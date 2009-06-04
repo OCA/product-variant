@@ -24,7 +24,18 @@
 			<field name="view_id" ref="product.product_variant_form_view" />
 		</record>
 
-		<menuitem action="product_variant" id="menu_variant" parent="product.menu_products_products" sequence="3" />
+		<record id="product_template" model="ir.actions.act_window">
+			<field name="name">Product Templates</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">product.template</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="product_template" id="menu_template" parent="product.menu_products" />
+
+		<menuitem action="product_variant" id="menu_variant" parent="product.menu_products" />
+
 
 		<record model="ir.actions.act_window" id="action_dimension_type_form">
 			<field name="name">Types</field>
@@ -120,7 +131,7 @@
 				<xpath expr="/form/notebook" position="inside">
 					<page string="Variants">
 						<field name="dimension_type_ids" widget="one2many_list" nolabel="1">
-							<tree string="Dimension types">
+							<tree string="Dimension types" editable="bottom">
 								<field name="name" />
 								<field name="allow_custom_value" />
 							</tree>
@@ -128,7 +139,7 @@
 								<field name="name" />
 								<field name="sequence" />
 								<field name="allow_custom_value" />
-								<field name="value_ids" nolabel="1" colspan="4">
+								<field name="value_ids">
 									<tree string="Variant Value" editable="bottom">
 										<field name="name" />
 										<field name="sequence" />
@@ -144,7 +155,6 @@
 								</field>
 							</form>
 						</field>
-						<button name="button_generate_variants" string="Generate ->" type="object" />
 						<field name="variant_ids" string="Variants" nolabel="1">
 							<tree string="Variants">
 								<field name="code" />
@@ -152,6 +162,7 @@
 								<field name="variants" string="Dimension Values" />
 							</tree>
 						</field>
+						<button name="button_generate_variants" string="Generate" type="object" />
 					</page>
 				</xpath>
 			</field>
@@ -165,7 +176,7 @@
 			<field name="arch" type="xml">
 				<field name="price_extra" position="after">
 					<field name="standard_price" readonly="1" />
-					<field name="list_price" string="Template price" readonly="1" />
+					<field name="list_price" readonly="1" />
 					<field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}"/>
 				</field>
 			</field>
