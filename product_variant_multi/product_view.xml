@@ -47,7 +47,7 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Variant Dimensions" id="menu_variant_dimension" parent="product.menu_config_product" />
+    <menuitem name="Variant Dimensions" id="menu_variant_dimension" parent="product.prod_config_main" />
     <menuitem name="Dimension Types" icon="STOCK_JUSTIFY_FILL" id="menu_variant_dimension_types" parent="menu_variant_dimension" action="action_dimension_type_form" />
     <menuitem name="Dimension Values" icon="STOCK_JUSTIFY_FILL" id="menu_variant_dimension_values" parent="menu_variant_dimension" action="action_dimension_value_form" />
 
@@ -71,10 +71,10 @@
       <field name="arch" type="xml">
         <form string="Variant Value">
           <field name="dimension_id" domain="[('product_tmpl_id','=',context.get('product_tmpl_id',False))]"/>
-          <field name="name" />
+          <field name="name" select="1"/>
           <field name="sequence" />
-          <field name="price_extra" />
-          <field name="price_margin" />
+          <field name="price_extra" select="1"/>
+          <field name="price_margin" select="1"/>
         </form>
       </field>
     </record>
@@ -98,26 +98,14 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Variant Type">
-          <field name="product_tmpl_id" />
-          <field name="name" />
+          <field name="product_tmpl_id" select="1" />
+          <field name="name" select="1"/>
           <field name="sequence" />
           <field name="allow_custom_value" />
-          <field name="value_ids">
-            <tree string="Variant Value" editable="bottom">
-              <field name="name" />
-              <field name="sequence" />
-              <field name="price_extra" />
-              <field name="price_margin" />
-            </tree>
-            <form string="Variant Value">
-              <field name="name" />
-              <field name="sequence" />
-              <field name="price_extra" />
-              <field name="price_margin" />
-            </form>
-          </field>
-        </form>
-      </field>
+          <separator colspan="4" string="Dimension Values"/>
+          <field name="value_ids" nolabel="1" widget="one2many_list" colspan="4" />
+          </form>  
+      </field>	
     </record>
 
     <record id="product_variant_multi.product_template_form_view" model="ir.ui.view">
@@ -153,7 +141,7 @@
                 </field>
               </form>
             </field>
-            <button name="button_generate_variants" string="Generate ->" type="object" />
+            <button name="button_generate_variants" string="Generate" icon="gtk-execute"  type="object" />
             <field name="variant_ids" string="Variants" nolabel="1">
               <tree string="Variants">
                 <field name="code" />
@@ -175,7 +163,8 @@
         <field name="price_extra" position="after">
           <field name="standard_price" readonly="1" />
           <field name="list_price" string="Template price" readonly="1" />
-          <field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}"/>
+          <newline/>
+          <field colspan="4" name="dimension_value_ids" nolabel="1" widget="many2many" context="{'product_tmpl_id':product_tmpl_id}"/>
         </field>
       </field>
     </record>
