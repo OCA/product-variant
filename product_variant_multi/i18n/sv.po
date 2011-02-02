@@ -1,21 +1,26 @@
-# Swedish translation for openobject-addons
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_variant_multi
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-09 10:30+0000\n"
-"PO-Revision-Date: 2010-11-22 19:44+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"Project-Id-Version: OpenERP Server 5.0.14\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-01-19 17:00+0000\n"
+"PO-Revision-Date: 2010-11-23 02:01+0000\n"
+"Last-Translator: Olivier Dony (OpenERP) <Unknown>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-18 05:33+0000\n"
+"X-Launchpad-Export-Date: 2011-02-02 04:57+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
+
+#. module: product_variant_multi
+#: view:product.variant.dimension.type:0
+#: field:product.variant.dimension.value,price_extra:0
+msgid "Sale Price Extra"
+msgstr ""
 
 #. module: product_variant_multi
 #: constraint:ir.model:0
@@ -24,13 +29,32 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_multi
-#: field:product.product,dimension_value_ids:0
-msgid "Dimensions"
+#: view:product.template:0
+msgid "Generate ->"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.product,cost_price_extra:0
+#: field:product.variant.dimension.value,cost_price_extra:0
+msgid "Purchase Extra Cost"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.template,is_multi_variants:0
+msgid "Is Multi Variants?"
 msgstr ""
 
 #. module: product_variant_multi
 #: field:product.variant.dimension.value,dimension_sequence:0
 msgid "Related Dimension Sequence"
+msgstr ""
+
+#. module: product_variant_multi
+#: help:product.template,code_generator:0
+msgid ""
+"enter the model for the product code, all parameter between [_o.my_field_] "
+"will be replace by the product field. Example product_code model : "
+"prefix_[_o.variants_]_suffixe ==> result : prefix_2S2T_suffix"
 msgstr ""
 
 #. module: product_variant_multi
@@ -45,13 +69,18 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_multi
+#: view:product.template:0
+msgid "Build Code ->"
+msgstr ""
+
+#. module: product_variant_multi
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.template:0
-msgid "Generate ->"
+#: field:product.product,dimension_value_ids:0
+msgid "Dimensions"
 msgstr ""
 
 #. module: product_variant_multi
@@ -61,8 +90,43 @@ msgid "Dimension Types"
 msgstr ""
 
 #. module: product_variant_multi
-#: field:product.variant.dimension.value,price_extra:0
-msgid "Price Extra"
+#: view:product.product:0
+msgid "Template Sale Price"
+msgstr ""
+
+#. module: product_variant_multi
+#: view:product.product:0
+#: field:product.variant.dimension.type,description:0
+msgid "Description"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.template,code_generator:0
+msgid "Code Generator"
+msgstr ""
+
+#. module: product_variant_multi
+#: help:product.variant.dimension.type,mandatory_dimension:0
+msgid ""
+"If false, variant products will be created with and without this dimension"
+msgstr ""
+
+#. module: product_variant_multi
+#: view:product.variant.dimension.type:0
+#: field:product.variant.dimension.value,price_margin:0
+msgid "Sale Price Margin"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.type,mandatory_dimension:0
+msgid "Mandatory Dimension"
+msgstr ""
+
+#. module: product_variant_multi
+#: help:product.template,variant_model_name:0
+msgid ""
+"[NAME] will be replaced by the name of the dimension and [VALUE] by is "
+"value. Example of Variant Model Name : \"[NAME] - [VALUE]\""
 msgstr ""
 
 #. module: product_variant_multi
@@ -105,8 +169,13 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: product_variant_multi
-#: field:product.variant.dimension.value,price_margin:0
-msgid "Price Margin"
+#: view:product.product:0
+msgid "Product Variant"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.template,variant_model_name_separator:0
+msgid "Variant Model Name Separator"
 msgstr ""
 
 #. module: product_variant_multi
@@ -129,6 +198,11 @@ msgid "Product Template"
 msgstr ""
 
 #. module: product_variant_multi
+#: field:product.template,variant_model_name:0
+msgid "Variant Model Name"
+msgstr ""
+
+#. module: product_variant_multi
 #: model:ir.actions.act_window,name:product_variant_multi.action_dimension_value_form
 msgid "Values"
 msgstr ""
@@ -139,6 +213,7 @@ msgid "Products with multi-level variants"
 msgstr "Products with multi-level variants"
 
 #. module: product_variant_multi
+#: view:product.product:0
 #: field:product.variant.dimension.type,name:0
 msgid "Dimension"
 msgstr ""
@@ -164,6 +239,11 @@ msgstr ""
 #: field:product.variant.dimension.type,sequence:0
 #: field:product.variant.dimension.value,sequence:0
 msgid "Sequence"
+msgstr ""
+
+#. module: product_variant_multi
+#: help:product.template,variant_model_name_separator:0
+msgid "Add a separator between the elements of the variant name"
 msgstr ""
 
 #. module: product_variant_multi
@@ -203,4 +283,9 @@ msgstr ""
 #: model:ir.model,name:product_variant_multi.model_product_variant_dimension_type
 #: field:product.variant.dimension.value,dimension_id:0
 msgid "Dimension Type"
+msgstr ""
+
+#. module: product_variant_multi
+#: view:product.product:0
+msgid "Price"
 msgstr ""
