@@ -1,0 +1,56 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_variant_multi_advanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.15\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-01-20 09:35:55+0000\n"
+"PO-Revision-Date: 2011-01-20 13:41+0100\n"
+"Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: product_variant_multi_advanced
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML no válido para la arquitectura de la vista!"
+
+#. module: product_variant_multi_advanced
+#: field:product.product,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: product_variant_multi_advanced
+#: view:product.product:0
+msgid "Sale description"
+msgstr "Descripción de venta"
+
+#. module: product_variant_multi_advanced
+#: field:product.product,description_sale:0
+msgid "Sale Description"
+msgstr "Descripción de venta"
+
+#. module: product_variant_multi_advanced
+#: view:product.template:0
+msgid "Build Sale Description ->"
+msgstr "Crear descripción de venta ->"
+
+#. module: product_variant_multi_advanced
+#: model:ir.module.module,shortdesc:product_variant_multi_advanced.module_meta_information
+msgid "Product Variant Multi Advanced"
+msgstr "Productos con variantes multi nivel avanzado"
+
+#. module: product_variant_multi_advanced
+#: model:ir.module.module,description:product_variant_multi_advanced.module_meta_information
+msgid ""
+"This module extend the capacity of product_variant_multi giving the posibility of building automatically the name, the description... of the product from the product template.\n"
+"Due to some limit of the orm you will need to apply some patch on the server"
+msgstr ""
+"Este módulo amplia la capacidad de product_variant_multi dando la posibilidad de crear de forma automática el nombre, la descripción, etc., del producto desde su plantilla.\n"
+"Debido a las limitaciones de ORM tendrá que aplicar algún parche en el servidor."
+

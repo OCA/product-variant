@@ -39,6 +39,17 @@
 		<menuitem name="Dimension Types" icon="STOCK_JUSTIFY_FILL" id="menu_variant_dimension_types" parent="menu_variant_dimension" action="action_dimension_type_form" />
 		<menuitem name="Dimension Values" icon="STOCK_JUSTIFY_FILL" id="menu_variant_dimension_values" parent="menu_variant_dimension" action="action_dimension_value_form" />
 
+		<record id="product_search_form_view_variants" model="ir.ui.view">
+			<field name="name">product.search.form.variants</field>
+			<field name="model">product.product</field>
+			<field name="type">search</field>
+			<field name="inherit_id" ref="product.product_search_form_view"/>
+			<field name="arch" type="xml">
+				<field name="categ_id" position="after">
+					<field name="variants"/>
+				</field>
+			</field>
+		</record>
 
 		<record id="product_variant_multi.variant_value_tree_view" model="ir.ui.view">
 			<field name="name">product_variant_multi.variant_value.tree</field>

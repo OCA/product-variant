@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  model module for OpenERP
+  Copyright (C) 2010 Sébastien BEAU <sebastien.beau@akretion.comr>
+  The licence is in the file __terp__.py
+-->
+
+<openerp>
+    <data>
+        <record id="view_product_variant_multi_advanced_form" model="ir.ui.view">
+            <field name="name">view.product.variant.multi.advanced.product.variant.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product_variant_multi.product_variant_form_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <group name="price" position="after">
+                        <group name='sale description' colspan="2" col="2"> 
+                            <separator string="Sale description" colspan="4"/>                 
+                            <field name="description_sale" nolabel="1" attrs="{'readonly':[('is_multi_variants','=',True)]}"/>
+                        </group>
+                    </group>
+
+                    <field name="name" position="replace">
+                        <field name="name" select="1" attrs="{'required':[('is_multi_variants','=',False)], 'readonly':[('is_multi_variants','=',True)]}"/>
+                        <field name="is_multi_variants" invisible="True"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+
+
+        <record id="view_product_normal_multi_advanced_form_view" model="ir.ui.view">
+            <field name="name">view.product.normal.multi.advanced.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <field name="name" position="replace">
+                        <field name="name" select="1" attrs="{'required':[('is_multi_variants','=',False)], 'readonly':[('is_multi_variants','=',True)]}"/>
+                        <field name="is_multi_variants" invisible="True"/>
+                    </field>
+
+                    <field name="description_sale" position="replace">
+                        <field name="description_sale" nolabel="1" colspan="4" attrs="{'readonly':[('is_multi_variants','=',True)]}"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+
+        
+        <record id="view_product_template_variant_multi_advanced_form" model="ir.ui.view">
+            <field name="name">view.product.template.variant.multi.advanced.product.variant.form</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product_variant_multi.product_template_form_view" />
+            <field name="arch" type="xml">
+                <button name="button_generate_product_code" position="after">
+                    <button name="button_generate_product_sale_description" string="Build Sale Description ->" type="object" colspan="4"/>
+                </button>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
