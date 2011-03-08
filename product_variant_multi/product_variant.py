@@ -123,7 +123,7 @@ class product_template(osv.osv):
         if old_id in seen_map.setdefault(self._name,[]):
             return
         seen_map[self._name].append(old_id)
-        return super(product_product, self).copy_translations(cr, uid, old_id, new_id, context=context)
+        return super(product_template, self).copy_translations(cr, uid, old_id, new_id, context=context)
 
     def _create_variant_list(self, cr, uid, vals, context=None):
         
@@ -230,8 +230,10 @@ class product_product(osv.osv):
     def _get_products_from_product(self, cr, uid, ids, context={}):
         result = []
         for product in self.pool.get('product.product').browse(cr, uid, ids, context=context):
-            for product_id in product.product_tmpl_id.variant_ids:
-                result.append(product_id.id)
+            # Checking if 'product_tmpl_id' is available, v6.0.1 gives error when a product is deleted
+            if hasattr(product, 'product_tmpl_id'):
+                for product_id in product.product_tmpl_id.variant_ids:
+                    result.append(product_id.id)
         return result
 
     def _get_products_from_product_template(self, cr, uid, ids, context={}):
