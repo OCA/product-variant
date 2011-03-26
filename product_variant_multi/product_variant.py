@@ -230,10 +230,8 @@ class product_product(osv.osv):
     def _get_products_from_product(self, cr, uid, ids, context={}):
         result = []
         for product in self.pool.get('product.product').browse(cr, uid, ids, context=context):
-            # Checking if 'product_tmpl_id' is available, v6.0.1 gives error when a product is deleted
-            if hasattr(product, 'product_tmpl_id'):
-                for product_id in product.product_tmpl_id.variant_ids:
-                    result.append(product_id.id)
+            for product_id in product.product_tmpl_id.variant_ids:
+                result.append(product_id.id)
         return result
 
     def _get_products_from_product_template(self, cr, uid, ids, context={}):
