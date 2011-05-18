@@ -125,7 +125,7 @@ class product_template(osv.osv):
         seen_map[self._name].append(old_id)
         return super(product_template, self).copy_translations(cr, uid, old_id, new_id, context=context)
 
-    def _create_variant_list(self, cr, uid, vals, context=None):
+    def _create_variant_list(self, cr, ids, uid, vals, context=None):
         
         def cartesian_product(args):
             if len(args) == 1: return [x and [x] or [] for x in args[0]]
@@ -146,7 +146,7 @@ class product_template(osv.osv):
                     temp_val_list.pop()
 
             if temp_val_list:
-                list_of_variants = self._create_variant_list(cr, uid, temp_val_list, context)
+                list_of_variants = self._create_variant_list(cr, uid, ids, temp_val_list, context)
                 existing_product_ids = variants_obj.search(cr, uid, [('product_tmpl_id', '=', product_temp.id)])
                 existing_product_dim_value = variants_obj.read(cr, uid, existing_product_ids, ['dimension_value_ids'])
                 list_of_variants_existing = [x['dimension_value_ids'] for x in existing_product_dim_value]
