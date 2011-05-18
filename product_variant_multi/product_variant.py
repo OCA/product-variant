@@ -265,7 +265,7 @@ class product_product(osv.osv):
                 
                 result[product.id] += dimension_extra
 
-        if ptype == 'standard_price':
+        elif ptype == 'standard_price':
             product_uom_obj = self.pool.get('product.uom')
             for product in self.browse(cr, uid, ids, context=context):
                 dimension_extra = 0.0

@@ -51,8 +51,8 @@
             </field>
         </record>
 
-        <record id="product_variant_multi.variant_value_tree_view" model="ir.ui.view">
-            <field name="name">product_variant_multi.variant_value.tree</field>
+        <record id="product_variant_multi_variant_value_tree_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.variant_value.tree</field>
             <field name="model">product.variant.dimension.value</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
@@ -63,8 +63,8 @@
             </field>
         </record>
 
-        <record id="product_variant_multi.variant_value_form_view" model="ir.ui.view">
-            <field name="name">product_variant_multi.variant_value.form</field>
+        <record id="product_variant_multi_variant_value_form_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.variant_value.form</field>
             <field name="model">product.variant.dimension.value</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -78,8 +78,8 @@
             </field>
         </record>
 
-        <record id="product_variant_multi.variant_type_tree_view" model="ir.ui.view">
-            <field name="name">product_variant_multi.variant_type.tree</field>
+        <record id="product_variant_multi_variant_type_tree_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.variant_type.tree</field>
             <field name="model">product.variant.dimension.type</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
@@ -91,8 +91,8 @@
             </field>
         </record>
 
-        <record id="product_variant_multi.variant_type_form_view" model="ir.ui.view">
-            <field name="name">product_variant_multi.variant_type.form</field>
+        <record id="product_variant_multi_variant_type_form_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.variant_type.form</field>
             <field name="model">product.variant.dimension.type</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -123,8 +123,8 @@
 
 <!-- TODO remove useless view of product.template in the module product or fusion this view with the existing view in product, it's depend how the inheritage on this view will be managed by the other module-->
 
-        <record id="product_variant_multi.product_template_form_view" model="ir.ui.view">
-            <field name="name">product_variant_multi.product.template.form</field>
+        <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.product.template.form</field>
             <field name="model">product.template</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="product.product_template_form_view" />
