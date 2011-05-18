@@ -38,7 +38,7 @@ class product_variant_dimension_type(osv.osv):
         'name' : fields.char('Dimension', size=64, required=True),
         'sequence' : fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
         'value_ids' : fields.one2many('product.variant.dimension.value', 'dimension_id', 'Dimension Values'),
-        'product_tmpl_id': fields.many2one('product.template', 'Product Template', required=True, ondelete='cascade'),
+        'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
         'mandatory_dimension': fields.boolean('Mandatory Dimension', help="If false, variant products will be created with and without this dimension"),
     }
@@ -63,11 +63,7 @@ class product_variant_dimension_value(osv.osv):
     _description = "Dimension Value"
 
     def _get_dimension_values(self, cr, uid, ids, context={}):
-        result = []
-        for type in self.pool.get('product.variant.dimension.type').browse(cr, uid, ids, context=context):
-            for value in type.value_ids:
-                result.append(value.id)
-        return result
+        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     _columns = {
         'name' : fields.char('Dimension Value', size=64, required=True),
@@ -75,11 +71,11 @@ class product_variant_dimension_value(osv.osv):
         'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
         'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
         'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
-        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True, ondelete='cascade'),
+        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
         'product_tmpl_id': fields.related('dimension_id', 'product_tmpl_id', type="many2one", relation="product.template", string="Product Template", store=True),
         'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
              store={
-                'product.variant.dimension.type': (_get_dimension_values, None, 10),
+                'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
             }),
     }
     _order = "dimension_sequence, sequence, name"
