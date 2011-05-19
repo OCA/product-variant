@@ -32,6 +32,47 @@
 
 		<menuitem name="Variant dimensions" id="menu_variant_dimension" parent="product.prod_config_main" />
 
+        <!-- Views from Dimension option -->
+        <record id="product_variant_multi_dimension_option_tree" model="ir.ui.view">
+            <field name="name">product.variant.multi.dimension.option.tree</field>
+            <field name="model">product.variant.dimension.option</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Dimension Options">
+                    <field name="dimension_id" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="name" />
+                    <field name="sequence" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_variant_multi_dimension_option_form" model="ir.ui.view">
+            <field name="name">product.variant.multi.dimension.option.form</field>
+            <field name="model">product.variant.dimension.option</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dimension Options">
+                    <field name="dimension_id" select="1" invisible="not context.get('dimension_option_main_view', False)" />
+                    <newline />
+                    <field name="sequence" />
+                    <field name="name" select="1" />
+                </form>
+            </field>
+        </record>
+
+        <!-- Default action for Dimension option -->
+		<record id="action_dimension_option" model="ir.actions.act_window">
+			<field name="name">Dimension Options</field>
+			<field name="res_model">product.variant.dimension.option</field>
+            <field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+            <field name="context">{'dimension_option_main_view': True}</field>
+		</record>
+
+        <!-- Menu entry for Dimension values -->
+		<menuitem id="menu_variant_dimension_option" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_option" />
+
+
 
         <!-- Views from Dimension values -->
         <record id="product_variant_multi_dimension_value_tree" model="ir.ui.view">
@@ -40,12 +81,12 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Dimension values">
-                    <field name="product_tmpl_id" invisible="not context.get('dimension_value_main_view', False)" />
-                    <field name="dimension_id" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="dimension_id" />
                     <field name="name" />
                     <field name="sequence" />
-                    <field name="price_extra" />
                     <field name="cost_price_extra" />
+                    <field name="price_extra" />
                 </tree>
             </field>
         </record>
@@ -57,13 +98,13 @@
             <field name="arch" type="xml">
                 <form string="Dimension values">
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
-                    <field name="dimension_id" domain="[('product_tmpl_id','=',context.get('product_tmpl_id',False))]" select="1" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="dimension_id" />
                     <newline />
                     <field name="name" select="1" />
                     <field name="sequence" />
+                    <field name="cost_price_extra" select="2" />
                     <field name="price_extra" select="2" />
                     <field name="price_margin" select="2" />
-                    <field name="cost_price_extra" select="2" />
                 </form>
             </field>
         </record>
@@ -87,10 +128,9 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Dimension Types">
-                    <field name="product_tmpl_id" invisible="not context.get('dimension_type_main_view', False)" />
 					<field name="name" />
                     <field name="description" />
-					<field name="value_ids" />
+					<field name="option_ids" />
 				</tree>
 			</field>
 		</record>
@@ -101,13 +141,12 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Dimension Types">
-                    <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_type_main_view', False)" />
 					<field name="name" select="1" />
                     <field name="description" select="2" />
 					<field name="sequence" />
 					<field name="allow_custom_value" select="2" />
 					<field name="mandatory_dimension" select="2" />
-					<field name="value_ids" nolabel="1" colspan="4" />
+					<field name="option_ids" nolabel="1" colspan="4" />
 				</form>
 			</field>
 		</record>
@@ -125,87 +164,8 @@
         <!-- Menu entry for dimension types -->
 		<menuitem id="menu_variant_dimension_types" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_type" />
 
-        <record id="product_search_form_view_variants" model="ir.ui.view">
-            <field name="name">product.search.form.variants</field>
-            <field name="model">product.product</field>
-            <field name="type">search</field>
-            <field name="inherit_id" ref="product.product_search_form_view"/>
-            <field name="arch" type="xml">
-                <field name="categ_id" position="after">
-                    <field name="variants"/>
-                </field>
-            </field>
-        </record>
 
-        <record id="product_variant_multi_variant_value_tree_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.variant_value.tree</field>
-            <field name="model">product.variant.dimension.value</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Variant Value">
-                    <field name="dimension_id" />
-                    <field name="name" />
-                </tree>
-            </field>
-        </record>
 
-        <record id="product_variant_multi_variant_value_form_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.variant_value.form</field>
-            <field name="model">product.variant.dimension.value</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Variant Value">
-                    <field name="dimension_id" domain="[('product_tmpl_id','=',context.get('product_tmpl_id',False))]"/>
-                    <field name="name" />
-                    <field name="sequence" />
-                    <field name="price_extra" />
-                    <field name="price_margin" />
-                </form>
-            </field>
-        </record>
-
-        <record id="product_variant_multi_variant_type_tree_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.variant_type.tree</field>
-            <field name="model">product.variant.dimension.type</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Variant Type">
-                    <field name="product_tmpl_id" />
-                    <field name="name" />
-                    <field name="value_ids" />
-                </tree>
-            </field>
-        </record>
-
-        <record id="product_variant_multi_variant_type_form_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.variant_type.form</field>
-            <field name="model">product.variant.dimension.type</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Variant Type">
-                    <field name="product_tmpl_id" />
-                    <field name="name" />
-                    <field name="sequence" />
-                    <field name="allow_custom_value" />
-                    <field name="mandatory_dimension" />
-                    <field name="value_ids">
-                        <tree string="Variant Value" editable="bottom">
-                            <field name="name" />
-                            <field name="sequence" />
-                            <field name="price_extra" />
-                            <field name="price_margin" />
-                        </tree>
-                        <form string="Variant Value">
-                            <field name="name" />
-                            <field name="sequence" />
-                            <field name="price_extra" string="Sale Price Extra"/>
-                            <field name="price_margin" string="Sale Price Margin"/>
-                            <field name="cost_price_extra"/>
-                        </form>
-                    </field>
-                </form>
-            </field>
-        </record>
 
 <!-- TODO remove useless view of product.template in the module product or fusion this view with the existing view in product, it's depend how the inheritage on this view will be managed by the other module-->
 
@@ -222,21 +182,28 @@
 
                     <xpath expr="/form/notebook" position="inside">
                         <page string="Variants" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                            <field name="dimension_type_ids" widget="one2many_list" nolabel="1" />
-                            <group>
-                                <field name="variant_model_name" colspan="4"/>
-                                <field name="variant_model_name_separator" colspan="4"/>
-                                <button name="button_generate_variants" string="Generate ->" type="object" colspan="4"/>
-                                <field name="code_generator" colspan="4"/>
-                                <button name="button_generate_product_code" string="Build Code ->" type="object" colspan="4"/>
-                            </group>
-                            <field name="variant_ids" string="Variants" nolabel="1">
-                                <tree string="Variants">
-                                    <field name="code" />
-                                    <field name="name" />
-                                    <field name="variants" string="Dimension Values" />
-                                </tree>
-                            </field>
+                                <group colspan="1" col="4">
+                                    <field name="dimension_type_ids" nolabel="1" colspan="4" />
+                                    <button name="add_all_option" string="Add All Option" type="object" colspan="2"/>
+                                    <button name="add_some_option" string="Add " type="object" colspan="2"/>
+                                    <field name="value_ids" nolabel="1" colspan="4" />
+                                </group>
+                                <group  colspan="1" col="4">
+                                    <field name="variant_model_name" colspan="4"/>
+                                    <field name="variant_model_name_separator" colspan="4"/>
+                                    <field name="code_generator" colspan="4"/>
+							        <field name="variant_track_production" colspan="4"/>
+							        <field name="variant_track_incoming" colspan="4"/>
+							        <field name="variant_track_outgoing" colspan="4"/>
+							        <button name="button_generate_variants" string="Generate / Update variants ->" type="object" colspan="4"/>
+                                </group>
+                                <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
+                                    <tree string="Variants">
+                                        <field name="code" />
+                                        <field name="name" />
+                                        <field name="variants" string="Dimension Values" />
+                                    </tree>
+                                </field>
                         </page>
                     </xpath>
                 </data>
@@ -245,32 +212,46 @@
         
         <!-- TODO remove useless view of product.product in the module product or move this correct view in product, it's depend how the heritage on this view will be managed by the other module -->
         
+        <record id="product_search_form_view_variants" model="ir.ui.view">
+            <field name="name">product.search.form.variants</field>
+            <field name="model">product.product</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="variants"/>
+                </field>
+            </field>
+        </record>
+
         <record id="product_variant_form_view" model="ir.ui.view">
             <field name="name">product.variant.form</field>
             <field name="model">product.product</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Product Variant">
-                    <group name='description' colspan="2" col="2">
-                        <separator string="Description" colspan="2"/>
-                        <field name="product_tmpl_id" select="1"/>
-                        <field name="name" select="1"/>
-                        <field name="active" select="1"/>
-                        <field name="variants" select="1"/>
-                        <field name="default_code" select="1"/>
-                    </group>
-                    <group name='price' colspan="2" col="2">
-                        <separator string="Price" colspan="2"/>
-                        <field name="list_price" string="Template Sale Price" readonly="1"/>
-                        <field name="price_margin" select="1"/>
-                        <field name="price_extra" select="1"/>
-                        <field name="cost_price_extra"/>
-                    </group>
-                    <group name='dimension' colspan="2" col="2"/>
-                        <separator string="Dimension" colspan="4"/>
-                        <field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}"/>
-                    <group/>
-                    
+                    <field name="name" select="1"/>
+                    <field name="product_tmpl_id" select="1"/>
+                    <field name="variants" select="1"/>
+                    <field name="default_code" select="1"/>
+                    <field name="active" select="1"/>
+                    <newline />
+                    <notebook colspan="4">
+                        <page string="Dimensions">
+                            <field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}" nolabel="1"/>
+                        </page>
+                        <page string="Price">
+                            <field name="list_price" string="Template Sale Price" readonly="1"/>
+                            <field name="price_margin" select="1"/>
+                            <field name="price_extra" select="1"/>
+                            <field name="cost_price_extra"/>
+                        </page>
+                        <page string="Lots">
+                            <field name="track_production" />
+                            <field name="track_incoming" />
+                            <field name="track_outgoing" />
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
