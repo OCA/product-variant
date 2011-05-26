@@ -60,31 +60,6 @@ class product_variant_dimension_type(osv.osv):
 
 product_variant_dimension_type()
 
-
-class product_variant_dimension_value(osv.osv):
-    _name = "product.variant.dimension.value"
-    _description = "Dimension Value"
-
-    def _get_dimension_values(self, cr, uid, ids, context={}):
-        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
-
-    _columns = {
-        'name' : fields.many2one('product.variant.dimension.option', 'Dimension Value', required=True),
-        'sequence' : fields.integer('Sequence'),
-        'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
-        'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
-        'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
-        'dimension_id' : fields.related('name', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", store=True),
-        'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
-        'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
-             store={
-                'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
-            }),
-    }
-    _order = "dimension_sequence, sequence, name"
-
-product_variant_dimension_value()
-
 class product_variant_dimension_option(osv.osv):
     _name = "product.variant.dimension.option"
     _description = "Dimension Option"
@@ -101,6 +76,31 @@ class product_variant_dimension_option(osv.osv):
     _order = "dimension_id, sequence, name"
 
 product_variant_dimension_option()
+
+
+class product_variant_dimension_value(osv.osv):
+    _name = "product.variant.dimension.value"
+    _description = "Dimension Value"
+
+    def _get_dimension_values(self, cr, uid, ids, context={}):
+        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
+
+    _columns = {
+        'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
+        'sequence' : fields.integer('Sequence'),
+        'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
+        'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
+        'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
+        'dimension_id' : fields.related('option_id', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", store=True),
+        'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
+        'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
+             store={
+                'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
+            }),
+    }
+    _order = "dimension_sequence, sequence, option_id"
+    
+product_variant_dimension_value()
 
 
 
@@ -135,7 +135,7 @@ class product_template(osv.osv):
                 if not dim.id in existing_dim:
                     for option in dim.option_ids:
                         print 'option', option.name
-                        vals['value_ids'] += [[0, 0, {'name': option.id}]]
+                        vals['value_ids'] += [[0, 0, {'option_id': option.id}]]
             print 'vals', vals
             self.write(cr, uid, template.id, vals, context=context)
                     
@@ -215,7 +215,7 @@ class product_template(osv.osv):
                     vals['product_tmpl_id'] = product_temp.id
                     vals['dimension_value_ids'] = [(6,0,variant)]
     
-                    var_id=variants_obj.create(cr, uid, vals, {})
+                    var_id=variants_obj.create(cr, uid, vals, {'generate_from_template' : True})
                                         
                     if count%50 == 0:
                         cr.commit()
@@ -285,7 +285,7 @@ class product_product(osv.osv):
         inherit this function to hack the code generation'''
         product = self.browse(cr, uid, product_id, context=context)
         model = product.variant_model_name
-        r = map(lambda dim: [dim.dimension_id.sequence, model.replace('[NAME]', (dim.dimension_id.name or '')).replace('[VALUE]', dim.name.name or '-')], product.dimension_value_ids)
+        r = map(lambda dim: [dim.dimension_id.sequence, model.replace('[NAME]', (dim.dimension_id.name or '')).replace('[VALUE]', dim.option_id.name or '-')], product.dimension_value_ids)
         r.sort()
         r = [x[1] for x in r]
         new_variant_name = (product.variant_model_name_separator or '').join(r)

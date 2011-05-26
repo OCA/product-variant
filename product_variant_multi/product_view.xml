@@ -83,7 +83,7 @@
                 <tree string="Dimension values">
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
                     <field name="dimension_id" />
-                    <field name="name" />
+                    <field name="option_id" />
                     <field name="sequence" />
                     <field name="cost_price_extra" />
                     <field name="price_extra" />
@@ -100,7 +100,7 @@
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
                     <field name="dimension_id" />
                     <newline />
-                    <field name="name" select="1" />
+                    <field name="option_id" select="1" />
                     <field name="sequence" />
                     <field name="cost_price_extra" select="2" />
                     <field name="price_extra" select="2" />
