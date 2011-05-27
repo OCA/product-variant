@@ -118,9 +118,6 @@
             <field name="context">{'dimension_value_main_view': True}</field>
 		</record>
 
-        <!-- Menu entry for Dimension values -->
-		<menuitem id="menu_variant_dimension_values" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_value" />
-
         <!-- Views for Dimension types -->
 		<record id="product_variant_multi_dimension_type_tree" model="ir.ui.view">
 			<field name="name">product.variant.multi.dimension.type.tree</field>
