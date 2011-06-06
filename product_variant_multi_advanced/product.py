@@ -53,42 +53,7 @@ class product_template(osv.osv):
         logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "Starting to generate/update product sale descriptions...")
         self.pool.get('product.product').build_product_sale_description(cr, uid, product_ids, context=context)
         logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "End of the generation/update of product sale descriptions.")
-        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "Starting to generate/update product names...")
-        context['variants_values'] = {}
-        for product in self.pool.get('product.product').read(cr, uid, product_ids, ['variants'], context=context):
-            context['variants_values'][product['id']] = product['variants']
-        self.pool.get('product.product').build_product_name(cr, uid, product_ids, context=context)
-        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "End of generation/update of product names.")
         return True
-
-
-
-    def write(self, cr, uid, ids, vals, context=None):
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        if context is None:
-            context = {}
-        res = super(product_template, self).write(cr, uid, ids, vals.copy(), context=context)
-
-        ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
-        ids_multi_variants = list(set(ids).difference(set(ids_simple)))
-
-        if not context.get('iamthechild', False) and ids_simple:
-            vals_to_write = get_vals_to_write(vals, duplicated_fields)
-
-            if vals_to_write:
-                obj_product = self.pool.get('product.product')
-                ctx = context.copy()
-                ctx['iamthechild'] = True
-                for product_tmpl in self.read(cr, uid, ids_simple, ['variant_ids'], context=context):
-                    if product_tmpl['variant_ids']:
-                        obj_product.write(cr, uid, [product_tmpl['variant_ids'][0]], vals_to_write, context=ctx)
-
-        if ids_multi_variants and vals.get('name', False):
-            product_ids = self.get_products_from_product_template(cr, uid, ids_multi_variants, context=context)
-            self.pool.get('product.product').build_product_field(cr, uid, product_ids, 'name', context=context)
-
-        return res
 
 product_template()
 

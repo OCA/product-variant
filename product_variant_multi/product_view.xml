@@ -166,6 +166,10 @@
 
 <!-- TODO remove useless view of product.template in the module product or fusion this view with the existing view in product, it's depend how the inheritage on this view will be managed by the other module-->
 
+                                    <!--TODO add a wizard to add the option-->
+                                    <!--<button name="add_some_option" string="Add " type="object" colspan="2"/>-->
+
+
         <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
             <field name="name">product.variant.multi.product.template.form</field>
             <field name="model">product.template</field>
@@ -182,7 +186,7 @@
                                 <group colspan="1" col="4">
                                     <field name="dimension_type_ids" nolabel="1" colspan="4" />
                                     <button name="add_all_option" string="Add All Option" type="object" colspan="2"/>
-                                    <button name="add_some_option" string="Add " type="object" colspan="2"/>
+
                                     <field name="value_ids" nolabel="1" colspan="4" />
                                 </group>
                                 <group  colspan="1" col="4">

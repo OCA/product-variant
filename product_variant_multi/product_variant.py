@@ -102,9 +102,18 @@ class product_variant_dimension_value(osv.osv):
     
 product_variant_dimension_value()
 
+class product_variant_osv(osv.osv):
+    _duplicated_fields = ['name']
+
+    def get_vals_to_write(self, vals):
+        vals_to_write = {}
+        for field in self._duplicated_fields:
+            if field in vals.keys():
+                vals_to_write[field] = vals[field]
+        return vals_to_write
 
 
-class product_template(osv.osv):
+class product_template(product_variant_osv):
     _inherit = "product.template"
 
     _columns = {
@@ -126,20 +135,49 @@ class product_template(osv.osv):
         'is_multi_variants' : lambda *a: False,
                 }
 
+
+
+    def write(self, cr, uid, ids, vals, context=None):
+        # When your write the name on a simple product from the menu product template you have to update the name on the product product
+        # Two solution was posible overwritting the write function or overwritting the read function
+        # I choose to overwrite the write function because read is call more often than the write function
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+
+        res = super(product_template, self).write(cr, uid, ids, vals.copy(), context=context)
+
+        if not context.get('iamthechild', False):
+            obj_product = self.pool.get('product.product')
+            if vals.get('is_multi_variants', 'wrong') != 'wrong':
+                if vals['is_multi_variants']:
+                    prod_tmpl_ids_simple = False
+                else:
+                    prod_tmpl_ids_simple = ids
+            else:            
+                prod_tmpl_ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
+            
+            if prod_tmpl_ids_simple:
+                #NB in the case that the user have just unchecked the option 'is_multi_variants' without changing any field the vals_to_write is empty
+                vals_to_write = obj_product.get_vals_to_write(vals)
+                if vals_to_write:
+                    ctx = context.copy()
+                    ctx['iamthechild'] = True
+                    product_ids = obj_product.search(cr, uid, [['product_tmpl_id', 'in', prod_tmpl_ids_simple]])
+                    obj_product.write(cr, uid, product_ids, vals_to_write, context=ctx)
+        return res
+
     def add_all_option(self, cr, uid, ids, context=None):
         for template in self.browse(cr, uid, ids, context=context):
             existing_dim = [x.dimension_id.id for x in template.value_ids]
             vals = {'value_ids' : []}
-            print 'template', template.name
             for dim in template.dimension_type_ids:
                 if not dim.id in existing_dim:
                     for option in dim.option_ids:
-                        print 'option', option.name
                         vals['value_ids'] += [[0, 0, {'option_id': option.id}]]
-            print 'vals', vals
             self.write(cr, uid, template.id, vals, context=context)
                     
-        print 'context', context, ids
         return True
 
     def get_products_from_product_template(self, cr, uid, ids, context={}):
@@ -231,13 +269,82 @@ class product_template(osv.osv):
         logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update product codes and properties...")
         self.pool.get('product.product').build_product_code_and_properties(cr, uid, product_ids, context=context)
         logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of product codes and properties.")
+
+        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "Starting to generate/update product names...")
+        context['variants_values'] = {}
+        for product in self.pool.get('product.product').read(cr, uid, product_ids, ['variants'], context=context):
+            context['variants_values'][product['id']] = product['variants']
+        self.pool.get('product.product').build_product_name(cr, uid, product_ids, context=context)
+        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "End of generation/update of product names.")
         return True
         
 product_template()
 
 
-class product_product(osv.osv):
+class product_product(product_variant_osv):
     _inherit = "product.product"
+
+    def build_product_name(self, cr, uid, ids, context=None):
+        return self.build_product_field(cr, uid, ids, 'name', context=None)
+
+    def build_product_field(self, cr, uid, ids, field, context=None):
+        def get_description_sale(product):
+            return self.parse(cr, uid, product, product.product_tmpl_id.description_sale, context=context)
+
+        def get_name(product):
+            if context.get('variants_values', False):
+                return (product.product_tmpl_id.name or '' )+ ' ' + (context['variants_values'][product.id] or '')
+            return (product.product_tmpl_id.name or '' )+ ' ' + (product.variants or '')
+
+        if not context:
+            context={}
+        context['is_multi_variants']=True
+        obj_lang=self.pool.get('res.lang')
+        lang_ids = obj_lang.search(cr, uid, [('translatable','=',True)], context=context)
+        lang_code = [x['code'] for x in obj_lang.read(cr, uid, lang_ids, ['code'], context=context)]
+        for code in lang_code:
+            context['lang'] = code
+            for product in self.browse(cr, uid, ids, context=context):
+                new_field_value = eval("get_" + field + "(product)") # TODO convert to safe_eval
+                cur_field_value = safe_eval("product." + field, {'product': product})
+                if new_field_value != cur_field_value:
+                    self.write(cr, uid, product.id, {field: new_field_value}, context=context)
+        return True
+
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        res = super(product_product, self).write(cr, uid, ids, vals.copy(), context=context)
+
+        ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
+
+        if not context.get('iamthechild', False) and ids_simple:
+            vals_to_write = self.get_vals_to_write(vals)
+
+            if vals_to_write:
+                obj_tmpl = self.pool.get('product.template')
+                ctx = context.copy()
+                ctx['iamthechild'] = True
+                tmpl_ids = obj_tmpl.search(cr, uid, [['variant_ids', 'in', ids_simple]])
+                obj_tmpl.write(cr, uid, tmpl_ids, vals_to_write, context=ctx)
+        return res
+
+    def create(self, cr, uid, vals, context=None):
+        #TAKE CARE for inherits objects openerp will create firstly the product_template and after the product_product
+        # and so the duplicated fields will be on the product_template and not on the product_product
+        ids = super(product_product, self).create(cr, uid, vals.copy(), context=context) #using vals.copy() if not the vals will be changed by calling the super method
+        ####### write the value in the product_product
+        ctx = context.copy()
+        ctx['iamthechild'] = True
+        vals_to_write = self.get_vals_to_write(vals)
+        if vals_to_write:
+            self.write(cr, uid, ids, vals_to_write, context=ctx)
+        return ids
+
+
 
     def parse(self, cr, uid, o, text, context=None):
         if not text:
@@ -369,6 +476,7 @@ class product_product(osv.osv):
         return super(product_product, self).copy(cr, uid, id, default, context)
 
     _columns = {
+        'name': fields.char('Name', size=128, translate=True, select=True),
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
         'cost_price_extra' : fields.float('Purchase Extra Cost', digits_compute=dp.get_precision('Purchase Price')),
         'lst_price' : fields.function(_product_lst_price, method=True, type='float', string='List Price', digits_compute=dp.get_precision('Sale Price')),
