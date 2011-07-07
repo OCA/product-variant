@@ -28,6 +28,7 @@ import decimal_precision as dp
 import netsvc
 # Lib to eval python code with security
 from tools.safe_eval import safe_eval
+from tools.translate import _
 
 #
 # Dimensions Definition
@@ -82,6 +83,13 @@ class product_variant_dimension_value(osv.osv):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
+    def unlink(self, cr, uid, ids, context=None):
+        for value in self.browse(cr, uid, ids, context=context):
+            if value.product_ids:
+                product_list = '\n    - ' + '\n    - '.join([product.name for product in value.product_ids])
+                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is use in the product : %s \n Please remove this products before removing the value"%(value.option_id.name, product_list)))
+        return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
+
     def _get_dimension_values(self, cr, uid, ids, context={}):
         return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
@@ -97,8 +105,15 @@ class product_variant_dimension_value(osv.osv):
              store={
                 'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
             }),
+        'product_ids': fields.many2many('product.product', 'product_product_dimension_rel', 'dimension_id', 'product_id', 'Variant', readonly=True),
+        'active' : fields.boolean('Active?', help="If false, this value will be not use anymore for generating variant"),
     }
-    _order = "dimension_sequence, sequence, option_id"
+
+    _defaults = {
+        'active': lambda *a: 1,
+        }
+
+    _order = "state, dimension_sequence, sequence, option_id"
     
 product_variant_dimension_value()
 
@@ -135,7 +150,12 @@ class product_template(product_variant_osv):
         'is_multi_variants' : lambda *a: False,
                 }
 
-
+    def unlink(self, cr, uid, ids, context=None):
+        if context and context.get('unlink_from_product_product', False):
+            for template in self.browse(cr, uid, ids, context):
+                if not template.is_multi_variants:
+                    super(product_template, self).unlink(cr, uid, [template.id], context)
+        return True
 
     def write(self, cr, uid, ids, vals, context=None):
         # When your write the name on a simple product from the menu product template you have to update the name on the product product
@@ -169,15 +189,18 @@ class product_template(product_variant_osv):
         return res
 
     def add_all_option(self, cr, uid, ids, context=None):
+        #Reactive all unactive values
+        value_obj = self.pool.get('product.variant.dimension.value')
         for template in self.browse(cr, uid, ids, context=context):
-            existing_dim = [x.dimension_id.id for x in template.value_ids]
+            values_ids = value_obj.search(cr, uid, [['product_tmpl_id','=', template.id], '|', ['active', '=', False], ['active', '=', True]], context=context)
+            value_obj.write(cr, uid, values_ids, {'active':True}, context=context)
+            existing_option_ids = [value.option_id.id for value in value_obj.browse(cr, uid, values_ids,context=context)]
             vals = {'value_ids' : []}
             for dim in template.dimension_type_ids:
-                if not dim.id in existing_dim:
-                    for option in dim.option_ids:
+                for option in dim.option_ids:
+                    if not option.id in existing_option_ids:
                         vals['value_ids'] += [[0, 0, {'option_id': option.id}]]
-            self.write(cr, uid, template.id, vals, context=context)
-                    
+            self.write(cr, uid, template.id, vals, context=context)    
         return True
 
     def get_products_from_product_template(self, cr, uid, ids, context={}):
@@ -283,6 +306,12 @@ product_template()
 
 class product_product(product_variant_osv):
     _inherit = "product.product"
+
+    def unlink(self, cr, uid, ids, context=None):
+        if not context:
+            context={}
+        context['unlink_from_product_product']=True
+        return super(product_product, self).unlink(cr, uid, ids, context)
 
     def build_product_name(self, cr, uid, ids, context=None):
         return self.build_product_field(cr, uid, ids, 'name', context=None)

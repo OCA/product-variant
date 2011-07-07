@@ -80,8 +80,9 @@
             <field name="model">product.variant.dimension.value</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Dimension values">
+                <tree string="Dimension values" editable="top">
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="active" />
                     <field name="dimension_id" />
                     <field name="option_id" />
                     <field name="sequence" />
@@ -98,6 +99,7 @@
             <field name="arch" type="xml">
                 <form string="Dimension values">
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="active" />
                     <field name="dimension_id" />
                     <newline />
                     <field name="option_id" select="1" />
@@ -186,7 +188,6 @@
                                 <group colspan="1" col="4">
                                     <field name="dimension_type_ids" nolabel="1" colspan="4" />
                                     <button name="add_all_option" string="Add All Option" type="object" colspan="2"/>
-
                                     <field name="value_ids" nolabel="1" colspan="4" />
                                 </group>
                                 <group  colspan="1" col="4">
