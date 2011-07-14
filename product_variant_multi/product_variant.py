@@ -113,7 +113,7 @@ class product_variant_dimension_value(osv.osv):
         'active': lambda *a: 1,
         }
 
-    _order = "state, dimension_sequence, sequence, option_id"
+    _order = "dimension_sequence, sequence, option_id"
     
 product_variant_dimension_value()
 
