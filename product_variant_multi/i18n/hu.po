@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-18 05:11+0000\n"
-"X-Generator: Launchpad (build 13168)\n"
+"X-Launchpad-Export-Date: 2011-09-28 05:33+0000\n"
+"X-Generator: Launchpad (build 14049)\n"
 
 #. module: product_variant_multi
 #: view:product.variant.dimension.type:0
@@ -290,9 +290,3 @@ msgstr ""
 #: view:product.product:0
 msgid "Price"
 msgstr ""
-
-#~ msgid "Price Extra"
-#~ msgstr "Plusz összeg"
-
-#~ msgid "Price Margin"
-#~ msgstr "Plusz árrés"

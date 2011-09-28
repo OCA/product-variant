@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Model module for OpenERP
+#    "Product variant multi advanced" module for OpenERP
 #    Copyright (C) 2010 Sébastien BEAU <sebastien.beau@akretion.com>
+#    @author Alexis de Lattre <alexis.delattre@akretion.com> (convert to
+#       single "Generate/Update" button)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,6 +26,8 @@ from osv import osv, fields
 import netsvc
 # Lib to translate error messages
 from tools.translate import _
+# Lib to eval python code with security
+from tools.safe_eval import safe_eval
 
 def get_vals_to_write(vals, fields):
     vals_to_write = {}
@@ -37,38 +41,20 @@ duplicated_fields = ['description_sale', 'name']
 
 class product_template(osv.osv):
     _inherit = "product.template"
-    
-    def button_generate_product_sale_description(self, cr, uid, ids, context=None):
+
+
+    def button_generate_variants(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        super(product_template, self).button_generate_variants(cr, uid, ids, context=context)
         product_ids = self.get_products_from_product_template(cr, uid, ids, context=context)
+        # generate/update sale description
+        logger = netsvc.Logger()
+        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "Starting to generate/update product sale descriptions...")
         self.pool.get('product.product').build_product_sale_description(cr, uid, product_ids, context=context)
+        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "End of the generation/update of product sale descriptions.")
+        return True
 
-    def write(self, cr, uid, ids, vals, context=None):
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        if not context:
-            context={}
-        res = super(product_template, self).write(cr, uid, ids, vals.copy(), context=context)
-
-        ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
-        ids_multi_variants = list(set(ids).difference(set(ids_simple)))
-        
-        if not context.get('iamthechild', False) and ids_simple:
-            vals_to_write = get_vals_to_write(vals, duplicated_fields)
-
-            if vals_to_write:
-                obj_product = self.pool.get('product.product')
-                ctx = context.copy()
-                ctx['iamthechild'] = True
-                for product_tmpl in self.read(cr, uid, ids_simple, ['variant_ids'], context=context):
-                    if product_tmpl['variant_ids']:
-                        obj_product.write(cr, uid, [product_tmpl['variant_ids'][0]], vals_to_write, context=ctx)          
-
-        if ids_multi_variants and vals.get('name', False):
-            product_ids = self.get_products_from_product_template(cr, uid, ids_multi_variants, context=context)
-            self.pool.get('product.product').build_product_field(cr, uid, product_ids, 'name', context=context)
-
-        return res
-    
 product_template()
 
 class product_product(osv.osv):
@@ -77,8 +63,8 @@ class product_product(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         if isinstance(ids, (int, long)):
             ids = [ids]
-        if not context:
-            context={}
+        if context is None:
+            context = {}
         res = super(product_product, self).write(cr, uid, ids, vals.copy(), context=context)
 
         ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
@@ -107,16 +93,11 @@ class product_product(osv.osv):
             self.write(cr, uid, ids, vals_to_write, context=ctx)
         return ids
 
-    def _get_products_from_product(self, cr, uid, ids, context=None):
-        #for a strange reason calling super with self doesn't work. maybe an orm bug
-        return super(product_product, self.pool.get('product.product'))._get_products_from_product(cr, uid, ids, context=context)
-    
-    def _get_products_from_product_template(self, cr, uid, ids, context=None):
-        #for a strange reason calling super with self doesn't work. maybe an orm bug
-        return super(product_product, self.pool.get('product.product'))._get_products_from_product_template(cr, uid, ids, context=context)
-
     def build_product_sale_description(self, cr, uid, ids, context=None):
         return self.build_product_field(cr, uid, ids, 'description_sale', context=None)
+
+    def build_product_name(self, cr, uid, ids, context=None):
+        return self.build_product_field(cr, uid, ids, 'name', context=None)
 
     def build_product_field(self, cr, uid, ids, field, context=None):
         def get_description_sale(product):
@@ -136,19 +117,15 @@ class product_product(osv.osv):
         for code in lang_code:
             context['lang'] = code
             for product in self.browse(cr, uid, ids, context=context):
-                field_value = eval("get_" + field + "(product)")
-                self.write(cr, uid, product.id, {field:field_value}, context=context)
+                new_field_value = eval("get_" + field + "(product)") # TODO convert to safe_eval
+                cur_field_value = safe_eval("product." + field, {'product': product})
+                if new_field_value != cur_field_value:
+                    self.write(cr, uid, product.id, {field: new_field_value}, context=context)
         return True
 
-    def product_ids_variant_changed(self, cr, uid, ids, res, context=None):
-        super(product_product, self).product_ids_variant_changed(cr, uid, ids, res, context=context)
-        context['variants_values']=res
-        self.build_product_field(cr, uid, res.keys(), 'name', context=context)
-        return True
-    
     _columns = {
         'name': fields.char('Name', size=128, translate=True, select=True),
-        'description_sale': fields.text('Sale Description',translate=True),
+        'description_sale': fields.text('Sale Description', translate=True),
     }
 product_product()
 
