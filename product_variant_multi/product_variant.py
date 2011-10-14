@@ -118,6 +118,7 @@ class product_variant_dimension_value(osv.osv):
 product_variant_dimension_value()
 
 class product_variant_osv(osv.osv):
+    _register = False # Set to false if the model shouldn't be automatically discovered.
     _duplicated_fields = ['name']
 
     def get_vals_to_write(self, vals):
