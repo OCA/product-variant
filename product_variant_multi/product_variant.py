@@ -308,6 +308,11 @@ product_template()
 class product_product(product_variant_osv):
     _inherit = "product.product"
 
+    def init(self, cr):
+        #For the first installation if you already have product in your database the name of the existing product will be empty, so we fill it
+        cr.execute("update product_product set name=name_template where name is null;")
+        return True
+  
     def unlink(self, cr, uid, ids, context=None):
         if not context:
             context={}
