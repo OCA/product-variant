@@ -1,5 +1,7 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "access_product_variant_dimension_type_user","product.variant.dimension.type","model_product_variant_dimension_type","base.group_user",1,0,0,0
 "access_product_variant_dimension_value_user","product.variant.dimension.value","model_product_variant_dimension_value","base.group_user",1,0,0,0
+"access_product_variant_dimension_option_user","product.variant.dimension.option","model_product_variant_dimension_option","base.group_user",1,0,0,0
 "access_product_variant_dimension_type_manager","product.variant.dimension.type","model_product_variant_dimension_type","base.group_sale_manager",1,1,1,1
 "access_product_variant_dimension_value_manager","product.variant.dimension.value","model_product_variant_dimension_value","base.group_sale_manager",1,1,1,1
+"access_product_variant_dimension_option_manager","product.variant.dimension.option","model_product_variant_dimension_option","base.group_sale_manager",1,1,1,1
