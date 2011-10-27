@@ -213,7 +213,7 @@
         </record>
         
         <!-- TODO remove useless view of product.product in the module product or move this correct view in product, it's depend how the heritage on this view will be managed by the other module -->
-        
+
         <record id="product_search_form_view_variants" model="ir.ui.view">
             <field name="name">product.search.form.variants</field>
             <field name="model">product.product</field>
@@ -232,7 +232,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Product Variant">
-                    <field name="name" select="1"/>
+                    <field name="name" select="1" required="1"/>
                     <field name="product_tmpl_id" select="1"/>
                     <field name="variants" select="1"/>
                     <field name="default_code" select="1"/>
@@ -257,7 +257,7 @@
                 </form>
             </field>
         </record>
-        
+      
         <record id="product_variant_tree_view" model="ir.ui.view">
             <field name="name">product.variant.tree</field>
             <field name="model">product.product</field>
@@ -294,12 +294,17 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
-                <field name="standard_price" position="replace">
-                    <group name='cost_prices' colspan="2" col="4">
-                        <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}"/>
-                        <field name="cost_price_extra" groups="product.group_product_variant"/>
-                    </group>
-                </field>
+                <data>
+                    <field name="name" position="attributes">
+                        <attribute name="required">1</attribute>
+                    </field>
+                    <field name="standard_price" position="replace">
+                        <group name='cost_prices' colspan="2" col="4">
+                            <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}"/>
+                            <field name="cost_price_extra" groups="product.group_product_variant"/>
+                        </group>
+                    </field>
+                </data>
             </field>
         </record>   
     

@@ -369,7 +369,9 @@ class product_product(product_variant_osv):
 
     def create(self, cr, uid, vals, context=None):
         #TAKE CARE for inherits objects openerp will create firstly the product_template and after the product_product
-        # and so the duplicated fields will be on the product_template and not on the product_product
+        # and so the duplicated fields (duplicated field = field which are on the template and on the variant) will be on the product_template and not on the product_product
+        #Also when a product is created the duplicated field are empty for the product.product, this is why the field name can not be a required field
+        #This should be fix in the orm in the futur
         ids = super(product_product, self).create(cr, uid, vals.copy(), context=context) #using vals.copy() if not the vals will be changed by calling the super method
         ####### write the value in the product_product
         ctx = context.copy()
