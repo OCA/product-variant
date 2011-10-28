@@ -42,6 +42,7 @@
                     <field name="dimension_id" invisible="not context.get('dimension_value_main_view', False)" />
                     <field name="name" />
                     <field name="sequence" />
+                    <field name="code" />
                 </tree>
             </field>
         </record>
@@ -56,6 +57,7 @@
                     <newline />
                     <field name="sequence" />
                     <field name="name" select="1" />
+                    <field name="code" />
                 </form>
             </field>
         </record>

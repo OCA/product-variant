@@ -70,6 +70,7 @@ class product_variant_dimension_option(osv.osv):
 
     _columns = {
         'name' : fields.char('Dimension Value', size=64, required=True),
+        'code' : fields.char('Code', size=64),
         'sequence' : fields.integer('Sequence'),
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
     }
@@ -136,7 +137,7 @@ class product_template(product_variant_osv):
         'dimension_type_ids':fields.many2many('product.variant.dimension.type', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Dimension Types'),
         'value_ids': fields.one2many('product.variant.dimension.value', 'product_tmpl_id', 'Dimension Values'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
-        'variant_model_name':fields.char('Variant Model Name', size=64, required=True, help='[NAME] will be replaced by the name of the dimension and [VALUE] by is value. Example of Variant Model Name : "[NAME] - [VALUE]"'),
+        'variant_model_name':fields.char('Variant Model Name', size=64, required=True, help='[_o.dimension_id.name_] will be replaced by the name of the dimension and [_o.option_id.code_] by the code of the option. Example of Variant Model Name : "[_o.dimension_id.name_] - [_o.option_id.code_]"'),
         'variant_model_name_separator':fields.char('Variant Model Name Separator', size=64, help= 'Add a separator between the elements of the variant name'),
         'code_generator' : fields.char('Code Generator', size=64, help='enter the model for the product code, all parameter between [_o.my_field_] will be replace by the product field. Example product_code model : prefix_[_o.variants_]_suffixe ==> result : prefix_2S2T_suffix'),
         'is_multi_variants' : fields.boolean('Is Multi Variants?'),
@@ -146,7 +147,7 @@ class product_template(product_variant_osv):
     }
     
     _defaults = {
-        'variant_model_name': lambda *a: '[NAME] - [VALUE]',
+        'variant_model_name': lambda *a: '[_o.dimension_id.name_] - [_o.option_id.code_]',
         'variant_model_name_separator': lambda *a: ' - ',
         'is_multi_variants' : lambda *a: False,
                 }
@@ -429,7 +430,7 @@ class product_product(product_variant_osv):
         inherit this function to hack the code generation'''
         product = self.browse(cr, uid, product_id, context=context)
         model = product.variant_model_name
-        r = map(lambda dim: [dim.dimension_id.sequence, model.replace('[NAME]', (dim.dimension_id.name or '')).replace('[VALUE]', dim.option_id.name or '-')], product.dimension_value_ids)
+        r = map(lambda dim: [dim.dimension_id.sequence ,self.parse(cr, uid, dim, model, context=context)], product.dimension_value_ids)
         r.sort()
         r = [x[1] for x in r]
         new_variant_name = (product.variant_model_name_separator or '').join(r)
