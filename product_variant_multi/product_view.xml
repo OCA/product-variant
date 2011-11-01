@@ -306,6 +306,29 @@
                             <field name="cost_price_extra" groups="product.group_product_variant"/>
                         </group>
                     </field>
+                    <group col="2" colspan="2" groups="base.group_extended" position="replace">
+                         <group colspan="2" col="6" name="weight" groups="base.group_extended">
+                            <field name="is_multi_variants" invisible="1"/>
+                            <group colspan="2" col="2">
+                                <separator string="Template Weights" colspan="2"/>
+                                <field digits="(14, 3)" name="volume" attrs="{'readonly':[('type','=','service')]}"/>
+                                <field digits="(14, 3)" name="weight" attrs="{'readonly':[('type','=','service')]}"/>
+                                <field digits="(14, 3)" name="weight_net" attrs="{'readonly':[('type','=','service')]}"/>
+                            </group>
+                            <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
+                                <separator string="Variant Weights" colspan="2"/>
+                                <field digits="(14, 3)" name="additional_volume" attrs="{'readonly':[('type','=','service')]}"/>
+                                <field digits="(14, 3)" name="additional_weight" attrs="{'readonly':[('type','=','service')]}"/>
+                                <field digits="(14, 3)" name="additional_weight_net" attrs="{'readonly':[('type','=','service')]}"/>
+                            </group>
+                            <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
+                                <separator string="Total Weights" colspan="2"/>
+                                <field digits="(14, 3)" name="total_volume"/>
+                                <field digits="(14, 3)" name="total_weight"/>
+                                <field digits="(14, 3)" name="total_weight_net"/>
+                            </group>
+                        </group>
+                    </group>
                 </data>
             </field>
         </record>   

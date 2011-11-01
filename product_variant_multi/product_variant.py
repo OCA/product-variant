@@ -513,11 +513,30 @@ class product_product(product_variant_osv):
         default.update({'variant_ids':False,})
         return super(product_product, self).copy(cr, uid, id, default, context)
 
+    def _product_compute_weight_volume(self, cr, uid, ids, fields, arg, context=None):
+        result = {}
+        print 'compute', ids, fields, context
+        for product in self.browse(cr, uid, ids, context=context):
+            result[product.id]={}
+            result[product.id]['weight'] =  product.weight + product.additional_weight
+            result[product.id]['weight_net'] =  product.weight_net + product.additional_weight_net
+            result[product.id]['volume'] = product.volume + product.additional_volume
+        return result
+
     _columns = {
         'name': fields.char('Name', size=128, translate=True, select=True),
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
         'cost_price_extra' : fields.float('Purchase Extra Cost', digits_compute=dp.get_precision('Purchase Price')),
         'lst_price' : fields.function(_product_lst_price, method=True, type='float', string='List Price', digits_compute=dp.get_precision('Sale Price')),
+        #the way the weight are implemented are not clean at all, we should redesign the module product form the addons in order to get something correclty.
+        #indeed some field of the template have to be overwrited like weight, name, weight_net, volume.
+        #in order to have a consitent api we should use the same field for getting the weight, now we have to use "weight" or "total_weight" not clean at all with external syncronization
+        'total_weight': fields.function(_product_compute_weight_volume, method=True, type='float', string='Gross weight', help="The gross weight in Kg.", multi='weight_volume'),
+        'total_weight_net': fields.function(_product_compute_weight_volume, method=True, type='float', string='Net weight', help="The net weight in Kg.", multi='weight_volume'),
+        'total_volume':  fields.function(_product_compute_weight_volume, method=True, type='float', string='Volume', help="The volume in m3.", multi='weight_volume'),
+        'additional_weight': fields.float('Additional Gross weight', help="The additional gross weight in Kg."),
+        'additional_weight_net': fields.float('Additional Net weight', help="The additional net weight in Kg."),
+        'additional_volume': fields.float('Additional Gross weight', help="The additional volume in Kg."),
     }
     _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]
 
