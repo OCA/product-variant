@@ -536,7 +536,7 @@ class product_product(product_variant_osv):
         'total_volume':  fields.function(_product_compute_weight_volume, method=True, type='float', string='Volume', help="The volume in m3.", multi='weight_volume'),
         'additional_weight': fields.float('Additional Gross weight', help="The additional gross weight in Kg."),
         'additional_weight_net': fields.float('Additional Net weight', help="The additional net weight in Kg."),
-        'additional_volume': fields.float('Additional Gross weight', help="The additional volume in Kg."),
+        'additional_volume': fields.float('Additional Volume', help="The additional volume in Kg."),
     }
     _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]
 
