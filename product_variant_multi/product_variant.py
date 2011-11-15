@@ -515,12 +515,11 @@ class product_product(product_variant_osv):
 
     def _product_compute_weight_volume(self, cr, uid, ids, fields, arg, context=None):
         result = {}
-        print 'compute', ids, fields, context
         for product in self.browse(cr, uid, ids, context=context):
             result[product.id]={}
-            result[product.id]['weight'] =  product.weight + product.additional_weight
-            result[product.id]['weight_net'] =  product.weight_net + product.additional_weight_net
-            result[product.id]['volume'] = product.volume + product.additional_volume
+            result[product.id]['total_weight'] =  product.weight + product.additional_weight
+            result[product.id]['total_weight_net'] =  product.weight_net + product.additional_weight_net
+            result[product.id]['total_volume'] = product.volume + product.additional_volume
         return result
 
     _columns = {
