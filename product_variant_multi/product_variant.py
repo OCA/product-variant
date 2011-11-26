@@ -139,7 +139,7 @@ class product_template(product_variant_osv):
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
         'variant_model_name':fields.char('Variant Model Name', size=64, required=True, help='[_o.dimension_id.name_] will be replaced by the name of the dimension and [_o.option_id.code_] by the code of the option. Example of Variant Model Name : "[_o.dimension_id.name_] - [_o.option_id.code_]"'),
         'variant_model_name_separator':fields.char('Variant Model Name Separator', size=64, help= 'Add a separator between the elements of the variant name'),
-        'code_generator' : fields.char('Code Generator', size=64, help='enter the model for the product code, all parameter between [_o.my_field_] will be replace by the product field. Example product_code model : prefix_[_o.variants_]_suffixe ==> result : prefix_2S2T_suffix'),
+        'code_generator' : fields.char('Code Generator', size=256, help='enter the model for the product code, all parameter between [_o.my_field_] will be replace by the product field. Example product_code model : prefix_[_o.variants_]_suffixe ==> result : prefix_2S2T_suffix'),
         'is_multi_variants' : fields.boolean('Is Multi Variants?'),
         'variant_track_production' : fields.boolean('Track Production Lots on variants ?'),
         'variant_track_incoming' : fields.boolean('Track Incoming Lots on variants ?'),
@@ -150,6 +150,7 @@ class product_template(product_variant_osv):
         'variant_model_name': lambda *a: '[_o.dimension_id.name_] - [_o.option_id.code_]',
         'variant_model_name_separator': lambda *a: ' - ',
         'is_multi_variants' : lambda *a: False,
+        'code_generator' : "[_'-'.join([x.option_id.code for x in o.dimension_value_ids] or ['CONF'])_]",
                 }
 
     def unlink(self, cr, uid, ids, context=None):
