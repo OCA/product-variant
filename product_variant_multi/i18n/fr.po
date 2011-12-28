@@ -14,11 +14,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-12-14 05:02+0000\n"
-"X-Generator: Launchpad (build 14487)\n"
+"X-Launchpad-Export-Date: 2011-12-28 05:37+0000\n"
+"X-Generator: Launchpad (build 14560)\n"
 
 #. module: product_variant_multi
-#: view:product.variant.dimension.type:0
 #: field:product.variant.dimension.value,price_extra:0
 msgid "Sale Price Extra"
 msgstr ""
@@ -36,7 +35,6 @@ msgstr "Generer ->"
 
 #. module: product_variant_multi
 #: field:product.product,cost_price_extra:0
-#: field:product.variant.dimension.value,cost_price_extra:0
 msgid "Purchase Extra Cost"
 msgstr ""
 
@@ -80,13 +78,14 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: product_variant_multi
+#: view:product.product:0
 #: field:product.product,dimension_value_ids:0
 msgid "Dimensions"
 msgstr ""
 
 #. module: product_variant_multi
-#: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension_types
 #: field:product.template,dimension_type_ids:0
+#: view:product.variant.dimension.type:0
 msgid "Dimension Types"
 msgstr ""
 
@@ -96,7 +95,6 @@ msgid "Template Sale Price"
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.product:0
 #: field:product.variant.dimension.type,description:0
 msgid "Description"
 msgstr ""
@@ -113,7 +111,6 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.variant.dimension.type:0
 #: field:product.variant.dimension.value,price_margin:0
 msgid "Sale Price Margin"
 msgstr ""
@@ -148,14 +145,14 @@ msgid "Product Variants"
 msgstr "Variante de produit"
 
 #. module: product_variant_multi
-#: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension_values
 #: view:product.template:0
-#: field:product.variant.dimension.type,value_ids:0
+#: field:product.template,value_ids:0
 msgid "Dimension Values"
 msgstr "Valeurs de la dimension"
 
 #. module: product_variant_multi
-#: view:product.template:0
+#: model:ir.actions.act_window,name:product_variant_multi.action_dimension_type
+#: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension_types
 msgid "Dimension types"
 msgstr "Types de la dimension"
 
@@ -188,11 +185,12 @@ msgstr ""
 
 #. module: product_variant_multi
 #: model:ir.model,name:product_variant_multi.model_product_variant_dimension_value
-#: field:product.variant.dimension.value,name:0
+#: field:product.variant.dimension.option,name:0
 msgid "Dimension Value"
 msgstr ""
 
 #. module: product_variant_multi
+#: model:ir.model,name:product_variant_multi.model_product_template
 #: field:product.variant.dimension.type,product_tmpl_id:0
 #: field:product.variant.dimension.value,product_tmpl_id:0
 msgid "Product Template"
@@ -214,7 +212,6 @@ msgid "Products with multi-level variants"
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.product:0
 #: field:product.variant.dimension.type,name:0
 msgid "Dimension"
 msgstr ""
@@ -237,6 +234,7 @@ msgid "Variant Dimensions"
 msgstr ""
 
 #. module: product_variant_multi
+#: field:product.variant.dimension.option,sequence:0
 #: field:product.variant.dimension.type,sequence:0
 #: field:product.variant.dimension.value,sequence:0
 msgid "Sequence"
@@ -282,6 +280,7 @@ msgstr ""
 
 #. module: product_variant_multi
 #: model:ir.model,name:product_variant_multi.model_product_variant_dimension_type
+#: field:product.variant.dimension.option,dimension_id:0
 #: field:product.variant.dimension.value,dimension_id:0
 msgid "Dimension Type"
 msgstr ""
