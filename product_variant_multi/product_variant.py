@@ -6,7 +6,7 @@
 #    Copyright (C) 2010-2011 Akretion (www.akretion.com). All Rights Reserved
 #    @author Sebatien Beau <sebastien.beau@akretion.com>
 #    @author Alexis de Lattre <alexis.delattre@akretion.com>
-#       update to use a single "Generate/Update" button & price computation code
+#    update to use a single "Generate/Update" button & price computation code
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -147,10 +147,10 @@ class product_template(product_variant_osv):
     }
     
     _defaults = {
-        'variant_model_name': lambda *a: '[_o.dimension_id.name_] - [_o.option_id.code_]',
+        'variant_model_name': lambda *a: '[_o.dimension_id.name_] - [_o.option_id.name_]',
         'variant_model_name_separator': lambda *a: ' - ',
         'is_multi_variants' : lambda *a: False,
-        'code_generator' : "[_'-'.join([x.option_id.code for x in o.dimension_value_ids] or ['CONF'])_]",
+        'code_generator' : "[_'-'.join([x.option_id.name for x in o.dimension_value_ids] or ['CONF'])_]",
                 }
 
     def unlink(self, cr, uid, ids, context=None):
