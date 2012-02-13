@@ -237,8 +237,7 @@ class product_template(product_variant_osv):
 
     def button_generate_variants(self, cr, uid, ids, context=None):
         logger = netsvc.Logger()
-        variants_obj = self.pool.get('product.product')
-        temp_val_list=[]
+        variants_obj = self.pool.get('product.product')       
 
         for product_temp in self.browse(cr, uid, ids, context):
             #for temp_type in product_temp.dimension_type_ids:
@@ -248,6 +247,7 @@ class product_template(product_variant_osv):
             #    if not temp_val_list[-1]:
             #        temp_val_list.pop()
             res = {}
+            temp_val_list=[]
             for value in product_temp.value_ids:
                 if res.get(value.dimension_id, False):
                     res[value.dimension_id] += [value.id]
@@ -279,7 +279,7 @@ class product_template(product_variant_osv):
                     vals['product_tmpl_id'] = product_temp.id
                     vals['dimension_value_ids'] = [(6,0,variant)]
     
-                    var_id=variants_obj.create(cr, uid, vals, {'generate_from_template' : True})
+                    var_id = variants_obj.create(cr, uid, vals, {'generate_from_template' : True})
                                         
                     if count%50 == 0:
                         cr.commit()

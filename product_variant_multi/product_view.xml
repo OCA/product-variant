@@ -26,11 +26,11 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem action="product_template" id="menu_template" parent="base.menu_product" />
+        <menuitem action="product_template" id="menu_template" parent="stock.menu_product_in_config_stock" />
 
-        <menuitem action="product_variant" id="menu_variant" parent="base.menu_product" />
+        <menuitem action="product_variant" id="menu_variant" parent="stock.menu_product_in_config_stock" />
 
-		<menuitem name="Variant dimensions" id="menu_variant_dimension" parent="product.prod_config_main" />
+        <menuitem name="Variant dimensions" id="menu_variant_dimension" parent="stock.menuitemnu_product_in_config_stock" />
 
         <!-- Views from Dimension option -->
         <record id="product_variant_multi_dimension_option_tree" model="ir.ui.view">
