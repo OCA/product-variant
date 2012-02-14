@@ -5,6 +5,7 @@
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Copyright (C) 2010-2011 Akretion (www.akretion.com). All Rights Reserved
 #    @author Sebatien Beau <sebastien.beau@akretion.com>
+#    @author Raphaël Valyi <raphael.valyi@akretion.com>
 #    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #    update to use a single "Generate/Update" button & price computation code
 #
@@ -49,7 +50,7 @@ class product_variant_dimension_type(osv.osv):
 
     _defaults = {
         'mandatory_dimension': lambda *a: 1,
-        }
+    }
     
     _order = "sequence, name"
 
@@ -60,6 +61,7 @@ class product_variant_dimension_type(osv.osv):
             return super(product_variant_dimension_type, self).name_search(cr, user, '', None, 'ilike', None, None)
 
 product_variant_dimension_type()
+
 
 class product_variant_dimension_option(osv.osv):
     _name = "product.variant.dimension.option"
@@ -112,28 +114,18 @@ class product_variant_dimension_value(osv.osv):
 
     _defaults = {
         'active': lambda *a: 1,
-        }
+    }
 
     _order = "dimension_sequence, sequence, option_id"
     
 product_variant_dimension_value()
 
-class product_variant_osv(osv.osv):
-    _register = False # Set to false if the model shouldn't be automatically discovered.
-    _duplicated_fields = ['name']
 
-    def get_vals_to_write(self, vals):
-        vals_to_write = {}
-        for field in self._duplicated_fields:
-            if field in vals.keys():
-                vals_to_write[field] = vals[field]
-        return vals_to_write
-
-
-class product_template(product_variant_osv):
+class product_template(osv.osv):
     _inherit = "product.template"
 
     _columns = {
+        'name': fields.char('Name', size=128, translate=True, select=True),
         'dimension_type_ids':fields.many2many('product.variant.dimension.type', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Dimension Types'),
         'value_ids': fields.one2many('product.variant.dimension.value', 'product_tmpl_id', 'Dimension Values'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
@@ -159,37 +151,6 @@ class product_template(product_variant_osv):
                 if not template.is_multi_variants:
                     super(product_template, self).unlink(cr, uid, [template.id], context)
         return True
-
-    def write(self, cr, uid, ids, vals, context=None):
-        # When your write the name on a simple product from the menu product template you have to update the name on the product product
-        # Two solution was posible overwritting the write function or overwritting the read function
-        # I choose to overwrite the write function because read is call more often than the write function
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        if context is None:
-            context = {}
-
-        res = super(product_template, self).write(cr, uid, ids, vals.copy(), context=context)
-
-        if not context.get('iamthechild', False):
-            obj_product = self.pool.get('product.product')
-            if vals.get('is_multi_variants', 'wrong') != 'wrong':
-                if vals['is_multi_variants']:
-                    prod_tmpl_ids_simple = False
-                else:
-                    prod_tmpl_ids_simple = ids
-            else:            
-                prod_tmpl_ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
-            
-            if prod_tmpl_ids_simple:
-                #NB in the case that the user have just unchecked the option 'is_multi_variants' without changing any field the vals_to_write is empty
-                vals_to_write = obj_product.get_vals_to_write(vals)
-                if vals_to_write:
-                    ctx = context.copy()
-                    ctx['iamthechild'] = True
-                    product_ids = obj_product.search(cr, uid, [['product_tmpl_id', 'in', prod_tmpl_ids_simple]])
-                    obj_product.write(cr, uid, product_ids, vals_to_write, context=ctx)
-        return res
 
     def add_all_option(self, cr, uid, ids, context=None):
         #Reactive all unactive values
@@ -307,7 +268,7 @@ class product_template(product_variant_osv):
 product_template()
 
 
-class product_product(product_variant_osv):
+class product_product(osv.osv):
     _inherit = "product.product"
 
     def init(self, cr):
@@ -348,43 +309,6 @@ class product_product(product_variant_osv):
                     self.write(cr, uid, product.id, {field: new_field_value}, context=context)
         return True
 
-
-    def write(self, cr, uid, ids, vals, context=None):
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        if context is None:
-            context = {}
-        res = super(product_product, self).write(cr, uid, ids, vals.copy(), context=context)
-
-        ids_simple = self.search(cr, uid, [['id', 'in', ids], ['is_multi_variants', '=', False]], context=context)
-
-        if not context.get('iamthechild', False) and ids_simple:
-            vals_to_write = self.get_vals_to_write(vals)
-
-            if vals_to_write:
-                obj_tmpl = self.pool.get('product.template')
-                ctx = context.copy()
-                ctx['iamthechild'] = True
-                tmpl_ids = obj_tmpl.search(cr, uid, [['variant_ids', 'in', ids_simple]])
-                obj_tmpl.write(cr, uid, tmpl_ids, vals_to_write, context=ctx)
-        return res
-
-    def create(self, cr, uid, vals, context=None):
-        #TAKE CARE for inherits objects openerp will create firstly the product_template and after the product_product
-        # and so the duplicated fields (duplicated field = field which are on the template and on the variant) will be on the product_template and not on the product_product
-        #Also when a product is created the duplicated field are empty for the product.product, this is why the field name can not be a required field
-        #This should be fix in the orm in the futur
-        ids = super(product_product, self).create(cr, uid, vals.copy(), context=context) #using vals.copy() if not the vals will be changed by calling the super method
-        ####### write the value in the product_product
-        ctx = context.copy()
-        ctx['iamthechild'] = True
-        vals_to_write = self.get_vals_to_write(vals)
-        if vals_to_write:
-            self.write(cr, uid, ids, vals_to_write, context=ctx)
-        return ids
-
-
-
     def parse(self, cr, uid, o, text, context=None):
         if not text:
             return ''
@@ -397,7 +321,6 @@ class product_product(product_variant_osv):
             else:
                 description += val
         return description
-
 
     def generate_product_code(self, cr, uid, product_obj, code_generator, context=None):
         '''I wrote this stupid function to be able to inherit it in a custom module !'''
@@ -436,7 +359,6 @@ class product_product(product_variant_osv):
         r = [x[1] for x in r]
         new_variant_name = (product.variant_model_name_separator or '').join(r)
         return new_variant_name
-
 
     def build_variants_name(self, cr, uid, ids, context=None):
         for product in self.browse(cr, uid, ids, context=context):
@@ -477,7 +399,6 @@ class product_product(product_variant_osv):
                 uom.id, dimension_extra, context['uom'])
         return dimension_extra
 
-
     def compute_dimension_extra_price(self, cr, uid, ids, result, product_price_extra=False, dim_price_margin=False, dim_price_extra=False, context=None):
         if context is None:
             context = {}
@@ -485,8 +406,6 @@ class product_product(product_variant_osv):
             dimension_extra = self.compute_product_dimension_extra_price(cr, uid, product.id, product_price_extra=product_price_extra, dim_price_margin=dim_price_margin, dim_price_extra=dim_price_extra, context=context)
             result[product.id] += dimension_extra
         return result
-
-
 
     def price_get(self, cr, uid, ids, ptype='list_price', context=None):
         if context is None:
@@ -505,7 +424,6 @@ class product_product(product_variant_osv):
         result = super(product_product, self)._product_lst_price(cr, uid, ids, name, arg, context=context)
         result = self.compute_dimension_extra_price(cr, uid, ids, result, product_price_extra='price_extra', dim_price_margin='price_margin', dim_price_extra='price_extra', context=context)
         return result
-
 
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
