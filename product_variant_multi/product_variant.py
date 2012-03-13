@@ -98,13 +98,14 @@ class product_variant_dimension_value(osv.osv):
 
     _columns = {
         'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
+        'name': fields.related('option_id', 'name', type='char', relation='product.variant.dimension.option', string="Dimension value", readonly=True),
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
         'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
         'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
         'dimension_id' : fields.related('option_id', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", store=True),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
-        'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
+        'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer', relation='product.variant.dimension.type', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
              store={
                 'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
             }),
