@@ -67,7 +67,7 @@ class product_variant_dimension_option(osv.osv):
     _name = "product.variant.dimension.option"
     _description = "Dimension Option"
 
-    def _get_dimension_values(self, cr, uid, ids, context={}):
+    def _get_dimension_values(self, cr, uid, ids, context=None):
         return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     _columns = {
@@ -90,10 +90,10 @@ class product_variant_dimension_value(osv.osv):
         for value in self.browse(cr, uid, ids, context=context):
             if value.product_ids:
                 product_list = '\n    - ' + '\n    - '.join([product.name for product in value.product_ids])
-                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is use in the product : %s \n Please remove this products before removing the value"%(value.option_id.name, product_list)))
+                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value."%(value.option_id.name, product_list)))
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
-    def _get_dimension_values(self, cr, uid, ids, context={}):
+    def _get_dimension_values(self, cr, uid, ids, context=None):
         return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     _columns = {
@@ -158,16 +158,16 @@ class product_template(osv.osv):
         for template in self.browse(cr, uid, ids, context=context):
             values_ids = value_obj.search(cr, uid, [['product_tmpl_id','=', template.id], '|', ['active', '=', False], ['active', '=', True]], context=context)
             value_obj.write(cr, uid, values_ids, {'active':True}, context=context)
-            existing_option_ids = [value.option_id.id for value in value_obj.browse(cr, uid, values_ids,context=context)]
+            existing_option_ids = [value.option_id.id for value in value_obj.browse(cr, uid, values_ids, context=context)]
             vals = {'value_ids' : []}
             for dim in template.dimension_type_ids:
                 for option in dim.option_ids:
                     if not option.id in existing_option_ids:
                         vals['value_ids'] += [[0, 0, {'option_id': option.id}]]
-            self.write(cr, uid, template.id, vals, context=context)    
+            self.write(cr, uid, template.id, vals, context=context)
         return True
 
-    def get_products_from_product_template(self, cr, uid, ids, context={}):
+    def get_products_from_product_template(self, cr, uid, ids, context=None):
         product_tmpl = self.read(cr, uid, ids, ['variant_ids'], context=context)
         return [id for vals in product_tmpl for id in vals['variant_ids']]
     
