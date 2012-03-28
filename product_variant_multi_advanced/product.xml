@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  model module for OpenERP
-  Copyright (C) 2010 Sébastien BEAU <sebastien.beau@akretion.comr>
-  The licence is in the file __terp__.py
+  Product variant multi advanced module for OpenERP
+  Copyright (C) 2010-2012 Akretion (http://www.akretion.com/)
+  The licence is in the file __openerp__.py
 -->
 
 <openerp>
@@ -15,7 +16,7 @@
             <field name="arch" type="xml">
                 <data>
                     <page string="Lots" position="after">
-                        <page string="Descriptions"> 
+                        <page string="Descriptions">
                             <separator string="Sale description" colspan="4"/>
                             <field name="description_sale" nolabel="1" attrs="{'readonly':[('is_multi_variants','=',True)]}"/>
                         </page>
@@ -38,13 +39,16 @@
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
                 <data>
-                    <field name="name" position="replace">
-                        <field name="name" select="1" attrs="{'required':[('is_multi_variants','=',False)], 'readonly':[('is_multi_variants','=',True)]}"/>
+                    <field name="name" position="attributes">
+                        <attribute name="attrs">{'required':[('is_multi_variants','=',False)], 'readonly':[('is_multi_variants','=',True)]}</attribute>
+                    </field>
+
+                    <field name="name" position="after">
                         <field name="is_multi_variants" invisible="True"/>
                     </field>
 
-                    <field name="description_sale" position="replace">
-                        <field name="description_sale" nolabel="1" colspan="4" attrs="{'readonly':[('is_multi_variants','=',True)]}"/>
+                    <field name="description_sale" position="attributes">
+                        <attribute name="attrs">{'readonly':[('is_multi_variants','=',True)]}</attribute>
                     </field>
                 </data>
             </field>

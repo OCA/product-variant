@@ -1,8 +1,10 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Asterisk Click2Dial module for OpenERP
-#    Copyright (C) 2010 Alexis de Lattre <alexis@via.ecp.fr>
+#    Product Variant Multi Advanced module for OpenERP
+#    Copyright (C) 2010-2012 Akretion (http://www.akretion.com)
+#    @author Sébastien BEAU <sebastien.beau@akretion.com>
+#    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as

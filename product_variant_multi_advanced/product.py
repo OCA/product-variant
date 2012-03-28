@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    "Product variant multi advanced" module for OpenERP
-#    Copyright (C) 2010 Sébastien BEAU <sebastien.beau@akretion.com>
+#    Copyright (C) 2010-2012 Akretion (http://www.akretion.com)
+#    @author Sébastien BEAU <sebastien.beau@akretion.com>
 #    @author Alexis de Lattre <alexis.delattre@akretion.com> (convert to
 #       single "Generate/Update" button)
 #
@@ -23,11 +24,13 @@
 
 from osv import osv, fields
 # Lib required to print logs
-import netsvc
+import logging
 # Lib to translate error messages
 from tools.translate import _
 # Lib to eval python code with security
 from tools.safe_eval import safe_eval
+
+_logger = logging.getLogger(__name__)
 
 def get_vals_to_write(vals, fields):
     vals_to_write = {}
@@ -49,10 +52,9 @@ class product_template(osv.osv):
         super(product_template, self).button_generate_variants(cr, uid, ids, context=context)
         product_ids = self.get_products_from_product_template(cr, uid, ids, context=context)
         # generate/update sale description
-        logger = netsvc.Logger()
-        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "Starting to generate/update product sale descriptions...")
+        _logger.info("Starting to generate/update product sale descriptions...")
         self.pool.get('product.product').build_product_sale_description(cr, uid, product_ids, context=context)
-        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "End of the generation/update of product sale descriptions.")
+        _logger.info("End of the generation/update of product sale descriptions.")
         return True
 
 product_template()
@@ -109,9 +111,9 @@ class product_product(osv.osv):
             return (product.product_tmpl_id.name or '' )+ ' ' + (product.variants or '')
 
         if not context:
-            context={}
-        context['is_multi_variants']=True
-        obj_lang=self.pool.get('res.lang')
+            context = {}
+        context['is_multi_variants'] = True
+        obj_lang = self.pool.get('res.lang')
         lang_ids = obj_lang.search(cr, uid, [('translatable','=',True)], context=context)
         lang_code = [x['code'] for x in obj_lang.read(cr, uid, lang_ids, ['code'], context=context)]
         for code in lang_code:
@@ -124,9 +126,9 @@ class product_product(osv.osv):
         return True
 
     _columns = {
-        'name': fields.char('Name', size=128, translate=True, select=True),
+        'name': fields.char('Name', size=128, translate=True),
         'description_sale': fields.text('Sale Description', translate=True),
     }
-product_product()
 
+product_product()
 
