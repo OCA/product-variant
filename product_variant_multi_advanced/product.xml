@@ -43,10 +43,6 @@
                         <attribute name="attrs">{'required':[('is_multi_variants','=',False)], 'readonly':[('is_multi_variants','=',True)]}</attribute>
                     </field>
 
-                    <field name="name" position="after">
-                        <field name="is_multi_variants" invisible="True"/>
-                    </field>
-
                     <field name="description_sale" position="attributes">
                         <attribute name="attrs">{'readonly':[('is_multi_variants','=',True)]}</attribute>
                     </field>
