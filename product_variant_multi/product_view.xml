@@ -148,7 +148,13 @@
 					<field name="sequence" />
 					<field name="allow_custom_value" select="2" />
 					<field name="mandatory_dimension" select="2" />
-					<field name="option_ids" nolabel="1" colspan="4" />
+					<field name="option_ids" nolabel="1" colspan="4" >
+                        <tree editable="bottom">
+                            <field name="name" />
+                            <field name="code" />
+                            <field name="sequence" invisible="1"/>
+                        </tree>
+                    </field>
 				</form>
 			</field>
 		</record>
