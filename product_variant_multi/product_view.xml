@@ -132,7 +132,6 @@
 				<tree string="Dimension Types">
 					<field name="name" />
                     <field name="description" />
-					<field name="option_ids" />
 				</tree>
 			</field>
 		</record>
@@ -180,6 +179,17 @@
                                     <!--TODO add a wizard to add the option-->
                                     <!--<button name="add_some_option" string="Add " type="object" colspan="2"/>-->
 
+        <record id="product_search_form_view_template" model="ir.ui.view">
+            <field name="name">product.search.form.template</field>
+            <field name="model">product.template</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Product Template">
+                   <field name="name"/>
+                </search>
+            </field>
+        </record>
+
 
         <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
             <field name="name">product.variant.multi.product.template.form</field>
@@ -206,6 +216,8 @@
 							        <field name="variant_track_production" colspan="4"/>
 							        <field name="variant_track_incoming" colspan="4"/>
 							        <field name="variant_track_outgoing" colspan="4"/>
+                                    <field name="do_not_generate_new_variant" colspan="4"/>
+                                    <field name="do_not_update_variant" colspan="4"/>
 							        <button name="button_generate_variants" string="Generate / Update variants ->" type="object" colspan="4"/>
                                 </group>
                                 <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">

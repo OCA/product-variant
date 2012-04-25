@@ -137,6 +137,8 @@ class product_template(osv.osv):
         'variant_track_production' : fields.boolean('Track Production Lots on variants ?'),
         'variant_track_incoming' : fields.boolean('Track Incoming Lots on variants ?'),
         'variant_track_outgoing' : fields.boolean('Track Outgoing Lots on variants ?'),
+        'do_not_update_variant' : fields.boolean("Don't Update Variant"),
+        'do_not_generate_new_variant' : fields.boolean("Don't Generate New Variant"),
     }
     
     _defaults = {
@@ -218,9 +220,10 @@ class product_template(osv.osv):
             for dim in res:
                 temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
 
-            if temp_val_list:
+            existing_product_ids = variants_obj.search(cr, uid, [('product_tmpl_id', '=', product_temp.id)])
+            created_product_ids = []
+            if temp_val_list and not product_temp.do_not_generate_new_variant:
                 list_of_variants = self._create_variant_list(cr, uid, ids, temp_val_list, context)
-                existing_product_ids = variants_obj.search(cr, uid, [('product_tmpl_id', '=', product_temp.id)])
                 existing_product_dim_value = variants_obj.read(cr, uid, existing_product_ids, ['dimension_value_ids'])
                 list_of_variants_existing = [x['dimension_value_ids'] for x in existing_product_dim_value]
                 for x in list_of_variants_existing:
@@ -241,29 +244,30 @@ class product_template(osv.osv):
                     vals['product_tmpl_id'] = product_temp.id
                     vals['dimension_value_ids'] = [(6,0,variant)]
     
-                    var_id = variants_obj.create(cr, uid, vals, {'generate_from_template' : True})
+                    created_product_ids.append(variants_obj.create(cr, uid, vals, {'generate_from_template' : True}))
                                         
                     if count%50 == 0:
                         cr.commit()
                         logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "product created : %s" % (count,))
                 logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "product created : %s" % (count,))
 
-        product_ids = self.get_products_from_product_template(cr, uid, ids, context=context)
-        # FIRST, Generate/Update variant names ('variants' field)
-        logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update variant names...")
-        self.pool.get('product.product').build_variants_name(cr, uid, product_ids, context=context)
-        logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of variant names.")
-        # SECOND, Generate/Update product codes and properties (we may need variants name for that)
-        logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update product codes and properties...")
-        self.pool.get('product.product').build_product_code_and_properties(cr, uid, product_ids, context=context)
-        logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of product codes and properties.")
+            if not product_temp.do_not_update_variant:
+                product_ids = existing_product_ids + created_product_ids
+            else:
+                product_ids = created_product_ids
 
-        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "Starting to generate/update product names...")
-        context['variants_values'] = {}
-        for product in self.pool.get('product.product').read(cr, uid, product_ids, ['variants'], context=context):
-            context['variants_values'][product['id']] = product['variants']
-        self.pool.get('product.product').build_product_name(cr, uid, product_ids, context=context)
-        logger.notifyChannel('product_variant_multi_advanced', netsvc.LOG_INFO, "End of generation/update of product names.")
+            # FIRST, Generate/Update variant names ('variants' field)
+            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update variant names...")
+            self.pool.get('product.product').build_variants_name(cr, uid, product_ids, context=context)
+            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of variant names.")
+            # SECOND, Generate/Update product codes and properties (we may need variants name for that)
+            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update product codes and properties...")
+            self.pool.get('product.product').build_product_code_and_properties(cr, uid, product_ids, context=context)
+            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of product codes and properties.")
+            # THIRD, Generate/Update product names (we may need variants name for that)
+            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update product names...")
+            self.pool.get('product.product').build_product_name(cr, uid, product_ids, context=context)
+            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of generation/update of product names.")
         return True
         
 product_template()
@@ -291,8 +295,6 @@ class product_product(osv.osv):
             return self.parse(cr, uid, product, product.product_tmpl_id.description_sale, context=context)
 
         def get_name(product):
-            if context.get('variants_values', False):
-                return (product.product_tmpl_id.name or '' )+ ' ' + (context['variants_values'][product.id] or '')
             return (product.product_tmpl_id.name or '' )+ ' ' + (product.variants or '')
 
         if not context:
