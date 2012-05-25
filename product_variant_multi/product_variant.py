@@ -245,11 +245,17 @@ class product_template(osv.osv):
                     vals['product_tmpl_id'] = product_temp.id
                     vals['dimension_value_ids'] = [(6,0,variant)]
 
-                    created_product_ids.append(variants_obj.create(cr, uid, vals, {'generate_from_template' : True}))
+                    cr.execute("SAVEPOINT pre_variant_save")
+                    try:
+                        created_product_ids.append(variants_obj.create(cr, uid, vals, {'generate_from_template' : True}))
+                        if count%50 == 0:
+                            _logger.debug("product created : %s", count)
+                    except Exception, e:
+                        _logger.error("Error creating product variant: %s", e, exc_info=True)
+                        _logger.debug("Values used to attempt creation of product variant: %s", vals)
+                        cr.execute("ROLLBACK TO SAVEPOINT pre_variant_save")
+                    cr.execute("RELEASE SAVEPOINT pre_variant_save")
 
-                    if count%50 == 0:
-                        cr.commit()
-                        _logger.debug("product created : %s", count)
                 _logger.debug("product created : %s", count)
 
             if not product_temp.do_not_update_variant:
