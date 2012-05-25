@@ -26,10 +26,12 @@
 
 from osv import fields, osv
 import decimal_precision as dp
-import netsvc
 # Lib to eval python code with security
 from tools.safe_eval import safe_eval
 from tools.translate import _
+
+import logging
+_logger = logging.getLogger(__name__)
 
 #
 # Dimensions Definition
@@ -51,7 +53,7 @@ class product_variant_dimension_type(osv.osv):
     _defaults = {
         'mandatory_dimension': lambda *a: 1,
     }
-    
+
     _order = "sequence, name"
 
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=None):
@@ -118,7 +120,7 @@ class product_variant_dimension_value(osv.osv):
     }
 
     _order = "dimension_sequence, sequence, option_id"
-    
+
 product_variant_dimension_value()
 
 
@@ -140,7 +142,7 @@ class product_template(osv.osv):
         'do_not_update_variant' : fields.boolean("Don't Update Variant"),
         'do_not_generate_new_variant' : fields.boolean("Don't Generate New Variant"),
     }
-    
+
     _defaults = {
         'variant_model_name': lambda *a: '[_o.dimension_id.name_] - [_o.option_id.name_]',
         'variant_model_name_separator': lambda *a: ' - ',
@@ -173,7 +175,7 @@ class product_template(osv.osv):
     def get_products_from_product_template(self, cr, uid, ids, context=None):
         product_tmpl = self.read(cr, uid, ids, ['variant_ids'], context=context)
         return [id for vals in product_tmpl for id in vals['variant_ids']]
-    
+
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
@@ -192,16 +194,15 @@ class product_template(osv.osv):
         return super(product_template, self).copy_translations(cr, uid, old_id, new_id, context=context)
 
     def _create_variant_list(self, cr, ids, uid, vals, context=None):
-        
+
         def cartesian_product(args):
             if len(args) == 1: return [x and [x] or [] for x in args[0]]
             return [(i and [i] or []) + j for j in cartesian_product(args[1:]) for i in args[0]]
-        
+
         return cartesian_product(vals)
 
     def button_generate_variants(self, cr, uid, ids, context=None):
-        logger = netsvc.Logger()
-        variants_obj = self.pool.get('product.product')       
+        variants_obj = self.pool.get('product.product')
 
         for product_temp in self.browse(cr, uid, ids, context):
             #for temp_type in product_temp.dimension_type_ids:
@@ -229,27 +230,27 @@ class product_template(osv.osv):
                 for x in list_of_variants_existing:
                     x.sort()
                 for x in list_of_variants:
-                    x.sort()        
+                    x.sort()
                 list_of_variants_to_create = [x for x in list_of_variants if not x in list_of_variants_existing]
-                
-                logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "variant existing : %s, variant to create : %s" % (len(list_of_variants_existing), len(list_of_variants_to_create)))
+
+                _logger.debug("variant existing : %s, variant to create : %s", len(list_of_variants_existing), len(list_of_variants_to_create))
                 count = 0
                 for variant in list_of_variants_to_create:
                     count += 1
-                    
+
                     vals={}
                     vals['track_production'] = product_temp.variant_track_production
                     vals['track_incoming'] = product_temp.variant_track_incoming
                     vals['track_outgoing'] = product_temp.variant_track_outgoing
                     vals['product_tmpl_id'] = product_temp.id
                     vals['dimension_value_ids'] = [(6,0,variant)]
-    
+
                     created_product_ids.append(variants_obj.create(cr, uid, vals, {'generate_from_template' : True}))
-                                        
+
                     if count%50 == 0:
                         cr.commit()
-                        logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "product created : %s" % (count,))
-                logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "product created : %s" % (count,))
+                        _logger.debug("product created : %s", count)
+                _logger.debug("product created : %s", count)
 
             if not product_temp.do_not_update_variant:
                 product_ids = existing_product_ids + created_product_ids
@@ -257,19 +258,19 @@ class product_template(osv.osv):
                 product_ids = created_product_ids
 
             # FIRST, Generate/Update variant names ('variants' field)
-            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update variant names...")
+            _logger.debug("Starting to generate/update variant names...")
             self.pool.get('product.product').build_variants_name(cr, uid, product_ids, context=context)
-            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of variant names.")
+            _logger.debug("End of the generation/update of variant names.")
             # SECOND, Generate/Update product codes and properties (we may need variants name for that)
-            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update product codes and properties...")
+            _logger.debug("Starting to generate/update product codes and properties...")
             self.pool.get('product.product').build_product_code_and_properties(cr, uid, product_ids, context=context)
-            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of the generation/update of product codes and properties.")
+            _logger.debug("End of the generation/update of product codes and properties.")
             # THIRD, Generate/Update product names (we may need variants name for that)
-            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "Starting to generate/update product names...")
+            _logger.debug("Starting to generate/update product names...")
             self.pool.get('product.product').build_product_name(cr, uid, product_ids, context=context)
-            logger.notifyChannel('product_variant_multi', netsvc.LOG_INFO, "End of generation/update of product names.")
+            _logger.debug("End of generation/update of product names.")
         return True
-        
+
 product_template()
 
 
@@ -280,7 +281,7 @@ class product_product(osv.osv):
         #For the first installation if you already have product in your database the name of the existing product will be empty, so we fill it
         cr.execute("update product_product set name=name_template where name is null;")
         return True
-  
+
     def unlink(self, cr, uid, ids, context=None):
         if not context:
             context={}
