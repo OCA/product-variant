@@ -378,13 +378,13 @@ class product_product(osv.osv):
         return True
 
     def _check_dimension_values(self, cr, uid, ids): # TODO: check that all dimension_types of the product_template have a corresponding dimension_value ??
-        for p in self.browse(cr, uid, ids, {}):
+        for product in self.browse(cr, uid, ids, {}):
             buffer = []
-            for value in p.dimension_value_ids:
+            for value in product.dimension_value_ids:
                 buffer.append(value.dimension_id)
             unique_set = set(buffer)
             if len(unique_set) != len(buffer):
-                return False
+                raise osv.except_osv(_('Constraint error :'), _("On product '%s', there are several dimension values for the same dimension type.") % product.name)
         return True
 
     def compute_product_dimension_extra_price(self, cr, uid, product_id, product_price_extra=False, dim_price_margin=False, dim_price_extra=False, context=None):
@@ -467,6 +467,9 @@ class product_product(osv.osv):
         'additional_weight_net': fields.float('Additional Net weight', help="The additional net weight in Kg."),
         'additional_volume': fields.float('Additional Volume', help="The additional volume in Kg."),
     }
-    _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]
+
+    _constraints = [
+        (_check_dimension_values, 'Error msg in raise', ['dimension_value_ids']),
+    ]
 
 product_product()
