@@ -51,16 +51,15 @@ class product_variant_dimension_type(osv.osv):
     }
 
     _defaults = {
-        'mandatory_dimension': lambda *a: 1,
+        'mandatory_dimension': lambda * a: 1,
     }
 
     _order = "sequence, name"
 
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=None):
-        if context.get('product_tmpl_id', False):
-            return super(product_variant_dimension_type, self).name_search(cr, user, '', args, 'ilike', None, None)
-        else:
-            return super(product_variant_dimension_type, self).name_search(cr, user, '', None, 'ilike', None, None)
+        if not context.get('product_tmpl_id', False):
+            args = None
+        return super(product_variant_dimension_type, self).name_search(cr, user, '', args, 'ilike', None, None)
 
 product_variant_dimension_type()
 
@@ -92,7 +91,7 @@ class product_variant_dimension_value(osv.osv):
         for value in self.browse(cr, uid, ids, context=context):
             if value.product_ids:
                 product_list = '\n    - ' + '\n    - '.join([product.name for product in value.product_ids])
-                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value."%(value.option_id.name, product_list)))
+                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value." % (value.option_id.name, product_list)))
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
     def _get_dimension_values(self, cr, uid, ids, context=None):
@@ -107,7 +106,7 @@ class product_variant_dimension_value(osv.osv):
         'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
         'dimension_id' : fields.related('option_id', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", store=True),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
-        'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer', relation='product.variant.dimension.type', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
+        'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer', relation='product.variant.dimension.type', string="Related Dimension Sequence", #used for ordering purposes in the "variants"
              store={
                 'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
             }),
@@ -116,7 +115,7 @@ class product_variant_dimension_value(osv.osv):
     }
 
     _defaults = {
-        'active': lambda *a: 1,
+        'active': lambda * a: 1,
     }
 
     _order = "dimension_sequence, dimension_id, sequence, option_id"
@@ -133,7 +132,7 @@ class product_template(osv.osv):
         'value_ids': fields.one2many('product.variant.dimension.value', 'product_tmpl_id', 'Dimension Values'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
         'variant_model_name':fields.char('Variant Model Name', size=64, required=True, help='[_o.dimension_id.name_] will be replaced by the name of the dimension and [_o.option_id.code_] by the code of the option. Example of Variant Model Name : "[_o.dimension_id.name_] - [_o.option_id.code_]"'),
-        'variant_model_name_separator':fields.char('Variant Model Name Separator', size=64, help= 'Add a separator between the elements of the variant name'),
+        'variant_model_name_separator':fields.char('Variant Model Name Separator', size=64, help='Add a separator between the elements of the variant name'),
         'code_generator' : fields.char('Code Generator', size=256, help='enter the model for the product code, all parameter between [_o.my_field_] will be replace by the product field. Example product_code model : prefix_[_o.variants_]_suffixe ==> result : prefix_2S2T_suffix'),
         'is_multi_variants' : fields.boolean('Is Multi Variants?'),
         'variant_track_production' : fields.boolean('Track Production Lots on variants ?'),
@@ -144,11 +143,11 @@ class product_template(osv.osv):
     }
 
     _defaults = {
-        'variant_model_name': lambda *a: '[_o.dimension_id.name_] - [_o.option_id.name_]',
-        'variant_model_name_separator': lambda *a: ' - ',
-        'is_multi_variants' : lambda *a: False,
+        'variant_model_name': lambda * a: '[_o.dimension_id.name_] - [_o.option_id.name_]',
+        'variant_model_name_separator': lambda * a: ' - ',
+        'is_multi_variants' : lambda * a: False,
         'code_generator' : "[_'-'.join([x.option_id.name for x in o.dimension_value_ids] or ['CONF'])_]",
-                }
+    }
 
     def unlink(self, cr, uid, ids, context=None):
         if context and context.get('unlink_from_product_product', False):
@@ -161,7 +160,7 @@ class product_template(osv.osv):
         #Reactive all unactive values
         value_obj = self.pool.get('product.variant.dimension.value')
         for template in self.browse(cr, uid, ids, context=context):
-            values_ids = value_obj.search(cr, uid, [['product_tmpl_id','=', template.id], '|', ['active', '=', False], ['active', '=', True]], context=context)
+            values_ids = value_obj.search(cr, uid, [['product_tmpl_id', '=', template.id], '|', ['active', '=', False], ['active', '=', True]], context=context)
             value_obj.write(cr, uid, values_ids, {'active':True}, context=context)
             existing_option_ids = [value.option_id.id for value in value_obj.browse(cr, uid, values_ids, context=context)]
             vals = {'value_ids' : []}
@@ -180,15 +179,15 @@ class product_template(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default.update({'variant_ids':False,})
+        default.update({'variant_ids':False, })
         return super(product_template, self).copy(cr, uid, id, default, context)
 
     def copy_translations(self, cr, uid, old_id, new_id, context=None):
         if context is None:
             context = {}
         # avoid recursion through already copied records in case of circular relationship
-        seen_map = context.setdefault('__copy_translations_seen',{})
-        if old_id in seen_map.setdefault(self._name,[]):
+        seen_map = context.setdefault('__copy_translations_seen', {})
+        if old_id in seen_map.setdefault(self._name, []):
             return
         seen_map[self._name].append(old_id)
         return super(product_template, self).copy_translations(cr, uid, old_id, new_id, context=context)
@@ -212,7 +211,7 @@ class product_template(osv.osv):
             #    if not temp_val_list[-1]:
             #        temp_val_list.pop()
             res = {}
-            temp_val_list=[]
+            temp_val_list = []
             for value in product_temp.value_ids:
                 if res.get(value.dimension_id, False):
                     res[value.dimension_id] += [value.id]
@@ -238,17 +237,17 @@ class product_template(osv.osv):
                 for variant in list_of_variants_to_create:
                     count += 1
 
-                    vals={}
+                    vals = {}
                     vals['track_production'] = product_temp.variant_track_production
                     vals['track_incoming'] = product_temp.variant_track_incoming
                     vals['track_outgoing'] = product_temp.variant_track_outgoing
                     vals['product_tmpl_id'] = product_temp.id
-                    vals['dimension_value_ids'] = [(6,0,variant)]
+                    vals['dimension_value_ids'] = [(6, 0, variant)]
 
                     cr.execute("SAVEPOINT pre_variant_save")
                     try:
                         created_product_ids.append(variants_obj.create(cr, uid, vals, {'generate_from_template' : True}))
-                        if count%50 == 0:
+                        if count % 50 == 0:
                             _logger.debug("product created : %s", count)
                     except Exception, e:
                         _logger.error("Error creating product variant: %s", e, exc_info=True)
@@ -293,8 +292,8 @@ class product_product(osv.osv):
 
     def unlink(self, cr, uid, ids, context=None):
         if not context:
-            context={}
-        context['unlink_from_product_product']=True
+            context = {}
+        context['unlink_from_product_product'] = True
         return super(product_product, self).unlink(cr, uid, ids, context)
 
     def build_product_name(self, cr, uid, ids, context=None):
@@ -305,13 +304,13 @@ class product_product(osv.osv):
             return self.parse(cr, uid, product, product.product_tmpl_id.description_sale, context=context)
 
         def get_name(product):
-            return (product.product_tmpl_id.name or '' )+ ' ' + (product.variants or '')
+            return (product.product_tmpl_id.name or '') + ' ' + (product.variants or '')
 
         if not context:
-            context={}
-        context['is_multi_variants']=True
-        obj_lang=self.pool.get('res.lang')
-        lang_ids = obj_lang.search(cr, uid, [('translatable','=',True)], context=context)
+            context = {}
+        context['is_multi_variants'] = True
+        obj_lang = self.pool.get('res.lang')
+        lang_ids = obj_lang.search(cr, uid, [('translatable', '=', True)], context=context)
         lang_code = [x['code'] for x in obj_lang.read(cr, uid, lang_ids, ['code'], context=context)]
         for code in lang_code:
             context['lang'] = code
@@ -330,7 +329,7 @@ class product_product(osv.osv):
         for val in vals:
             if '_]' in val:
                 sub_val = val.split('_]')
-                description += (safe_eval(sub_val[0], {'o' :o, 'context':context}) or '' ) + sub_val[1]
+                description += (safe_eval(sub_val[0], {'o' :o, 'context':context}) or '') + sub_val[1]
             else:
                 description += val
         return description
@@ -367,7 +366,7 @@ class product_product(osv.osv):
         inherit this function to hack the code generation'''
         product = self.browse(cr, uid, product_id, context=context)
         model = product.variant_model_name
-        r = map(lambda dim: [dim.dimension_id.sequence ,self.parse(cr, uid, dim, model, context=context)], product.dimension_value_ids)
+        r = map(lambda dim: [dim.dimension_id.sequence , self.parse(cr, uid, dim, model, context=context)], product.dimension_value_ids)
         r.sort()
         r = [x[1] for x in r]
         new_variant_name = (product.variant_model_name_separator or '').join(r)
@@ -454,22 +453,22 @@ class product_product(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default.update({'variant_ids':False,})
+        default.update({'variant_ids':False, })
         return super(product_product, self).copy(cr, uid, id, default, context)
 
     def _product_compute_weight_volume(self, cr, uid, ids, fields, arg, context=None):
         result = {}
         for product in self.browse(cr, uid, ids, context=context):
-            result[product.id]={}
-            result[product.id]['total_weight'] =  product.weight + product.additional_weight
-            result[product.id]['total_weight_net'] =  product.weight_net + product.additional_weight_net
+            result[product.id] = {}
+            result[product.id]['total_weight'] = product.weight + product.additional_weight
+            result[product.id]['total_weight_net'] = product.weight_net + product.additional_weight_net
             result[product.id]['total_volume'] = product.volume + product.additional_volume
         return result
 
     _columns = {
         'name': fields.char('Name', size=128, translate=True, select=True),
         'variants': fields.char('Variants', size=128),
-        'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
+        'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id', 'dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
         'cost_price_extra' : fields.float('Purchase Extra Cost', digits_compute=dp.get_precision('Purchase Price')),
         'lst_price' : fields.function(_product_lst_price, method=True, type='float', string='List Price', digits_compute=dp.get_precision('Sale Price')),
         #the way the weight are implemented are not clean at all, we should redesign the module product form the addons in order to get something correclty.
