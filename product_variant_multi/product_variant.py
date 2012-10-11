@@ -95,7 +95,7 @@ class product_variant_dimension_value(osv.osv):
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
     def _get_dimension_values(self, cr, uid, ids, context=None):
-        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
+        return self.search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     _columns = {
         'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
@@ -168,7 +168,7 @@ class product_template(osv.osv):
                 for option in dim.option_ids:
                     if not option.id in existing_option_ids:
                         vals['value_ids'] += [[0, 0, {'option_id': option.id}]]
-            self.write(cr, uid, template.id, vals, context=context)
+            self.write(cr, uid, [template.id], vals, context=context)
         return True
 
     def get_products_from_product_template(self, cr, uid, ids, context=None):
@@ -318,7 +318,7 @@ class product_product(osv.osv):
                 new_field_value = eval("get_" + field + "(product)") # TODO convert to safe_eval
                 cur_field_value = safe_eval("product." + field, {'product': product})
                 if new_field_value != cur_field_value:
-                    self.write(cr, uid, product.id, {field: new_field_value}, context=context)
+                    self.write(cr, uid, [product.id], {field: new_field_value}, context=context)
         return True
 
     def parse(self, cr, uid, o, text, context=None):
@@ -354,7 +354,7 @@ class product_product(osv.osv):
                 'track_incoming': product.product_tmpl_id.variant_track_incoming,
             }
             if new_values != current_values:
-                self.write(cr, uid, product.id, new_values, context=context)
+                self.write(cr, uid, [product.id], new_values, context=context)
         return True
 
     def product_ids_variant_changed(self, cr, uid, ids, res, context=None):
@@ -376,7 +376,7 @@ class product_product(osv.osv):
         for product in self.browse(cr, uid, ids, context=context):
             new_variant_name = self.generate_variant_name(cr, uid, product.id, context=context)
             if new_variant_name != product.variants:
-                self.write(cr, uid, product.id, {'variants': new_variant_name}, context=context)
+                self.write(cr, uid, [product.id], {'variants': new_variant_name}, context=context)
         return True
 
     def update_variant_price(self, cr, uid, ids, context=None):
@@ -437,7 +437,6 @@ class product_product(osv.osv):
         result = super(product_product, self).price_get(cr, uid, ids, ptype, context=context)
         if ptype == 'list_price': #TODO check if the price_margin on the dimension is very usefull, maybe we will remove it
             result = self.compute_dimension_extra_price(cr, uid, ids, result, product_price_extra='price_extra', dim_price_margin='price_margin', dim_price_extra='price_extra', context=context)
-
         elif ptype == 'standard_price':
             result = self.compute_dimension_extra_price(cr, uid, ids, result, product_price_extra='cost_price_extra', dim_price_extra='cost_price_extra', context=context)
         return result
@@ -453,7 +452,7 @@ class product_product(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default.update({'variant_ids':False, })
+        default.update({'variant_ids':False})
         return super(product_product, self).copy(cr, uid, id, default, context)
 
     def _product_compute_weight_volume(self, cr, uid, ids, fields, arg, context=None):
