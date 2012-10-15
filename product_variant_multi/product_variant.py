@@ -118,6 +118,9 @@ class product_variant_dimension_value(osv.osv):
         'active': lambda * a: 1,
     }
 
+    _sql_constraints = [ ('opt_dim_tmpl_uniq', 'UNIQUE(option_id, dimension_id, product_tmpl_id)',
+                _('The combination option and dimension type already exists for this product template !')), ]
+
     _order = "dimension_sequence, dimension_id, sequence, option_id"
 
 product_variant_dimension_value()
