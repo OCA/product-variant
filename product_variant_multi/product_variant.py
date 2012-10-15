@@ -44,7 +44,7 @@ class product_variant_dimension_type(osv.osv):
         'description': fields.char('Description', size=64, translate=True),
         'name' : fields.char('Dimension', size=64, required=True),
         'sequence' : fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
-        'option_ids' : fields.one2many('product.variant.dimension.option', 'dimension_id', 'Dimension Option'),
+        'option_ids' : fields.one2many('product.variant.dimension.option', 'dimension_id', 'Dimension Options'),
         'product_tmpl_id': fields.many2many('product.template', 'product_template_dimension_rel', 'dimension_id', 'template_id', 'Product Template'),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
         'mandatory_dimension': fields.boolean('Mandatory Dimension', help="If false, variant products will be created with and without this dimension"),
@@ -72,7 +72,7 @@ class product_variant_dimension_option(osv.osv):
         return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     _columns = {
-        'name' : fields.char('Dimension Value', size=64, required=True),
+        'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=64),
         'sequence' : fields.integer('Sequence'),
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
