@@ -95,10 +95,10 @@ class product_variant_dimension_value(osv.osv):
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
     def _get_values_from_types(self, cr, uid, ids, context=None):
-        return self.search(cr, uid, [('dimension_id', 'in', ids)], context=context)
+        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     def _get_values_from_options(self, cr, uid, ids, context=None):
-        return self.search(cr, uid, [('option_id', 'in', ids)], context=context)
+        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('option_id', 'in', ids)], context=context)
 
     _columns = {
         'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
