@@ -240,6 +240,7 @@
             <field name="inherit_id" ref="product.product_search_form_view"/>
             <field name="arch" type="xml">
                 <field name="categ_id" position="after">
+                    <field name="product_tmpl_id"/>
                     <field name="variants"/>
                 </field>
             </field>
