@@ -94,8 +94,11 @@ class product_variant_dimension_value(osv.osv):
                 raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value." % (value.option_id.name, product_list)))
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
-    def _get_dimension_values(self, cr, uid, ids, context=None):
+    def _get_values_from_types(self, cr, uid, ids, context=None):
         return self.search(cr, uid, [('dimension_id', 'in', ids)], context=context)
+
+    def _get_values_from_options(self, cr, uid, ids, context=None):
+        return self.search(cr, uid, [('option_id', 'in', ids)], context=context)
 
     _columns = {
         'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
@@ -104,11 +107,14 @@ class product_variant_dimension_value(osv.osv):
         'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
         'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
         'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
-        'dimension_id' : fields.related('option_id', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", store=True),
+        'dimension_id' : fields.related('option_id', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", readonly=True, store={
+            'product.variant.dimension.value': (lambda self, cr, uid, ids, c={}: ids, ['option_id'], 10),
+            'product.variant.dimension.option': (_get_values_from_options, ['dimension_id'], 20),
+                }),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
         'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer', relation='product.variant.dimension.type', string="Related Dimension Sequence", #used for ordering purposes in the "variants"
              store={
-                'product.variant.dimension.type': (_get_dimension_values, ['sequence'], 10),
+                'product.variant.dimension.type': (_get_values_from_types, ['sequence'], 10),
             }),
         'product_ids': fields.many2many('product.product', 'product_product_dimension_rel', 'dimension_id', 'product_id', 'Variant', readonly=True),
         'active' : fields.boolean('Active?', help="If false, this value will be not use anymore for generating variant"),
