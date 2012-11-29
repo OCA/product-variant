@@ -136,7 +136,7 @@ class product_template(osv.osv):
     _inherit = "product.template"
 
     _columns = {
-        'name': fields.char('Name', size=128, translate=True, select=True),
+        'name': fields.char('Name', size=128, translate=True, select=True, required=False),
         'dimension_type_ids':fields.many2many('product.variant.dimension.type', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Dimension Types'),
         'value_ids': fields.one2many('product.variant.dimension.value', 'product_tmpl_id', 'Dimension Values'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
