@@ -29,7 +29,7 @@
 
         <menuitem action="product_variant" id="menu_variant" parent="stock.menu_stock_product" />
 
-        <menuitem name="Variant dimensions" id="menu_variant_dimension" parent="stock.menu_product_in_config_stock" />
+        <menuitem name="Variant dimensions" id="menu_variant_dimension" parent="stock.menu_stock_product" />
 
         <!-- Views from Dimension option -->
         <record id="product_variant_multi_dimension_option_tree" model="ir.ui.view">
@@ -62,16 +62,16 @@
         </record>
 
         <!-- Default action for Dimension option -->
-		<record id="action_dimension_option" model="ir.actions.act_window">
-			<field name="name">Dimension Options</field>
-			<field name="res_model">product.variant.dimension.option</field>
+        <record id="action_dimension_option" model="ir.actions.act_window">
+            <field name="name">Dimension Options</field>
+            <field name="res_model">product.variant.dimension.option</field>
             <field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="context">{'dimension_option_main_view': True}</field>
-		</record>
+        </record>
 
         <!-- Menu entry for Dimension values -->
-		<menuitem id="menu_variant_dimension_option" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_option" />
+        <menuitem id="menu_variant_dimension_option" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_option" />
 
 
 
@@ -113,61 +113,61 @@
         </record>
 
         <!-- Default action for Dimension values -->
-		<record id="action_dimension_value" model="ir.actions.act_window">
-			<field name="name">Dimension values</field>
-			<field name="res_model">product.variant.dimension.value</field>
+        <record id="action_dimension_value" model="ir.actions.act_window">
+            <field name="name">Dimension values</field>
+            <field name="res_model">product.variant.dimension.value</field>
             <field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="context">{'dimension_value_main_view': True}</field>
-		</record>
+        </record>
 
         <!-- Views for Dimension types -->
-		<record id="product_variant_multi_dimension_type_tree" model="ir.ui.view">
-			<field name="name">product.variant.multi.dimension.type.tree</field>
-			<field name="model">product.variant.dimension.type</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Dimension Types">
-					<field name="name" />
+        <record id="product_variant_multi_dimension_type_tree" model="ir.ui.view">
+            <field name="name">product.variant.multi.dimension.type.tree</field>
+            <field name="model">product.variant.dimension.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Dimension Types">
+                    <field name="name" />
                     <field name="description" />
-				</tree>
-			</field>
-		</record>
+                </tree>
+            </field>
+        </record>
 
-		<record id="product_variant_multi_dimension_type_form" model="ir.ui.view">
-			<field name="name">product.variant.multi.dimension.type.form</field>
-			<field name="model">product.variant.dimension.type</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Dimension Types">
-					<field name="name" select="1" />
+        <record id="product_variant_multi_dimension_type_form" model="ir.ui.view">
+            <field name="name">product.variant.multi.dimension.type.form</field>
+            <field name="model">product.variant.dimension.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dimension Types">
+                    <field name="name" select="1" />
                     <field name="description" select="2" />
-					<field name="sequence" />
-					<field name="allow_custom_value" select="2" />
-					<field name="mandatory_dimension" select="2" />
-					<field name="option_ids" nolabel="1" colspan="4" >
+                    <field name="sequence" />
+                    <field name="allow_custom_value" select="2" />
+                    <field name="mandatory_dimension" select="2" />
+                    <field name="option_ids" nolabel="1" colspan="4" >
                         <tree editable="bottom" string="Dimension Options">
                             <field name="name" />
                             <field name="code" />
                             <field name="sequence" invisible="1"/>
                         </tree>
                     </field>
-				</form>
-			</field>
-		</record>
+                </form>
+            </field>
+        </record>
 
 
         <!-- Default action for Dimension types -->
-		<record id="action_dimension_type" model="ir.actions.act_window">
-			<field name="name">Dimension types</field>
-			<field name="res_model">product.variant.dimension.type</field>
+        <record id="action_dimension_type" model="ir.actions.act_window">
+            <field name="name">Dimension types</field>
+            <field name="res_model">product.variant.dimension.type</field>
             <field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="context">{'dimension_type_main_view': True}</field>
-		</record>
+        </record>
 
         <!-- Menu entry for dimension types -->
-		<menuitem id="menu_variant_dimension_types" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_type" />
+        <menuitem id="menu_variant_dimension_types" icon="STOCK_JUSTIFY_FILL" parent="menu_variant_dimension" action="action_dimension_type" />
 
 
 
@@ -177,180 +177,182 @@
                                     <!--TODO add a wizard to add the option-->
                                     <!--<button name="add_some_option" string="Add " type="object" colspan="2"/>-->
 
-        <record id="product_search_form_view_template" model="ir.ui.view">
-            <field name="name">product.search.form.template</field>
-            <field name="model">product.template</field>
-            <field name="type">search</field>
-            <field name="arch" type="xml">
-                <search string="Product Template">
-                   <field name="name"/>
-                </search>
-            </field>
-        </record>
+                                    <record id="product_search_form_view_template" model="ir.ui.view">
+                                        <field name="name">product.search.form.template</field>
+                                        <field name="model">product.template</field>
+                                        <field name="type">search</field>
+                                        <field name="arch" type="xml">
+                                            <search string="Product Template">
+                                                <field name="name"/>
+                                            </search>
+                                        </field>
+                                    </record>
 
 
-        <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.product.template.form</field>
-            <field name="model">product.template</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="product.product_template_form_view" />
-            <field name="arch" type="xml">
-                <data>
-                    <field name="name" position="after">
-                        <field name="is_multi_variants"/>
-                    </field>
+                                    <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
+                                        <field name="name">product.variant.multi.product.template.form</field>
+                                        <field name="model">product.template</field>
+                                        <field name="type">form</field>
+                                        <field name="inherit_id" ref="product.product_template_form_view" />
+                                        <field name="arch" type="xml">
+                                            <data>
+                                                <xpath expr="/form/notebook" position="inside">
+                                                    <page string="Variants">
+                                                        <group colspan="4">
+                                                            <field name="is_multi_variants"/>
+                                                        </group>
+                                                        <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
+                                                            <field name="dimension_type_ids" nolabel="1" colspan="4" />
+                                                            <button name="add_all_option" string="Add All Option" type="object" colspan="2"/>
+                                                            <field name="value_ids" nolabel="1" colspan="4" />
+                                                        </group>
+                                                        <group  colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
+                                                            <field name="variant_model_name" colspan="4"/>
+                                                            <field name="variant_model_name_separator" colspan="4"/>
+                                                            <field name="code_generator" colspan="4"/>
+                                                            <field name="variant_track_production" colspan="4"/>
+                                                            <field name="variant_track_incoming" colspan="4"/>
+                                                            <field name="variant_track_outgoing" colspan="4"/>
+                                                            <field name="do_not_generate_new_variant" colspan="4"/>
+                                                            <field name="do_not_update_variant" colspan="4"/>
+                                                            <button name="button_generate_variants" string="Generate / Update variants ->" type="object" colspan="4"/>
+                                                        </group>
+                                                        <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
+                                                            <tree string="Variants">
+                                                                <field name="code" />
+                                                                <field name="name" />
+                                                                <field name="variants" string="Dimension Values" />
+                                                            </tree>
+                                                        </field>
+                                                    </page>
+                                                </xpath>
+                                            </data>
+                                        </field>
+                                    </record>
 
-                    <xpath expr="/form/notebook" position="inside">
-                        <page string="Variants">
-                                <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                                    <field name="dimension_type_ids" nolabel="1" colspan="4" />
-                                    <button name="add_all_option" string="Add All Option" type="object" colspan="2"/>
-                                    <field name="value_ids" nolabel="1" colspan="4" />
-                                </group>
-                                <group  colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                                    <field name="variant_model_name" colspan="4"/>
-                                    <field name="variant_model_name_separator" colspan="4"/>
-                                    <field name="code_generator" colspan="4"/>
-							        <field name="variant_track_production" colspan="4"/>
-							        <field name="variant_track_incoming" colspan="4"/>
-							        <field name="variant_track_outgoing" colspan="4"/>
-                                    <field name="do_not_generate_new_variant" colspan="4"/>
-                                    <field name="do_not_update_variant" colspan="4"/>
-							        <button name="button_generate_variants" string="Generate / Update variants ->" type="object" colspan="4"/>
-                                </group>
-                                <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
-                                    <tree string="Variants">
-                                        <field name="code" />
-                                        <field name="name" />
-                                        <field name="variants" string="Dimension Values" />
-                                    </tree>
-                                </field>
-                        </page>
-                    </xpath>
-                </data>
-            </field>
-        </record>
-        
-        <!-- TODO remove useless view of product.product in the module product or move this correct view in product, it's depend how the heritage on this view will be managed by the other module -->
+                                    <!-- TODO remove useless view of product.product in the module product or move this correct view in product, it's depend how the heritage on this view will be managed by the other module -->
 
-        <record id="product_search_form_view_variants" model="ir.ui.view">
-            <field name="name">product.search.form.variants</field>
-            <field name="model">product.product</field>
-            <field name="type">search</field>
-            <field name="inherit_id" ref="product.product_search_form_view"/>
-            <field name="arch" type="xml">
-                <field name="categ_id" position="after">
-                    <field name="product_tmpl_id"/>
-                    <field name="variants"/>
-                </field>
-            </field>
-        </record>
+                                    <record id="product_search_form_view_variants" model="ir.ui.view">
+                                        <field name="name">product.search.form.variants</field>
+                                        <field name="model">product.product</field>
+                                        <field name="type">search</field>
+                                        <field name="inherit_id" ref="product.product_search_form_view"/>
+                                        <field name="arch" type="xml">
+                                            <field name="categ_id" position="after">
+                                                <field name="product_tmpl_id"/>
+                                                <field name="variants"/>
+                                            </field>
+                                        </field>
+                                    </record>
 
-        <record id="product_variant_form_view" model="ir.ui.view">
-            <field name="name">product.variant.form</field>
-            <field name="model">product.product</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Product Variant">
-                    <field name="name" select="1" required="1"/>
-                    <field name="product_tmpl_id" select="1"/>
-                    <field name="variants" select="1"/>
-                    <field name="default_code" select="1"/>
-                    <field name="active" select="1"/>
-                    <newline />
-                    <notebook colspan="4">
-                        <page string="Dimensions">
-                            <separator string="Dimension Values" colspan="4"/>
-                            <field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}" nolabel="1" colspan="4"/>
-                        </page>
-                        <page string="Price">
-                            <field name="list_price" string="Template Sale Price" readonly="1"/>
-                            <field name="price_margin" select="1"/>
-                            <field name="price_extra" select="1"/>
-                            <field name="cost_price_extra"/>
-                        </page>
-                        <page string="Lots">
-                            <field name="track_production" />
-                            <field name="track_incoming" />
-                            <field name="track_outgoing" />
-                        </page>
-                    </notebook>
-                </form>
-            </field>
-        </record>
-      
-        <record id="product_variant_tree_view" model="ir.ui.view">
-            <field name="name">product.variant.tree</field>
-            <field name="model">product.product</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Product Variant">
-                    <field name="default_code"/>
-                    <field name="name"/>
-                    <field name="product_tmpl_id"/>
-                    <field name="variants"/>
-                    <field name="price_extra"/>
-                    <field name="cost_price_extra"/>
-                </tree>
-            </field>
-        </record>
-    
-        <record id="action_variant_tree" model="ir.actions.act_window.view">
-            <field name="sequence" eval="10" />
-            <field name="view_mode">tree</field>
-            <field name="act_window_id" ref="product_variant" />
-            <field name="view_id" ref="product_variant_tree_view" />
-        </record>
+                                    <record id="product_variant_form_view" model="ir.ui.view">
+                                        <field name="name">product.variant.form</field>
+                                        <field name="model">product.product</field>
+                                        <field name="type">form</field>
+                                        <field name="arch" type="xml">
+                                            <form string="Product Variant">
+                                                <field name="name" select="1" required="1"/>
+                                                <field name="product_tmpl_id" select="1"/>
+                                                <field name="variants" select="1"/>
+                                                <field name="default_code" select="1"/>
+                                                <field name="active" select="1"/>
+                                                <newline />
+                                                <notebook colspan="4">
+                                                    <page string="Dimensions">
+                                                        <separator string="Dimension Values" colspan="4"/>
+                                                        <field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}" nolabel="1" colspan="4"/>
+                                                    </page>
+                                                    <page string="Price">
+                                                        <field name="list_price" string="Template Sale Price" readonly="1"/>
+                                                        <field name="price_margin" select="1"/>
+                                                        <field name="price_extra" select="1"/>
+                                                        <field name="cost_price_extra"/>
+                                                    </page>
+                                                    <page string="Lots">
+                                                        <field name="track_production" />
+                                                        <field name="track_incoming" />
+                                                        <field name="track_outgoing" />
+                                                    </page>
+                                                </notebook>
+                                            </form>
+                                        </field>
+                                    </record>
 
-        <record id="action_variant_form" model="ir.actions.act_window.view">
-            <field name="sequence" eval="20" />
-            <field name="view_mode">form</field>
-            <field name="act_window_id" ref="product_variant" />
-            <field name="view_id" ref="product_variant_form_view" />
-        </record>
+                                    <record id="product_variant_tree_view" model="ir.ui.view">
+                                        <field name="name">product.variant.tree</field>
+                                        <field name="model">product.product</field>
+                                        <field name="type">tree</field>
+                                        <field name="arch" type="xml">
+                                            <tree string="Product Variant">
+                                                <field name="default_code"/>
+                                                <field name="name"/>
+                                                <field name="product_tmpl_id"/>
+                                                <field name="variants"/>
+                                                <field name="price_extra"/>
+                                                <field name="cost_price_extra"/>
+                                            </tree>
+                                        </field>
+                                    </record>
 
-        <record id="product_normal_variant_form_view" model="ir.ui.view">
-            <field name="name">product.normal.variant.form</field>
-            <field name="model">product.product</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="product.product_normal_form_view" />
-            <field name="arch" type="xml">
-                <data>
-                    <field name="name" position="attributes">
-                        <attribute name="required">1</attribute>
-                    </field>
-                    <field name="standard_price" position="replace">
-                        <group name='cost_prices' colspan="2" col="4">
-                            <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}"/>
-                            <field name="cost_price_extra" groups="product.group_product_variant"/>
-                        </group>
-                    </field>
-                    <group col="2" colspan="2" groups="base.group_extended" position="replace">
-                         <group colspan="2" col="6" name="weight" groups="base.group_extended">
-                            <field name="is_multi_variants" invisible="1"/>
-                            <group colspan="2" col="2">
-                                <separator string="Template Weights" colspan="2"/>
-                                <field digits="(14, 3)" name="volume" attrs="{'readonly':[('type','=','service')]}"/>
-                                <field digits="(14, 3)" name="weight" attrs="{'readonly':[('type','=','service')]}"/>
-                                <field digits="(14, 3)" name="weight_net" attrs="{'readonly':[('type','=','service')]}"/>
-                            </group>
-                            <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                                <separator string="Variant Weights" colspan="2"/>
-                                <field digits="(14, 3)" name="additional_volume" attrs="{'readonly':[('type','=','service')]}"/>
-                                <field digits="(14, 3)" name="additional_weight" attrs="{'readonly':[('type','=','service')]}"/>
-                                <field digits="(14, 3)" name="additional_weight_net" attrs="{'readonly':[('type','=','service')]}"/>
-                            </group>
-                            <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                                <separator string="Total Weights" colspan="2"/>
-                                <field digits="(14, 3)" name="total_volume"/>
-                                <field digits="(14, 3)" name="total_weight"/>
-                                <field digits="(14, 3)" name="total_weight_net"/>
-                            </group>
-                        </group>
-                    </group>
-                </data>
-            </field>
-        </record>   
-    
-    </data>
-</openerp>
+                                    <record id="action_variant_tree" model="ir.actions.act_window.view">
+                                        <field name="sequence" eval="10" />
+                                        <field name="view_mode">tree</field>
+                                        <field name="act_window_id" ref="product_variant" />
+                                        <field name="view_id" ref="product_variant_tree_view" />
+                                    </record>
+
+                                    <record id="action_variant_form" model="ir.actions.act_window.view">
+                                        <field name="sequence" eval="20" />
+                                        <field name="view_mode">form</field>
+                                        <field name="act_window_id" ref="product_variant" />
+                                        <field name="view_id" ref="product_variant_form_view" />
+                                    </record>
+
+                                    <record id="product_normal_variant_form_view" model="ir.ui.view">
+                                        <field name="name">product.normal.variant.form</field>
+                                        <field name="model">product.product</field>
+                                        <field name="type">form</field>
+                                        <field name="inherit_id" ref="product.product_normal_form_view"/>
+                                        <field name="sequence" eval="20"/>
+                                        <field name="arch" type="xml">
+                                            <data>
+                                                <field name="name" position="attributes">
+                                                    <attribute name="required">1</attribute>
+                                                </field>
+                                                <xpath expr="//field[@name='standard_price']" position="replace">
+                                                    <group name='cost_prices' colspan="2" col="2">
+                                                        <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}"/>
+                                                        <field name="cost_price_extra" groups="product.group_product_variant"/>
+                                                    </group>
+                                                </xpath>
+                                                <xpath expr="//notebook" position="inside">
+                                                    <page string="Template">
+                                                        <group colspan="2" col="6" name="weight">
+                                                            <field name="is_multi_variants" invisible="1"/>
+                                                            <group colspan="2" col="2">
+                                                                <separator string="Template Weights" colspan="2"/>
+                                                                <field digits="(14, 3)" name="volume" attrs="{'readonly':[('type','=','service')]}"/>
+                                                                <field digits="(14, 3)" name="weight" attrs="{'readonly':[('type','=','service')]}"/>
+                                                                <field digits="(14, 3)" name="weight_net" attrs="{'readonly':[('type','=','service')]}"/>
+                                                            </group>
+                                                            <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
+                                                                <separator string="Variant Weights" colspan="2"/>
+                                                                <field digits="(14, 3)" name="additional_volume" attrs="{'readonly':[('type','=','service')]}"/>
+                                                                <field digits="(14, 3)" name="additional_weight" attrs="{'readonly':[('type','=','service')]}"/>
+                                                                <field digits="(14, 3)" name="additional_weight_net" attrs="{'readonly':[('type','=','service')]}"/>
+                                                            </group>
+                                                            <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
+                                                                <separator string="Total Weights" colspan="2"/>
+                                                                <field digits="(14, 3)" name="total_volume"/>
+                                                                <field digits="(14, 3)" name="total_weight"/>
+                                                                <field digits="(14, 3)" name="total_weight_net"/>
+                                                            </group>
+                                                        </group>
+                                                    </page>
+                                                </xpath>
+                                            </data>
+                                        </field>
+                                    </record>   
+
+                                </data>
+                            </openerp>

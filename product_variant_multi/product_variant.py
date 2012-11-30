@@ -246,12 +246,14 @@ class product_template(osv.osv):
                 for variant in list_of_variants_to_create:
                     count += 1
 
-                    vals = {}
-                    vals['track_production'] = product_temp.variant_track_production
-                    vals['track_incoming'] = product_temp.variant_track_incoming
-                    vals['track_outgoing'] = product_temp.variant_track_outgoing
-                    vals['product_tmpl_id'] = product_temp.id
-                    vals['dimension_value_ids'] = [(6, 0, variant)]
+                    vals = {
+                        'name': product_temp.name,
+                        'track_production': product_temp.variant_track_production,
+                        'track_incoming': product_temp.variant_track_incoming,
+                        'track_outgoing': product_temp.variant_track_outgoing,
+                        'product_tmpl_id': product_temp.id,
+                        'dimension_value_ids': [(6, 0, variant)],
+                    }
 
                     cr.execute("SAVEPOINT pre_variant_save")
                     try:
