@@ -35,7 +35,6 @@
         <record id="product_variant_multi_dimension_option_tree" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.option.tree</field>
             <field name="model">product.variant.dimension.option</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Dimension Options">
                     <field name="dimension_id" invisible="not context.get('dimension_value_main_view', False)" />
@@ -49,7 +48,6 @@
         <record id="product_variant_multi_dimension_option_form" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.option.form</field>
             <field name="model">product.variant.dimension.option</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Dimension Options">
                     <field name="dimension_id" select="1" invisible="not context.get('dimension_option_main_view', False)" />
@@ -79,7 +77,6 @@
         <record id="product_variant_multi_dimension_value_tree" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.value.tree</field>
             <field name="model">product.variant.dimension.value</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Dimension values" editable="top">
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
@@ -96,7 +93,6 @@
         <record id="product_variant_multi_dimension_value_form" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.value.form</field>
             <field name="model">product.variant.dimension.value</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Dimension values">
                     <field name="product_tmpl_id" select="1" invisible="not context.get('dimension_value_main_view', False)" />
@@ -125,7 +121,6 @@
         <record id="product_variant_multi_dimension_type_tree" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.type.tree</field>
             <field name="model">product.variant.dimension.type</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Dimension Types">
                     <field name="name" />
@@ -137,7 +132,6 @@
         <record id="product_variant_multi_dimension_type_form" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.type.form</field>
             <field name="model">product.variant.dimension.type</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Dimension Types">
                     <field name="name" select="1" />
@@ -180,7 +174,6 @@
                                     <record id="product_search_form_view_template" model="ir.ui.view">
                                         <field name="name">product.search.form.template</field>
                                         <field name="model">product.template</field>
-                                        <field name="type">search</field>
                                         <field name="arch" type="xml">
                                             <search string="Product Template">
                                                 <field name="name"/>
@@ -192,7 +185,6 @@
                                     <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
                                         <field name="name">product.variant.multi.product.template.form</field>
                                         <field name="model">product.template</field>
-                                        <field name="type">form</field>
                                         <field name="inherit_id" ref="product.product_template_form_view" />
                                         <field name="arch" type="xml">
                                             <data>
@@ -235,7 +227,6 @@
                                     <record id="product_search_form_view_variants" model="ir.ui.view">
                                         <field name="name">product.search.form.variants</field>
                                         <field name="model">product.product</field>
-                                        <field name="type">search</field>
                                         <field name="inherit_id" ref="product.product_search_form_view"/>
                                         <field name="arch" type="xml">
                                             <field name="categ_id" position="after">
@@ -248,7 +239,6 @@
                                     <record id="product_variant_form_view" model="ir.ui.view">
                                         <field name="name">product.variant.form</field>
                                         <field name="model">product.product</field>
-                                        <field name="type">form</field>
                                         <field name="arch" type="xml">
                                             <form string="Product Variant">
                                                 <field name="name" select="1" required="1"/>
@@ -281,7 +271,6 @@
                                     <record id="product_variant_tree_view" model="ir.ui.view">
                                         <field name="name">product.variant.tree</field>
                                         <field name="model">product.product</field>
-                                        <field name="type">tree</field>
                                         <field name="arch" type="xml">
                                             <tree string="Product Variant">
                                                 <field name="default_code"/>
@@ -311,9 +300,7 @@
                                     <record id="product_normal_variant_form_view" model="ir.ui.view">
                                         <field name="name">product.normal.variant.form</field>
                                         <field name="model">product.product</field>
-                                        <field name="type">form</field>
                                         <field name="inherit_id" ref="product.product_normal_form_view"/>
-                                        <field name="sequence" eval="20"/>
                                         <field name="arch" type="xml">
                                             <data>
                                                 <field name="name" position="attributes">
