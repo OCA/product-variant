@@ -36,7 +36,7 @@ _logger = logging.getLogger(__name__)
 #
 # Dimensions Definition
 #
-class product_variant_dimension_type(osv.osv):
+class product_variant_dimension_type(osv.Model):
     _name = "product.variant.dimension.type"
     _description = "Dimension Type"
 
@@ -61,10 +61,8 @@ class product_variant_dimension_type(osv.osv):
             args = None
         return super(product_variant_dimension_type, self).name_search(cr, user, '', args, 'ilike', None, None)
 
-product_variant_dimension_type()
 
-
-class product_variant_dimension_option(osv.osv):
+class product_variant_dimension_option(osv.Model):
     _name = "product.variant.dimension.option"
     _description = "Dimension Option"
 
@@ -80,10 +78,8 @@ class product_variant_dimension_option(osv.osv):
 
     _order = "dimension_id, sequence, to_number(name, '')"
 
-product_variant_dimension_option()
 
-
-class product_variant_dimension_value(osv.osv):
+class product_variant_dimension_value(osv.Model):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
@@ -129,10 +125,8 @@ class product_variant_dimension_value(osv.osv):
 
     _order = "dimension_sequence, dimension_id, sequence, option_id"
 
-product_variant_dimension_value()
 
-
-class product_template(osv.osv):
+class product_template(osv.Model):
     _inherit = "product.template"
 
     _columns = {
@@ -290,10 +284,8 @@ class product_template(osv.osv):
             _logger.debug("End of updating prices.")
         return True
 
-product_template()
 
-
-class product_product(osv.osv):
+class product_product(osv.Model):
     _inherit = "product.product"
 
     def init(self, cr):
@@ -495,5 +487,3 @@ class product_product(osv.osv):
     _constraints = [
         (_check_dimension_values, 'Error msg in raise', ['dimension_value_ids']),
     ]
-
-product_product()
