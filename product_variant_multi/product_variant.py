@@ -76,7 +76,7 @@ class product_variant_dimension_option(osv.Model):
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
     }
 
-    _order = "dimension_id, sequence, to_number(name, '')"
+    _order = "dimension_id, sequence, name"
 
 
 class product_variant_dimension_value(osv.Model):
