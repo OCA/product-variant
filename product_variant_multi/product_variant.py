@@ -332,7 +332,10 @@ class product_product(osv.Model):
         for val in vals:
             if '_]' in val:
                 sub_val = val.split('_]')
-                description += (safe_eval(sub_val[0], {'o' :o, 'context':context}) or '') + sub_val[1]
+                try:
+                    description += (safe_eval(sub_val[0], {'o' :o, 'context':context}) or '') + sub_val[1]
+                except AttributeError:
+                    raise osv.except_osv(_('Bad expression'), _("One of your expressions contains a non existing attribute: %s") % sub_val[0])
             else:
                 description += val
         return description
