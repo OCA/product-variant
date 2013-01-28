@@ -87,7 +87,7 @@ class product_variant_dimension_value(osv.Model):
         for value in self.browse(cr, uid, ids, context=context):
             if value.product_ids:
                 product_list = '\n    - ' + '\n    - '.join([product.name for product in value.product_ids])
-                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value." % (value.option_id.name, product_list)))
+                raise osv.except_osv(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value.") % (value.option_id.name, product_list))
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
     def _get_values_from_types(self, cr, uid, ids, context=None):
