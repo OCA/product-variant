@@ -279,9 +279,6 @@ class product_template(osv.Model):
             _logger.debug("Starting to generate/update product names...")
             self.pool.get('product.product').build_product_name(cr, uid, product_ids, context=context)
             _logger.debug("End of generation/update of product names.")
-            _logger.debug("Starting to updating prices ...")
-            self.pool.get('product.product').update_variant_price(cr, uid, product_ids, context=context)
-            _logger.debug("End of updating prices.")
         return True
 
 
@@ -383,18 +380,6 @@ class product_product(osv.Model):
             new_variant_name = self.generate_variant_name(cr, uid, product.id, context=context)
             if new_variant_name != product.variants:
                 self.write(cr, uid, [product.id], {'variants': new_variant_name}, context=context)
-        return True
-
-    def update_variant_price(self, cr, uid, ids, context=None):
-        for product in self.browse(cr, uid, ids, context=context):
-            extra_prices = {
-                'cost_price_extra': 0,
-                'price_extra': 0,
-            }
-            for var_obj in product.dimension_value_ids:
-                extra_prices['cost_price_extra'] += var_obj.cost_price_extra
-                extra_prices['price_extra'] += var_obj.price_extra
-            product.write(extra_prices, context=context)
         return True
 
     def _check_dimension_values(self, cr, uid, ids): # TODO: check that all dimension_types of the product_template have a corresponding dimension_value ??
