@@ -205,7 +205,7 @@
                                 <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                                     <field name="dimension_type_ids" nolabel="1" colspan="4" />
                                     <button name="add_all_option" string="Add All Option" type="object" colspan="2"/>
-                                    <field name="value_ids" nolabel="1" colspan="4" />
+                                    <!-- FIXME TODO this should be enabled again! field name="value_ids" nolabel="1" colspan="4" /-->
                                 </group>
                                 <group  colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                                     <field name="variant_model_name" colspan="4"/>
