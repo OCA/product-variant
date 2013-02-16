@@ -25,11 +25,11 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem action="product_template" id="menu_template" parent="stock.menu_stock_product" />
+        <menuitem action="product_template" id="menu_template" parent="product.prod_config_main" />
 
-        <menuitem action="product_variant" id="menu_variant" parent="stock.menu_stock_product" />
+        <menuitem action="product_variant" id="menu_variant" parent="product.prod_config_main" />
 
-        <menuitem name="Variant dimensions" id="menu_variant_dimension" parent="stock.menu_product_in_config_stock" />
+        <menuitem name="Variant dimensions" id="menu_variant_dimension" parent="product.prod_config_main" />
 
         <!-- Views from Dimension option -->
         <record id="product_variant_multi_dimension_option_tree" model="ir.ui.view">
@@ -200,7 +200,7 @@
                         <field name="is_multi_variants"/>
                     </field>
 
-                    <xpath expr="/form/notebook" position="inside">
+                    <xpath expr="//form/notebook" position="inside">
                         <page string="Variants">
                                 <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                                     <field name="dimension_type_ids" nolabel="1" colspan="4" />
@@ -269,11 +269,6 @@
                             <field name="price_extra" select="1"/>
                             <field name="cost_price_extra"/>
                         </page>
-                        <page string="Lots">
-                            <field name="track_production" />
-                            <field name="track_incoming" />
-                            <field name="track_outgoing" />
-                        </page>
                     </notebook>
                 </form>
             </field>
@@ -325,9 +320,9 @@
                             <field name="cost_price_extra" groups="product.group_product_variant"/>
                         </group>
                     </field>
-                    <group col="2" colspan="2" groups="base.group_extended" position="replace">
-                         <group colspan="2" col="6" name="weight" groups="base.group_extended">
-                            <field name="is_multi_variants" invisible="1"/>
+                    <group name="Weights" position="replace">
+                         <group colspan="2" col="6" name="weight" groups="product.group_stock_packaging">
+                            <field name="is_multi_variants" />
                             <group colspan="2" col="2">
                                 <separator string="Template Weights" colspan="2"/>
                                 <field digits="(14, 3)" name="volume" attrs="{'readonly':[('type','=','service')]}"/>
@@ -342,9 +337,9 @@
                             </group>
                             <group colspan="2" col="2" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                                 <separator string="Total Weights" colspan="2"/>
-                                <field digits="(14, 3)" name="total_volume"/>
+<!--                                <field digits="(14, 3)" name="total_volume"/>
                                 <field digits="(14, 3)" name="total_weight"/>
-                                <field digits="(14, 3)" name="total_weight_net"/>
+                                <field digits="(14, 3)" name="total_weight_net"/> -->
                             </group>
                         </group>
                     </group>

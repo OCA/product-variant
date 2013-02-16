@@ -57,11 +57,8 @@ optional while product.product now has a new mandatory name field. This is usual
 transparent as OpenERP modules try to get their properties like name from product.product
 and only from product.template if not found on product.product. But at least you
 will have been warned.
-
-The dependence to the stock module is weak, it's only there to be able to put the
-variant menu in the warehouse management sub-menu (sigh!).
     """,
-    "depends" : ["product", "stock"],
+    "depends" : ["product"],
     "init_xml" : [],
     "demo_xml" : ["demo_data.xml"],
     "update_xml" : [
