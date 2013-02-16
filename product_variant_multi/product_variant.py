@@ -78,7 +78,8 @@ class product_variant_dimension_option(osv.osv):
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
     }
 
-    _order = "dimension_id, sequence, to_number(name, '')"
+#    _order = "dimension_id, sequence, to_number(name, '')" #FIXME doesn't work anymore on OpenERP v7.0 ?
+    _order = "dimension_id, sequence"
 
 product_variant_dimension_option()
 
@@ -352,15 +353,15 @@ class product_product(osv.osv):
             new_default_code = self.generate_product_code(cr, uid, product, product.product_tmpl_id.code_generator, context=context)
             current_values = {
                 'default_code': product.default_code,
-                'track_production': product.track_production,
-                'track_outgoing': product.track_outgoing,
-                'track_incoming': product.track_incoming,
+#                'track_production': product.track_production,
+#                'track_outgoing': product.track_outgoing,
+#                'track_incoming': product.track_incoming,
             }
             new_values = {
                 'default_code': new_default_code,
-                'track_production': product.product_tmpl_id.variant_track_production,
-                'track_outgoing': product.product_tmpl_id.variant_track_outgoing,
-                'track_incoming': product.product_tmpl_id.variant_track_incoming,
+#                'track_production': product.product_tmpl_id.variant_track_production,
+#                'track_outgoing': product.product_tmpl_id.variant_track_outgoing,
+#                'track_incoming': product.product_tmpl_id.variant_track_incoming,
             }
             if new_values != current_values:
                 self.write(cr, uid, [product.id], new_values, context=context)
