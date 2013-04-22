@@ -157,6 +157,12 @@ class product_template(osv.Model):
             for template in self.browse(cr, uid, ids, context):
                 if not template.is_multi_variants:
                     super(product_template, self).unlink(cr, uid, [template.id], context)
+        else:
+            for template in self.browse(cr, uid, ids, context):
+                if template.variant_ids == []:
+                    super(product_template, self).unlink(cr, uid, [template.id], context)
+                else:
+                    raise osv.except_osv(_("Can't delete template "), _(" This template has existing corresponding products... "))
         return True
 
     def add_all_option(self, cr, uid, ids, context=None):
