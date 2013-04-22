@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2010-2013 Akretion (http://www.akretion.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,10 +20,12 @@
 #
 ##############################################################################
 {
-    "name" : "Products with multi-level variants",
+    "name" : "Product Variant Multi",
     "version" : "1.0",
-    "author" : "Tiny, Akretion",
-    "category" : "Generic Modules/Inventory Control",
+    "author" : "OpenERP SA, Akretion",
+    "category" : "Sales Management",
+    "license": "AGPL-3",
+    "summary": "Products with multi-dimension variants",
     "description":"""
 Multi-axial varianted product support for OpenERP
 =================================================
@@ -57,19 +59,15 @@ optional while product.product now has a new mandatory name field. This is usual
 transparent as OpenERP modules try to get their properties like name from product.product
 and only from product.template if not found on product.product. But at least you
 will have been warned.
-
-The dependence to the stock module is weak, it's only there to be able to put the
-variant menu in the warehouse management sub-menu (sigh!).
     """,
-    "depends" : ["product", "stock"],
-    "init_xml" : [],
-    "demo_xml" : ["demo_data.xml"],
-    "update_xml" : [
+    "depends" : ["product"],
+    "demo" : ["demo_data.xml"],
+    "data" : [
         "security/ir.model.access.csv",
         "product_view.xml",
     ],
+    "application": True,
     "active": False,
-    "installable": True
+    "installable": True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    Copyright (C) 2010-2011 Akretion (www.akretion.com). All Rights Reserved
+#    Copyright (C) 2010-2013 Akretion (www.akretion.com). All Rights Reserved
 #    @author Sebatien Beau <sebastien.beau@akretion.com>
 #    @author Raphaël Valyi <raphael.valyi@akretion.com>
 #    @author Alexis de Lattre <alexis.delattre@akretion.com>
@@ -24,11 +24,11 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-import decimal_precision as dp
+from openerp.osv import fields, osv, orm
+import openerp.addons.decimal_precision as dp
 # Lib to eval python code with security
-from tools.safe_eval import safe_eval
-from tools.translate import _
+from openerp.tools.safe_eval import safe_eval
+from openerp.tools.translate import _
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -42,16 +42,16 @@ class product_variant_dimension_type(osv.Model):
 
     _columns = {
         'description': fields.char('Description', size=64, translate=True),
-        'name' : fields.char('Dimension', size=64, required=True),
-        'sequence' : fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
-        'option_ids' : fields.one2many('product.variant.dimension.option', 'dimension_id', 'Dimension Options'),
+        'name': fields.char('Dimension Type Name', size=64, required=True),
+        'sequence': fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
+        'option_ids': fields.one2many('product.variant.dimension.option', 'dimension_id', 'Dimension Options'),
         'product_tmpl_id': fields.many2many('product.template', 'product_template_dimension_rel', 'dimension_id', 'template_id', 'Product Template'),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
         'mandatory_dimension': fields.boolean('Mandatory Dimension', help="If false, variant products will be created with and without this dimension"),
     }
 
     _defaults = {
-        'mandatory_dimension': lambda * a: 1,
+        'mandatory_dimension': 1,
     }
 
     _order = "sequence, name"
@@ -70,10 +70,10 @@ class product_variant_dimension_option(osv.Model):
         return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
     _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=64),
-        'sequence' : fields.integer('Sequence'),
-        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
+        'name': fields.char('Dimension Option Name', size=64, required=True),
+        'code': fields.char('Code', size=64),
+        'sequence': fields.integer('Sequence'),
+        'dimension_id': fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
     }
 
     _order = "dimension_id, sequence, name"
@@ -98,7 +98,7 @@ class product_variant_dimension_value(osv.Model):
 
     _columns = {
         'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
-        'name': fields.related('option_id', 'name', type='char', relation='product.variant.dimension.option', string="Dimension value", readonly=True),
+        'name': fields.related('option_id', 'name', type='char', relation='product.variant.dimension.option', string="Dimension Value", readonly=True),
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
         'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
@@ -113,11 +113,11 @@ class product_variant_dimension_value(osv.Model):
                 'product.variant.dimension.type': (_get_values_from_types, ['sequence'], 10),
             }),
         'product_ids': fields.many2many('product.product', 'product_product_dimension_rel', 'dimension_id', 'product_id', 'Variant', readonly=True),
-        'active' : fields.boolean('Active?', help="If false, this value will be not use anymore for generating variant"),
+        'active' : fields.boolean('Active', help="If false, this value will not be used anymore to generate variants."),
     }
 
     _defaults = {
-        'active': lambda * a: 1,
+        'active': True,
     }
 
     _sql_constraints = [ ('opt_dim_tmpl_uniq', 'UNIQUE(option_id, dimension_id, product_tmpl_id)',
@@ -129,6 +129,8 @@ class product_variant_dimension_value(osv.Model):
 class product_template(osv.Model):
     _inherit = "product.template"
 
+    _order = "name"
+
     _columns = {
         'name': fields.char('Name', size=128, translate=True, select=True, required=False),
         'dimension_type_ids':fields.many2many('product.variant.dimension.type', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Dimension Types'),
@@ -137,7 +139,7 @@ class product_template(osv.Model):
         'variant_model_name':fields.char('Variant Model Name', size=64, required=True, help='[_o.dimension_id.name_] will be replaced by the name of the dimension and [_o.option_id.code_] by the code of the option. Example of Variant Model Name : "[_o.dimension_id.name_] - [_o.option_id.code_]"'),
         'variant_model_name_separator':fields.char('Variant Model Name Separator', size=64, help='Add a separator between the elements of the variant name'),
         'code_generator' : fields.char('Code Generator', size=256, help='enter the model for the product code, all parameter between [_o.my_field_] will be replace by the product field. Example product_code model : prefix_[_o.variants_]_suffixe ==> result : prefix_2S2T_suffix'),
-        'is_multi_variants' : fields.boolean('Is Multi Variants?'),
+        'is_multi_variants' : fields.boolean('Is Multi Variants'),
         'variant_track_production' : fields.boolean('Track Production Lots on variants ?'),
         'variant_track_incoming' : fields.boolean('Track Incoming Lots on variants ?'),
         'variant_track_outgoing' : fields.boolean('Track Outgoing Lots on variants ?'),
@@ -146,9 +148,9 @@ class product_template(osv.Model):
     }
 
     _defaults = {
-        'variant_model_name': lambda * a: '[_o.dimension_id.name_] - [_o.option_id.name_]',
-        'variant_model_name_separator': lambda * a: ' - ',
-        'is_multi_variants' : lambda * a: False,
+        'variant_model_name': '[_o.dimension_id.name_] - [_o.option_id.name_]',
+        'variant_model_name_separator': ' - ',
+        'is_multi_variants' : False,
         'code_generator' : "[_'-'.join([x.option_id.name for x in o.dimension_value_ids] or ['CONF'])_]",
     }
 
@@ -352,15 +354,15 @@ class product_product(osv.Model):
             new_default_code = self.generate_product_code(cr, uid, product, product.product_tmpl_id.code_generator, context=context)
             current_values = {
                 'default_code': product.default_code,
-                'track_production': product.track_production,
-                'track_outgoing': product.track_outgoing,
-                'track_incoming': product.track_incoming,
+#                'track_production': product.track_production,
+#                'track_outgoing': product.track_outgoing,
+#                'track_incoming': product.track_incoming,
             }
             new_values = {
                 'default_code': new_default_code,
-                'track_production': product.product_tmpl_id.variant_track_production,
-                'track_outgoing': product.product_tmpl_id.variant_track_outgoing,
-                'track_incoming': product.product_tmpl_id.variant_track_incoming,
+#                'track_production': product.product_tmpl_id.variant_track_production,
+#                'track_outgoing': product.product_tmpl_id.variant_track_outgoing,
+#                'track_incoming': product.product_tmpl_id.variant_track_incoming,
             }
             if new_values != current_values:
                 self.write(cr, uid, [product.id], new_values, context=context)
@@ -395,7 +397,7 @@ class product_product(osv.Model):
                 buffer.append(value.dimension_id)
             unique_set = set(buffer)
             if len(unique_set) != len(buffer):
-                raise osv.except_osv(_('Constraint error :'), _("On product '%s', there are several dimension values for the same dimension type.") % product.name)
+                raise orm.except_orm(_('Constraint error :'), _("On product '%s', there are several dimension values for the same dimension type.") % product.name)
         return True
 
     def compute_product_dimension_extra_price(self, cr, uid, product_id, product_price_extra=False, dim_price_margin=False, dim_price_extra=False, context=None):
@@ -470,9 +472,9 @@ class product_product(osv.Model):
         #the way the weight are implemented are not clean at all, we should redesign the module product form the addons in order to get something correclty.
         #indeed some field of the template have to be overwrited like weight, name, weight_net, volume.
         #in order to have a consitent api we should use the same field for getting the weight, now we have to use "weight" or "total_weight" not clean at all with external syncronization
-        'total_weight': fields.function(_product_compute_weight_volume, method=True, type='float', string='Gross weight', help="The gross weight in Kg.", multi='weight_volume'),
-        'total_weight_net': fields.function(_product_compute_weight_volume, method=True, type='float', string='Net weight', help="The net weight in Kg.", multi='weight_volume'),
-        'total_volume':  fields.function(_product_compute_weight_volume, method=True, type='float', string='Volume', help="The volume in m3.", multi='weight_volume'),
+        'total_weight': fields.function(_product_compute_weight_volume, method=True, type='float', string='Total Gross Weight', help="The gross weight in Kg.", multi='weight_volume'),
+        'total_weight_net': fields.function(_product_compute_weight_volume, method=True, type='float', string='Total Net Weight', help="The net weight in Kg.", multi='weight_volume'),
+        'total_volume':  fields.function(_product_compute_weight_volume, method=True, type='float', string='Total Volume', help="The volume in m3.", multi='weight_volume'),
         'additional_weight': fields.float('Additional Gross weight', help="The additional gross weight in Kg."),
         'additional_weight_net': fields.float('Additional Net weight', help="The additional net weight in Kg."),
         'additional_volume': fields.float('Additional Volume', help="The additional volume in Kg."),
