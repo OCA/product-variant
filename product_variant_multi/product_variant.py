@@ -245,7 +245,17 @@ class product_template(osv.Model):
             default = {}
         default = default.copy()
         default.update({'variant_ids': False, })
-        return super(product_template, self).copy(cr, uid, id, default, context)
+        new_id = super(product_template, self).copy(cr, uid, id, default, context)
+
+        val_obj = self.pool.get('product.variant.dimension.value')
+        template = self.read(cr, uid, new_id, ['value_ids'], context=context)
+        # Making sure the values we duplicated are no longer linked via the
+        # m2m 'product_ids' with the product.product variants from the original template
+        val_obj.write(cr, uid, template['value_ids'], {
+            'product_ids': [(6,0,[])],
+        }, context=context)
+
+        return new_id
 
     def copy_translations(self, cr, uid, old_id, new_id, context=None):
         if context is None:
