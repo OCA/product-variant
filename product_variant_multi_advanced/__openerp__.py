@@ -28,8 +28,11 @@
     'category': 'Sales Management',
     'license': 'AGPL-3',
     'complexity': 'expert',
-    'description': """This module extend the capacity of product_variant_multi giving the posibility of building automatically the name, the description... of the product from the product template.
-Due to some limit of the orm you will need to apply some patch on the server""",
+    'description': ("This module extend the capacity of product_variant_multi "
+                    "giving the posibility of building automatically the "
+                    "name, the description... of the product from the product "
+                    "template. Due to some limit of the orm you will need to "
+                    "apply some patch on the server"),
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': ['product_variant_multi'],
@@ -39,4 +42,3 @@ Due to some limit of the orm you will need to apply some patch on the server""",
     'installable': True,
     'active': False,
 }
-

@@ -252,7 +252,7 @@ class product_template(osv.Model):
         # Making sure the values we duplicated are no longer linked via the
         # m2m 'product_ids' with the product.product variants from the original template
         val_obj.write(cr, uid, template['value_ids'], {
-            'product_ids': [(6,0,[])],
+            'product_ids': [(6, 0, [])],
         }, context=context)
 
         return new_id

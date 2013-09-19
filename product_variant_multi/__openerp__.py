@@ -20,13 +20,13 @@
 #
 ##############################################################################
 {
-    "name" : "Product Variant Multi",
-    "version" : "1.0",
-    "author" : "OpenERP SA, Akretion",
-    "category" : "Sales Management",
+    "name": "Product Variant Multi",
+    "version": "1.0",
+    "author": "OpenERP SA, Akretion",
+    "category": "Sales Management",
     "license": "AGPL-3",
     "summary": "Products with multi-dimension variants",
-    "description":"""
+    "description": """
 Multi-axial varianted product support for OpenERP
 =================================================
 
@@ -60,9 +60,9 @@ transparent as OpenERP modules try to get their properties like name from produc
 and only from product.template if not found on product.product. But at least you
 will have been warned.
     """,
-    "depends" : ["product"],
-    "demo" : ["demo_data.xml"],
-    "data" : [
+    "depends": ["product"],
+    "demo": ["demo_data.xml"],
+    "data": [
         "security/ir.model.access.csv",
         "product_view.xml",
     ],
@@ -70,4 +70,3 @@ will have been warned.
     "active": False,
     "installable": True,
 }
-
