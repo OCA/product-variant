@@ -22,7 +22,7 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import fields, orm
 import logging
 #from tools.translate import _
 from tools.safe_eval import safe_eval
@@ -41,7 +41,7 @@ def get_vals_to_write(vals, fields):
 duplicated_fields = ['description_sale', 'name']
 
 
-class product_template(osv.osv):
+class product_template(orm.Model):
     _inherit = "product.template"
 
     def button_generate_variants(self, cr, uid, ids, context=None):
@@ -57,7 +57,7 @@ class product_template(osv.osv):
         return True
 
 
-class product_product(osv.osv):
+class product_product(orm.Model):
     _inherit = "product.product"
 
     def write(self, cr, uid, ids, vals, context=None):

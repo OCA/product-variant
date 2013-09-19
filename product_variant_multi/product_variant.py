@@ -34,7 +34,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class product_variant_dimension_type(osv.Model):
+class product_variant_dimension_type(orm.Model):
     _name = "product.variant.dimension.type"
     _description = "Dimension Type"
 
@@ -68,7 +68,7 @@ class product_variant_dimension_type(osv.Model):
                      self).name_search(cr, uid, '', args, 'ilike', None, None)
 
 
-class product_variant_dimension_option(osv.Model):
+class product_variant_dimension_option(orm.Model):
     _name = "product.variant.dimension.option"
     _description = "Dimension Option"
 
@@ -87,7 +87,7 @@ class product_variant_dimension_option(osv.Model):
     _order = "dimension_id, sequence, name"
 
 
-class product_variant_dimension_value(osv.Model):
+class product_variant_dimension_value(orm.Model):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
@@ -157,7 +157,7 @@ class product_variant_dimension_value(osv.Model):
     _order = "dimension_sequence, dimension_id, sequence, option_id"
 
 
-class product_template(osv.Model):
+class product_template(orm.Model):
     _inherit = "product.template"
 
     _order = "name"
@@ -364,7 +364,7 @@ class product_template(osv.Model):
         return True
 
 
-class product_product(osv.Model):
+class product_product(orm.Model):
     _inherit = "product.product"
 
     def init(self, cr):
