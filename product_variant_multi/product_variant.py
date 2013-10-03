@@ -152,9 +152,9 @@ class product_template(osv.Model):
         if attribute_set_id:
             attribute_ids = location_obj.search(cr, uid, [['attribute_set_id', '=', attribute_set_id]], context=context)
             for attribute in attribute_ids:
-                res = axe_obj.search(cr, uid, [['product_attribute_id', '=', attribute]], context=context)
-                if res:
-                    axes.append(res[0])
+                axes_ids = axe_obj.search(cr, uid, [['product_attribute_id', '=', attribute]], context=context)
+                if axes_ids:
+                    axes.append(axes_ids[0])
         return  {'value' : {'axes_variance_ids' : axes}}
 
     def unlink(self, cr, uid, ids, context=None):

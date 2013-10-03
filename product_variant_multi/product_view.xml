@@ -163,6 +163,19 @@
             </field>
         </record>
 
+        <record id="product_variant_multi_attribute_form_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.attribute.form</field>
+            <field name="model">attribute.attribute</field>
+            <field name="inherit_id" ref="base_custom_attributes.attribute_attribute_form_view" />
+            <field name="arch" type="xml">
+                <field name="attribute_type" position="replace">
+                    <field name="attribute_type" readonly="context.get('readonly_attribut_type')"/>
+                </field>
+                <field name="model_id" position="replace">
+                    <field name="model_id" readonly="context.get('readonly_attribut_type')"/>
+                </field>
+             </field>
+        </record>
 
         <record id="action_dimension_type" model="ir.actions.act_window">
             <field name="name">Axes Variance</field>
