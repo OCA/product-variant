@@ -60,7 +60,10 @@ transparent as OpenERP modules try to get their properties like name from produc
 and only from product.template if not found on product.product. But at least you
 will have been warned.
     """,
-    "depends" : ["product"],
+    "depends" : [
+                "product",
+                "product_custom_attributes"
+                ],
     "demo" : ["demo_data.xml"],
     "data" : [
         "security/ir.model.access.csv",
@@ -70,4 +73,3 @@ will have been warned.
     "active": False,
     "installable": True,
 }
-

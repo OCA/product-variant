@@ -36,51 +36,34 @@ _logger = logging.getLogger(__name__)
 #
 # Dimensions Definition
 #
-class product_variant_dimension_type(osv.Model):
-    _name = "product.variant.dimension.type"
-    _description = "Dimension Type"
+class product_variant_axe(osv.Model):
+    _name = "product.variant.axe"
+    _table = 'product_variant_axe'
+    _inherits = {'attribute.attribute': 'product_attribute_id'}
+
 
     _columns = {
-        'description': fields.char('Description', size=64, translate=True),
-        'name': fields.char('Dimension Type Name', size=64, required=True),
+    #    'description': fields.char('Description', size=64, translate=True),
+    #    'name': fields.char('Dimension Type Name', size=64, required=True),
         'sequence': fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
-        'option_ids': fields.one2many('product.variant.dimension.option', 'dimension_id', 'Dimension Options'),
-        'product_tmpl_id': fields.many2many('product.template', 'product_template_dimension_rel', 'dimension_id', 'template_id', 'Product Template'),
+    #    'option_ids': fields.one2many('product.variant.dimension.option', 'dimension_id', 'Dimension Options'),
+    #maybe useless    'product_tmpl_id': fields.many2many('product.template', 'product_template_dimension_rel', 'dimension_id', 'template_id', 'Product Template'),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
         'mandatory_dimension': fields.boolean('Mandatory Dimension', help="If false, variant products will be created with and without this dimension"),
+        'product_attribute_id': fields.many2one('attribute.attribute', string='Product Attribute'),
     }
 
     _defaults = {
         'mandatory_dimension': 1,
     }
 
-    _order = "sequence, name"
+    _order = "sequence"
 
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=None):
         if not context.get('product_tmpl_id', False):
             args = None
-        return super(product_variant_dimension_type, self).name_search(cr, user, '', args, 'ilike', None, None)
+        return super(product_variant_axe, self).name_search(cr, user, '', args, 'ilike', None, None)
 
-product_variant_dimension_type()
-
-
-class product_variant_dimension_option(osv.Model):
-    _name = "product.variant.dimension.option"
-    _description = "Dimension Option"
-
-    def _get_dimension_values(self, cr, uid, ids, context=None):
-        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
-
-    _columns = {
-        'name': fields.char('Dimension Option Name', size=64, required=True),
-        'code': fields.char('Code', size=64),
-        'sequence': fields.integer('Sequence'),
-        'dimension_id': fields.many2one('product.variant.dimension.type', 'Dimension Type', ondelete='cascade'),
-    }
-
-    _order = "dimension_id, sequence, name"
-
-product_variant_dimension_option()
 
 
 class product_variant_dimension_value(osv.Model):
@@ -88,35 +71,36 @@ class product_variant_dimension_value(osv.Model):
     _description = "Dimension Value"
 
     def unlink(self, cr, uid, ids, context=None):
-        for value in self.browse(cr, uid, ids, context=context):
-            if value.product_ids:
-                product_list = '\n    - ' + '\n    - '.join([product.name for product in value.product_ids])
-                raise orm.except_orm(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value." % (value.option_id.name, product_list)))
+        #for value in self.browse(cr, uid, ids, context=context):
+            #if value.product_ids:
+            #    product_list = '\n    - ' + '\n    - '.join([product.name for product in value.product_ids])
+            #    raise orm.except_orm(_('Dimension value can not be removed'), _("The value %s is used by the products : %s \n Please remove these products before removing the value." % (value.option_id.name, product_list)))
         return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
     def _get_values_from_types(self, cr, uid, ids, context=None):
         return self.pool.get('product.variant.dimension.value').search(cr, uid, [('dimension_id', 'in', ids)], context=context)
 
-    def _get_values_from_options(self, cr, uid, ids, context=None):
-        return self.pool.get('product.variant.dimension.value').search(cr, uid, [('option_id', 'in', ids)], context=context)
+    #def _get_values_from_options(self, cr, uid, ids, context=None):
+    #    return self.pool.get('product.variant.dimension.value').search(cr, uid, [('option_id', 'in', ids)], context=context)
 
     _columns = {
-        'option_id' : fields.many2one('product.variant.dimension.option', 'Option', required=True),
-        'name': fields.related('option_id', 'name', type='char', relation='product.variant.dimension.option', string="Dimension Value", readonly=True),
+        'option_id' : fields.many2one('attribute.option', 'Option', required=True),#TODO add param in context to have a full name 'dimension + option' exemple address on sale order
+        'name': fields.related('option_id', 'name', type='char', relation='attribute.option', string="Dimension Value", readonly=True),
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Sale Price Extra', digits_compute=dp.get_precision('Sale Price')),
         'price_margin' : fields.float('Sale Price Margin', digits_compute=dp.get_precision('Sale Price')),
         'cost_price_extra' : fields.float('Cost Price Extra', digits_compute=dp.get_precision('Purchase Price')),
-        'dimension_id' : fields.related('option_id', 'dimension_id', type="many2one", relation="product.variant.dimension.type", string="Dimension Type", readonly=True, store={
-            'product.variant.dimension.value': (lambda self, cr, uid, ids, c={}: ids, ['option_id'], 10),
-            'product.variant.dimension.option': (_get_values_from_options, ['dimension_id'], 20),
-                }),
+        'dimension_id' : fields.many2one('product.variant.axe', 'Axe', required=True),
+#        'dimension_id' : fields.related('option_id', 'attribute_id', type="many2one", relation="product.variant.axe", string="Dimension Type", readonly=True, store={
+#           'product.variant.dimension.value': (lambda self, cr, uid, ids, c={}: ids, ['option_id'], 10),
+#           'product.variant.dimension.option': (_get_values_from_options, ['dimension_id'], 20),
+#               }),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template', ondelete='cascade'),
-        'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer', relation='product.variant.dimension.type', string="Related Dimension Sequence", #used for ordering purposes in the "variants"
+        'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer', relation='product.variant.axe', string="Related Dimension Sequence", #used for ordering purposes in the "variants"
              store={
-                'product.variant.dimension.type': (_get_values_from_types, ['sequence'], 10),
+                'product.variant.axe': (_get_values_from_types, ['sequence'], 10),
             }),
-        'product_ids': fields.many2many('product.product', 'product_product_dimension_rel', 'dimension_id', 'product_id', 'Variant', readonly=True),
+#        'product_ids': fields.many2many('product.product', 'product_product_dimension_rel', 'dimension_id', 'product_id', 'Variant', readonly=True),
         'active' : fields.boolean('Active', help="If false, this value will not be used anymore to generate variants."),
     }
 
@@ -127,7 +111,7 @@ class product_variant_dimension_value(osv.Model):
     _sql_constraints = [ ('opt_dim_tmpl_uniq', 'UNIQUE(option_id, dimension_id, product_tmpl_id)',
                 _('The combination option and dimension type already exists for this product template !')), ]
 
-    _order = "dimension_sequence, dimension_id, sequence, option_id"
+    _order = "dimension_sequence, sequence, option_id"
 
 product_variant_dimension_value()
 
@@ -138,8 +122,9 @@ class product_template(osv.Model):
     _order = "name"
 
     _columns = {
+        #'attribute_set_id': fields.many2one('attribute.set', 'Name', required=True),
         'name': fields.char('Name', size=128, translate=True, select=True),
-        'dimension_type_ids':fields.many2many('product.variant.dimension.type', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Dimension Types'),
+        'axes_variance_ids':fields.many2many('product.variant.axe', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Axes Variance'),
         'value_ids': fields.one2many('product.variant.dimension.value', 'product_tmpl_id', 'Dimension Values'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
         'variant_model_name':fields.char('Variant Model Name', size=64, required=True, help='[_o.dimension_id.name_] will be replaced by the name of the dimension and [_o.option_id.code_] by the code of the option. Example of Variant Model Name : "[_o.dimension_id.name_] - [_o.option_id.code_]"'),
@@ -175,10 +160,10 @@ class product_template(osv.Model):
             value_obj.write(cr, uid, values_ids, {'active':True}, context=context)
             existing_option_ids = [value.option_id.id for value in value_obj.browse(cr, uid, values_ids, context=context)]
             vals = {'value_ids' : []}
-            for dim in template.dimension_type_ids:
+            for dim in template.axes_variance_ids:
                 for option in dim.option_ids:
                     if not option.id in existing_option_ids:
-                        vals['value_ids'] += [[0, 0, {'option_id': option.id}]]
+                        vals['value_ids'] += [[0, 0, {'dimension_id': dim.id, 'option_id': option.id}]]
             self.write(cr, uid, [template.id], vals, context=context)
         return True
 
@@ -297,6 +282,7 @@ class product_product(osv.Model):
     _inherit = "product.product"
 
     def init(self, cr):
+        #TODO do it only for the first installation
         #For the first installation if you already have product in your database the name of the existing product will be empty, so we fill it
         cr.execute("update product_product set name=name_template where name is null;")
         return True
