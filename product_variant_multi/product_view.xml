@@ -119,12 +119,12 @@
         </record>
 
 
-        <!-- DIMENSION TYPE -->
+        <!-- Axes Variance -->
         <record id="product_variant_multi_dimension_type_search" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.type.search</field>
             <field name="model">product.variant.axe</field>
             <field name="arch" type="xml">
-                <search string="Dimension Type Search">
+                <search string="Axes Variance Search">
                     <field name="name"/>
                 </search>
             </field>
@@ -200,6 +200,9 @@
                 <xpath expr="//field[@name='categ_id']/.." position="after">
                     <group>
                         <field name="is_multi_variants"/>
+                        <field name="attribute_set_id"
+                               attrs="{'invisible':[('is_multi_variants','=',False)]}"
+                               on_change="onchange_attribute_set(attribute_set_id, context)"/>
                     </group>
                 </xpath>
                 <xpath expr="//form/notebook" position="inside">

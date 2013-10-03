@@ -122,7 +122,7 @@ class product_template(osv.Model):
     _order = "name"
 
     _columns = {
-        #'attribute_set_id': fields.many2one('attribute.set', 'Name', required=True),
+        'attribute_set_id': fields.many2one('attribute.set', 'Attribute Set', required=True),
         'name': fields.char('Name', size=128, translate=True, select=True),
         'axes_variance_ids':fields.many2many('product.variant.axe', 'product_template_dimension_rel', 'template_id', 'dimension_id', 'Axes Variance'),
         'value_ids': fields.one2many('product.variant.dimension.value', 'product_tmpl_id', 'Dimension Values'),
@@ -144,6 +144,18 @@ class product_template(osv.Model):
         'is_multi_variants' : False,
         'code_generator' : "[_'-'.join([x.option_id.name for x in o.dimension_value_ids] or ['CONF'])_]",
     }
+
+    def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
+        location_obj = self.pool.get('attribute.location')
+        axe_obj = self.pool.get('product.variant.axe')
+        axes = []
+        if attribute_set_id:
+            attribute_ids = location_obj.search(cr, uid, [['attribute_set_id', '=', attribute_set_id]], context=context)
+            for attribute in attribute_ids:
+                res = axe_obj.search(cr, uid, [['product_attribute_id', '=', attribute]], context=context)
+                if res:
+                    axes.append(res[0])
+        return  {'value' : {'axes_variance_ids' : axes}}
 
     def unlink(self, cr, uid, ids, context=None):
         if context and context.get('unlink_from_product_product', False):
