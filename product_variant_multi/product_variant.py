@@ -30,6 +30,7 @@ import openerp.addons.decimal_precision as dp
 # Lib to eval python code with security
 from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
+from collections import defaultdict
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -50,8 +51,6 @@ class product_variant_axe(orm.Model):
     _columns = {
         'sequence': fields.integer('Sequence', help=("The product 'variants' code will "
                                                      "use this to order the dimension values")),
-        #'product_tmpl_id': fields.many2many('product.template', 'product_template_dimension_rel',
-        #                                    'dimension_id', 'template_id', 'Product Template'),
         'allow_custom_value': fields.boolean('Allow Custom Value',
                                              help=("If true, custom values can be entered "
                                                    "in the product configurator")),
@@ -259,19 +258,19 @@ class product_template(orm.Model):
 
     def button_generate_variants(self, cr, uid, ids, context=None):
         variants_obj = self.pool.get('product.product')
-        value_obj = self.pool['product.variant.dimension.value']
+        option_obj = self.pool['attribute.option']
 
         for product_temp in self.browse(cr, uid, ids, context):
-            res = {}
-            temp_val_list = []
+            res = defaultdict(list)
             for value in product_temp.value_ids:
-                if res.get(value.dimension_id, False):
-                    res[value.dimension_id] += [value.id]
-                else:
-                    res[value.dimension_id] = [value.id]
+                res[value.dimension_id].append(value.option_id.id)
 
+            temp_val_list = []
+            dimension_fields = []
             for dim in res:
+                dimension_fields.append(dim.name)
                 temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
+
 
             #example temp_val_list is equal to [['red', 'blue', 'yellow'], ['L', 'XL', 'M']]
             #In reallity it's not a string value but the id of the value
@@ -280,23 +279,24 @@ class product_template(orm.Model):
                                                        [('product_tmpl_id', '=', product_temp.id)])
             created_product_ids = []
             if temp_val_list and not product_temp.do_not_generate_new_variant:
-                list_of_variants = self._create_variant_list(cr, uid, ids, temp_val_list, context)
-                existing_product_dim_value = variants_obj.read(cr, uid, existing_product_ids,
-                                                               ['dimension_value_ids'])
-                list_of_variants_existing = [x['dimension_value_ids']
-                                             for x in existing_product_dim_value]
-                for x in list_of_variants_existing:
-                    x.sort()
-                for x in list_of_variants:
-                    x.sort()
-                list_of_variants_to_create = [x for x in list_of_variants
-                                              if not x in list_of_variants_existing]
+                list_of_combinaison= self._create_variant_list(cr, uid, ids, temp_val_list, context)
+                existing_products = variants_obj.read(cr, uid, existing_product_ids,
+                                                               dimension_fields, context=context)
+                list_of_existing_combinaison = []
+                for existing_product in existing_products:
+                    existing_combinaison = []
+                    for field in dimension_fields:
+                        existing_combinaison.append(existing_product[field][0])
+                    list_of_existing_combinaison.append(existing_combinaison)
+
+                list_of_combinaison_to_create = [x for x in list_of_combinaison
+                                              if not x in list_of_existing_combinaison]
 
                 _logger.debug("variant existing : %s, variant to create : %s",
-                              len(list_of_variants_existing),
-                              len(list_of_variants_to_create))
+                              len(list_of_existing_combinaison),
+                              len(list_of_combinaison_to_create))
                 count = 0
-                for variant in list_of_variants_to_create:
+                for combinaison in list_of_combinaison_to_create:
                     count += 1
                     vals = {
                         'name': product_temp.name,
@@ -304,11 +304,10 @@ class product_template(orm.Model):
                         'track_incoming': product_temp.variant_track_incoming,
                         'track_outgoing': product_temp.variant_track_outgoing,
                         'product_tmpl_id': product_temp.id,
-                        'dimension_value_ids': [(6, 0, variant)],
                     }
 
-                    for value in value_obj.browse(cr, uid, variant):
-                        vals[value.option_id.attribute_id.name] = value.option_id.id
+                    for option in option_obj.browse(cr, uid, combinaison, context=context):
+                        vals[option.attribute_id.name] = option.id
 
                     cr.execute("SAVEPOINT pre_variant_save")
                     try:
@@ -332,22 +331,22 @@ class product_template(orm.Model):
             else:
                 product_ids = created_product_ids
 
-            # FIRST, Generate/Update variant names ('variants' field)
-            _logger.debug("Starting to generate/update variant names...")
-            self.pool.get('product.product').build_variants_name(cr, uid, product_ids,
-                                                                 context=context)
-            _logger.debug("End of the generation/update of variant names.")
-            # SECOND, Generate/Update product codes and properties (we may need variants name)
-            _logger.debug("Starting to generate/update product codes and properties...")
-            self.pool.get('product.product').build_product_code_and_properties(cr, uid,
-                                                                               product_ids,
-                                                                               context=context)
-            _logger.debug("End of the generation/update of product codes and properties.")
-            # THIRD, Generate/Update product names (we may need variants name for that)
-            _logger.debug("Starting to generate/update product names...")
-            self.pool.get('product.product').build_product_name(cr, uid, product_ids,
-                                                                context=context)
-            _logger.debug("End of generation/update of product names.")
+            ## FIRST, Generate/Update variant names ('variants' field)
+            #_logger.debug("Starting to generate/update variant names...")
+            #self.pool.get('product.product').build_variants_name(cr, uid, product_ids,
+            #                                                     context=context)
+            #_logger.debug("End of the generation/update of variant names.")
+            ## SECOND, Generate/Update product codes and properties (we may need variants name)
+            #_logger.debug("Starting to generate/update product codes and properties...")
+            #self.pool.get('product.product').build_product_code_and_properties(cr, uid,
+            #                                                                   product_ids,
+            #                                                                   context=context)
+            #_logger.debug("End of the generation/update of product codes and properties.")
+            ## THIRD, Generate/Update product names (we may need variants name for that)
+            #_logger.debug("Starting to generate/update product names...")
+            #self.pool.get('product.product').build_product_name(cr, uid, product_ids,
+            #                                                    context=context)
+            #_logger.debug("End of generation/update of product names.")
         return True
 
 
