@@ -7,6 +7,7 @@
 #    @author Sebatien Beau <sebastien.beau@akretion.com>
 #    @author Raphaël Valyi <raphael.valyi@akretion.com>
 #    @author Alexis de Lattre <alexis.delattre@akretion.com>
+#    @author Chafique Delli <chafique.delli@akretion.com>
 #    update to use a single "Generate/Update" button & price computation code
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -50,7 +51,7 @@ class product_variant_axe(osv.Model):
     #maybe useless    'product_tmpl_id': fields.many2many('product.template', 'product_template_dimension_rel', 'dimension_id', 'template_id', 'Product Template'),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
         'mandatory_dimension': fields.boolean('Mandatory Dimension', help="If false, variant products will be created with and without this dimension"),
-        'product_attribute_id': fields.many2one('attribute.attribute', string='Product Attribute'),
+        'product_attribute_id': fields.many2one('attribute.attribute', string='Product Attribute', required=True, ondelete='cascade'),
     }
 
     _defaults = {
@@ -210,6 +211,7 @@ class product_template(osv.Model):
 
     def button_generate_variants(self, cr, uid, ids, context=None):
         variants_obj = self.pool.get('product.product')
+        value_obj = self.pool['product.variant.dimension.value']
 
         for product_temp in self.browse(cr, uid, ids, context):
             #for temp_type in product_temp.dimension_type_ids:
@@ -218,6 +220,7 @@ class product_template(osv.Model):
                 # if last dimension_type has no dimension_value, we ignore it
             #    if not temp_val_list[-1]:
             #        temp_val_list.pop()
+
             res = {}
             temp_val_list = []
             for value in product_temp.value_ids:
@@ -225,8 +228,12 @@ class product_template(osv.Model):
                     res[value.dimension_id] += [value.id]
                 else:
                     res[value.dimension_id] = [value.id]
+
             for dim in res:
                 temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
+
+            #example temp_val_list is equal to [['red', 'blue', 'yellow'], ['L', 'XL', 'M']]
+            #In reallity it's not a string value but the id of the value
 
             existing_product_ids = variants_obj.search(cr, uid, [('product_tmpl_id', '=', product_temp.id)])
             created_product_ids = []
@@ -250,7 +257,9 @@ class product_template(osv.Model):
                     vals['track_incoming'] = product_temp.variant_track_incoming
                     vals['track_outgoing'] = product_temp.variant_track_outgoing
                     vals['product_tmpl_id'] = product_temp.id
-                    vals['dimension_value_ids'] = [(6, 0, variant)]
+
+                    for value in value_obj.browse(cr, uid, variant):
+                        vals[value.option_id.attribute_id.name] = value.option_id.id
 
                     cr.execute("SAVEPOINT pre_variant_save")
                     try:
