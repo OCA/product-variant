@@ -5,6 +5,3 @@
 "access_product_variant_dimension_type_sale_manager","Full rights on product.variant.dimension.type for sale manager","model_product_variant_dimension_type","base.group_sale_manager",1,1,1,1
 "access_product_variant_dimension_value_sale_manager","Full rights on product.variant.dimension.value for sale manager","model_product_variant_dimension_value","base.group_sale_manager",1,1,1,1
 "access_product_variant_dimension_option_sale_manager","Full rights on product.variant.dimension.option for sale manager","model_product_variant_dimension_option","base.group_sale_manager",1,1,1,1
-"access_product_variant_dimension_type_stock_manager","Full rights on product.variant.dimension.type for stock manager","model_product_variant_dimension_type","stock.group_stock_manager",1,1,1,1
-"access_product_variant_dimension_value_stock_manager","Full rights on product.variant.dimension.value for stock manager","model_product_variant_dimension_value","stock.group_stock_manager",1,1,1,1
-"access_product_variant_dimension_option_stock_manager","Full rights on product.variant.dimension.option for stock manager","model_product_variant_dimension_option","stock.group_stock_manager",1,1,1,1
