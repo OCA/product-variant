@@ -19,6 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# flake8: noqa
 
-import product_variant
-
+from . import product_variant

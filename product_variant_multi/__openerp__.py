@@ -20,13 +20,13 @@
 #
 ##############################################################################
 {
-    "name" : "Product Variant Multi",
-    "version" : "1.0",
-    "author" : "OpenERP SA, Akretion",
-    "category" : "Sales Management",
+    "name": "Product Variant Multi",
+    "version": "1.0",
+    "author": "OpenERP SA, Akretion",
+    "category": "Sales Management",
     "license": "AGPL-3",
     "summary": "Products with multi-dimension variants",
-    "description":"""
+    "description": """
 Multi-axial varianted product support for OpenERP
 =================================================
 
