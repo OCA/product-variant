@@ -31,6 +31,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
 from collections import defaultdict
+from mako.template import Template
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -138,21 +139,11 @@ class product_template(orm.Model):
                                      'product_tmpl_id',
                                      'Dimension Values'),
         'variant_ids': fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
-        'variant_model_name': fields.char('Variant Model Name', size=64, required=True,
-                                          help=('[_o.dimension_id.name_] will be replaced with the'
-                                                ' name of the dimension and [_o.option_id.code_] '
-                                                'by the code of the option. Example of Variant '
-                                                'Model Name : "[_o.dimension_id.name_] - '
-                                                '[_o.option_id.code_]"')),
-        'variant_model_name_separator': fields.char('Variant Model Name Separator', size=64,
-                                                    help=('Add a separator between the elements '
-                                                          'of the variant name')),
-        'code_generator': fields.char('Code Generator', size=256,
-                                      help=('enter the model for the product code, all parameter'
-                                            ' between [_o.my_field_] will be replace by the '
-                                            'product field. Example product_code model : '
-                                            'prefix_[_o.variants_]_suffixe ==> result : '
-                                            'prefix_2S2T_suffix')),
+        'template_name': fields.char('Template Name', size=256, required=True,
+                                          help=('Name in mako syntax in order to generate '
+                                                'the name of your variant')),
+        'template_code': fields.char('Template Code', size=256,
+                                      help=('Code of the product in mako syntax')),
         'is_multi_variants': fields.boolean('Is Multi Variants'),
         'variant_track_production': fields.boolean('Track Production Lots on variants ?'),
         'variant_track_incoming': fields.boolean('Track Incoming Lots on variants ?'),
@@ -162,11 +153,9 @@ class product_template(orm.Model):
     }
 
     _defaults = {
-        'variant_model_name': '[_o.dimension_id.name_] - [_o.option_id.name_]',
-        'variant_model_name_separator': ' - ',
+        'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.axes_variance_ids])}',
         'is_multi_variants': False,
-        'code_generator': ("[_'-'.join([x.option_id.name for x in o.dimension_value_ids] "
-                           "or ['CONF'])_]"),
+        'template_code': ('${"-".join([o[dimension.name].name for dimension in o.axes_variance_ids])}'),
     }
 
     def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
@@ -331,10 +320,10 @@ class product_template(orm.Model):
             else:
                 product_ids = created_product_ids
 
-            ## FIRST, Generate/Update variant names ('variants' field)
-            #_logger.debug("Starting to generate/update variant names...")
-            #self.pool.get('product.product').build_variants_name(cr, uid, product_ids,
-            #                                                     context=context)
+            # FIRST, Generate/Update variant names ('variants' field)
+            _logger.debug("Starting to generate/update variant names...")
+            self.pool.get('product.product').update_variant(cr, uid, product_ids,
+                                                                 context=context)
             #_logger.debug("End of the generation/update of variant names.")
             ## SECOND, Generate/Update product codes and properties (we may need variants name)
             #_logger.debug("Starting to generate/update product codes and properties...")
@@ -366,21 +355,7 @@ class product_product(orm.Model):
         context['unlink_from_product_product'] = True
         return super(product_product, self).unlink(cr, uid, ids, context)
 
-    def build_product_name(self, cr, uid, ids, context=None):
-        return self.build_product_field(cr, uid, ids, 'name', context=None)
-
-    def build_product_field(self, cr, uid, ids, field, context=None):
-        def get_description_sale(product):
-            return self.parse(cr, uid, product,
-                              product.product_tmpl_id.description_sale,
-                              context=context)
-
-        def get_name(product):
-            return (product.product_tmpl_id.name or '') + ' ' + (product.variants or '')
-
-        if not context:
-            context = {}
-        context['is_multi_variants'] = True
+    def update_variant(self, cr, uid, ids, context=None):
         obj_lang = self.pool.get('res.lang')
         lang_ids = obj_lang.search(cr, uid, [('translatable', '=', True)], context=context)
         lang_code = [x['code']
@@ -388,96 +363,50 @@ class product_product(orm.Model):
         for code in lang_code:
             context['lang'] = code
             for product in self.browse(cr, uid, ids, context=context):
-                new_field_value = eval("get_" + field + "(product)")  # TODO convert to safe_eval
-                cur_field_value = safe_eval("product." + field, {'product': product})
-                if new_field_value != cur_field_value:
-                    self.write(cr, uid, [product.id], {field: new_field_value}, context=context)
+                self._update_variant(cr, uid, product, context=context)
         return True
 
-    def parse(self, cr, uid, o, text, context=None):
-        if not text:
-            return ''
-        vals = text.split('[_')
-        description = ''
-        for val in vals:
-            if '_]' in val:
-                sub_val = val.split('_]')
-                try:
-                    description += (safe_eval(sub_val[0], {'o': o, 'context': context})
-                                    or ''
-                                    ) + sub_val[1]
-                except AttributeError:
-                    raise osv.except_osv(_('Bad expression'),
-                                         _("One of your expressions contains "
-                                           "a non existing attribute: %s"
-                                           ) % sub_val[0])
-            else:
-                description += val
-        return description
-
-    def generate_product_code(self, cr, uid, product_obj, code_generator, context=None):
-        '''I wrote this stupid function to be able to inherit it in a custom module !'''
-        return self.parse(cr, uid, product_obj, code_generator, context=context)
-
-    def build_product_code_and_properties(self, cr, uid, ids, context=None):
-        for product in self.browse(cr, uid, ids, context=context):
-            new_default_code = self.generate_product_code(cr, uid, product,
-                                                          product.product_tmpl_id.code_generator,
-                                                          context=context)
-            current_values = {
-                'default_code': product.default_code,
-                #'track_production': product.track_production,
-                #'track_outgoing': product.track_outgoing,
-                #'track_incoming': product.track_incoming,
-            }
-            new_values = {
-                'default_code': new_default_code,
-                #'track_production': product.product_tmpl_id.variant_track_production,
-                #'track_outgoing': product.product_tmpl_id.variant_track_outgoing,
-                #'track_incoming': product.product_tmpl_id.variant_track_incoming,
-            }
-            if new_values != current_values:
-                self.write(cr, uid, [product.id], new_values, context=context)
+    def _update_variant(self, cr, uid, product, context=None):
+        vals = self._prepare_update_vals(cr, uid, product, context=context)
+        vals = self._remove_not_updated(cr, uid, product, vals, context=context)
+        if vals:
+            product.write(vals)
         return True
 
-    def product_ids_variant_changed(self, cr, uid, ids, res, context=None):
-        '''it's a hook for product_variant_multi advanced'''
-        return True
+    def _prepare_update_vals(self, cr, uid, product, context=None):
+        context['is_multi_variants'] = True
+        vals = {
+            'variants': Template(product.template_name).render(o=product),
+            'default_code': Template(product.template_code).render(o=product),
+        }
+        vals['name'] = (product.product_tmpl_id.name or '')+ ' ' + vals['variants']
 
-    def generate_variant_name(self, cr, uid, product_id, context=None):
-        '''Do the generation of the variant name in a dedicated function, so that we can
-        inherit this function to hack the code generation'''
-        product = self.browse(cr, uid, product_id, context=context)
-        model = product.variant_model_name
-        r = map(lambda dim: [dim.dimension_id.sequence,
-                             self.parse(cr, uid, dim, model, context=context)],
-                product.dimension_value_ids)
-        r.sort()
-        r = [x[1] for x in r]
-        new_variant_name = (product.variant_model_name_separator or '').join(r)
-        return new_variant_name
+        return vals
 
-    def build_variants_name(self, cr, uid, ids, context=None):
-        for product in self.browse(cr, uid, ids, context=context):
-            new_variant_name = self.generate_variant_name(cr, uid, product.id, context=context)
-            if new_variant_name != product.variants:
-                self.write(cr, uid, [product.id], {'variants': new_variant_name}, context=context)
-        return True
+    def _remove_not_updated(self, cr, uid, product, vals, context=None):
+        vals_to_write = {}
+        for key in vals:
+            if vals[key] != product[key]:
+                vals_to_write[key] = vals[key]
+        return vals_to_write
 
-    def _check_dimension_values(self, cr, uid, ids):
-        # TODO: check that all dimension_types of the product_template
-        # have a corresponding dimension_value ??
-        for product in self.browse(cr, uid, ids, {}):
-            buffer = []
-            for value in product.dimension_value_ids:
-                buffer.append(value.dimension_id)
-            unique_set = set(buffer)
-            if len(unique_set) != len(buffer):
-                raise orm.except_orm(_('Constraint error :'),
-                                     _("On product '%s', there are several dimension values "
-                                       "for the same dimension type.") % product.name)
-        return True
 
+    #TODO reimplement
+    #def _check_dimension_values(self, cr, uid, ids):
+    #    # TODO: check that all dimension_types of the product_template
+    #    # have a corresponding dimension_value ??
+    #    for product in self.browse(cr, uid, ids, {}):
+    #        buffer = []
+    #        for value in product.dimension_value_ids:
+    #            buffer.append(value.dimension_id)
+    #        unique_set = set(buffer)
+    #        if len(unique_set) != len(buffer):
+    #            raise orm.except_orm(_('Constraint error :'),
+    #                                 _("On product '%s', there are several dimension values "
+    #                                   "for the same dimension type.") % product.name)
+    #    return True
+
+    #deprecated
     def compute_product_dimension_extra_price(self, cr, uid, product_id,
                                               product_price_extra=False, dim_price_margin=False,
                                               dim_price_extra=False, context=None):
@@ -566,6 +495,7 @@ class product_product(orm.Model):
         default.update({'variant_ids': False})
         return super(product_product, self).copy(cr, uid, id, default, context)
 
+    #deprecated
     def _product_compute_weight_volume(self, cr, uid, ids, fields, arg, context=None):
         result = {}
         for product in self.browse(cr, uid, ids, context=context):
@@ -626,5 +556,5 @@ class product_product(orm.Model):
     }
 
     _constraints = [
-        (_check_dimension_values, 'Error msg in raise', ['dimension_value_ids']),
+    #    (_check_dimension_values, 'Error msg in raise', ['dimension_value_ids']),
     ]
