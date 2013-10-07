@@ -390,22 +390,6 @@ class product_product(orm.Model):
                 vals_to_write[key] = vals[key]
         return vals_to_write
 
-
-    #TODO reimplement
-    #def _check_dimension_values(self, cr, uid, ids):
-    #    # TODO: check that all dimension_types of the product_template
-    #    # have a corresponding dimension_value ??
-    #    for product in self.browse(cr, uid, ids, {}):
-    #        buffer = []
-    #        for value in product.dimension_value_ids:
-    #            buffer.append(value.dimension_id)
-    #        unique_set = set(buffer)
-    #        if len(unique_set) != len(buffer):
-    #            raise orm.except_orm(_('Constraint error :'),
-    #                                 _("On product '%s', there are several dimension values "
-    #                                   "for the same dimension type.") % product.name)
-    #    return True
-
     #deprecated
     def compute_product_dimension_extra_price(self, cr, uid, product_id,
                                               product_price_extra=False, dim_price_margin=False,
@@ -554,7 +538,3 @@ class product_product(orm.Model):
         'additional_volume': fields.float('Additional Volume',
                                           help="The additional volume in Kg."),
     }
-
-    _constraints = [
-    #    (_check_dimension_values, 'Error msg in raise', ['dimension_value_ids']),
-    ]
