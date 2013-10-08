@@ -58,7 +58,8 @@ class product_variant_axe(orm.Model):
         'mandatory_dimension': fields.boolean('Mandatory Dimension',
                                               help=("If false, variant products will be created "
                                                     "with and without this dimension")),
-        'product_attribute_id': fields.many2one('attribute.attribute', string='Product Attribute'),
+        'product_attribute_id': fields.many2one('attribute.attribute', string='Product Attribute',
+                                                required=True, ondelete='cascade'),
     }
 
     _defaults = {
@@ -155,7 +156,7 @@ class product_template(orm.Model):
     _defaults = {
         'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.axes_variance_ids])}',
         'is_multi_variants': False,
-        'template_code': ('${"-".join([o[dimension.name].name for dimension in o.axes_variance_ids])}'),
+        'template_code': ('${"-".join([o[dimension.name].code for dimension in o.axes_variance_ids])}'),
     }
 
     def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
@@ -398,25 +399,26 @@ class product_product(orm.Model):
             context = {}
         dimension_extra = 0.0
         product = self.browse(cr, uid, product_id, context=context)
-        for dim in product.dimension_value_ids:
-            if product_price_extra and dim_price_margin and dim_price_extra:
-                dimension_extra += (safe_eval('product.' + product_price_extra,
-                                              {'product': product})
-                                    * safe_eval('dim.' + dim_price_margin,
-                                                {'dim': dim})
-                                    + safe_eval('dim.' + dim_price_extra,
-                                                {'dim': dim}))
-            elif not product_price_extra and not dim_price_margin and dim_price_extra:
-                dimension_extra += safe_eval('dim.' + dim_price_extra, {'dim': dim})
-            elif product_price_extra and dim_price_margin and not dim_price_extra:
-                dimension_extra += (safe_eval('product.' + product_price_extra,
-                                              {'product': product})
-                                    * safe_eval('dim.' + dim_price_margin,
-                                                {'dim': dim}))
-            elif product_price_extra and not dim_price_margin and dim_price_extra:
-                dimension_extra += (safe_eval('product.' + product_price_extra,
-                                              {'product': product})
-                                    + safe_eval('dim.' + dim_price_extra, {'dim': dim}))
+        #TODO
+        #for dim in product.dimension_value_ids:
+        #    if product_price_extra and dim_price_margin and dim_price_extra:
+        #        dimension_extra += (safe_eval('product.' + product_price_extra,
+        #                                      {'product': product})
+        #                            * safe_eval('dim.' + dim_price_margin,
+        #                                        {'dim': dim})
+        #                            + safe_eval('dim.' + dim_price_extra,
+        #                                        {'dim': dim}))
+        #    elif not product_price_extra and not dim_price_margin and dim_price_extra:
+        #        dimension_extra += safe_eval('dim.' + dim_price_extra, {'dim': dim})
+        #    elif product_price_extra and dim_price_margin and not dim_price_extra:
+        #        dimension_extra += (safe_eval('product.' + product_price_extra,
+        #                                      {'product': product})
+        #                            * safe_eval('dim.' + dim_price_margin,
+        #                                        {'dim': dim}))
+        #    elif product_price_extra and not dim_price_margin and dim_price_extra:
+        #        dimension_extra += (safe_eval('product.' + product_price_extra,
+        #                                      {'product': product})
+        #                            + safe_eval('dim.' + dim_price_extra, {'dim': dim}))
 
         if 'uom' in context:
             product_uom_obj = self.pool.get('product.uom')
@@ -425,6 +427,7 @@ class product_product(orm.Model):
                                                              dimension_extra, context['uom'])
         return dimension_extra
 
+    #deprecated
     def compute_dimension_extra_price(self, cr, uid, ids, result, product_price_extra=False,
                                       dim_price_margin=False, dim_price_extra=False, context=None):
         if context is None:
@@ -439,6 +442,7 @@ class product_product(orm.Model):
             result[product.id] += dimension_extra
         return result
 
+    #deprecated
     def price_get(self, cr, uid, ids, ptype='list_price', context=None):
         if context is None:
             context = {}
@@ -460,6 +464,7 @@ class product_product(orm.Model):
                 context=context)
         return result
 
+    #deprecated
     def _product_lst_price(self, cr, uid, ids, name, arg, context=None):
         if context is None:
             context = {}
@@ -472,6 +477,7 @@ class product_product(orm.Model):
                                                     context=context)
         return result
 
+    #deprecated
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
@@ -479,25 +485,9 @@ class product_product(orm.Model):
         default.update({'variant_ids': False})
         return super(product_product, self).copy(cr, uid, id, default, context)
 
-    #deprecated
-    def _product_compute_weight_volume(self, cr, uid, ids, fields, arg, context=None):
-        result = {}
-        for product in self.browse(cr, uid, ids, context=context):
-            result[product.id] = p = {}
-            p['total_weight'] = product.weight + product.additional_weight
-            p['total_weight_net'] = product.weight_net + product.additional_weight_net
-            p['total_volume'] = product.volume + product.additional_volume
-        return result
-
     _columns = {
         'name': fields.char('Name', size=128, translate=True, select=True),
         'variants': fields.char('Variants', size=128),
-        'dimension_value_ids': fields.many2many(
-            'product.variant.dimension.value',
-            'product_product_dimension_rel',
-            'product_id', 'dimension_id',
-            'Dimensions',
-            domain="[('product_tmpl_id','=',product_tmpl_id)]"),
         'cost_price_extra': fields.float('Purchase Extra Cost',
                                          digits_compute=dp.get_precision('Purchase Price')),
         'lst_price': fields.function(_product_lst_price,
@@ -505,36 +495,4 @@ class product_product(orm.Model):
                                      type='float',
                                      string='List Price',
                                      digits_compute=dp.get_precision('Sale Price')),
-        #the way the weight are implemented are not clean at all,
-        #we should redesign the module product form the addons
-        #in order to get something correclty.
-        #indeed some field of the template have to be overwrited
-        #like weight, name, weight_net, volume.
-        #in order to have a consitent api we should use the same field for getting the weight,
-        #now we have to use "weight" or "total_weight"
-        #not clean at all with external syncronization
-        'total_weight': fields.function(_product_compute_weight_volume,
-                                        method=True,
-                                        type='float',
-                                        string='Total Gross Weight',
-                                        help="The gross weight in Kg.",
-                                        multi='weight_volume'),
-        'total_weight_net': fields.function(_product_compute_weight_volume,
-                                            method=True,
-                                            type='float',
-                                            string='Total Net Weight',
-                                            help="The net weight in Kg.",
-                                            multi='weight_volume'),
-        'total_volume':  fields.function(_product_compute_weight_volume,
-                                         method=True,
-                                         type='float',
-                                         string='Total Volume',
-                                         help="The volume in m3.",
-                                         multi='weight_volume'),
-        'additional_weight': fields.float('Additional Gross weight',
-                                          help="The additional gross weight in Kg."),
-        'additional_weight_net': fields.float('Additional Net weight',
-                                              help="The additional net weight in Kg."),
-        'additional_volume': fields.float('Additional Volume',
-                                          help="The additional volume in Kg."),
     }

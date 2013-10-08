@@ -240,10 +240,6 @@
                             <field name="active" />
                         </group>
                         <notebook colspan="4">
-                            <page string="Dimensions">
-                                <separator string="Dimension Values" colspan="4"/>
-                                <field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}" nolabel="1" colspan="4"/>
-                            </page>
                             <page string="Prices">
                                 <group>
                                     <field name="list_price" string="Template Sale Price" readonly="1"/>
@@ -314,25 +310,6 @@
                         <field name="cost_price_extra" groups="product.group_product_variant"/>
                     </group>
                 </field>
-                <group name="Weights" position="replace">
-                     <group colspan="4" col="6" name="Weights" groups="product.group_stock_packaging">
-                        <group name="template_weights" string="Template Weights">
-                            <field digits="(14, 3)" name="volume" attrs="{'readonly':[('type','=','service')]}"/>
-                            <field name="weight" attrs="{'readonly':[('type','=','service')]}"/>
-                            <field name="weight_net" attrs="{'readonly':[('type','=','service')]}"/>
-                        </group>
-                        <group name="variant_weights" string="Variant Weights" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                            <field digits="(14, 3)" name="additional_volume" attrs="{'readonly':[('type','=','service')]}"/>
-                            <field name="additional_weight" attrs="{'readonly':[('type','=','service')]}"/>
-                            <field name="additional_weight_net" attrs="{'readonly':[('type','=','service')]}"/>
-                        </group>
-                        <group name="total_weights" string="Total Weights" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                            <field digits="(14, 3)" name="total_volume"/>
-                            <field name="total_weight"/>
-                            <field name="total_weight_net"/>
-                        </group>
-                    </group>
-                </group>
             </field>
         </record>
 
