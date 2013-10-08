@@ -10,8 +10,6 @@
   @author Chafique Delli <chafique.delli@akretion.com>
 -->
 
-        <menuitem name="Axes Variance" id="menu_variant_dimension" parent="product.prod_config_main" action="action_dimension_type"/>
-
         <!-- DIMENSION VALUES -->
         <record id="product_variant_multi_dimension_value_search" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.value.search</field>
@@ -128,6 +126,7 @@
             <field name="context">{'dimension_type_main_view': True}</field>
         </record>
 
+        <menuitem name="Axes Variance" id="menu_variant_dimension" parent="product.prod_config_main" action="action_dimension_type"/>
 
         <!-- PRODUCT TEMPLATE -->
 

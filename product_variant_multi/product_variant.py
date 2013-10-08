@@ -73,17 +73,20 @@ class product_variant_dimension_value(orm.Model):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
-    #TODO
-    #def unlink(self, cr, uid, ids, context=None):
-    #    for value in self.browse(cr, uid, ids, context=context):
-    #        if value.product_ids:
-    #            product_names = [product.name for product in value.product_ids]
-    #            product_list = '\n    - ' + '\n    - '.join(product_names)
-    #            raise osv.except_osv(_('Dimension value can not be removed'),
-    #                                 _("The value %s is used by the products : %s \n "
-    #                                   "Please remove these products before removing the value.")
-    #                                 % (value.option_id.name, product_list))
-    #    return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
+
+    def unlink(self, cr, uid, ids, context=None):
+        product_obj = self.pool['product.product']
+        for value in self.browse(cr, uid, ids, context=context):
+            product_ids = product_obj.search(cr, uid, [['product_tmpl_id', '=', value.product_tmpl_id.id],
+                                                    [value.dimension_id.name, '=', value.option_id.name]], context=context)
+            if product_ids:
+                product_names = [product.name for product in product_obj.browse(cr, uid, product_ids, context=context)]
+                product_list = '\n    - ' + '\n    - '.join(product_names)
+                raise osv.except_osv(_('Dimension value can not be removed'),
+                                     _("The value %s is used by the products : %s \n "
+                                       "Please remove these products before removing the value.")
+                                     % (value.option_id.name, product_list))
+        return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
 
     def _get_values_from_types(self, cr, uid, ids, context=None):
         dimvalue_obj = self.pool.get('product.variant.dimension.value')
@@ -96,12 +99,6 @@ class product_variant_dimension_value(orm.Model):
                                relation='product.variant.dimension.option',
                                string="Dimension Value", readonly=True),
         'sequence': fields.integer('Sequence'),
-        'price_extra': fields.float('Sale Price Extra',
-                                    digits_compute=dp.get_precision('Sale Price')),
-        'price_margin': fields.float('Sale Price Margin',
-                                     digits_compute=dp.get_precision('Sale Price')),
-        'cost_price_extra': fields.float('Cost Price Extra',
-                                         digits_compute=dp.get_precision('Purchase Price')),
         'dimension_id' : fields.many2one('product.variant.axe', 'Axe', required=True),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template',
                                            ondelete='cascade'),
