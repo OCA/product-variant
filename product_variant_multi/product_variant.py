@@ -73,6 +73,7 @@ class product_variant_dimension_value(orm.Model):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
+    #TODO
     #def unlink(self, cr, uid, ids, context=None):
     #    for value in self.browse(cr, uid, ids, context=context):
     #        if value.product_ids:
@@ -391,108 +392,7 @@ class product_product(orm.Model):
                 vals_to_write[key] = vals[key]
         return vals_to_write
 
-    #deprecated
-    def compute_product_dimension_extra_price(self, cr, uid, product_id,
-                                              product_price_extra=False, dim_price_margin=False,
-                                              dim_price_extra=False, context=None):
-        if context is None:
-            context = {}
-        dimension_extra = 0.0
-        product = self.browse(cr, uid, product_id, context=context)
-        #TODO
-        #for dim in product.dimension_value_ids:
-        #    if product_price_extra and dim_price_margin and dim_price_extra:
-        #        dimension_extra += (safe_eval('product.' + product_price_extra,
-        #                                      {'product': product})
-        #                            * safe_eval('dim.' + dim_price_margin,
-        #                                        {'dim': dim})
-        #                            + safe_eval('dim.' + dim_price_extra,
-        #                                        {'dim': dim}))
-        #    elif not product_price_extra and not dim_price_margin and dim_price_extra:
-        #        dimension_extra += safe_eval('dim.' + dim_price_extra, {'dim': dim})
-        #    elif product_price_extra and dim_price_margin and not dim_price_extra:
-        #        dimension_extra += (safe_eval('product.' + product_price_extra,
-        #                                      {'product': product})
-        #                            * safe_eval('dim.' + dim_price_margin,
-        #                                        {'dim': dim}))
-        #    elif product_price_extra and not dim_price_margin and dim_price_extra:
-        #        dimension_extra += (safe_eval('product.' + product_price_extra,
-        #                                      {'product': product})
-        #                            + safe_eval('dim.' + dim_price_extra, {'dim': dim}))
-
-        if 'uom' in context:
-            product_uom_obj = self.pool.get('product.uom')
-            uom = product.uos_id or product.uom_id
-            dimension_extra = product_uom_obj._compute_price(cr, uid, uom.id,
-                                                             dimension_extra, context['uom'])
-        return dimension_extra
-
-    #deprecated
-    def compute_dimension_extra_price(self, cr, uid, ids, result, product_price_extra=False,
-                                      dim_price_margin=False, dim_price_extra=False, context=None):
-        if context is None:
-            context = {}
-        for product in self.browse(cr, uid, ids, context=context):
-            dimension_extra = self.compute_product_dimension_extra_price(
-                cr, uid, product.id,
-                product_price_extra=product_price_extra,
-                dim_price_margin=dim_price_margin,
-                dim_price_extra=dim_price_extra,
-                context=context)
-            result[product.id] += dimension_extra
-        return result
-
-    #deprecated
-    def price_get(self, cr, uid, ids, ptype='list_price', context=None):
-        if context is None:
-            context = {}
-        result = super(product_product, self).price_get(cr, uid, ids, ptype, context=context)
-        if ptype == 'list_price':
-            #TODO check if the price_margin on the dimension is very usefull,
-            # maybe we will remove it
-            result = self.compute_dimension_extra_price(
-                cr, uid, ids, result,
-                product_price_extra='price_extra',
-                dim_price_margin='price_margin',
-                dim_price_extra='price_extra',
-                context=context)
-        elif ptype == 'standard_price':
-            result = self.compute_dimension_extra_price(
-                cr, uid, ids, result,
-                product_price_extra='cost_price_extra',
-                dim_price_extra='cost_price_extra',
-                context=context)
-        return result
-
-    #deprecated
-    def _product_lst_price(self, cr, uid, ids, name, arg, context=None):
-        if context is None:
-            context = {}
-        result = super(product_product, self)._product_lst_price(cr, uid, ids, name, arg,
-                                                                 context=context)
-        result = self.compute_dimension_extra_price(cr, uid, ids, result,
-                                                    product_price_extra='price_extra',
-                                                    dim_price_margin='price_margin',
-                                                    dim_price_extra='price_extra',
-                                                    context=context)
-        return result
-
-    #deprecated
-    def copy(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default = default.copy()
-        default.update({'variant_ids': False})
-        return super(product_product, self).copy(cr, uid, id, default, context)
-
     _columns = {
         'name': fields.char('Name', size=128, translate=True, select=True),
         'variants': fields.char('Variants', size=128),
-        'cost_price_extra': fields.float('Purchase Extra Cost',
-                                         digits_compute=dp.get_precision('Purchase Price')),
-        'lst_price': fields.function(_product_lst_price,
-                                     method=True,
-                                     type='float',
-                                     string='List Price',
-                                     digits_compute=dp.get_precision('Sale Price')),
     }

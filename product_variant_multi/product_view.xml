@@ -34,8 +34,6 @@
                     <field name="active" />
                     <field name="option_id" />
                     <field name="sequence" />
-                    <field name="cost_price_extra" />
-                    <field name="price_extra" />
                 </tree>
             </field>
         </record>
@@ -50,9 +48,6 @@
                     <newline />
                     <field name="option_id" />
                     <field name="sequence" />
-                    <field name="cost_price_extra" />
-                    <field name="price_extra" />
-                    <field name="price_margin" />
                 </form>
             </field>
         </record>
@@ -137,9 +132,6 @@
         <!-- PRODUCT TEMPLATE -->
 
 <!-- TODO remove useless view of product.template in the module product or fusion this view with the existing view in product, it's depend how the inheritage on this view will be managed by the other module-->
-
-<!--TODO add a wizard to add the option-->
-<!--<button name="add_some_option" string="Add " type="object" colspan="2"/>-->
 
         <record id="product_search_form_view_template" model="ir.ui.view">
             <field name="name">product.search.form.template</field>
@@ -239,16 +231,6 @@
                             <field name="default_code" />
                             <field name="active" />
                         </group>
-                        <notebook colspan="4">
-                            <page string="Prices">
-                                <group>
-                                    <field name="list_price" string="Template Sale Price" readonly="1"/>
-                                    <field name="price_margin" />
-                                    <field name="price_extra" />
-                                    <field name="cost_price_extra"/>
-                                </group>
-                            </page>
-                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -263,8 +245,6 @@
                     <field name="name"/>
                     <field name="product_tmpl_id"/>
                     <field name="variants"/>
-                    <field name="price_extra"/>
-                    <field name="cost_price_extra"/>
                 </tree>
             </field>
         </record>
@@ -304,12 +284,6 @@
                     <field name="is_multi_variants" readonly="1"/>
                     <label for="is_multi_variants" />
                 </div>
-                <field name="standard_price" position="replace">
-                    <group name='cost_prices' colspan="2" col="2">
-                        <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}"/>
-                        <field name="cost_price_extra" groups="product.group_product_variant"/>
-                    </group>
-                </field>
             </field>
         </record>
 
