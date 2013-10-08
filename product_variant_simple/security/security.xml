@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+    <!-- Activate the Product Variant group on the Sales Manager -->
+    <record model="res.groups" id="base.group_sale_manager">
+        <field name="implied_ids" eval="[(4, ref('product.group_product_variant'))]"/>
+    </record>
+
+    </data>
+</openerp>
+
+
