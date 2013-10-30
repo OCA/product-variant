@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--
+  The licence is in the file __openerp__.py
+  @author Chafique Delli <chafique.delli@akretion.com>
+-->
+
+        <!-- PRODUCT TEMPLATE -->
+        <record id="product_variant_multi_product_display_form_view" model="ir.ui.view">
+            <field name="name">product.variant.multi.product.display.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product_variant_generator.product_variant_multi_product_template_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='attribute_set_id']/.." position="after">
+                    <group>
+                        <field name="is_displays" attrs="{'invisible':[('is_multi_variants','=',False)]}"/>
+                        <field name="product_ids"
+                               attrs="{'invisible':['|',('is_displays','=',False),('is_multi_variants','=',False)]}"
+                               domain="[('attribute_set_id', '=',attribute_set_id )]"/>/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
