@@ -26,9 +26,7 @@
 ##############################################################################
 
 from openerp.osv import fields, osv, orm
-import openerp.addons.decimal_precision as dp
 # Lib to eval python code with security
-from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
 from collections import defaultdict
 from mako.template import Template
@@ -51,7 +49,7 @@ class product_variant_axe(orm.Model):
             context=None, limit=None):
         if not context.get('product_tmpl_id', False):
             args = None
-        return super(product_variant_axe, self).name_search(cr, user,
+        return super(product_variant_axe, self).name_search(cr, uid,
                                                             '', args,
                                                             'ilike', None, None)
 
