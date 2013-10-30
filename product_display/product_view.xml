@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <!--Product Display -->
+
+        <record id="product_display_form_view" model="ir.ui.view">
+            <field name="name">product.display.form</field>
+            <field name="model">product.display</field>
+            <field name="arch" type="xml">
+                <form string="Product Display" version="7.0">
+                    <group col="4">
+                        <field name="product_ids"/>
+                        <field name="active"/>
+                        <field name="attribute_ids"/>
+                        <field name="attribute_options"
+                               domain="[('attribute_id', '=',attribute_ids )]"/>
+                        <field name="type" attrs="{'readonly': True}"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_display_tree_view" model="ir.ui.view">
+            <field name="name">product.display.tree</field>
+            <field name="model">product.display</field>
+            <field name="arch" type="xml">
+                <tree string="Products Displays">
+                    <field name="product_ids"/>
+                    <field name="attribute_ids"/>
+                    <field name="attribute_options"/>
+                    <field name="type"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_display_search_view" model="ir.ui.view">
+            <field name="name">product.display.search</field>
+            <field name="model">product.display</field>
+            <field name="arch" type="xml">
+                <search string="Product Display Search">
+                    <field name="product_ids"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_product_display" model="ir.actions.act_window">
+            <field name="name">Products Displays</field>
+            <field name="res_model">product.display</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="product_display_search_view"/>
+        </record>
+
+        <menuitem string="Products Displays"
+                  action="action_product_display"
+                  id="menu_product_display"
+                  parent="base.menu_product"
+                  sequence="20"/>
+
+    </data>
+</openerp>
