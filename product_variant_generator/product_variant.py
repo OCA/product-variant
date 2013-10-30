@@ -36,6 +36,7 @@ from mako.template import Template
 import logging
 _logger = logging.getLogger(__name__)
 
+
 #
 # Dimensions Definition
 #
@@ -44,21 +45,28 @@ class product_variant_axe(orm.Model):
     _table = 'product_variant_axe'
     _inherits = {'attribute.attribute': 'product_attribute_id'}
 
-    def name_search(self, cr, uid, name='', args=None, operator='ilike', context=None, limit=None):
+    def name_search(
+            self, cr, uid,
+            name='', args=None, operator='ilike',
+            context=None, limit=None):
         if not context.get('product_tmpl_id', False):
             args = None
-        return super(product_variant_axe, self).name_search(cr, user, '', args, 'ilike', None, None)
+        return super(product_variant_axe, self).name_search(cr, user,
+                                                            '', args,
+                                                            'ilike', None, None)
 
     _columns = {
-        'sequence': fields.integer('Sequence', help=("The product 'variants' code will "
-                                                     "use this to order the dimension values")),
+        'sequence': fields.integer('Sequence',
+                                   help=("The product 'variants' code will "
+                                         "use this to order the dimension values")),
         'allow_custom_value': fields.boolean('Allow Custom Value',
                                              help=("If true, custom values can be entered "
                                                    "in the product configurator")),
         'mandatory_dimension': fields.boolean('Mandatory Dimension',
                                               help=("If false, variant products will be created "
                                                     "with and without this dimension")),
-        'product_attribute_id': fields.many2one('attribute.attribute', string='Product Attribute',
+        'product_attribute_id': fields.many2one('attribute.attribute',
+                                                string='Product Attribute',
                                                 required=True, ondelete='cascade'),
     }
 
@@ -73,43 +81,58 @@ class product_variant_dimension_value(orm.Model):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
-
     def unlink(self, cr, uid, ids, context=None):
         product_obj = self.pool['product.product']
-        for value in self.browse(cr, uid, ids, context=context):
-            product_ids = product_obj.search(cr, uid, [['product_tmpl_id', '=', value.product_tmpl_id.id],
-                                                    [value.dimension_id.name, '=', value.option_id.name]], context=context)
+        for value in self.browse(cr, uid, ids,
+                                 context=context):
+            product_ids = product_obj.search(cr, uid,
+                                             [['product_tmpl_id', '=', value.product_tmpl_id.id],
+                                             [value.dimension_id.name, '=', value.option_id.name]],
+                                             context=context)
             if product_ids:
-                product_names = [product.name for product in product_obj.browse(cr, uid, product_ids, context=context)]
+                product_names = [product.name
+                                 for product in product_obj.browse(cr, uid,
+                                                                   product_ids,
+                                                                   context=context)
+                                 ]
                 product_list = '\n    - ' + '\n    - '.join(product_names)
                 raise osv.except_osv(_('Dimension value can not be removed'),
                                      _("The value %s is used by the products : %s \n "
                                        "Please remove these products before removing the value.")
                                      % (value.option_id.name, product_list))
-        return super(product_variant_dimension_value, self).unlink(cr, uid, ids, context)
+        return super(product_variant_dimension_value, self).unlink(cr, uid,
+                                                                   ids, context)
 
     def _get_values_from_types(self, cr, uid, ids, context=None):
         dimvalue_obj = self.pool.get('product.variant.dimension.value')
-        return dimvalue_obj.search(cr, uid, [('dimension_id', 'in', ids)], context=context)
+        return dimvalue_obj.search(cr, uid,
+                                   [('dimension_id', 'in', ids)],
+                                   context=context)
 
     _columns = {
-        #TODO option_id add param in context to have a full name 'dimension + option' exemple address on sale order
-        'option_id' : fields.many2one('attribute.option', 'Option', required=True),
+        # TODO option_id add param in context
+        #     to have a full name 'dimension + option'
+        # exemple address on sale order
+        'option_id': fields.many2one('attribute.option', 'Option',
+                                      required=True),
         'name': fields.related('option_id', 'name', type='char',
                                relation='product.variant.dimension.option',
                                string="Dimension Value", readonly=True),
         'sequence': fields.integer('Sequence'),
-        'dimension_id' : fields.many2one('product.variant.axe', 'Axe', required=True),
+        'dimension_id': fields.many2one('product.variant.axe', 'Axe',
+                                         required=True),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template',
                                            ondelete='cascade'),
-        'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer',
+        'dimension_sequence': fields.related('dimension_id', 'sequence',
+                                             type='integer',
                                              relation='product.variant.dimension.type',
                                              #used for ordering purposes in the "variants"
                                              string="Related Dimension Sequence",
                                              store={'product.variant.dimension.type':
                                                     (_get_values_from_types, ['sequence'], 10)}),
-        'active': fields.boolean('Active', help=("If false, this value will not be "
-                                                 "used anymore to generate variants.")),
+        'active': fields.boolean('Active',
+                                  help=("If false, this value will not be "
+                                  "used anymore to generate variants.")),
     }
 
     _defaults = {
@@ -130,17 +153,20 @@ class product_template(orm.Model):
     _order = "name"
 
     _columns = {
-        'name': fields.char('Name', size=128, translate=True, select=True, required=False),
-        'axes_variance_ids':fields.many2many('product.variant.axe',
-                                               'product_template_dimension_rel',
-                                               'template_id', 'dimension_id', 'Dimension Types'),
+        'name': fields.char('Name', size=128,
+                            translate=True, select=True, required=False),
+        'axes_variance_ids': fields.many2many('product.variant.axe',
+                                             'product_template_dimension_rel',
+                                             'template_id', 'dimension_id',
+                                             'Dimension Types'),
         'value_ids': fields.one2many('product.variant.dimension.value',
                                      'product_tmpl_id',
                                      'Dimension Values'),
-        'variant_ids': fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
+        'variant_ids': fields.one2many('product.product', 'product_tmpl_id',
+                                       'Variants'),
         'template_name': fields.char('Template Name', size=256, required=True,
-                                          help=('Name in mako syntax in order to generate '
-                                                'the name of your variant')),
+                                     help=('Name in mako syntax in order '
+                                           'to generate the name of your variant')),
         'template_code': fields.char('Template Code', size=256,
                                       help=('Code of the product in mako syntax')),
         'is_multi_variants': fields.boolean('Is Multi Variants'),
@@ -162,23 +188,32 @@ class product_template(orm.Model):
         axe_obj = self.pool.get('product.variant.axe')
         axes = []
         if attribute_set_id:
-            attribute_location_ids = location_obj.search(cr, uid, [['attribute_set_id', '=', attribute_set_id]], context=context)
+            attribute_location_ids = location_obj.search(cr, uid,
+                                                         [['attribute_set_id', '=', attribute_set_id]],
+                                                         context=context)
             for attribute_location in attribute_location_ids:
-                attribute = location_obj.read(cr, uid, attribute_location, fields='attribute_id', context=context)
-                axes_ids = axe_obj.search(cr, uid, [['product_attribute_id', '=', attribute['attribute_id']]], context=context)
+                attribute = location_obj.read(cr, uid,
+                                              attribute_location,
+                                              fields='attribute_id',
+                                              context=context)
+                axes_ids = axe_obj.search(cr, uid,
+                                          [['product_attribute_id', '=', attribute['attribute_id']]],
+                                          context=context)
                 if axes_ids:
                     axes.append(axes_ids[0])
-        return  {'value' : {'axes_variance_ids' : axes}}
+        return {'value': {'axes_variance_ids': axes}}
 
     def unlink(self, cr, uid, ids, context=None):
         if context and context.get('unlink_from_product_product', False):
             for template in self.browse(cr, uid, ids, context):
                 if not template.is_multi_variants:
-                    super(product_template, self).unlink(cr, uid, [template.id], context)
+                    super(product_template, self).unlink(cr, uid,
+                                                         [template.id], context)
         else:
             for template in self.browse(cr, uid, ids, context):
                 if template.variant_ids == []:
-                    super(product_template, self).unlink(cr, uid, [template.id], context)
+                    super(product_template, self).unlink(cr, uid,
+                                                         [template.id], context)
                 else:
                     raise osv.except_osv(_("Cannot delete template"),
                                          _("This template has existing corresponding products..."))
@@ -188,9 +223,10 @@ class product_template(orm.Model):
         #Reactive all unactive values
         value_obj = self.pool.get('product.variant.dimension.value')
         for template in self.browse(cr, uid, ids, context=context):
-            values_ids = value_obj.search(cr, uid, [['product_tmpl_id', '=', template.id],
-                                                    '|', ['active', '=', False],
-                                                         ['active', '=', True]], context=context)
+            values_ids = value_obj.search(cr, uid,
+                                          [['product_tmpl_id', '=', template.id],
+                                          '|', ['active', '=', False],
+                                          ['active', '=', True]], context=context)
             value_obj.write(cr, uid, values_ids,
                             {'active': True},
                             context=context)
@@ -213,7 +249,9 @@ class product_template(orm.Model):
             default = {}
         default = default.copy()
         default.update({'variant_ids': False, })
-        new_id = super(product_template, self).copy(cr, uid, id, default, context)
+        new_id = super(product_template, self).copy(cr, uid,
+                                                    id, default,
+                                                    context)
 
         val_obj = self.pool.get('product.variant.dimension.value')
         template = self.read(cr, uid, new_id, ['value_ids'], context=context)
@@ -233,7 +271,8 @@ class product_template(orm.Model):
         if old_id in seen_map.setdefault(self._name, []):
             return
         seen_map[self._name].append(old_id)
-        return super(product_template, self).copy_translations(cr, uid, old_id, new_id,
+        return super(product_template, self).copy_translations(cr, uid,
+                                                               old_id, new_id,
                                                                context=context)
 
     def _create_variant_list(self, cr, ids, uid, vals, context=None):
@@ -260,7 +299,6 @@ class product_template(orm.Model):
                 dimension_fields.append(dim.name)
                 temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
 
-
             #example temp_val_list is equal to [['red', 'blue', 'yellow'], ['L', 'XL', 'M']]
             #In reallity it's not a string value but the id of the value
 
@@ -268,9 +306,13 @@ class product_template(orm.Model):
                                                        [('product_tmpl_id', '=', product_temp.id)])
             created_product_ids = []
             if temp_val_list and not product_temp.do_not_generate_new_variant:
-                list_of_combinaison= self._create_variant_list(cr, uid, ids, temp_val_list, context)
-                existing_products = variants_obj.read(cr, uid, existing_product_ids,
-                                                               dimension_fields, context=context)
+                list_of_combinaison = self._create_variant_list(cr, uid,
+                                                                ids, temp_val_list,
+                                                                context)
+                existing_products = variants_obj.read(cr, uid,
+                                                      existing_product_ids,
+                                                      dimension_fields,
+                                                      context=context)
                 list_of_existing_combinaison = []
                 for existing_product in existing_products:
                     existing_combinaison = []
@@ -298,7 +340,8 @@ class product_template(orm.Model):
                         'product_tmpl_id': product_temp.id,
                     }
 
-                    for option in option_obj.browse(cr, uid, combinaison, context=context):
+                    for option in option_obj.browse(cr, uid,
+                                                    combinaison, context=context):
                         vals[option.attribute_id.name] = option.id
 
                     cr.execute("SAVEPOINT pre_variant_save")
@@ -360,9 +403,13 @@ class product_product(orm.Model):
 
     def update_variant(self, cr, uid, ids, context=None):
         obj_lang = self.pool.get('res.lang')
-        lang_ids = obj_lang.search(cr, uid, [('translatable', '=', True)], context=context)
+        lang_ids = obj_lang.search(cr, uid,
+                                   [('translatable', '=', True)], context=context)
         lang_code = [x['code']
-                     for x in obj_lang.read(cr, uid, lang_ids, ['code'], context=context)]
+                     for x in obj_lang.read(cr, uid,
+                                            lang_ids, ['code'],
+                                            context=context)
+                     ]
         for code in lang_code:
             context['lang'] = code
             for product in self.browse(cr, uid, ids, context=context):
@@ -382,7 +429,7 @@ class product_product(orm.Model):
             'variants': Template(product.template_name).render(o=product),
             'default_code': Template(product.template_code).render(o=product),
         }
-        vals['name'] = (product.product_tmpl_id.name or '')+ ' ' + vals['variants']
+        vals['name'] = (product.product_tmpl_id.name or '') + ' ' + vals['variants']
 
         return vals
 
