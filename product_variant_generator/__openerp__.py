@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name": "Product Variant Multi",
+    "name": "Product Variant Generator",
     "version": "1.0",
     "author": "OpenERP SA, Akretion",
     "category": "Sales Management",
@@ -44,8 +44,6 @@ Once the product.template is set up, you can use a 'generator' button that will 
 the space of the variants. You could also choose to populate only some combinations
 by hand instead.
 
-Each variant can have an extra price that will be taken into account when computing
-the base listed price. Yet to be implemented: a price extra per variant dimension value.
 Finally, this module is better used along with the product_variant_configurator which
 will help the salesman selecting the appropriate variant in the sale order line
 using dimension criteria instead of having to crawl the full space of variants.
@@ -61,10 +59,9 @@ and only from product.template if not found on product.product. But at least you
 will have been warned.
     """,
     "depends" : [
-                "product",
-                "product_custom_attributes"
+                "product_custom_attributes",
+                "product_variant_simple"
                 ],
-    "demo" : ["demo_data.xml"],
     "data" : [
         "security/ir.model.access.csv",
         "product_view.xml",

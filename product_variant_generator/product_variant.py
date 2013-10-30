@@ -154,7 +154,7 @@ class product_template(orm.Model):
     _defaults = {
         'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.axes_variance_ids])}',
         'is_multi_variants': False,
-        'template_code': ('${"-".join([o[dimension.name].code for dimension in o.axes_variance_ids])}'),
+        'template_code': '${"-".join([o[dimension.name].code for dimension in o.axes_variance_ids])}',
     }
 
     def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
@@ -162,9 +162,10 @@ class product_template(orm.Model):
         axe_obj = self.pool.get('product.variant.axe')
         axes = []
         if attribute_set_id:
-            attribute_ids = location_obj.search(cr, uid, [['attribute_set_id', '=', attribute_set_id]], context=context)
-            for attribute in attribute_ids:
-                axes_ids = axe_obj.search(cr, uid, [['product_attribute_id', '=', attribute]], context=context)
+            attribute_location_ids = location_obj.search(cr, uid, [['attribute_set_id', '=', attribute_set_id]], context=context)
+            for attribute_location in attribute_location_ids:
+                attribute = location_obj.read(cr, uid, attribute_location, fields='attribute_id', context=context)
+                axes_ids = axe_obj.search(cr, uid, [['product_attribute_id', '=', attribute['attribute_id']]], context=context)
                 if axes_ids:
                     axes.append(axes_ids[0])
         return  {'value' : {'axes_variance_ids' : axes}}
@@ -274,7 +275,10 @@ class product_template(orm.Model):
                 for existing_product in existing_products:
                     existing_combinaison = []
                     for field in dimension_fields:
-                        existing_combinaison.append(existing_product[field][0])
+                        if existing_product[field]:
+                            existing_combinaison.append(existing_product[field][0])
+                        else:
+                            existing_combinaison.append(None)
                     list_of_existing_combinaison.append(existing_combinaison)
 
                 list_of_combinaison_to_create = [x for x in list_of_combinaison
