@@ -366,19 +366,15 @@ class product_template(orm.Model):
 
             # FIRST, Generate/Update variant names ('variants' field)
             _logger.debug("Starting to generate/update variant names...")
-            self.pool.get('product.product').update_variant(cr, uid, product_ids,
-                                                                 context=context)
+            variants_obj.update_variant(cr, uid, product_ids, context=context)
             #_logger.debug("End of the generation/update of variant names.")
             ## SECOND, Generate/Update product codes and properties (we may need variants name)
             #_logger.debug("Starting to generate/update product codes and properties...")
-            #self.pool.get('product.product').build_product_code_and_properties(cr, uid,
-            #                                                                   product_ids,
-            #                                                                   context=context)
+            #variants_obj.build_product_code_and_properties(cr, uid, product_ids, context=context)
             #_logger.debug("End of the generation/update of product codes and properties.")
             ## THIRD, Generate/Update product names (we may need variants name for that)
             #_logger.debug("Starting to generate/update product names...")
-            #self.pool.get('product.product').build_product_name(cr, uid, product_ids,
-            #                                                    context=context)
+            #variants_obj.build_product_name(cr, uid, product_ids, context=context)
             #_logger.debug("End of generation/update of product names.")
         return True
 
