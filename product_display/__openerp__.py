@@ -37,7 +37,7 @@ module (creator wizards, ...).
  'maintainer': 'Akretion',
  'website': 'http://www.akretion.com/',
  'depends' : [
-    'product_custom_attributes',
+    'product_variant_generator',
     ],
  'data': [
     'product_view.xml',

@@ -23,34 +23,14 @@
 from openerp.osv import orm, fields
 
 
-class product_display(orm.Model):
-    _name = 'product.display'
-    _inherits = {'product.product': 'product_ids'}
-
-
-    def _type_selection(self, cr, uid, context=None):
-        selection=[]
-        template_obj= self.pool.get('product.template')
-        selection = template_obj._columns['type'].selection
-        if ('display', 'Display Product') not in selection:
-            selection += [('display', 'Display Product')]
-        return selection
+class product_product(orm.Model):
+    _inherit = 'product.product'
 
     _columns = {
-        'product_ids': fields.many2one('product.product', string='Products',
-                                       required=True, ondelete='cascade'),
-        'type': fields.selection(_type_selection, string='Product Type'),
-        'attribute_ids': fields.many2one('attribute.attribute',
-                                         string='Attribute',
-                                         required=True),
-        'attribute_options': fields.many2one('attribute.option',
-                                             string='Attribute Option',
-                                             required=True),
+        'display_for_product_ids': fields.many2one('product.product', string='Products'),
+        'is_displays': fields.boolean('Is Displays'),
     }
 
     _defaults = {
-        'type': 'display',
+        'is_displays': False,
     }
-
-    _sql_constraints = [('product_display_unique','unique(product_ids, attribute_ids, attribute_options)',
-                         'Product Display must be unique!')]

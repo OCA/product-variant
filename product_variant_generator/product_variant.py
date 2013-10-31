@@ -273,7 +273,7 @@ class product_template(orm.Model):
                                                                old_id, new_id,
                                                                context=context)
 
-    def _create_variant_list(self, cr, ids, uid, vals, context=None):
+    def _create_variant_list(self, cr, uid, vals, context=None):
 
         def cartesian_product(args):
             if len(args) == 1:
@@ -282,100 +282,118 @@ class product_template(orm.Model):
 
         return cartesian_product(vals)
 
-    def button_generate_variants(self, cr, uid, ids, context=None):
-        variants_obj = self.pool.get('product.product')
+    def _get_list_of_combinaison_to_create(self, cr, uid, product_temp, existing_product_ids, context=None):
+        variants_obj = self.pool['product.product']
+        res = defaultdict(list)
+        for value in product_temp.value_ids:
+            res[value.dimension_id].append(value.option_id.id)
+
+        temp_val_list = []
+        dimension_fields = []
+        for dim in res:
+            dimension_fields.append(dim.name)
+            temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
+
+        #example temp_val_list is equal to [['red', 'blue', 'yellow'], ['L', 'XL', 'M']]
+        #In reallity it's not a string value but the id of the value
+
+        if not temp_val_list:
+            return []
+
+        list_of_combinaison = self._create_variant_list(cr, uid,
+                                                        temp_val_list,
+                                                        context)
+        existing_products = variants_obj.read(cr, uid,
+                                                existing_product_ids,
+                                                dimension_fields,
+                                                context=context)
+
+        list_of_existing_combinaison = []
+        for existing_product in existing_products:
+            existing_combinaison = []
+            for field in dimension_fields:
+                if existing_product[field]:
+                    existing_combinaison.append(existing_product[field][0])
+                else:
+                    existing_combinaison.append(None)
+            list_of_existing_combinaison.append(existing_combinaison)
+
+        list_of_combinaison_to_create = [x for x in list_of_combinaison
+                                      if not x in list_of_existing_combinaison]
+
+        _logger.debug("variant existing : %s, variant to create : %s",
+                      len(list_of_existing_combinaison),
+                      len(list_of_combinaison_to_create))
+        return list_of_combinaison_to_create
+
+    def _prepare_variant_vals(self, cr, uid, product_temp, combinaison, context=None):
         option_obj = self.pool['attribute.option']
+        vals = {
+            'name': product_temp.name,
+            'track_production': product_temp.variant_track_production,
+            'track_incoming': product_temp.variant_track_incoming,
+            'track_outgoing': product_temp.variant_track_outgoing,
+            'product_tmpl_id': product_temp.id,
+        }
 
-        for product_temp in self.browse(cr, uid, ids, context):
-            res = defaultdict(list)
-            for value in product_temp.value_ids:
-                res[value.dimension_id].append(value.option_id.id)
+        for option in option_obj.browse(cr, uid, combinaison, context=context):
+            vals[option.attribute_id.name] = option.id
+        return vals
 
-            temp_val_list = []
-            dimension_fields = []
-            for dim in res:
-                dimension_fields.append(dim.name)
-                temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
+    def _create_variant(self, cr, uid, product_temp, existing_product_ids, context=None):
+        variants_obj = self.pool['product.product']
+        created_product_ids = []
+        list_of_combinaison_to_create = self.\
+            _get_list_of_combinaison_to_create(cr, uid, product_temp,
+                                               existing_product_ids,
+                                               context=context)
 
-            #example temp_val_list is equal to [['red', 'blue', 'yellow'], ['L', 'XL', 'M']]
-            #In reallity it's not a string value but the id of the value
+        count = 0
+        for combinaison in list_of_combinaison_to_create:
+            count += 1
+            vals = self._prepare_variant_vals(cr, uid, product_temp,
+                                              combinaison, context=context)
 
-            existing_product_ids = variants_obj.search(cr, uid,
-                                                       [('product_tmpl_id', '=', product_temp.id)])
-            created_product_ids = []
-            if temp_val_list and not product_temp.do_not_generate_new_variant:
-                list_of_combinaison = self._create_variant_list(cr, uid,
-                                                                ids, temp_val_list,
-                                                                context)
-                existing_products = variants_obj.read(cr, uid,
-                                                      existing_product_ids,
-                                                      dimension_fields,
-                                                      context=context)
-                list_of_existing_combinaison = []
-                for existing_product in existing_products:
-                    existing_combinaison = []
-                    for field in dimension_fields:
-                        if existing_product[field]:
-                            existing_combinaison.append(existing_product[field][0])
-                        else:
-                            existing_combinaison.append(None)
-                    list_of_existing_combinaison.append(existing_combinaison)
+            cr.execute("SAVEPOINT pre_variant_save")
+            try:
+                product_id = variants_obj.create(cr, uid, vals,
+                                                 {'generate_from_template': True})
+                created_product_ids.append(product_id)
+                if count % 50 == 0:
+                    _logger.debug("product created : %s", count)
+            except Exception, e:
+                _logger.error("Error creating product variant: %s",
+                              e, exc_info=True)
+                _logger.debug("Values used to attempt creation of product variant: %s",
+                              vals)
+                cr.execute("ROLLBACK TO SAVEPOINT pre_variant_save")
+            cr.execute("RELEASE SAVEPOINT pre_variant_save")
 
-                list_of_combinaison_to_create = [x for x in list_of_combinaison
-                                              if not x in list_of_existing_combinaison]
+        _logger.debug("product created : %s", len(created_product_ids))
+        return created_product_ids
 
-                _logger.debug("variant existing : %s, variant to create : %s",
-                              len(list_of_existing_combinaison),
-                              len(list_of_combinaison_to_create))
-                count = 0
-                for combinaison in list_of_combinaison_to_create:
-                    count += 1
-                    vals = {
-                        'name': product_temp.name,
-                        'track_production': product_temp.variant_track_production,
-                        'track_incoming': product_temp.variant_track_incoming,
-                        'track_outgoing': product_temp.variant_track_outgoing,
-                        'product_tmpl_id': product_temp.id,
-                    }
 
-                    for option in option_obj.browse(cr, uid,
-                                                    combinaison, context=context):
-                        vals[option.attribute_id.name] = option.id
+    def _generate_variant_for_template(self, cr, uid, product_temp, context=None):
+        variants_obj = self.pool['product.product']
+        created_product_ids = []
 
-                    cr.execute("SAVEPOINT pre_variant_save")
-                    try:
-                        product_id = variants_obj.create(cr, uid, vals,
-                                                         {'generate_from_template': True})
-                        created_product_ids.append(product_id)
-                        if count % 50 == 0:
-                            _logger.debug("product created : %s", count)
-                    except Exception, e:
-                        _logger.error("Error creating product variant: %s",
-                                      e, exc_info=True)
-                        _logger.debug("Values used to attempt creation of product variant: %s",
-                                      vals)
-                        cr.execute("ROLLBACK TO SAVEPOINT pre_variant_save")
-                    cr.execute("RELEASE SAVEPOINT pre_variant_save")
+        existing_product_ids = variants_obj.search(cr, uid,
+            [('product_tmpl_id', '=', product_temp.id)],
+            context=context)
 
-                _logger.debug("product created : %s", count)
+        if not product_temp.do_not_generate_new_variant:
+            created_product_ids = self._create_variant(cr, uid, product_temp,
+                existing_product_ids, context=context)
 
-            if not product_temp.do_not_update_variant:
-                product_ids = existing_product_ids + created_product_ids
-            else:
-                product_ids = created_product_ids
+        product_ids = existing_product_ids + created_product_ids
 
-            # FIRST, Generate/Update variant names ('variants' field)
-            _logger.debug("Starting to generate/update variant names...")
-            variants_obj.update_variant(cr, uid, product_ids, context=context)
-            #_logger.debug("End of the generation/update of variant names.")
-            ## SECOND, Generate/Update product codes and properties (we may need variants name)
-            #_logger.debug("Starting to generate/update product codes and properties...")
-            #variants_obj.build_product_code_and_properties(cr, uid, product_ids, context=context)
-            #_logger.debug("End of the generation/update of product codes and properties.")
-            ## THIRD, Generate/Update product names (we may need variants name for that)
-            #_logger.debug("Starting to generate/update product names...")
-            #variants_obj.build_product_name(cr, uid, product_ids, context=context)
-            #_logger.debug("End of generation/update of product names.")
+        _logger.debug("Starting to generate/update variant names...")
+        variants_obj.update_variant(cr, uid, product_ids, context=context)
+        return True
+
+    def button_generate_variants(self, cr, uid, ids, context=None):
+        for product_temp in self.browse(cr, uid, ids, context=context):
+            self._generate_variant_for_template(cr, uid, product_temp, context=context)
         return True
 
 

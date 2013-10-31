@@ -47,24 +47,6 @@ class product_product(orm.Model):
 class product_template(orm.Model):
     _inherit = "product.template"
 
-
-    _columns = {
-        'product_ids': fields.many2one('product.product', string='Products'),
-        'is_displays': fields.boolean('Is Displays'),
-    }
-
-    _defaults = {
-        'is_displays': False,
-        'type': 'display',
-    }
-
-    def __init__(self, pool, cr):
-        super(product_template, self).__init__(pool, cr)
-        option = ('display', 'Product Display')
-        type_selection = self._columns['type'].selection
-        if option not in type_selection:
-            type_selection.append(option)
-
     def button_generate_variants(self, cr, uid, ids, context=None):
         display_obj = self.pool.get('product.display')
         variants_obj = self.pool.get('product.product')
