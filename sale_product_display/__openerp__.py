@@ -18,33 +18,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Display',
+{'name' : 'Sale Product Display',
  'version' : '1.0',
  "author": "Akretion",
  'category': 'Sales Management',
  'description': """
-Product Display
-================
+Sale Product Display
+====================
 
-A simple module for handling the product display.
-It provides view for product display,
-so they can be created manually. It doesn't provide
-all the bells and whistles of the product_variant_display
-module (creator wizards, ...).
+A simple module for preventing validation of a command that contains a product display.
 
 """,
  'author' : 'Akretion',
  'maintainer': 'Akretion',
  'website': 'http://www.akretion.com/',
  'depends' : [
-    'product',
-    'sale_product_display'
+    'sale',
     ],
- 'data': [
-    'product_view.xml',
-    ],
- 'test': [],
- 'installable': True,
  'auto_install': False,
- 'application': True,
  }

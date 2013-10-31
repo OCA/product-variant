@@ -19,26 +19,21 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-{
-    "name": "Product Variant Display Generator",
-    "version": "1.0",
-    "author": "OpenERP SA, Akretion",
-    "category": "Sales Management",
-    "license": "AGPL-3",
-    "summary": "Products Displays with multi-dimension variants ",
-    "description": """
-Multi-axial display product support for OpenERP
-===============================================
+
+from openerp.osv import orm, osv
+from openerp.tools.translate import _
 
 
-    """,
-    "depends" : [
-                "product_custom_attributes",
-                "product_variant_generator",
-                "product_display"
-                ],
-    "data" : [],
-    "application": True,
-    "active": False,
-    "installable": True,
-}
+class sale_order_line(orm.Model):
+    _inherit = 'sale.order.line'
+
+
+    def _check_product_display(self, cr, uid, ids, context=None):
+        for record in self.browse(cr, uid, ids, context=context):
+            if record.product_id.is_displays:
+                raise osv.except_osv(_('Error'), _('You cannot validate the order with product display %s.')% (record.product_id.name))
+        return True
+
+    _constraints = [
+        (_check_product_display, 'You cannot validate an order with a product display.',
+            [])]

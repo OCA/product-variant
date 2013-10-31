@@ -19,26 +19,5 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-{
-    "name": "Product Variant Display Generator",
-    "version": "1.0",
-    "author": "OpenERP SA, Akretion",
-    "category": "Sales Management",
-    "license": "AGPL-3",
-    "summary": "Products Displays with multi-dimension variants ",
-    "description": """
-Multi-axial display product support for OpenERP
-===============================================
 
-
-    """,
-    "depends" : [
-                "product_custom_attributes",
-                "product_variant_generator",
-                "product_display"
-                ],
-    "data" : [],
-    "application": True,
-    "active": False,
-    "installable": True,
-}
+import sale
