@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#   Module for OpenERP 
+#   Module for OpenERP
 #   Copyright (C) 2013 Akretion (http://www.akretion.com).
 #   @author Chafique Delli <chafique.delli@akretion.com>
 #
@@ -19,8 +19,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-
-
 {
     "name": "Product Variant Display Generator",
     "version": "1.0",
