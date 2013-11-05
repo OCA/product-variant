@@ -27,7 +27,11 @@ class product_product(orm.Model):
     _inherit = 'product.product'
 
     _columns = {
-        'display_for_product_ids': fields.many2one('product.product', string='Products'),
+        'display_for_product_ids': fields.many2many('product.product',
+                                                    'product_template_option_rel',
+                                                    'product_display_id',
+                                                    'product_id',
+                                                    string='Products'),
         'is_displays': fields.boolean('Is Displays'),
     }
 

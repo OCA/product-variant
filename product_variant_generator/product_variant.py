@@ -282,16 +282,14 @@ class product_template(orm.Model):
 
         return cartesian_product(vals)
 
-    def _get_list_of_combinaison_to_create(self, cr, uid, product_temp, existing_product_ids, context=None):
-        variants_obj = self.pool['product.product']
+    def _get_combinaison(self, cr, uid, product_temp, context=None):
         res = defaultdict(list)
+
         for value in product_temp.value_ids:
             res[value.dimension_id].append(value.option_id.id)
 
         temp_val_list = []
-        dimension_fields = []
         for dim in res:
-            dimension_fields.append(dim.name)
             temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
 
         #example temp_val_list is equal to [['red', 'blue', 'yellow'], ['L', 'XL', 'M']]
@@ -300,31 +298,45 @@ class product_template(orm.Model):
         if not temp_val_list:
             return []
 
-        list_of_combinaison = self._create_variant_list(cr, uid,
+        combinaisons = self._create_variant_list(cr, uid,
                                                         temp_val_list,
                                                         context)
+        return combinaisons
+
+    def _get_combinaisons_to_create(self, cr, uid, product_temp, existing_product_ids, context=None):
+        variants_obj = self.pool['product.product']
+
+        fields = [dimension.name for dimension in product_temp.axes_variance_ids]
+
+        combinaisons = self._get_combinaison(cr, uid,
+            product_temp, context=context)
+
+        for combinaison in combinaisons:
+            combinaison.sort()
+
         existing_products = variants_obj.read(cr, uid,
                                                 existing_product_ids,
-                                                dimension_fields,
+                                                fields,
                                                 context=context)
 
-        list_of_existing_combinaison = []
+        existing_combinaisons = []
         for existing_product in existing_products:
             existing_combinaison = []
-            for field in dimension_fields:
+            for field in fields:
                 if existing_product[field]:
                     existing_combinaison.append(existing_product[field][0])
                 else:
                     existing_combinaison.append(None)
-            list_of_existing_combinaison.append(existing_combinaison)
+            existing_combinaison.sort()
+            existing_combinaisons.append(existing_combinaison)
 
-        list_of_combinaison_to_create = [x for x in list_of_combinaison
-                                      if not x in list_of_existing_combinaison]
+        combinaisons_to_create = [x for x in combinaisons
+                                      if not x in existing_combinaisons]
 
         _logger.debug("variant existing : %s, variant to create : %s",
-                      len(list_of_existing_combinaison),
-                      len(list_of_combinaison_to_create))
-        return list_of_combinaison_to_create
+                      len(existing_combinaisons),
+                      len(combinaisons_to_create))
+        return combinaisons_to_create
 
     def _prepare_variant_vals(self, cr, uid, product_temp, combinaison, context=None):
         option_obj = self.pool['attribute.option']
@@ -335,21 +347,21 @@ class product_template(orm.Model):
             'track_outgoing': product_temp.variant_track_outgoing,
             'product_tmpl_id': product_temp.id,
         }
-
-        for option in option_obj.browse(cr, uid, combinaison, context=context):
+        option_ids = [option_id for option_id in combinaison if option_id]
+        for option in option_obj.browse(cr, uid, option_ids, context=context):
             vals[option.attribute_id.name] = option.id
         return vals
 
     def _create_variant(self, cr, uid, product_temp, existing_product_ids, context=None):
         variants_obj = self.pool['product.product']
         created_product_ids = []
-        list_of_combinaison_to_create = self.\
-            _get_list_of_combinaison_to_create(cr, uid, product_temp,
+        combinaisons_to_create = self.\
+            _get_combinaisons_to_create(cr, uid, product_temp,
                                                existing_product_ids,
                                                context=context)
 
         count = 0
-        for combinaison in list_of_combinaison_to_create:
+        for combinaison in combinaisons_to_create:
             count += 1
             vals = self._prepare_variant_vals(cr, uid, product_temp,
                                               combinaison, context=context)

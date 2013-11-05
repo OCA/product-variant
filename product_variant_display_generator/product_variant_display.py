@@ -20,26 +20,67 @@
 #
 ###############################################################################
 
+from openerp.osv import orm, fields
+from collections import defaultdict
+
 import logging
 _logger = logging.getLogger(__name__)
-
-
-#class product_product(orm.Model):
-#    _inherit = "product.product"
-#
-#    def _prepare_update_vals(self, cr, uid, product, context=None):
-#        context['is_multi_variants'] = True
-#        vals = {
-#            'variants': Template(product.template_name).render(o=product),
-#            'default_code': Template(product.template_code).render(o=product),
-#            }
-#        if product.is_displays:
-#            vals['name'] = (product.product_ids.name or '') + ' ' + vals['variants']
-#        else:
-#            vals['name'] = (product.product_tmpl_id.name or '') + ' ' + vals['variants']
-#        return vals
 
 
 class product_template(orm.Model):
     _inherit = "product.template"
 
+    _columns = {
+        'generate_main_display': fields.boolean('Generate Main Display'),
+        'generate_display_from_dim_id': fields.many2one('attribute.attribute',
+                                                        string='Generate Display From Dimension'),
+    }
+
+
+    def _get_combinaison(self, cr, uid, product_temp, context=None):
+        if context.get('product_display'):
+            fields = [dimension.name for dimension in product_temp.axes_variance_ids]
+            number_of_fields = len(fields)
+            combinaisons = []
+            if product_temp.generate_display_from_dim_id:
+                for option in product_temp.generate_display_from_dim_id.option_ids:
+                   combinaisons.append([option.id] + [None]*(number_of_fields -1))
+            if product_temp.generate_main_display:
+                combinaisons.append([None]*number_of_fields)
+            return combinaisons
+        return super(product_template, self)._get_combinaison(cr, uid,
+                                                              product_temp,
+                                                              context=context)
+
+
+    def _prepare_variant_vals(self, cr, uid, product_temp, combinaison, context=None):
+        product_obj=self.pool['product.product']
+        vals = super(product_template, self)._prepare_variant_vals(cr, uid,
+            product_temp, combinaison, context=context)
+        if context.get('product_display'):
+            vals['is_displays'] = True
+            dimension_name=str(product_temp.generate_display_from_dim_id.name)
+            if dimension_name in vals:
+                vals['display_for_product_ids']=[(6, 0, product_obj.search(cr, uid,
+                                [[dimension_name, '=', vals[dimension_name]]],
+                                context=context))]
+
+            else:
+                vals['display_for_product_ids']=[(6, 0, product_obj.search(cr, uid,
+                                [['product_tmpl_id', '=', vals['product_tmpl_id']]],
+                                context=context))]
+        return vals
+
+
+    def _create_variant(self, cr, uid, product_temp, existing_product_ids, context=None):
+        created_product_ids = super(product_template, self)._create_variant(cr, uid,
+                                                             product_temp,
+                                                             existing_product_ids,
+                                                             context=context)
+        ctx = context.copy()
+        ctx['product_display'] = True
+        created_product_display_ids = super(product_template, self)._create_variant(cr, uid,
+                                                             product_temp,
+                                                             existing_product_ids,
+                                                             context=ctx)
+        return created_product_ids + created_product_display_ids

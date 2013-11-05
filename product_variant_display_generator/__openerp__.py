@@ -37,7 +37,8 @@ Multi-axial display product support for OpenERP
                 "product_variant_generator",
                 "product_display"
                 ],
-    "data" : [],
+    "data" : ["product_view.xml",
+              ],
     "application": True,
     "active": False,
     "installable": True,
