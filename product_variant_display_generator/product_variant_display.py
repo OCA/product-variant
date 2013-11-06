@@ -21,7 +21,7 @@
 ###############################################################################
 
 from openerp.osv import orm, fields
-from collections import defaultdict
+
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -59,16 +59,15 @@ class product_template(orm.Model):
             product_temp, combinaison, context=context)
         if context.get('product_display'):
             vals['is_displays'] = True
-            dimension_name=str(product_temp.generate_display_from_dim_id.name)
+            dimension_name = product_temp.generate_display_from_dim_id.name
             if dimension_name in vals:
-                vals['display_for_product_ids']=[(6, 0, product_obj.search(cr, uid,
-                                [[dimension_name, '=', vals[dimension_name]]],
-                                context=context))]
-
+                domain = [[dimension_name, '=', vals[dimension_name]],
+                    ['is_displays', '=', False]]
             else:
-                vals['display_for_product_ids']=[(6, 0, product_obj.search(cr, uid,
-                                [['product_tmpl_id', '=', vals['product_tmpl_id']]],
-                                context=context))]
+                domain = [['product_tmpl_id', '=', vals['product_tmpl_id']],
+                    ['is_displays', '=', False]]
+            product_ids = product_obj.search(cr, uid, domain, context=context)
+            vals['display_for_product_ids']=[(6, 0, product_ids)]
         return vals
 
 

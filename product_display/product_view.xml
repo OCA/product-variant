@@ -17,7 +17,7 @@
                 <notebook position="inside">
                     <page string="Product Display" attrs="{'invisible':[('is_displays','=',False)]}">
                         <group colspan="2" col="2">
-                            <field name="display_for_product_ids"/>
+                            <field name="display_for_product_ids" nolabel="1"/>
                         </group>
                     </page>
                 </notebook>
