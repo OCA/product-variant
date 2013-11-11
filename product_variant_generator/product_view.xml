@@ -147,7 +147,14 @@
                         <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                             <field name="axes_variance_ids" nolabel="1" colspan="4" />
                             <button name="add_all_option" string="Add All Options" type="object" colspan="2"/>
-                            <field name="value_ids" nolabel="1" colspan="4" />
+                            <field name="value_ids" nolabel="1" colspan="4">
+                                <tree string="Values" editable="top">
+                                    <field name="active"/>
+                                    <field name="dimension_id" on_change="on_dimension_change(dimension_id, context)"/>
+                                    <field name="option_id"/>
+                                    <field name="sequence"/>
+                                </tree>
+                            </field>
                             <field name="template_name" colspan="4"/>
                             <field name="template_code" colspan="4"/>
                             <field name="variant_track_production" colspan="4"/>

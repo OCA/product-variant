@@ -144,6 +144,14 @@ class product_variant_dimension_value(orm.Model):
 
     _order = "dimension_sequence, sequence, option_id"
 
+    def on_dimension_change(self, cr, uid, ids, dimension_id, context=None):
+        dim_obj = self.pool['product.variant.axe']
+        dim = dim_obj.browse(cr, uid, dimension_id, context=context)
+        return {
+            'domain': {'option_id': [('id', 'in', [option.id for option in dim.option_ids])]},
+            'value': {'option_id': False},
+            }
+
 
 class product_template(orm.Model):
     _inherit = "product.template"
