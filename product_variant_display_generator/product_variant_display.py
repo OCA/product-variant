@@ -32,7 +32,7 @@ class product_template(orm.Model):
 
     _columns = {
         'generate_main_display': fields.boolean('Generate Main Display'),
-        'generate_display_from_dim_id': fields.many2one('attribute.attribute',
+        'generate_display_from_dim_id': fields.many2one('product.variant.axe',
                                                         string='Generate Display From Dimension'),
     }
 
@@ -43,8 +43,9 @@ class product_template(orm.Model):
             number_of_fields = len(fields)
             combinaisons = []
             if product_temp.generate_display_from_dim_id:
-                for option in product_temp.generate_display_from_dim_id.option_ids:
-                   combinaisons.append([option.id] + [None]*(number_of_fields -1))
+                for value in product_temp.value_ids:
+                    if value.dimension_id.id == product_temp.generate_display_from_dim_id.id:
+                        combinaisons.append([value.option_id.id] + [None]*(number_of_fields -1))
             if product_temp.generate_main_display:
                 combinaisons.append([None]*number_of_fields)
             return combinaisons

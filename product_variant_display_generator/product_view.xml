@@ -17,6 +17,7 @@
                 <xpath expr="//field[@name='do_not_update_variant']/.." position="after">
                     <group string="Displays" colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                         <field name="generate_main_display"/>
+                        <!-- TODO add domain on dimension -->
                         <field name="generate_display_from_dim_id"/>
                     </group>
                 </xpath>
