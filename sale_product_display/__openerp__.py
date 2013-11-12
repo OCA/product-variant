@@ -34,6 +34,7 @@ A simple module for preventing validation of a command that contains a product d
  'website': 'http://www.akretion.com/',
  'depends' : [
     'sale',
+    'product_display'
     ],
- 'auto_install': False,
+ 'auto_install': True,
  }

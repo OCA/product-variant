@@ -38,7 +38,6 @@ module (creator wizards, ...).
  'website': 'http://www.akretion.com/',
  'depends' : [
     'product',
-    'sale_product_display'
     ],
  'data': [
     'product_view.xml',
