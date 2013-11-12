@@ -32,9 +32,9 @@ class product_product(orm.Model):
                                                     'product_display_id',
                                                     'product_id',
                                                     string='Products'),
-        'is_displays': fields.boolean('Is Displays'),
+        'is_display': fields.boolean('Is Display'),
     }
 
     _defaults = {
-        'is_displays': False,
+        'is_display': False,
     }

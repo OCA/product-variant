@@ -30,7 +30,7 @@ class sale_order_line(orm.Model):
 
     def _check_product_display(self, cr, uid, ids, context=None):
         for record in self.browse(cr, uid, ids, context=context):
-            if record.product_id.is_displays:
+            if record.product_id.is_display:
                 raise osv.except_osv(_('Error'), _('You cannot validate the order with product display %s.')% (record.product_id.name))
         return True
 

@@ -11,11 +11,11 @@
             <field name="inherit_id" ref="product_variant_generator.product_normal_variant_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='is_multi_variants']/.." position="after">
-                    <field name="is_displays"/>
-                    <label for="is_displays" />
+                    <field name="is_display"/>
+                    <label for="is_display" />
                 </xpath>
                 <notebook position="inside">
-                    <page string="Product Display" attrs="{'invisible':[('is_displays','=',False)]}">
+                    <page string="Product Display" attrs="{'invisible':[('is_display','=',False)]}">
                         <group colspan="2" col="2">
                             <field name="display_for_product_ids" nolabel="1"/>
                         </group>
