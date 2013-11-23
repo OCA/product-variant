@@ -150,7 +150,9 @@
                             <field name="value_ids" nolabel="1" colspan="4">
                                 <tree string="Values" editable="top">
                                     <field name="active"/>
-                                    <field name="dimension_id" on_change="on_dimension_change(dimension_id, context)"/>
+                                    <field name="dimension_id"
+                                           on_change="on_dimension_change(dimension_id, context)"
+                                           domain="[('dimension_id','in',parent.axes_variance_ids)]" />
                                     <field name="option_id"/>
                                     <field name="sequence"/>
                                 </tree>
