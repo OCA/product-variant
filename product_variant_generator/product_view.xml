@@ -157,6 +157,7 @@
                                     <field name="sequence"/>
                                 </tree>
                             </field>
+                            <field name="base_default_code" colspan="4"/>
                             <field name="template_name" colspan="4"/>
                             <field name="template_code" colspan="4"/>
                             <field name="variant_track_production" colspan="4"/>

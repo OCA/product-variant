@@ -175,6 +175,9 @@ class product_template(orm.Model):
                                            'to generate the name of your variant')),
         'template_code': fields.char('Template Code', size=256,
                                       help=('Code of the product in mako syntax')),
+        'base_default_code': fields.char('Base Default Code', size=256,
+                                      help=('Base Default Code of the template '
+                                          'used for generating the product code')),
         'is_multi_variants': fields.boolean('Is Multi Variants'),
         'variant_track_production': fields.boolean('Track Production Lots on variants ?'),
         'variant_track_incoming': fields.boolean('Track Incoming Lots on variants ?'),
