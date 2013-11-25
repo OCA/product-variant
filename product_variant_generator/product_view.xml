@@ -61,7 +61,7 @@
         <!-- Axes Variance -->
         <record id="product_variant_multi_dimension_type_search" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.type.search</field>
-            <field name="model">product.variant.axe</field>
+            <field name="model">product.variant.dimension</field>
             <field name="arch" type="xml">
                 <search string="Axes Variance Search">
                     <field name="name"/>
@@ -71,7 +71,7 @@
 
         <record id="product_variant_multi_dimension_type_tree" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.type.tree</field>
-            <field name="model">product.variant.axe</field>
+            <field name="model">product.variant.dimension</field>
             <field name="arch" type="xml">
                 <tree string="Axes Variance" >
                     <field name="name" />
@@ -82,7 +82,7 @@
 
         <record id="product_variant_multi_dimension_type_form" model="ir.ui.view">
             <field name="name">product.variant.multi.dimension.type.form</field>
-            <field name="model">product.variant.axe</field>
+            <field name="model">product.variant.dimension</field>
             <field name="arch" type="xml">
                 <form string="Axes Variance" version="7.0">
                     <sheet>
@@ -119,7 +119,7 @@
 
         <record id="action_dimension_type" model="ir.actions.act_window">
             <field name="name">Axes Variance</field>
-            <field name="res_model">product.variant.axe</field>
+            <field name="res_model">product.variant.dimension</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{'dimension_type_main_view': True}</field>
@@ -145,14 +145,14 @@
                 <xpath expr="//form/notebook" position="inside">
                     <page string="Variants">
                         <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                            <field name="axes_variance_ids" nolabel="1" colspan="4" />
+                            <field name="dimension_ids" nolabel="1" colspan="4" />
                             <button name="add_all_option" string="Add All Options" type="object" colspan="2"/>
                             <field name="value_ids" nolabel="1" colspan="4">
                                 <tree string="Values" editable="top">
                                     <field name="active"/>
                                     <field name="dimension_id"
                                            on_change="on_dimension_change(dimension_id, context)"
-                                           domain="[('dimension_id','in',parent.axes_variance_ids)]" />
+                                           domain="[('dimension_id','in',parent.dimension_ids)]" />
                                     <field name="option_id"/>
                                     <field name="sequence"/>
                                 </tree>

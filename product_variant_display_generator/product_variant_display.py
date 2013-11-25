@@ -32,14 +32,14 @@ class product_template(orm.Model):
 
     _columns = {
         'generate_main_display': fields.boolean('Generate Main Display'),
-        'generate_display_from_dim_id': fields.many2one('product.variant.axe',
+        'generate_display_from_dim_id': fields.many2one('product.variant.dimension',
                                                         string='Generate Display From Dimension'),
     }
 
 
     def _get_combinaison(self, cr, uid, product_temp, context=None):
         if context.get('product_display'):
-            fields = [dimension.name for dimension in product_temp.axes_variance_ids]
+            fields = [dimension.name for dimension in product_temp.dimension_ids]
             number_of_fields = len(fields)
             combinaisons = []
             if product_temp.generate_display_from_dim_id:

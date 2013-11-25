@@ -39,9 +39,9 @@ _logger = logging.getLogger(__name__)
 #
 # Dimensions Definition
 #
-class product_variant_axe(orm.Model):
-    _name = "product.variant.axe"
-    _table = 'product_variant_axe'
+class product_variant_dimension(orm.Model):
+    _name = "product.variant.dimension"
+    _table = 'product_variant_dimension'
     _inherits = {'attribute.attribute': 'product_attribute_id'}
 
     def name_search(
@@ -50,7 +50,7 @@ class product_variant_axe(orm.Model):
             context=None, limit=None):
         if not context.get('product_tmpl_id', False):
             args = None
-        return super(product_variant_axe, self).name_search(cr, uid,
+        return super(product_variant_dimension, self).name_search(cr, uid,
                                                             '', args,
                                                             'ilike', None, None)
 
@@ -118,7 +118,7 @@ class product_variant_dimension_value(orm.Model):
                                relation='product.variant.dimension.option',
                                string="Dimension Value", readonly=True),
         'sequence': fields.integer('Sequence'),
-        'dimension_id': fields.many2one('product.variant.axe', 'Axe',
+        'dimension_id': fields.many2one('product.variant.dimension', 'Axe',
                                          required=True),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template',
                                            ondelete='cascade'),
@@ -146,7 +146,7 @@ class product_variant_dimension_value(orm.Model):
     _order = "dimension_sequence, sequence, option_id"
 
     def on_dimension_change(self, cr, uid, ids, dimension_id, context=None):
-        dim_obj = self.pool['product.variant.axe']
+        dim_obj = self.pool['product.variant.dimension']
         dim = dim_obj.browse(cr, uid, dimension_id, context=context)
         return {
             'domain': {'option_id': [('id', 'in', [option.id for option in dim.option_ids])]},
@@ -162,7 +162,7 @@ class product_template(orm.Model):
     _columns = {
         'name': fields.char('Name', size=128,
                             translate=True, select=True, required=False),
-        'axes_variance_ids': fields.many2many('product.variant.axe',
+        'dimension_ids': fields.many2many('product.variant.dimension',
                                              'product_template_dimension_rel',
                                              'template_id', 'dimension_id',
                                              'Dimension Types'),
@@ -188,15 +188,15 @@ class product_template(orm.Model):
     }
 
     _defaults = {
-        'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.axes_variance_ids if o[dimension.name].name])}',
+        'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.dimension_ids if o[dimension.name].name])}',
         'is_multi_variants': False,
-        'template_code': '${"-".join([o[dimension.name].code for dimension in o.axes_variance_ids if o[dimension.name].code])}',
+        'template_code': '${"-".join([o[dimension.name].code for dimension in o.dimension_ids if o[dimension.name].code])}',
     }
 
     def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
         location_obj = self.pool.get('attribute.location')
-        axe_obj = self.pool.get('product.variant.axe')
-        axes = []
+        dimension_obj = self.pool.get('product.variant.dimension')
+        dimension_ids = []
         if attribute_set_id:
             attribute_location_ids = location_obj.search(cr, uid,
                                                          [['attribute_set_id', '=', attribute_set_id]],
@@ -206,12 +206,12 @@ class product_template(orm.Model):
                                               attribute_location,
                                               fields='attribute_id',
                                               context=context)
-                axes_ids = axe_obj.search(cr, uid,
+                ids = dimension_obj.search(cr, uid,
                                           [['product_attribute_id', '=', attribute['attribute_id']]],
                                           context=context)
-                if axes_ids:
-                    axes.append(axes_ids[0])
-        return {'value': {'axes_variance_ids': axes}}
+                if ids:
+                    dimension_ids.append(ids[0])
+        return {'value': {'dimension_ids': dimension_ids}}
 
     def unlink(self, cr, uid, ids, context=None):
         if context and context.get('unlink_from_product_product', False):
@@ -243,7 +243,7 @@ class product_template(orm.Model):
             values = value_obj.browse(cr, uid, values_ids, context=context)
             existing_option_ids = [value.option_id.id for value in values]
             vals = {'value_ids': []}
-            for dim in template.axes_variance_ids:
+            for dim in template.dimension_ids:
                 for option in dim.option_ids:
                     if not option.id in existing_option_ids:
                         vals['value_ids'] += [[0, 0, {'dimension_id': dim.id, 'option_id': option.id}]]
@@ -318,7 +318,7 @@ class product_template(orm.Model):
     def _get_combinaisons_to_create(self, cr, uid, product_temp, existing_product_ids, context=None):
         variants_obj = self.pool['product.product']
 
-        fields = [dimension.name for dimension in product_temp.axes_variance_ids]
+        fields = [dimension.name for dimension in product_temp.dimension_ids]
 
         combinaisons = self._get_combinaison(cr, uid,
             product_temp, context=context)
