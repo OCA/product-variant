@@ -30,6 +30,7 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from collections import defaultdict
 from mako.template import Template
+from openerp.tools import config
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -385,6 +386,8 @@ class product_template(orm.Model):
                 if count % 50 == 0:
                     _logger.debug("product created : %s", count)
             except Exception, e:
+                if config['debug_mode']:
+                    raise
                 _logger.error("Error creating product variant: %s",
                               e, exc_info=True)
                 _logger.debug("Values used to attempt creation of product variant: %s",
