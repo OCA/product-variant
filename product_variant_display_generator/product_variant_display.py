@@ -61,12 +61,12 @@ class product_template(orm.Model):
         if context.get('product_display'):
             vals['is_display'] = True
             dimension_name = product_temp.generate_display_from_dim_id.name
+            domain = [
+                ['product_tmpl_id', '=', vals['product_tmpl_id']],
+                ['is_display', '=', False],
+            ]
             if dimension_name in vals:
-                domain = [[dimension_name, '=', vals[dimension_name]],
-                    ['is_display', '=', False]]
-            else:
-                domain = [['product_tmpl_id', '=', vals['product_tmpl_id']],
-                    ['is_display', '=', False]]
+                domain.append([dimension_name, '=', vals[dimension_name]])
             product_ids = product_obj.search(cr, uid, domain, context=context)
             vals['display_for_product_ids']=[(6, 0, product_ids)]
         return vals
