@@ -190,7 +190,7 @@ class product_template(orm.Model):
     _defaults = {
         'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.dimension_ids if o[dimension.name].name])}',
         'is_multi_variants': False,
-        'template_code': '${"-".join([o[dimension.name].code for dimension in o.dimension_ids if o[dimension.name].code])}',
+        'template_code': '${"-".join([o[dimension.name].name for dimension in o.dimension_ids])}',
     }
 
     def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
