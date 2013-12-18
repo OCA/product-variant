@@ -34,6 +34,16 @@ class product_template(orm.Model):
         'generate_main_display': fields.boolean('Generate Main Display'),
         'generate_display_from_dim_id': fields.many2one('product.variant.dimension',
                                                         string='Generate Display From Dimension'),
+        'display_variant_ids': fields.one2many(
+            'product.product',
+            'product_tmpl_id',
+            domain=[('is_display', '=', True)],
+            string='Display Variants'),
+        'product_variant_ids': fields.one2many(
+            'product.product',
+            'product_tmpl_id',
+            domain=[('is_display', '=', False)],
+            string='Product Variants'),
     }
 
 
