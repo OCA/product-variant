@@ -167,6 +167,7 @@
                             <field name="do_not_update_variant" colspan="4"/>
                             <button name="button_generate_variants" string="Generate / Update Variants" type="object" colspan="4"/>
                         </group>
+                        <separator string="Variants"/>
                         <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
                             <tree string="Variants">
                                 <field name="code" />
