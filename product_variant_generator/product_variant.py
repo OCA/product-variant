@@ -456,7 +456,7 @@ class product_product(orm.Model):
 
     def _update_variant(self, cr, uid, product, context=None):
         vals = self._prepare_update_vals(cr, uid, product, context=context)
-        vals = self._remove_not_updated(cr, uid, product, vals, context=context) 
+        vals = self._remove_not_updated(cr, uid, product, vals, context=context)
         if vals:
             product.write(vals)
         return True
