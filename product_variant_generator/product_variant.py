@@ -190,7 +190,7 @@ class product_template(orm.Model):
     _defaults = {
         'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.dimension_ids if o[dimension.name].name])}',
         'is_multi_variants': False,
-        'template_code': '${"-".join([o[dimension.name].name for dimension in o.dimension_ids])}',
+        'template_code': '${" - ".join([o[dimension.name].name for dimension in o.dimension_ids if o[dimension.name].name])}',
     }
 
     def onchange_attribute_set(self, cr, uid, ids, attribute_set_id, context=None):
@@ -456,7 +456,7 @@ class product_product(orm.Model):
 
     def _update_variant(self, cr, uid, product, context=None):
         vals = self._prepare_update_vals(cr, uid, product, context=context)
-        vals = self._remove_not_updated(cr, uid, product, vals, context=context) 
+        vals = self._remove_not_updated(cr, uid, product, vals, context=context)
         if vals:
             product.write(vals)
         return True
@@ -468,7 +468,6 @@ class product_product(orm.Model):
             'default_code': Template(product.template_code).render(o=product),
         }
         vals['name'] = (product.product_tmpl_id.name or '') + ' ' + vals['variants']
-
         return vals
 
     def _remove_not_updated(self, cr, uid, product, vals, context=None):
