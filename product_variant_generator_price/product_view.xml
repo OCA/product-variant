@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--
+  "Product variant generator price" module for OpenERP
+  The licence is in the file __openerp__.py
+  @author Chafique Delli <chafique.delli@akretion.com>
+-->
+
+        <!-- PRODUCT TEMPLATE -->
+        <record id="product_variant_price_product_template_form_view" model="ir.ui.view">
+            <field name="name">product.variant.price.product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product_variant_generator.product_variant_multi_product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="option_id" position="after">
+                    <field name="price_option"/>
+                </field>
+                <field name="variant_ids" position="replace">
+                    <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
+                        <tree string="Variants" editable="top">
+                            <field name="code" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="variants" string="Dimension Values" readonly="1"/>
+                            <field name="price_extra"/>
+                            <field name="lst_price"/>
+                        </tree>
+                    </field>
+                </field>
+                <field name="do_not_update_variant" position="after">
+                    <field name="generate_price_extra"/>
+                </field>
+                <field name="list_price" position="replace"/>
+                <field name="is_multi_variants" position="before">
+                    <field name="list_price"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- PRODUCT PRODUCT -->
+        <record id="product_variant_price_product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.variant.price.product.normal.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="list_price" position="replace">
+                    <field name="lst_price" string="Sale Price"/>
+                </field>
+                <field name="price_margin" position="replace">
+                    <field name="list_price" string="Base Price"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
