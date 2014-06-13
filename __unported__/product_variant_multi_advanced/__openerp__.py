@@ -39,6 +39,6 @@
     'init_xml': [],
     'update_xml': ['product.xml'],
     'demo_xml': [],
-    'installable': True,
+    'installable': False,
     'active': False,
 }
