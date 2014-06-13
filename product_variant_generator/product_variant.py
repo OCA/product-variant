@@ -58,9 +58,6 @@ class ProductVariantDimension(orm.Model):
         'sequence': fields.integer('Sequence',
                                    help=("The product 'variants' code will "
                                          "use this to order the dimension values")),
-        'allow_custom_value': fields.boolean('Allow Custom Value',
-                                             help=("If true, custom values can be entered "
-                                                   "in the product configurator")),
         'mandatory_dimension': fields.boolean('Mandatory Dimension',
                                               help=("If false, variant products will be created "
                                                     "with and without this dimension")),

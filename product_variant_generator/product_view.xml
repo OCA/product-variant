@@ -95,7 +95,6 @@
                         </div>
                         <group>
                             <field name="sequence" />
-                            <field name="allow_custom_value" />
                             <field name="mandatory_dimension" />
                         </group>
                     </sheet>
