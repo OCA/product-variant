@@ -37,13 +37,21 @@ class product_template(orm.Model):
         'display_variant_ids': fields.one2many(
             'product.product',
             'product_tmpl_id',
-            domain=[('is_display', '=', True)],
-            string='Display Variants'),
+            domain=[
+                ('is_display', '=', True),
+                '|',
+                ('active', '=', True),
+                ('active', '=', False),
+                ], string='Display Variants'),
         'product_variant_ids': fields.one2many(
             'product.product',
             'product_tmpl_id',
-            domain=[('is_display', '=', False)],
-            string='Product Variants'),
+            domain=[
+                ('is_display', '=', False),
+                '|',
+                ('active', '=', True),
+                ('active', '=', False),
+                ], string='Product Variants'),
     }
 
 
