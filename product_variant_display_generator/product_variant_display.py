@@ -109,7 +109,7 @@ class product_template(orm.Model):
 
 class product_product(orm.Model):
     _inherit = 'product.product'
-    
+
     def update_existing_product_display(self, cr, uid, ids, context=None):
         ids = self.search(cr, uid, [
             ['id', 'in', ids],
@@ -126,6 +126,6 @@ class product_product(orm.Model):
                 domain.append([dimension.name, '=', product[dimension.name].name])
             product_ids = self.search(cr, uid, domain, context=context)
             product.write({'display_for_product_ids': [(6, 0, product_ids)]})
-        return True 
+        return True
 
 
