@@ -28,7 +28,10 @@ class ProductTemplateAddOption(orm.TransientModel):
     _description = 'Product Template Add Option'
 
     def _get_option_domain(self, cr, uid, tmpl, context=None):
-        attr_ids = [dim.product_attribute_id.id for dim in tmpl.dimension_ids]
+        attr_ids = []
+        for group in tmpl.attribute_set_id.attribute_group_ids:
+            for attr in group.attribute_ids:
+                attr_ids.append(attr.attribute_id.id)
         domain = [('attribute_id', 'in', attr_ids)]
         existing_option_ids = [value.option_id.id for value in tmpl.value_ids]
         if existing_option_ids:
@@ -57,15 +60,11 @@ class ProductTemplateAddOption(orm.TransientModel):
 
     def add_option(self, cr, uid, ids, context=None):
         tmpl_obj = self.pool['product.template']
-        dim_obj = self.pool['product.variant.dimension']
         for wizard in self.browse(cr, uid, ids, context=context):
             values = []
             for option in wizard.option_ids:
-                dim_id = dim_obj.search(cr, uid, [
-                    ['product_attribute_id', '=', option.attribute_id.id]
-                    ], context=context)
                 values.append([0, 0, {
-                    'dimension_id': dim_id[0],
+                    'dimension_id': option.attribute_id.id,
                     'option_id': option.id,
                     }])
             tmpl_obj.write(cr, uid, context['active_id'], {

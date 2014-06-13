@@ -11,23 +11,12 @@
 -->
 
         <!-- DIMENSION VALUES -->
-        <record id="product_variant_multi_dimension_value_search" model="ir.ui.view">
-            <field name="name">product.variant.multi.dimension.value.search</field>
-            <field name="model">product.variant.dimension.value</field>
-            <field name="arch" type="xml">
-                <search string="Dimension Values Search">
-                    <field name="product_tmpl_id"/>
-                    <field name="option_id"/>
-                </search>
-            </field>
-        </record>
-
-        <record id="product_variant_multi_dimension_value_tree" model="ir.ui.view">
-            <field name="name">product.variant.multi.dimension.value.tree</field>
-            <field name="model">product.variant.dimension.value</field>
+        <record id="dimension_value_tree" model="ir.ui.view">
+            <field name="model">dimension.value</field>
             <field name="arch" type="xml">
                 <tree string="Dimension Values" editable="top">
-                    <field name="product_tmpl_id" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="product_tmpl_id"
+                           invisible="not context.get('dimension_value_main_view', False)"/>
                     <field name="active" />
                     <field name="option_id" />
                     <field name="sequence" />
@@ -36,11 +25,11 @@
         </record>
 
         <record id="product_variant_multi_dimension_value_form" model="ir.ui.view">
-            <field name="name">product.variant.multi.dimension.value.form</field>
-            <field name="model">product.variant.dimension.value</field>
+            <field name="model">dimension.value</field>
             <field name="arch" type="xml">
                 <form string="Dimension Values">
-                    <field name="product_tmpl_id" invisible="not context.get('dimension_value_main_view', False)" />
+                    <field name="product_tmpl_id"
+                           invisible="not context.get('dimension_value_main_view', False)"/>
                     <field name="active" />
                     <newline />
                     <field name="option_id" />
@@ -51,85 +40,28 @@
 
         <record id="action_dimension_value" model="ir.actions.act_window">
             <field name="name">Dimension values</field>
-            <field name="res_model">product.variant.dimension.value</field>
+            <field name="res_model">dimension.value</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{'dimension_value_main_view': True}</field>
         </record>
-
-
-        <!-- Axes Variance -->
-        <record id="product_variant_multi_dimension_type_search" model="ir.ui.view">
-            <field name="name">product.variant.multi.dimension.type.search</field>
-            <field name="model">product.variant.dimension</field>
-            <field name="arch" type="xml">
-                <search string="Axes Variance Search">
-                    <field name="name"/>
-                </search>
-            </field>
-        </record>
-
-        <record id="product_variant_multi_dimension_type_tree" model="ir.ui.view">
-            <field name="name">product.variant.multi.dimension.type.tree</field>
-            <field name="model">product.variant.dimension</field>
-            <field name="arch" type="xml">
-                <tree string="Axes Variance" >
-                    <field name="name" />
-                    <field name="field_description" string="Description"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="product_variant_multi_dimension_type_form" model="ir.ui.view">
-            <field name="name">product.variant.multi.dimension.type.form</field>
-            <field name="model">product.variant.dimension</field>
-            <field name="arch" type="xml">
-                <form string="Axes Variance" version="7.0">
-                    <sheet>
-                        <div class="oe_title">
-                            <label for="name" string="Product Attribute" class="oe_edit_only"/>
-                            <h1>
-                                <field name="product_attribute_id"
-                                       context="{'default_attribute_type': 'select', 'force_model': 'product.product', 'readonly_attribut_type': True}"/>
-                            </h1>
-                        </div>
-                        <group>
-                            <field name="sequence" />
-                            <field name="mandatory_dimension" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record id="product_variant_multi_attribute_form_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.attribute.form</field>
+        
+        <record id="attribute_attribute_form_view" model="ir.ui.view">
             <field name="model">attribute.attribute</field>
-            <field name="inherit_id" ref="base_custom_attributes.attribute_attribute_form_view" />
+            <field name="inherit_id" ref="base_custom_attributes.attribute_attribute_form_view"/>
             <field name="arch" type="xml">
-                <field name="attribute_type" position="replace">
-                    <field name="attribute_type" readonly="context.get('readonly_attribut_type')"/>
+                <field name="translate" position="after">
+                    <field name="is_dimension"/>
+                    <field name="sequence"
+                           attrs="{'invisible': [('is_dimension','=', False)]}"/>
+                    <field name="mandatory_dimension"
+                           attrs="{'invisible': [('is_dimension','=', False)]}"/>
                 </field>
-                <field name="model_id" position="replace">
-                    <field name="model_id" readonly="context.get('readonly_attribut_type')"/>
-                </field>
-             </field>
+            </field>
         </record>
-
-        <record id="action_dimension_type" model="ir.actions.act_window">
-            <field name="name">Axes Variance</field>
-            <field name="res_model">product.variant.dimension</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{'dimension_type_main_view': True}</field>
-        </record>
-
-        <menuitem name="Axes Variance" id="menu_variant_dimension" parent="product.prod_config_main" action="action_dimension_type"/>
-
-
+    
         <!-- PRODUCT TEMPLATE -->
         <record id="product_variant_multi_product_template_form_view" model="ir.ui.view">
-            <field name="name">product.variant.multi.product.template.form</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_form_view" />
             <field name="arch" type="xml">
@@ -137,14 +69,12 @@
                     <group>
                         <field name="is_multi_variants"/>
                         <field name="attribute_set_id"
-                               attrs="{'invisible':[('is_multi_variants','=',False)]}"
-                               on_change="onchange_attribute_set(attribute_set_id, context)"/>
+                               attrs="{'invisible':[('is_multi_variants','=',False)]}"/>
                     </group>
                 </xpath>
                 <xpath expr="//form/notebook" position="inside">
                     <page string="Variants">
                         <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
-                            <field name="dimension_ids" nolabel="1" colspan="4" />
                             <button name="%(product_variant_generator.action_add_option)d"
                                 string="Add Option"
                                 type="action"/>
@@ -166,10 +96,16 @@
                             <field name="variant_track_outgoing" colspan="4"/>
                             <field name="do_not_generate_new_variant" colspan="4"/>
                             <field name="do_not_update_variant" colspan="4"/>
-                            <button name="button_generate_variants" string="Generate / Update Variants" type="object" colspan="4"/>
+                            <button name="button_generate_variants"
+                                    string="Generate / Update Variants"
+                                    type="object"
+                                    colspan="4"/>
                         </group>
                         <separator string="Variants"/>
-                        <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
+                        <field name="variant_ids"
+                               string="Variants"
+                               nolabel="1" 
+                               colspan="1">
                             <tree string="Variants">
                                 <field name="code" />
                                 <field name="name" />
@@ -189,10 +125,8 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-
         <!-- PRODUCT VARIANTS -->
         <record id="product_variant_form_view" model="ir.ui.view">
-            <field name="name">product.variant.form</field>
             <field name="model">product.product</field>
             <field name="arch" type="xml">
                 <form string="Product Variant" version="7.0">
@@ -218,7 +152,6 @@
         </record>
 
         <record id="product_variant_tree_view" model="ir.ui.view">
-            <field name="name">product.variant.tree</field>
             <field name="model">product.product</field>
             <field name="arch" type="xml">
                 <tree string="Product Variant">
@@ -231,7 +164,6 @@
         </record>
 
         <record id="product_normal_variant_form_view" model="ir.ui.view">
-            <field name="name">product.normal.variant.form</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
