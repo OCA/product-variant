@@ -34,6 +34,24 @@ class product_template(orm.Model):
         'generate_main_display': fields.boolean('Generate Main Display'),
         'generate_display_from_dim_id': fields.many2one('product.variant.dimension',
                                                         string='Generate Display From Dimension'),
+        'display_variant_ids': fields.one2many(
+            'product.product',
+            'product_tmpl_id',
+            domain=[
+                ('is_display', '=', True),
+                '|',
+                ('active', '=', True),
+                ('active', '=', False),
+                ], string='Display Variants'),
+        'product_variant_ids': fields.one2many(
+            'product.product',
+            'product_tmpl_id',
+            domain=[
+                ('is_display', '=', False),
+                '|',
+                ('active', '=', True),
+                ('active', '=', False),
+                ], string='Product Variants'),
     }
 
 
@@ -60,23 +78,26 @@ class product_template(orm.Model):
             product_temp, combinaison, context=context)
         if context.get('product_display'):
             vals['is_display'] = True
-            dimension_name = product_temp.generate_display_from_dim_id.name
             domain = [
                 ['product_tmpl_id', '=', vals['product_tmpl_id']],
                 ['is_display', '=', False],
             ]
-            if dimension_name in vals:
-                domain.append([dimension_name, '=', vals[dimension_name]])
+            dimension = product_temp.generate_display_from_dim_id
+            if dimension and dimension.name in vals:
+                domain.append([dimension.name, '=', vals[dimension.name]])
             product_ids = product_obj.search(cr, uid, domain, context=context)
             vals['display_for_product_ids']=[(6, 0, product_ids)]
         return vals
-
 
     def _create_variant(self, cr, uid, product_temp, existing_product_ids, context=None):
         created_product_ids = super(product_template, self)._create_variant(cr, uid,
                                                              product_temp,
                                                              existing_product_ids,
                                                              context=context)
+        if created_product_ids:
+            self.pool['product.product'].\
+                    update_existing_product_display(cr, uid, created_product_ids, context=context)
+
         ctx = context.copy()
         ctx['product_display'] = True
         created_product_display_ids = super(product_template, self)._create_variant(cr, uid,
@@ -84,3 +105,27 @@ class product_template(orm.Model):
                                                              existing_product_ids,
                                                              context=ctx)
         return created_product_ids + created_product_display_ids
+
+
+class product_product(orm.Model):
+    _inherit = 'product.product'
+    
+    def update_existing_product_display(self, cr, uid, ids, context=None):
+        ids = self.search(cr, uid, [
+            ['id', 'in', ids],
+            ['is_display', '=', True]
+            ], context=context)
+
+        for product in self.browse(cr, uid, ids, context=context):
+            domain = [
+                ['product_tmpl_id', '=', product.product_tmpl_id.id],
+                ['is_display', '=', False],
+            ]
+            dimension = product.generate_display_from_dim_id
+            if dimension and product[dimension.name]:
+                domain.append([dimension.name, '=', product[dimension.name].name])
+            product_ids = self.search(cr, uid, domain, context=context)
+            product.write({'display_for_product_ids': [(6, 0, product_ids)]})
+        return True 
+
+

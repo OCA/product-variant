@@ -467,10 +467,6 @@ class product_product(orm.Model):
             'variants': Template(product.template_name).render(o=product),
             'default_code': Template(product.template_code).render(o=product),
         }
-        if vals['default_code']:
-            vals['default_code'] = product.product_tmpl_id.name + ' - ' + vals['default_code']
-        else:
-            vals['default_code'] = product.product_tmpl_id.name
         vals['name'] = (product.product_tmpl_id.name or '') + ' ' + vals['variants']
         return vals
 

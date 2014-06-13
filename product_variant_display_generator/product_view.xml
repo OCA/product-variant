@@ -19,8 +19,24 @@
                         <field name="generate_main_display"/>
                         <!-- TODO add domain on dimension -->
                         <field name="generate_display_from_dim_id"/>
+                        <field name="display_variant_ids" nolabel="1" colspan="4">
+                            <tree string="Display Variants">
+                                <field name="code" />
+                                <field name="name" />
+                                <field name="variants" string="Dimension Values" />
+                            </tree>
+                        </field>
                     </group>
                 </xpath>
+                <field name="variant_ids" position="replace">
+                    <field name="product_variant_ids" nolabel="1" colspan="4">
+                        <tree string="Product Variants">
+                            <field name="code" />
+                            <field name="name" />
+                            <field name="variants" string="Dimension Values" />
+                        </tree>
+                    </field>
+                </field>
             </field>
         </record>
 

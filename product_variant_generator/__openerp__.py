@@ -63,6 +63,7 @@ will have been warned.
                 "product_variant_simple"
                 ],
     "data" : [
+        "wizard/product_template_add_option_view.xml",
         "security/ir.model.access.csv",
         "product_view.xml",
     ],

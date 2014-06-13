@@ -22,3 +22,4 @@
 # flake8: noqa
 
 from . import product_variant
+from . import wizard

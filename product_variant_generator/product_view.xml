@@ -146,7 +146,9 @@
                     <page string="Variants">
                         <group colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                             <field name="dimension_ids" nolabel="1" colspan="4" />
-                            <button name="add_all_option" string="Add All Options" type="object" colspan="2"/>
+                            <button name="%(product_variant_generator.action_add_option)d"
+                                string="Add Option"
+                                type="action"/>
                             <field name="value_ids" nolabel="1" colspan="4">
                                 <tree string="Values" editable="top">
                                     <field name="active"/>
@@ -167,6 +169,7 @@
                             <field name="do_not_update_variant" colspan="4"/>
                             <button name="button_generate_variants" string="Generate / Update Variants" type="object" colspan="4"/>
                         </group>
+                        <separator string="Variants"/>
                         <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
                             <tree string="Variants">
                                 <field name="code" />

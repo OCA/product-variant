@@ -2,8 +2,8 @@
 ###############################################################################
 #
 #   Module for OpenERP
-#   Copyright (C) 2013 Akretion (http://www.akretion.com).
-#   @author Chafique Delli <chafique.delli@akretion.com>
+#   Copyright (C) 2014 Akretion (http://www.akretion.com).
+#   @author Sébastien BEAU <sebastien.beau@akretion.com>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as
@@ -20,28 +20,5 @@
 #
 ###############################################################################
 
-from openerp.osv import orm, fields
+from . import product_template_add_option
 
-
-class product_product(orm.Model):
-    _inherit = 'product.product'
-
-    _columns = {
-        'display_for_product_ids': fields.many2many(
-            'product.product',
-            'product_template_option_rel',
-            'product_display_id',
-            'product_id',
-            string='Products'),
-        'display_ids': fields.many2many(
-            'product.product',
-            'product_template_option_rel',
-            'product_id',
-            'product_display_id',
-            string='Products Display'),
-        'is_display': fields.boolean('Is Display'),
-    }
-
-    _defaults = {
-        'is_display': False,
-    }
