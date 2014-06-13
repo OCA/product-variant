@@ -42,7 +42,7 @@ class ProductTemplateAddOption(orm.TransientModel):
             context=context, toolbar=toolbar, submenu=submenu,
             )
         tmpl_id = context.get('active_id')
-        if tmpl_id and view_type=='form':
+        if tmpl_id and view_type == 'form':
             tmpl_obj = self.pool['product.template']
             tmpl = tmpl_obj.browse(cr, uid, tmpl_id, context=context)
             res['fields']['option_ids']['domain'] = self._get_option_domain(
