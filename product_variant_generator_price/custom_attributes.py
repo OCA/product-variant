@@ -23,7 +23,7 @@ from openerp.osv import orm, fields
 
 
 
-class attribute_option(orm.Model):
+class AttributeOption(orm.Model):
     _inherit = "attribute.option"
 
 

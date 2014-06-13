@@ -23,7 +23,7 @@
 from openerp.osv import orm, fields
 
 
-class product_product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = 'product.product'
 
     _columns = {

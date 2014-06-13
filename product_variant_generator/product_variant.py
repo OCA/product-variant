@@ -39,7 +39,7 @@ _logger = logging.getLogger(__name__)
 #
 # Dimensions Definition
 #
-class product_variant_dimension(orm.Model):
+class ProductVariantDimension(orm.Model):
     _name = "product.variant.dimension"
     _table = 'product_variant_dimension'
     _inherits = {'attribute.attribute': 'product_attribute_id'}
@@ -50,7 +50,7 @@ class product_variant_dimension(orm.Model):
             context=None, limit=None):
         if not context.get('product_tmpl_id', False):
             args = None
-        return super(product_variant_dimension, self).name_search(cr, uid,
+        return super(ProductVariantDimension, self).name_search(cr, uid,
                                                             '', args,
                                                             'ilike', None, None)
 
@@ -76,7 +76,7 @@ class product_variant_dimension(orm.Model):
     _order = "sequence"
 
 
-class product_variant_dimension_value(orm.Model):
+class ProductVariantDimensionValue(orm.Model):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
 
@@ -99,7 +99,7 @@ class product_variant_dimension_value(orm.Model):
                                      _("The value %s is used by the products : %s \n "
                                        "Please remove these products before removing the value.")
                                      % (value.option_id.name, product_list))
-        return super(product_variant_dimension_value, self).unlink(cr, uid,
+        return super(ProductVariantDimensionValue, self).unlink(cr, uid,
                                                                    ids, context)
 
     def _get_values_from_types(self, cr, uid, ids, context=None):
@@ -154,7 +154,7 @@ class product_variant_dimension_value(orm.Model):
             }
 
 
-class product_template(orm.Model):
+class ProductTemplate(orm.Model):
     _inherit = "product.template"
 
     _order = "name"
@@ -217,12 +217,12 @@ class product_template(orm.Model):
         if context and context.get('unlink_from_product_product', False):
             for template in self.browse(cr, uid, ids, context):
                 if not template.is_multi_variants:
-                    super(product_template, self).unlink(cr, uid,
+                    super(ProductTemplate, self).unlink(cr, uid,
                                                          [template.id], context)
         else:
             for template in self.browse(cr, uid, ids, context):
                 if template.variant_ids == []:
-                    super(product_template, self).unlink(cr, uid,
+                    super(ProductTemplate, self).unlink(cr, uid,
                                                          [template.id], context)
                 else:
                     raise osv.except_osv(_("Cannot delete template"),
@@ -259,7 +259,7 @@ class product_template(orm.Model):
             default = {}
         default = default.copy()
         default.update({'variant_ids': False, })
-        new_id = super(product_template, self).copy(cr, uid,
+        new_id = super(ProductTemplate, self).copy(cr, uid,
                                                     id, default,
                                                     context)
 
@@ -281,7 +281,7 @@ class product_template(orm.Model):
         if old_id in seen_map.setdefault(self._name, []):
             return
         seen_map[self._name].append(old_id)
-        return super(product_template, self).copy_translations(cr, uid,
+        return super(ProductTemplate, self).copy_translations(cr, uid,
                                                                old_id, new_id,
                                                                context=context)
 
@@ -423,7 +423,7 @@ class product_template(orm.Model):
         return True
 
 
-class product_product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = "product.product"
 
     def init(self, cr):
@@ -437,7 +437,7 @@ class product_product(orm.Model):
         if not context:
             context = {}
         context['unlink_from_product_product'] = True
-        return super(product_product, self).unlink(cr, uid, ids, context)
+        return super(ProductProduct, self).unlink(cr, uid, ids, context)
 
     def update_variant(self, cr, uid, ids, context=None):
         obj_lang = self.pool.get('res.lang')

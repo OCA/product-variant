@@ -27,7 +27,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class product_template(orm.Model):
+class ProductTemplate(orm.Model):
     _inherit = "product.template"
 
     _columns = {
@@ -67,14 +67,14 @@ class product_template(orm.Model):
             if product_temp.generate_main_display:
                 combinaisons.append([None]*number_of_fields)
             return combinaisons
-        return super(product_template, self)._get_combinaison(cr, uid,
+        return super(ProductTemplate, self)._get_combinaison(cr, uid,
                                                               product_temp,
                                                               context=context)
 
 
     def _prepare_variant_vals(self, cr, uid, product_temp, combinaison, context=None):
         product_obj=self.pool['product.product']
-        vals = super(product_template, self)._prepare_variant_vals(cr, uid,
+        vals = super(ProductTemplate, self)._prepare_variant_vals(cr, uid,
             product_temp, combinaison, context=context)
         if context.get('product_display'):
             vals['is_display'] = True
@@ -90,7 +90,7 @@ class product_template(orm.Model):
         return vals
 
     def _create_variant(self, cr, uid, product_temp, existing_product_ids, context=None):
-        created_product_ids = super(product_template, self)._create_variant(cr, uid,
+        created_product_ids = super(ProductTemplate, self)._create_variant(cr, uid,
                                                              product_temp,
                                                              existing_product_ids,
                                                              context=context)
@@ -100,14 +100,14 @@ class product_template(orm.Model):
 
         ctx = context.copy()
         ctx['product_display'] = True
-        created_product_display_ids = super(product_template, self)._create_variant(cr, uid,
+        created_product_display_ids = super(ProductTemplate, self)._create_variant(cr, uid,
                                                              product_temp,
                                                              existing_product_ids,
                                                              context=ctx)
         return created_product_ids + created_product_display_ids
 
 
-class product_product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = 'product.product'
 
     def update_existing_product_display(self, cr, uid, ids, context=None):

@@ -23,7 +23,7 @@
 from openerp.osv import fields,orm
 
 
-class product_product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = "product.product"
 
     def _get_price_extra(self, cr, uid, ids, field_names=None, arg=False, context=None):
@@ -67,7 +67,7 @@ class product_product(orm.Model):
 
 
 
-class product_variant_dimension_value(orm.Model):
+class ProductVariantDimensionValue(orm.Model):
     _inherit = "product.variant.dimension.value"
 
     _columns = {
@@ -81,7 +81,7 @@ class product_variant_dimension_value(orm.Model):
     }
 
 
-class product_template(orm.Model):
+class ProductTemplate(orm.Model):
     _inherit = "product.template"
 
     _columns = {

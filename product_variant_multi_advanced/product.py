@@ -41,13 +41,13 @@ def get_vals_to_write(vals, fields):
 duplicated_fields = ['description_sale', 'name']
 
 
-class product_template(orm.Model):
+class ProductTemplate(orm.Model):
     _inherit = "product.template"
 
     def button_generate_variants(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        super(product_template, self).button_generate_variants(cr, uid, ids, context=context)
+        super(ProductTemplate, self).button_generate_variants(cr, uid, ids, context=context)
         product_ids = self.get_products_from_product_template(cr, uid, ids, context=context)
         # generate/update sale description
         _logger.info("Starting to generate/update product sale descriptions...")
@@ -57,7 +57,7 @@ class product_template(orm.Model):
         return True
 
 
-class product_product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = "product.product"
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -65,7 +65,7 @@ class product_product(orm.Model):
             ids = [ids]
         if context is None:
             context = {}
-        res = super(product_product, self).write(cr, uid, ids, vals.copy(), context=context)
+        res = super(ProductProduct, self).write(cr, uid, ids, vals.copy(), context=context)
 
         ids_simple = self.search(
             cr, uid,
@@ -98,7 +98,7 @@ class product_product(orm.Model):
         # and not on the product_product
 
         #take care to use vals.copy() if not the vals will be changed by calling the super method
-        ids = super(product_product, self).create(cr, uid, vals.copy(), context=context)
+        ids = super(ProductProduct, self).create(cr, uid, vals.copy(), context=context)
         ####### write the value in the product_product
         ctx = context.copy()
         ctx['iamthechild'] = True

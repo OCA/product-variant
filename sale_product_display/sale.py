@@ -24,7 +24,7 @@ from openerp.osv import orm, osv
 from openerp.tools.translate import _
 
 
-class sale_order_line(orm.Model):
+class SaleOrderLine(orm.Model):
     _inherit = 'sale.order.line'
 
 

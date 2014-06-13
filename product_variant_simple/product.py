@@ -22,7 +22,7 @@
 from openerp.osv import orm, fields
 
 
-class product_template(orm.Model):
+class ProductTemplate(orm.Model):
     _inherit = 'product.template'
     _columns = {
         'variant_ids': fields.one2many(
