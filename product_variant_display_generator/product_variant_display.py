@@ -55,28 +55,28 @@ class ProductTemplate(orm.Model):
                 ], string='Product Variants'),
     }
 
-
     def _get_combinaison(self, cr, uid, product_temp, context=None):
         if context.get('product_display'):
-            fields = [dimension.name for dimension in product_temp.dimension_ids]
-            number_of_fields = len(fields)
+            fields = [dim.name for dim in product_temp.dimension_ids]
+            num_of_fields = len(fields)
             combinaisons = []
             if product_temp.main_dim_id:
                 for value in product_temp.value_ids:
                     if value.dimension_id.id == product_temp.main_dim_id.id:
-                        combinaisons.append([value.option_id.id] + [None]*(number_of_fields -1))
+                        combinaisons.append(
+                            [value.option_id.id] + [None]*(num_of_fields - 1)
+                            )
             if product_temp.generate_main_display:
-                combinaisons.append([None]*number_of_fields)
+                combinaisons.append([None]*num_of_fields)
             return combinaisons
-        return super(ProductTemplate, self)._get_combinaison(cr, uid,
-                                                              product_temp,
-                                                              context=context)
+        return super(ProductTemplate, self)._get_combinaison(
+            cr, uid, product_temp, context=context)
 
-
-    def _prepare_variant_vals(self, cr, uid, product_temp, combinaison, context=None):
-        product_obj=self.pool['product.product']
-        vals = super(ProductTemplate, self)._prepare_variant_vals(cr, uid,
-            product_temp, combinaison, context=context)
+    def _prepare_variant_vals(self, cr, uid, product_temp, combinaison,
+                              context=None):
+        product_obj = self.pool['product.product']
+        vals = super(ProductTemplate, self)._prepare_variant_vals(
+            cr, uid, product_temp, combinaison, context=context)
         if context.get('product_display'):
             vals['is_display'] = True
             domain = [
@@ -87,24 +87,22 @@ class ProductTemplate(orm.Model):
             if dimension and dimension.name in vals:
                 domain.append([dimension.name, '=', vals[dimension.name]])
             product_ids = product_obj.search(cr, uid, domain, context=context)
-            vals['display_for_product_ids']=[(6, 0, product_ids)]
+            vals['display_for_product_ids'] = [(6, 0, product_ids)]
         return vals
 
-    def _create_variant(self, cr, uid, product_temp, existing_product_ids, context=None):
-        created_product_ids = super(ProductTemplate, self)._create_variant(cr, uid,
-                                                             product_temp,
-                                                             existing_product_ids,
-                                                             context=context)
+    def _create_variant(self, cr, uid, product_temp, existing_product_ids,
+                        context=None):
+        created_product_ids = super(ProductTemplate, self)._create_variant(
+            cr, uid, product_temp, existing_product_ids, context=context)
         if created_product_ids:
-            self.pool['product.product'].\
-                    update_existing_product_display(cr, uid, created_product_ids, context=context)
+            self.pool['product.product'].update_existing_product_display(
+                cr, uid, created_product_ids, context=context)
 
         ctx = context.copy()
         ctx['product_display'] = True
-        created_product_display_ids = super(ProductTemplate, self)._create_variant(cr, uid,
-                                                             product_temp,
-                                                             existing_product_ids,
-                                                             context=ctx)
+        created_product_display_ids = super(ProductTemplate, self).\
+            _create_variant(cr, uid, product_temp, existing_product_ids,
+                            context=ctx)
         return created_product_ids + created_product_display_ids
 
 
@@ -122,11 +120,9 @@ class ProductProduct(orm.Model):
                 ['product_tmpl_id', '=', product.product_tmpl_id.id],
                 ['is_display', '=', False],
             ]
-            dimension = product.main_dim_id
-            if dimension and product[dimension.name]:
-                domain.append([dimension.name, '=', product[dimension.name].name])
+            dim = product.main_dim_id
+            if dim and product[dim.name]:
+                domain.append([dim.name, '=', product[dim.name].name])
             product_ids = self.search(cr, uid, domain, context=context)
             product.write({'display_for_product_ids': [(6, 0, product_ids)]})
         return True
-
-
