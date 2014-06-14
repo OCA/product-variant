@@ -17,8 +17,8 @@
                 <xpath expr="//field[@name='do_not_update_variant']/.." position="after">
                     <group string="Displays" colspan="1" col="4" attrs="{'invisible':[('is_multi_variants','=',False)]}">
                         <field name="generate_main_display"/>
-                        <!-- TODO add domain on dimension -->
-                        <field name="generate_display_from_dim_id"/>
+                        <field name="dimension_ids" invisible="1"/>
+                        <field name="main_dim_id" domain="[('id', 'in', dimension_ids and dimension_ids[0][2])]"/>
                         <field name="display_variant_ids" nolabel="1" colspan="4">
                             <tree string="Display Variants">
                                 <field name="code" />

@@ -33,8 +33,10 @@ class ProductTemplate(orm.Model):
     _columns = {
         'generate_main_display': fields.boolean('Generate Main Display'),
         'main_dim_id': fields.many2one(
-            'product.variant.dimension',
-            string='Generate Display From Dimension'),
+            'attribute.attribute',
+            string='Main Dimension',
+            help=('This dimension will be used for generating '
+                 'the product display')),
         'display_variant_ids': fields.one2many(
             'product.product',
             'product_tmpl_id',
