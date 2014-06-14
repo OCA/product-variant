@@ -22,10 +22,8 @@
 from openerp.osv import orm, fields
 
 
-
 class AttributeOption(orm.Model):
     _inherit = "attribute.option"
-
 
     _columns = {
         'price': fields.float('Price'),

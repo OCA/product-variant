@@ -20,17 +20,18 @@
 #
 ##############################################################################
 
-from openerp.osv import fields,orm
+from openerp.osv import fields, orm
 
 
 class ProductProduct(orm.Model):
     _inherit = "product.product"
 
-    def _get_price_extra(self, cr, uid, ids, field_names=None, arg=False, context=None):
+    def _get_price_extra(self, cr, uid, ids, field_names=None, arg=False,
+                         context=None):
         res = {}
         for product in self.browse(cr, uid, ids, context=context):
             automatic = False
-            if field_names=='price_extra':
+            if field_names == 'price_extra':
                 automatic = self.pool.get('product.template').read(
                     cr, uid,
                     product.product_tmpl_id.id, ['generate_price_extra'],
@@ -54,9 +55,9 @@ class ProductProduct(orm.Model):
                 res[product.id] = price_extra
         return res
 
-    def _set_extra_price(self, cr, uid, id, field_names=None, value=None, arg=False, context=None):
+    def _set_extra_price(self, cr, uid, id, field_names=None, value=None,
+                         arg=False, context=None):
         self.write(cr, uid, id, {'manual_price_extra': value}, context=context)
-
 
     _columns = {
         'price_extra': fields.function(_get_price_extra, type='float',
@@ -66,14 +67,17 @@ class ProductProduct(orm.Model):
     }
 
 
-
-class ProductVariantDimensionValue(orm.Model):
-    _inherit = "product.variant.dimension.value"
+class DimensionValue(orm.Model):
+    _inherit = "dimension.value"
 
     _columns = {
-        'price_option': fields.related('option_id', 'price', type='float',
-                               relation='product.variant.dimension.option',
-                               string="Price", readonly=True),
+        'price_option': fields.related(
+            'option_id',
+            'price',
+            type='float',
+            relation='product.variant.dimension.option',
+            string="Price",
+            readonly=True),
     }
 
     _defaults = {
