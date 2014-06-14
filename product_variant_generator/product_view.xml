@@ -89,8 +89,8 @@
                                 </tree>
                             </field>
                             <field name="base_default_code" colspan="4"/>
-                            <field name="template_name" colspan="4"/>
-                            <field name="template_code" colspan="4"/>
+                            <field name="template_name_id" colspan="4"/>
+                            <field name="template_code_id" colspan="4"/>
                             <field name="variant_track_production" colspan="4"/>
                             <field name="variant_track_incoming" colspan="4"/>
                             <field name="variant_track_outgoing" colspan="4"/>
@@ -176,6 +176,52 @@
                 </div>
             </field>
         </record>
+
+        <record id="view_model_string_template_search" model="ir.ui.view">
+            <field name="model">string.template</field>
+            <field name="arch" type="xml">
+                <search string="String Template">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_model_string_template_tree" model="ir.ui.view">
+            <field name="model">string.template</field>
+            <field name="arch" type="xml">
+                <tree string="String Template">
+                    <field name="name"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_model_string_template_form" model="ir.ui.view">
+            <field name="model">string.template</field>
+            <field name="arch" type="xml">
+                <form string="Label" version="7.0">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="code"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="string_template_form_action" model="ir.actions.act_window">
+            <field name="res_model">string.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_model_string_template_tree"/>
+            <field name="search_view_id" ref="view_model_string_template_search"/>
+            <field name="help"></field>
+        </record>
+
+        <menuitem
+            name="Product Code/Name generator"
+            action="string_template_form_action"
+            id="menu_string_template_action"
+            parent="product.prod_config_main"
+            sequence="40"/>
 
     </data>
 </openerp>

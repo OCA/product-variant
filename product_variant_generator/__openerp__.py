@@ -59,13 +59,14 @@ and only from product.template if not found on product.product. But at least you
 will have been warned.
     """,
     "depends" : [
-                "product_custom_attributes",
-                "product_variant_simple"
-                ],
+        "product_custom_attributes",
+        "product_variant_simple"
+    ],
     "data" : [
         "wizard/product_template_add_option_view.xml",
         "security/ir.model.access.csv",
         "product_view.xml",
+        "product_data.xml",
     ],
     "application": True,
     "active": False,

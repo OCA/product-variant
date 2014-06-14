@@ -28,11 +28,7 @@ class ProductTemplateAddOption(orm.TransientModel):
     _description = 'Product Template Add Option'
 
     def _get_option_domain(self, cr, uid, tmpl, context=None):
-        attr_ids = []
-        for group in tmpl.attribute_set_id.attribute_group_ids:
-            for attr in group.attribute_ids:
-                attr_ids.append(attr.attribute_id.id)
-        domain = [('attribute_id', 'in', attr_ids)]
+        domain = [('attribute_id', 'in', [x.id for x in tmpl.dimension_ids])]
         existing_option_ids = [value.option_id.id for value in tmpl.value_ids]
         if existing_option_ids:
             domain.append(('id', 'not in', existing_option_ids))

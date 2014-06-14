@@ -31,6 +31,9 @@ from openerp.tools.translate import _
 from collections import defaultdict
 from mako.template import Template
 from openerp.tools import config
+from openerp.tools.safe_eval import safe_eval
+import datetime
+
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -162,8 +165,17 @@ class DimensionValue(orm.Model):
 
 class ProductTemplate(orm.Model):
     _inherit = "product.template"
-
     _order = "name"
+
+    def _get_dimension_ids(self, cr, uid, ids, field_name, args, context=None):
+        result = {}
+        for product_tmpl in self.browse(cr, uid, ids, context=context):
+            attr_ids = []
+            for group in product_tmpl.attribute_set_id.attribute_group_ids:
+                for attr in group.attribute_ids:
+                    attr_ids.append(attr.attribute_id.id)
+            result[product_tmpl.id] = attr_ids
+        return result
 
     _columns = {
         'name': fields.char(
@@ -175,20 +187,27 @@ class ProductTemplate(orm.Model):
             'dimension.value',
             'product_tmpl_id',
             'Dimension Values'),
+        'dimension_ids': fields.function(
+            _get_dimension_ids,
+            string='Dimension',
+            type='many2many',
+            relation='attribute.attribute'),
         'variant_ids': fields.one2many(
             'product.product',
             'product_tmpl_id',
             'Variants'),
-        'template_name': fields.char(
+        'template_name_id': fields.many2one(
+            'string.template',
             'Template Name',
-            size=256,
             required=True,
-            help=('Name in mako syntax in order '
-                  'to generate the name of your variant')),
-        'template_code': fields.char(
+            domain=[('type', '=', 'product_name')],
+            ondelete='restrict'),
+        'template_code_id': fields.many2one(
+            'string.template',
             'Template Code',
-            size=256,
-            help=('Code of the product in mako syntax')),
+            required=True,
+            domain=[('type', '=', 'product_code')],
+            ondelete='restrict'),
         'base_default_code': fields.char(
             'Base Default Code',
             size=256,
@@ -207,10 +226,22 @@ class ProductTemplate(orm.Model):
             "Don't Generate New Variant"),
     }
 
+    def _get_default_template_name(self, cr, uid, context=None):
+        tmpl_id = self.pool['string.template'].search(cr, uid, [
+            ('type', '=', 'product_name'),
+            ], context=context)
+        return tmpl_id and tmpl_id[0] or False
+
+    def _get_default_template_code(self, cr, uid, context=None):
+        tmpl_id = self.pool['string.template'].search(cr, uid, [
+            ('type', '=', 'product_code'),
+            ], context=context)
+        return tmpl_id and tmpl_id[0] or False
+
     _defaults = {
-        'template_name': '${" | ".join(["%s - %s" %(dimension.field_description, o[dimension.name].name) for dimension in o.dimension_ids if o[dimension.name].name])}',
         'is_multi_variants': False,
-        'template_code': '${" - ".join([o[dimension.name].name for dimension in o.dimension_ids if o[dimension.name].name])}',
+        'template_name_id': _get_default_template_name,
+        'template_code_id': _get_default_template_code,
     }
 
     def unlink(self, cr, uid, ids, context=None):
@@ -452,9 +483,12 @@ class ProductProduct(orm.Model):
 
     def _prepare_update_vals(self, cr, uid, product, context=None):
         context['is_multi_variants'] = True
+        string_template_obj = self.pool['string.template']
         vals = {
-            'variants': Template(product.template_name).render(o=product),
-            'default_code': Template(product.template_code).render(o=product),
+            'variants': string_template_obj._build(
+                cr, uid, product.template_name_id.id, product),
+            'default_code': string_template_obj._build(
+                cr, uid, product.template_code_id.id, product),
         }
         vals['name'] = "%s %s" % (
             product.product_tmpl_id.name or '',
@@ -478,3 +512,70 @@ class ProductProduct(orm.Model):
             'Variants',
             size=128),
     }
+
+
+class StringTemplate(orm.Model):
+    _name='string.template'
+
+    def __get_type(self, cr, uid, context=None):
+        return self._get_type(cr, uid, context=context)
+
+    def _get_type(self, cr, uid, context=None):
+        return [
+            ('product_code', 'Product Code'),
+            ('product_name', 'Product Name'),
+            ]
+
+    _columns = {
+        'name': fields.char('name', required=True),
+        'type': fields.selection(__get_type, 'Type', required=True),
+        'code': fields.text('Code', required=True),
+        }
+
+    _defaults = {
+        'code': """# Python code. Use result='YOUR_RESULT' to return your value.
+        # You can use the following variables :
+        #  - self: ORM model of the record which is checked
+        #  - o: browse_record of product template
+        #  - pool: ORM model pool (i.e. self.pool)
+        #  - datetime: Python datetime module
+        #  - cr: database cursor
+        #  - uid: current user id
+        #  - context: current context
+        """
+        }
+
+    def _eval_context(self, cr, uid, obj, context=None):
+        if context is None:
+            context = {}
+
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context) 
+        return {
+            'self': self.pool.get(obj._name),
+            'o': obj,
+            'pool': self.pool,
+            'cr': cr,
+            'uid': uid,
+            'user': user,
+            'datetime': datetime,
+            # copy context to prevent side-effects of eval
+            'context': context.copy(),
+            }
+
+    def _build(self, cr, uid, template_id, obj, context=None):
+        if isinstance(template_id, (tuple, list)):
+            template_id = template_id[0]
+        template = self.browse(cr, uid, template_id, context=context)
+        expr = template.code
+        space = self._eval_context(cr, uid, obj, context=context)
+        try:
+            safe_eval(expr,
+                      space,
+                      mode='exec',
+                      nocopy=True)  # nocopy allows to return 'result'
+        except Exception, e:
+            raise orm.except_orm(
+                _('Error'),
+                _('Error when evaluating the template:\n %s \n(%s)')
+                % (template.name, e))
+        return space.get('result', False)
