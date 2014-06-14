@@ -29,7 +29,6 @@ from openerp.osv import fields, osv, orm
 # Lib to eval python code with security
 from openerp.tools.translate import _
 from collections import defaultdict
-from mako.template import Template
 from openerp.tools import config
 from openerp.tools.safe_eval import safe_eval
 import datetime
@@ -125,10 +124,10 @@ class DimensionValue(orm.Model):
                     ['sequence'],
                     10),
                 'dimension.value': (
-                        lambda self, cr, uid, ids, c={}: ids,
-                        ['dimension_id'],
-                        10),
-                }),
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['dimension_id'],
+                    10),
+            }),
         'active': fields.boolean(
             'Active',
             help=("If false, this value will not be "
@@ -515,7 +514,7 @@ class ProductProduct(orm.Model):
 
 
 class StringTemplate(orm.Model):
-    _name='string.template'
+    _name = 'string.template'
 
     def __get_type(self, cr, uid, context=None):
         return self._get_type(cr, uid, context=context)
@@ -549,7 +548,7 @@ class StringTemplate(orm.Model):
         if context is None:
             context = {}
 
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context) 
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         return {
             'self': self.pool.get(obj._name),
             'o': obj,
