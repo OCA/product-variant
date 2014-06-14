@@ -32,8 +32,9 @@ class ProductTemplate(orm.Model):
 
     _columns = {
         'generate_main_display': fields.boolean('Generate Main Display'),
-        'generate_display_from_dim_id': fields.many2one('product.variant.dimension',
-                                                        string='Generate Display From Dimension'),
+        'main_dim_id': fields.many2one(
+            'product.variant.dimension',
+            string='Generate Display From Dimension'),
         'display_variant_ids': fields.one2many(
             'product.product',
             'product_tmpl_id',
@@ -60,9 +61,9 @@ class ProductTemplate(orm.Model):
             fields = [dimension.name for dimension in product_temp.dimension_ids]
             number_of_fields = len(fields)
             combinaisons = []
-            if product_temp.generate_display_from_dim_id:
+            if product_temp.main_dim_id:
                 for value in product_temp.value_ids:
-                    if value.dimension_id.id == product_temp.generate_display_from_dim_id.id:
+                    if value.dimension_id.id == product_temp.main_dim_id.id:
                         combinaisons.append([value.option_id.id] + [None]*(number_of_fields -1))
             if product_temp.generate_main_display:
                 combinaisons.append([None]*number_of_fields)
@@ -82,7 +83,7 @@ class ProductTemplate(orm.Model):
                 ['product_tmpl_id', '=', vals['product_tmpl_id']],
                 ['is_display', '=', False],
             ]
-            dimension = product_temp.generate_display_from_dim_id
+            dimension = product_temp.main_dim_id
             if dimension and dimension.name in vals:
                 domain.append([dimension.name, '=', vals[dimension.name]])
             product_ids = product_obj.search(cr, uid, domain, context=context)
@@ -121,7 +122,7 @@ class ProductProduct(orm.Model):
                 ['product_tmpl_id', '=', product.product_tmpl_id.id],
                 ['is_display', '=', False],
             ]
-            dimension = product.generate_display_from_dim_id
+            dimension = product.main_dim_id
             if dimension and product[dimension.name]:
                 domain.append([dimension.name, '=', product[dimension.name].name])
             product_ids = self.search(cr, uid, domain, context=context)
