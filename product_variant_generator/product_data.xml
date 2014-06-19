@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+        
+        <record id="product_name_generator" model="string.template">
+            <field name="name">Default Name Generator</field>
+            <field name="type">product_name</field>
+            <field name="code">name = []
+for dimension in o.dimension_ids:
+    if o[dimension.name].name:
+        name.append("%s - %s" %(dimension.field_description, o[dimension.name].name))
+result = " | ".join(name)</field>
+        </record>
+
+        <record id="product_code_generator" model="string.template">
+            <field name="name">Default Code Generator</field>
+            <field name="type">product_code</field>
+            <field name="code">code = []
+if o.base_default_code:
+    code.append(o.base_default_code)
+for dimension in o.dimension_ids:
+    if o[dimension.name].name:
+        code.append(o[dimension.name].name)
+result = " - ".join(code)</field>
+        </record>
+
+    </data>
+</openerp>
+
