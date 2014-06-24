@@ -15,25 +15,14 @@
             <field name="inherit_id" ref="product_variant_generator.product_variant_multi_product_template_form_view"/>
             <field name="arch" type="xml">
                 <field name="option_id" position="after">
-                    <field name="price_option"/>
+                    <field name="price_extra"/>
                 </field>
-                <field name="variant_ids" position="replace">
-                    <field name="variant_ids" string="Variants" nolabel="1"  colspan="1">
-                        <tree string="Variants" editable="top">
-                            <field name="code" readonly="1"/>
-                            <field name="name" readonly="1"/>
-                            <field name="variants" string="Dimension Values" readonly="1"/>
-                            <field name="price_extra"/>
-                            <field name="lst_price"/>
-                        </tree>
-                    </field>
-                </field>
-                <field name="do_not_update_variant" position="after">
-                    <field name="generate_price_extra"/>
-                </field>
-                <field name="list_price" position="replace"/>
-                <field name="is_multi_variants" position="before">
-                    <field name="list_price"/>
+                <xpath expr="//field[@name='variant_ids']/tree[@string='Variants']/field[@name='variants']" position="after">
+                    <field name="price_extra"/>
+                </xpath>
+                <field name="attribute_set_id" position="after">
+                    <field name="automatic_price_extra"
+                           attrs="{'invisible':[('is_multi_variants', '=', False)]}"/>
                 </field>
             </field>
         </record>
@@ -49,6 +38,39 @@
                 </field>
                 <field name="price_margin" position="replace">
                     <field name="list_price" string="Base Price"/>
+                </field>
+                 <div name="options" position="inside">
+                    <field name="automatic_price_extra" invisible="True"/>
+                </div>
+                <field name="price_extra" position="replace">
+                    <field name="price_extra"
+                           attrs="{'readonly':[('automatic_price_extra', '=', True)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- PRODUCT VARIANT -->
+        <record id="product_variant_form_view" model="ir.ui.view">
+            <field name="model">product.product</field>
+             <field name="inherit_id" ref="product.product_variant_form_view"/>
+            <field name="arch" type="xml">
+                <field name="price_extra" position="after">
+                    <field name="automatic_price_extra" invisible="True"/>
+                </field>
+                <field name="price_extra" position="replace">
+                    <field name="price_extra"
+                           attrs="{'readonly':[('automatic_price_extra', '=', True)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- DIMENSION VALUES -->
+         <record id="product_variant_multi_dimension_value_form" model="ir.ui.view">
+            <field name="model">dimension.value</field>
+            <field name="inherit_id" ref="product_variant_generator.product_variant_multi_dimension_value_form"/>
+            <field name="arch" type="xml">
+                <field name="option_id" position="after">
+                    <field name="price_extra"/>
                 </field>
             </field>
         </record>

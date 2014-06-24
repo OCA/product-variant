@@ -55,6 +55,7 @@ class AttributeAttribute(orm.Model):
 
     _defaults = {
         'mandatory_dimension': 1,
+        'attribute_type': 'select',
     }
 
     _order = "sequence"
@@ -162,6 +163,73 @@ class DimensionValue(orm.Model):
             }
 
 
+class StringTemplate(orm.Model):
+    _name = 'string.template'
+
+    def __get_type(self, cr, uid, context=None):
+        return self._get_type(cr, uid, context=context)
+
+    def _get_type(self, cr, uid, context=None):
+        return [
+            ('product_code', 'Product Code'),
+            ('product_name', 'Product Name'),
+            ]
+
+    _columns = {
+        'name': fields.char('name', required=True),
+        'type': fields.selection(__get_type, 'Type', required=True),
+        'code': fields.text('Code', required=True),
+        }
+
+    _defaults = {
+        'code': """# Python code. Use result='YOUR_RESULT' to return your value.
+        # You can use the following variables :
+        #  - self: ORM model of the record which is checked
+        #  - o: browse_record of product template
+        #  - pool: ORM model pool (i.e. self.pool)
+        #  - datetime: Python datetime module
+        #  - cr: database cursor
+        #  - uid: current user id
+        #  - context: current context
+        """
+        }
+
+    def _eval_context(self, cr, uid, obj, context=None):
+        if context is None:
+            context = {}
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        return {
+            'self': self.pool.get(obj._name),
+            'o': obj,
+            'pool': self.pool,
+            'cr': cr,
+            'uid': uid,
+            'user': user,
+            'datetime': datetime,
+            # copy context to prevent side-effects of eval
+            'context': context.copy(),
+            }
+
+    def _build(self, cr, uid, template_id, obj, context=None):
+        if isinstance(template_id, (tuple, list)):
+            template_id = template_id[0]
+        template = self.browse(cr, uid, template_id, context=context)
+        expr = template.code
+        space = self._eval_context(cr, uid, obj, context=context)
+        try:
+            safe_eval(expr,
+                      space,
+                      mode='exec',
+                      nocopy=True)  # nocopy allows to return 'result'
+        except Exception, e:
+            if config['debug_mode']: raise
+            raise orm.except_orm(
+                _('Error'),
+                _('Error when evaluating the template:\n %s \n(%s)')
+                % (template.name, e))
+        return space.get('result', False)
+
+
 class ProductTemplate(orm.Model):
     _inherit = "product.template"
     _order = "name"
@@ -170,10 +238,11 @@ class ProductTemplate(orm.Model):
         result = {}
         for product_tmpl in self.browse(cr, uid, ids, context=context):
             attr_ids = []
-            for group in product_tmpl.attribute_set_id.attribute_group_ids:
-                for attr in group.attribute_ids:
-                    attr_ids.append(attr.attribute_id.id)
-            result[product_tmpl.id] = attr_ids
+            if product_tmpl.attribute_set_id:
+                for group in product_tmpl.attribute_set_id.attribute_group_ids:
+                    for attr in group.attribute_ids:
+                        attr_ids.append(attr.attribute_id.id)
+                result[product_tmpl.id] = attr_ids
         return result
 
     _columns = {
@@ -511,70 +580,3 @@ class ProductProduct(orm.Model):
             'Variants',
             size=128),
     }
-
-
-class StringTemplate(orm.Model):
-    _name = 'string.template'
-
-    def __get_type(self, cr, uid, context=None):
-        return self._get_type(cr, uid, context=context)
-
-    def _get_type(self, cr, uid, context=None):
-        return [
-            ('product_code', 'Product Code'),
-            ('product_name', 'Product Name'),
-            ]
-
-    _columns = {
-        'name': fields.char('name', required=True),
-        'type': fields.selection(__get_type, 'Type', required=True),
-        'code': fields.text('Code', required=True),
-        }
-
-    _defaults = {
-        'code': """# Python code. Use result='YOUR_RESULT' to return your value.
-        # You can use the following variables :
-        #  - self: ORM model of the record which is checked
-        #  - o: browse_record of product template
-        #  - pool: ORM model pool (i.e. self.pool)
-        #  - datetime: Python datetime module
-        #  - cr: database cursor
-        #  - uid: current user id
-        #  - context: current context
-        """
-        }
-
-    def _eval_context(self, cr, uid, obj, context=None):
-        if context is None:
-            context = {}
-
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        return {
-            'self': self.pool.get(obj._name),
-            'o': obj,
-            'pool': self.pool,
-            'cr': cr,
-            'uid': uid,
-            'user': user,
-            'datetime': datetime,
-            # copy context to prevent side-effects of eval
-            'context': context.copy(),
-            }
-
-    def _build(self, cr, uid, template_id, obj, context=None):
-        if isinstance(template_id, (tuple, list)):
-            template_id = template_id[0]
-        template = self.browse(cr, uid, template_id, context=context)
-        expr = template.code
-        space = self._eval_context(cr, uid, obj, context=context)
-        try:
-            safe_eval(expr,
-                      space,
-                      mode='exec',
-                      nocopy=True)  # nocopy allows to return 'result'
-        except Exception, e:
-            raise orm.except_orm(
-                _('Error'),
-                _('Error when evaluating the template:\n %s \n(%s)')
-                % (template.name, e))
-        return space.get('result', False)

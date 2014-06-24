@@ -20,5 +20,4 @@
 ##############################################################################
 # flake8: noqa
 
-from . import custom_attributes
 from . import product_variant

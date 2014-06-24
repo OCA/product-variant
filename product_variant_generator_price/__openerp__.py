@@ -32,7 +32,6 @@
                 "product_variant_generator",
                 ],
     "data" : [
-        "custom_attributes_view.xml",
         "product_view.xml",
     ],
     "application": True,
