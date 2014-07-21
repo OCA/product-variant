@@ -15,7 +15,7 @@
             <field name="inherit_id" ref="product_variant_multi.product_variant_form_view" />
             <field name="arch" type="xml">
                 <data>
-                    <page string="Lots" position="after">
+                    <page string="Prices" position="after">
                         <page string="Descriptions">
                             <separator string="Sale description" colspan="4"/>
                             <field name="description_sale" nolabel="1" attrs="{'readonly':[('is_multi_variants','=',True)]}"/>
