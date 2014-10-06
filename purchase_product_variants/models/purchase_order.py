@@ -16,7 +16,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 
 
 class ProductAttributeValuePurchaseLine(models.Model):
@@ -39,7 +39,7 @@ class PurchaseOrderLine(models.Model):
     product_attributes = fields.One2many('purchase.order.line.attribute',
                                          'purchase_line',
                                          string='Product attributes',
-                                         copyable=True)
+                                         copy=True)
 
     @api.multi
     @api.onchange('product_template')
@@ -67,26 +67,25 @@ class PurchaseOrderLine(models.Model):
     def onchange_product_attributes(self):
         if not self.product_id:
             product_obj = self.env['product.product']
-            att_values_ids = [attr_line.value and attr_line.value.id
-                              or False
+            att_values_ids = [attr_line.value and attr_line.value.id or False
                               for attr_line in self.product_attributes]
             domain = [('product_tmpl_id', '=', self.product_template.id)]
             for value in att_values_ids:
                 domain.append(('attribute_value_ids', '=', value))
             self.product_id = product_obj.search(domain, limit=1)
 
-    @api.multi
-    def onchange_product_id(self, pricelist_id, product_id, qty,
+    def onchange_product_id(self, cr, uid, ids, pricelist_id, product_id, qty,
                             uom_id, partner_id, date_order=False,
                             fiscal_position_id=False, date_planned=False,
-                            name=False, price_unit=False, state='draft'):
+                            name=False, price_unit=False, state='draft',
+                            context=None):
         res = super(PurchaseOrderLine, self).onchange_product_id(
-            pricelist_id, product_id, qty, uom_id, partner_id,
+            cr, uid, ids, pricelist_id, product_id, qty, uom_id, partner_id,
             date_order=date_order, fiscal_position_id=fiscal_position_id,
             date_planned=date_planned, name=name, price_unit=price_unit,
-            state=state)
-        product_obj = self.env['product.product']
-        product = product_obj.browse(product_id)
+            state=state, context=context)
+        product_obj = self.pool['product.product']
+        product = product_obj.browse(cr, uid, product_id, context=context)
         attributes = []
         for attribute_value in product.attribute_value_ids:
             attributes.append({'attribute': attribute_value.attribute_id.id,
@@ -95,12 +94,12 @@ class PurchaseOrderLine(models.Model):
                              'product_template': product.product_tmpl_id.id})
         return res
 
-    @api.one
+    @api.multi
     def action_duplicate(self):
+        self.ensure_one()
         self.copy()
         # Force reload of payment order view as a workaround for lp:1155525
         return {
-            'name': _('Purchase order'),
             'context': self.env.context,
             'view_type': 'form',
             'view_mode': 'form,tree',
@@ -114,9 +113,9 @@ class PurchaseOrderLine(models.Model):
         for line in self:
             if not line.product_id:
                 product_obj = self.env['product.product']
-                att_values_ids = [attr_line.value and attr_line.value.id
-                                  or False
-                                  for attr_line in line.product_attributes]
+                att_values_ids = [
+                    attr_line.value and attr_line.value.id or False
+                    for attr_line in line.product_attributes]
                 domain = [('product_tmpl_id', '=', line.product_template.id)]
                 for value in att_values_ids:
                     domain.append(('attribute_value_ids', '=', value))
