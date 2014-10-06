@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="purchase_order_extended_form_view">
+            <field name="name">purchase.order.extended.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <xpath
+                    expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                    position="before">
+                    <field name="product_template" />
+                </xpath>
+                <xpath
+                    expr="//field[@name='order_line']/tree//field[@name='price_subtotal']"
+                    position="after">
+                    <button name="action_duplicate" state="draft" string="Duplicate" type="object" icon="gtk-go-forward" help="Duplicate line"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_line_extended_form_view">
+            <field name="name">purchase.order.line.extended.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="product_template" />
+                </field>
+                <field name="name" position="after">
+                    <label for="product_attributes" />
+                    <field name="product_attributes"
+                        attrs="{'invisible': [('product_attributes','=',[])]}"
+                        options="{'no_create': True, 'no_delete': True}">
+                        <tree create="false" editable="1">
+                            <field name="attribute" />
+                            <field name="value" />
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_line_extended_form_view2">
+            <field name="name">purchase.order.line.extended.form2</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form2" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="product_template" />
+                </field>
+                <field name="product_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="name" position="after">
+                    <label for="product_attributes" />
+                    <field name="product_attributes"
+                        attrs="{'invisible': [('product_attributes','=',[])]}"
+                        options="{'no_create': True, 'no_delete': True}">
+                        <tree create="false" editable="1">
+                            <field name="attribute" />
+                            <field name="value" />
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_line_extended_tree_view">
+            <field name="name">purchase.order.line.extended.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_tree" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="product_template" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
