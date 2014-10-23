@@ -29,21 +29,26 @@
                     <field name="product_template" />
                 </xpath>
                 <xpath
-                    expr="//field[@name='order_line']/form//field[@name='product_id']"
-                    position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    expr="//field[@name='order_line']//form//field[@name='price_unit']"
+                    position="after">
+                    <button name="update_price_unit"
+                        states="draft" string="(update)" type="object"
+                        class="oe_edit_only oe_link" colspan="2" 
+                        attrs="{'invisible':[('product_id','!=',False)]}"/>
                 </xpath>
                 <xpath
                     expr="//field[@name='order_line']/form//label[@for='name']"
                     position="before">
-                    <label for="product_attributes" />
+                    <label for="product_attributes"
+                        attrs="{'invisible':[('product_attributes','=',[])]}" />
                     <field name="product_attributes"
                         attrs="{'invisible':[('product_attributes','=',[])]}"
                         options="{'no_create': True, 'no_delete': True}">
                         <tree create="0" delete="0" editable="1">
                             <field name="attribute" />
-                            <field name="possible_values" invisible="True"/>
+                            <field name="possible_values" invisible="True" />
                             <field name="value" />
+                            <field name="price_extra" readonly="True" />
                         </tree>
                     </field>
                 </xpath>
@@ -58,9 +63,6 @@
                 <field name="product_id" position="before">
                     <field name="product_template" />
                 </field>
-                <field name="product_id" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </field>
                 <field name="name" position="after">
                     <label for="product_attributes" />
                     <field name="product_attributes"
@@ -69,6 +71,7 @@
                         <tree create="0" delete="0" editable="1">
                             <field name="attribute" />
                             <field name="value" />
+                            <field name="price_extra" readonly="True" />
                         </tree>
                     </field>
                 </field>
