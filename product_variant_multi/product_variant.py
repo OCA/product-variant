@@ -135,7 +135,8 @@ class product_variant_dimension_value(orm.Model):
                                            ondelete='cascade'),
         'dimension_sequence': fields.related('dimension_id', 'sequence', type='integer',
                                              relation='product.variant.dimension.type',
-                                             #used for ordering purposes in the "variants"
+                                             # used for ordering purposes in
+                                             # the "variants"
                                              string="Related Dimension Sequence",
                                              store={'product.variant.dimension.type':
                                                     (_get_values_from_types, ['sequence'], 10)}),
@@ -150,9 +151,9 @@ class product_variant_dimension_value(orm.Model):
     }
 
     _sql_constraints = [('opt_dim_tmpl_uniq',
-                        'UNIQUE(option_id, dimension_id, product_tmpl_id)',
-                        _("The combination option and dimension type "
-                          "already exists for this product template !")), ]
+                         'UNIQUE(option_id, dimension_id, product_tmpl_id)',
+                         _("The combination option and dimension type "
+                           "already exists for this product template !")), ]
 
     _order = "dimension_sequence, dimension_id, sequence, option_id"
 
@@ -206,23 +207,26 @@ class product_template(orm.Model):
         if context and context.get('unlink_from_product_product', False):
             for template in self.browse(cr, uid, ids, context):
                 if not template.is_multi_variants:
-                    super(product_template, self).unlink(cr, uid, [template.id], context)
+                    super(product_template, self).unlink(
+                        cr, uid, [template.id], context)
         else:
             for template in self.browse(cr, uid, ids, context):
                 if template.variant_ids == []:
-                    super(product_template, self).unlink(cr, uid, [template.id], context)
+                    super(product_template, self).unlink(
+                        cr, uid, [template.id], context)
                 else:
                     raise osv.except_osv(_("Cannot delete template"),
                                          _("This template has existing corresponding products..."))
         return True
 
     def add_all_option(self, cr, uid, ids, context=None):
-        #Reactive all unactive values
+        # Reactive all unactive values
         value_obj = self.pool.get('product.variant.dimension.value')
         for template in self.browse(cr, uid, ids, context=context):
             values_ids = value_obj.search(cr, uid, [['product_tmpl_id', '=', template.id],
-                                                    '|', ['active', '=', False],
-                                                         ['active', '=', True]], context=context)
+                                                    '|', [
+                                                        'active', '=', False],
+                                                    ['active', '=', True]], context=context)
             value_obj.write(cr, uid, values_ids,
                             {'active': True},
                             context=context)
@@ -237,7 +241,8 @@ class product_template(orm.Model):
         return True
 
     def get_products_from_product_template(self, cr, uid, ids, context=None):
-        product_tmpl = self.read(cr, uid, ids, ['variant_ids'], context=context)
+        product_tmpl = self.read(
+            cr, uid, ids, ['variant_ids'], context=context)
         return [id for vals in product_tmpl for id in vals['variant_ids']]
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -245,12 +250,14 @@ class product_template(orm.Model):
             default = {}
         default = default.copy()
         default.update({'variant_ids': False, })
-        new_id = super(product_template, self).copy(cr, uid, id, default, context)
+        new_id = super(product_template, self).copy(
+            cr, uid, id, default, context)
 
         val_obj = self.pool.get('product.variant.dimension.value')
         template = self.read(cr, uid, new_id, ['value_ids'], context=context)
         # Making sure the values we duplicated are no longer linked via the
-        # m2m 'product_ids' with the product.product variants from the original template
+        # m2m 'product_ids' with the product.product variants from the original
+        # template
         val_obj.write(cr, uid, template['value_ids'], {
             'product_ids': [(6, 0, [])],
         }, context=context)
@@ -260,7 +267,8 @@ class product_template(orm.Model):
     def copy_translations(self, cr, uid, old_id, new_id, context=None):
         if context is None:
             context = {}
-        # avoid recursion through already copied records in case of circular relationship
+        # avoid recursion through already copied records in case of circular
+        # relationship
         seen_map = context.setdefault('__copy_translations_seen', {})
         if old_id in seen_map.setdefault(self._name, []):
             return
@@ -289,13 +297,15 @@ class product_template(orm.Model):
                 else:
                     res[value.dimension_id] = [value.id]
             for dim in res:
-                temp_val_list += [res[dim] + (not dim.mandatory_dimension and [None] or [])]
+                temp_val_list += [res[dim] +
+                                  (not dim.mandatory_dimension and [None] or [])]
 
             existing_product_ids = variants_obj.search(cr, uid,
                                                        [('product_tmpl_id', '=', product_temp.id)])
             created_product_ids = []
             if temp_val_list and not product_temp.do_not_generate_new_variant:
-                list_of_variants = self._create_variant_list(cr, uid, ids, temp_val_list, context)
+                list_of_variants = self._create_variant_list(
+                    cr, uid, ids, temp_val_list, context)
                 existing_product_dim_value = variants_obj.read(cr, uid, existing_product_ids,
                                                                ['dimension_value_ids'])
                 list_of_variants_existing = [x['dimension_value_ids']
@@ -350,13 +360,17 @@ class product_template(orm.Model):
             self.pool.get('product.product').build_variants_name(cr, uid, product_ids,
                                                                  context=context)
             _logger.debug("End of the generation/update of variant names.")
-            # SECOND, Generate/Update product codes and properties (we may need variants name)
-            _logger.debug("Starting to generate/update product codes and properties...")
+            # SECOND, Generate/Update product codes and properties (we may need
+            # variants name)
+            _logger.debug(
+                "Starting to generate/update product codes and properties...")
             self.pool.get('product.product').build_product_code_and_properties(cr, uid,
                                                                                product_ids,
                                                                                context=context)
-            _logger.debug("End of the generation/update of product codes and properties.")
-            # THIRD, Generate/Update product names (we may need variants name for that)
+            _logger.debug(
+                "End of the generation/update of product codes and properties.")
+            # THIRD, Generate/Update product names (we may need variants name
+            # for that)
             _logger.debug("Starting to generate/update product names...")
             self.pool.get('product.product').build_product_name(cr, uid, product_ids,
                                                                 context=context)
@@ -368,9 +382,10 @@ class product_product(orm.Model):
     _inherit = "product.product"
 
     def init(self, cr):
-        #For the first installation if you already have product in your database,
+        # For the first installation if you already have product in your database,
         # the name of the existing product will be empty, so we fill it
-        cr.execute("update product_product set name=name_template where name is null;")
+        cr.execute(
+            "update product_product set name=name_template where name is null;")
         return True
 
     def unlink(self, cr, uid, ids, context=None):
@@ -395,16 +410,20 @@ class product_product(orm.Model):
             context = {}
         context['is_multi_variants'] = True
         obj_lang = self.pool.get('res.lang')
-        lang_ids = obj_lang.search(cr, uid, [('translatable', '=', True)], context=context)
+        lang_ids = obj_lang.search(
+            cr, uid, [('translatable', '=', True)], context=context)
         lang_code = [x['code']
                      for x in obj_lang.read(cr, uid, lang_ids, ['code'], context=context)]
         for code in lang_code:
             context['lang'] = code
             for product in self.browse(cr, uid, ids, context=context):
-                new_field_value = eval("get_" + field + "(product)")  # TODO convert to safe_eval
-                cur_field_value = safe_eval("product." + field, {'product': product})
+                # TODO convert to safe_eval
+                new_field_value = eval("get_" + field + "(product)")
+                cur_field_value = safe_eval(
+                    "product." + field, {'product': product})
                 if new_field_value != cur_field_value:
-                    self.write(cr, uid, [product.id], {field: new_field_value}, context=context)
+                    self.write(
+                        cr, uid, [product.id], {field: new_field_value}, context=context)
         return True
 
     def parse(self, cr, uid, o, text, context=None):
@@ -472,9 +491,11 @@ class product_product(orm.Model):
 
     def build_variants_name(self, cr, uid, ids, context=None):
         for product in self.browse(cr, uid, ids, context=context):
-            new_variant_name = self.generate_variant_name(cr, uid, product.id, context=context)
+            new_variant_name = self.generate_variant_name(
+                cr, uid, product.id, context=context)
             if new_variant_name != product.variants:
-                self.write(cr, uid, [product.id], {'variants': new_variant_name}, context=context)
+                self.write(
+                    cr, uid, [product.id], {'variants': new_variant_name}, context=context)
         return True
 
     def _check_dimension_values(self, cr, uid, ids):
@@ -507,7 +528,8 @@ class product_product(orm.Model):
                                     + safe_eval('dim.' + dim_price_extra,
                                                 {'dim': dim}))
             elif not product_price_extra and not dim_price_margin and dim_price_extra:
-                dimension_extra += safe_eval('dim.' + dim_price_extra, {'dim': dim})
+                dimension_extra += safe_eval('dim.' +
+                                             dim_price_extra, {'dim': dim})
             elif product_price_extra and dim_price_margin and not dim_price_extra:
                 dimension_extra += (safe_eval('product.' + product_price_extra,
                                               {'product': product})
@@ -542,9 +564,10 @@ class product_product(orm.Model):
     def price_get(self, cr, uid, ids, ptype='list_price', context=None):
         if context is None:
             context = {}
-        result = super(product_product, self).price_get(cr, uid, ids, ptype, context=context)
+        result = super(product_product, self).price_get(
+            cr, uid, ids, ptype, context=context)
         if ptype == 'list_price':
-            #TODO check if the price_margin on the dimension is very usefull,
+            # TODO check if the price_margin on the dimension is very usefull,
             # maybe we will remove it
             result = self.compute_dimension_extra_price(
                 cr, uid, ids, result,
@@ -584,7 +607,8 @@ class product_product(orm.Model):
         for product in self.browse(cr, uid, ids, context=context):
             result[product.id] = p = {}
             p['total_weight'] = product.weight + product.additional_weight
-            p['total_weight_net'] = product.weight_net + product.additional_weight_net
+            p['total_weight_net'] = product.weight_net + \
+                product.additional_weight_net
             p['total_volume'] = product.volume + product.additional_volume
         return result
 
@@ -604,14 +628,14 @@ class product_product(orm.Model):
                                      type='float',
                                      string='List Price',
                                      digits_compute=dp.get_precision('Sale Price')),
-        #the way the weight are implemented are not clean at all,
-        #we should redesign the module product form the addons
-        #in order to get something correclty.
-        #indeed some field of the template have to be overwrited
-        #like weight, name, weight_net, volume.
-        #in order to have a consitent api we should use the same field for getting the weight,
-        #now we have to use "weight" or "total_weight"
-        #not clean at all with external syncronization
+        # the way the weight are implemented are not clean at all,
+        # we should redesign the module product form the addons
+        # in order to get something correclty.
+        # indeed some field of the template have to be overwrited
+        # like weight, name, weight_net, volume.
+        # in order to have a consitent api we should use the same field for getting the weight,
+        # now we have to use "weight" or "total_weight"
+        # not clean at all with external syncronization
         'total_weight': fields.function(_product_compute_weight_volume,
                                         method=True,
                                         type='float',
@@ -639,5 +663,6 @@ class product_product(orm.Model):
     }
 
     _constraints = [
-        (_check_dimension_values, 'Error msg in raise', ['dimension_value_ids']),
+        (_check_dimension_values, 'Error msg in raise',
+         ['dimension_value_ids']),
     ]

@@ -37,7 +37,7 @@ def get_vals_to_write(vals, fields):
             vals_to_write[field] = vals[field]
     return vals_to_write
 
-#Add your duplicated fields here
+# Add your duplicated fields here
 duplicated_fields = ['description_sale', 'name']
 
 
@@ -47,13 +47,17 @@ class product_template(orm.Model):
     def button_generate_variants(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        super(product_template, self).button_generate_variants(cr, uid, ids, context=context)
-        product_ids = self.get_products_from_product_template(cr, uid, ids, context=context)
+        super(product_template, self).button_generate_variants(
+            cr, uid, ids, context=context)
+        product_ids = self.get_products_from_product_template(
+            cr, uid, ids, context=context)
         # generate/update sale description
-        _logger.info("Starting to generate/update product sale descriptions...")
+        _logger.info(
+            "Starting to generate/update product sale descriptions...")
         self.pool.get('product.product').build_product_sale_description(
             cr, uid, product_ids, context=context)
-        _logger.info("End of the generation/update of product sale descriptions.")
+        _logger.info(
+            "End of the generation/update of product sale descriptions.")
         return True
 
 
@@ -65,7 +69,8 @@ class product_product(orm.Model):
             ids = [ids]
         if context is None:
             context = {}
-        res = super(product_product, self).write(cr, uid, ids, vals.copy(), context=context)
+        res = super(product_product, self).write(
+            cr, uid, ids, vals.copy(), context=context)
 
         ids_simple = self.search(
             cr, uid,
@@ -97,12 +102,14 @@ class product_product(orm.Model):
         # and so the duplicated fields will be on the product_template
         # and not on the product_product
 
-        #take care to use vals.copy() if not the vals will be changed by calling the super method
-        ids = super(product_product, self).create(cr, uid, vals.copy(), context=context)
-        ####### write the value in the product_product
+        # take care to use vals.copy() if not the vals will be changed by
+        # calling the super method
+        ids = super(product_product, self).create(
+            cr, uid, vals.copy(), context=context)
+        # write the value in the product_product
         ctx = context.copy()
         ctx['iamthechild'] = True
-        vals_to_write = get_vals_to_write(vals, ['name']+duplicated_fields)
+        vals_to_write = get_vals_to_write(vals, ['name'] + duplicated_fields)
         if vals_to_write:
             self.write(cr, uid, ids, vals_to_write, context=ctx)
         return ids
@@ -129,16 +136,20 @@ class product_product(orm.Model):
             context = {}
         context['is_multi_variants'] = True
         obj_lang = self.pool.get('res.lang')
-        lang_ids = obj_lang.search(cr, uid, [('translatable', '=', True)], context=context)
+        lang_ids = obj_lang.search(
+            cr, uid, [('translatable', '=', True)], context=context)
         langs = obj_lang.read(cr, uid, lang_ids, ['code'], context=context)
         lang_code = [x['code'] for x in langs]
         for code in lang_code:
             context['lang'] = code
             for product in self.browse(cr, uid, ids, context=context):
-                new_field_value = eval("get_" + field + "(product)")  # TODO convert to safe_eval
-                cur_field_value = safe_eval("product." + field, {'product': product})
+                # TODO convert to safe_eval
+                new_field_value = eval("get_" + field + "(product)")
+                cur_field_value = safe_eval(
+                    "product." + field, {'product': product})
                 if new_field_value != cur_field_value:
-                    self.write(cr, uid, product.id, {field: new_field_value}, context=context)
+                    self.write(
+                        cr, uid, product.id, {field: new_field_value}, context=context)
         return True
 
     _columns = {
