@@ -22,7 +22,7 @@
 {
     "name" : "Products with multi-level variants",
     "version" : "1.0",
-    "author" : "Tiny, Akretion",
+    "author" : "Tiny, Akretion,Odoo Community Association (OCA)",
     "category" : "Generic Modules/Inventory Control",
     "description":"""
 Multi-axial varianted product support for OpenERP
