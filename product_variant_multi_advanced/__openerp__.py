@@ -33,7 +33,7 @@
                     "name, the description... of the product from the product "
                     "template. Due to some limit of the orm you will need to "
                     "apply some patch on the server"),
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com/',
     'depends': ['product_variant_multi'],
     'init_xml': [],
