@@ -22,7 +22,7 @@
 {
     "name": "Product Variant Multi",
     "version": "1.0",
-    "author": "OpenERP SA, Akretion",
+    "author": "OpenERP SA, Akretion,Odoo Community Association (OCA)",
     "category": "Sales Management",
     "license": "AGPL-3",
     "summary": "Products with multi-dimension variants",
