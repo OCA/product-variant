@@ -70,19 +70,22 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def product_id_change(
-            self, pricelist, product, qty=0, uom=False, qty_uos=0, uos=False,
-            name='', partner_id=False, lang=False, update_tax=True,
+            self, pricelist, product_id, qty=0, uom=False, qty_uos=0,
+            uos=False, name='', partner_id=False, lang=False, update_tax=True,
             date_order=False, packaging=False, fiscal_position=False,
             flag=False):
         product_obj = self.env['product.product']
         res = super(SaleOrderLine, self).product_id_change(
-            pricelist, product, qty=qty, uom=uom, qty_uos=qty_uos, uos=uos,
+            pricelist, product_id, qty=qty, uom=uom, qty_uos=qty_uos, uos=uos,
             name=name, partner_id=partner_id, lang=lang, update_tax=update_tax,
             date_order=date_order, packaging=packaging,
             fiscal_position=fiscal_position, flag=flag)
-        if (product_obj.browse(product).attribute_value_ids and name and
-                'value' in res and 'name' in res['value'] and
-                name != res['value']['name']):
+        product = product_obj.browse(product_id)
+        attributes_dict = product._get_product_attributes_values_dict()
+        res['value'].update({'product_attributes': attributes_dict})
+        if (product.attribute_value_ids and 'value' in res and
+                'name' in res['value']):
+            name = product._get_product_attributes_values_text()
             res['value'].update({'name': (('%s\n--\n%s') %
                                           (res['value']['name'], name))})
         return res
@@ -98,6 +101,8 @@ class SaleOrderLine(models.Model):
                 self.product_template.product_variant_ids[0])
         else:
             self.product_id = False
+            self.product_uom = self.product_template.uom_id
+            self.product_uos = self.product_template.uos_id
             self.price_unit = self.order_id.pricelist_id.with_context(
                 {
                     'uom': self.product_uom.id,
@@ -121,7 +126,8 @@ class SaleOrderLine(models.Model):
                                                 attr_line.value.name)
         self.product_id = product_obj._product_find(self.product_template,
                                                     self.product_attributes)
-        self.name = description
+        if not self.product_id:
+            self.name = description
         if self.product_template:
             self.update_price_unit()
 
