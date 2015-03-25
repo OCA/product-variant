@@ -16,7 +16,14 @@
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']"
                        position="after">
-                    <button name="action_duplicate" state="draft" string="Duplicate" type="object" icon="gtk-go-forward" help="Duplicate line"/>
+                    <field name="order_state" invisible="1"/>
+                    <button name="action_duplicate"
+                            state="draft"
+                            string="Duplicate"
+                            type="object"
+                            icon="STOCK_COPY"
+                            attrs="{'invisible': [('order_state', 'not in', ['draft', 'sent'])]}"
+                            help="Duplicate line"/>
                 </xpath>
             </field>
         </record>
@@ -31,9 +38,9 @@
                     <div colspan="4"
                          attrs="{'invisible': [('product_attributes', '=', [])]}">
                         <label for="product_attributes"/>
-                        <field name="product_attributes"
-                               options="{'no_create': True, 'no_delete': True}">
-                            <tree create="false" editable="1">
+                        <field name="product_attributes">
+                            <tree create="false" delete="false" editable="1">
+                                <field name="possible_values" invisible="1" />
                                 <field name="attribute" />
                                 <field name="value" />
                             </tree>
@@ -53,9 +60,9 @@
                     <div colspan="4"
                          attrs="{'invisible': [('product_attributes', '=', [])]}">
                         <label for="product_attributes" />
-                        <field name="product_attributes"
-                               options="{'no_create': True, 'no_delete': True}">
-                            <tree create="false" editable="1">
+                        <field name="product_attributes">
+                            <tree create="false" delete="false" editable="1">
+                                <field name="possible_values" invisible="1" />
                                 <field name="attribute" />
                                 <field name="value" />
                             </tree>
