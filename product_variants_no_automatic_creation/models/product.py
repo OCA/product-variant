@@ -78,10 +78,8 @@ class ProductTemplate(models.Model):
         return res
 
     def _get_product_attributes_dict(self):
-        product_attributes = []
-        for attribute in self.attribute_line_ids:
-            product_attributes.append({'attribute': attribute.attribute_id.id})
-        return product_attributes
+        return self.attribute_line_ids.mapped(
+            lambda x: {'attribute': x.attribute_id.id})
 
     @api.multi
     def create_variant_ids(self):
@@ -109,28 +107,48 @@ class ProductTemplate(models.Model):
             'product_variants_no_automatic_creation.attribute_price_action')
         return result
 
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        # Make a search with default criteria
+        temp = super(models.Model, self).name_search(
+            name=name, args=args, operator=operator, limit=limit)
+        # Make the other search
+        temp += super(ProductTemplate, self).name_search(
+            name=name, args=args, operator=operator, limit=limit)
+        # Merge both results
+        res = []
+        keys = []
+        for val in temp:
+            if val[0] not in keys:
+                res.append(val)
+                keys.append(val[0])
+                if len(res) >= limit:
+                    break
+        return res
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     def _get_product_attributes_values_dict(self):
-        product_attributes = []
-        for attr_value in self.attribute_value_ids:
-            product_attributes.append({'attribute': attr_value.attribute_id.id,
-                                       'value': attr_value.id})
-        return product_attributes
+        # Retrieve first the attributes from template to preserve order
+        res = self.product_tmpl_id._get_product_attributes_dict()
+        for val in res:
+            value = self.attribute_value_ids.filtered(
+                lambda x: x.attribute_id.id == val['attribute'])
+            val['value'] = value.id
+        return res
 
     def _get_product_attributes_values_text(self):
-        description = self.product_tmpl_id.name
-        for attr_value in self.attribute_value_ids:
-            description += _('\n%s: %s') % (attr_value.attribute_id.name,
-                                            attr_value.name)
-        return description
+        description = self.attribute_value_ids.mapped(
+            lambda x: "%s: %s" % (x.attribute_id.name, x.name))
+        return "%s\n%s" % (self.product_tmpl_id.name, "\n".join(description))
 
     def _product_find(self, product_template, product_attributes):
         domain = []
         if product_template:
             domain.append(('product_tmpl_id', '=', product_template.id))
+            attr_values = []
             for attr_line in product_attributes:
                 if isinstance(attr_line, dict):
                     attribute_id = attr_line.get('attribute')
@@ -138,13 +156,16 @@ class ProductProduct(models.Model):
                 else:
                     attribute_id = attr_line.attribute.id
                     value_id = attr_line.value.id
-                if len(product_template.attribute_line_ids.search(
+                if value_id and len(product_template.attribute_line_ids.search(
                         [('product_tmpl_id', '=', product_template.id),
-                         ('attribute_id', '=',
-                          attribute_id)]).value_ids) > 1:
-                    domain.append(('attribute_value_ids', '=',
-                                   value_id))
-            return self.search(domain, limit=1) or False
+                         ('attribute_id', '=', attribute_id)]).value_ids) > 1:
+                    domain.append(('attribute_value_ids', '=', value_id))
+                    attr_values.append(value_id)
+            products = self.search(domain)
+            # Filter the product with the exact number of attributes values
+            for product in products:
+                if len(product.attribute_value_ids) == len(attr_values):
+                    return product
         return False
 
 
