@@ -1,22 +1,8 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see http://www.gnu.org/licenses/.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# (c) 2015 Oihane Crucelaegui - AvanzOSC
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from openerp import models, fields, api, _
+from openerp import api, fields, models, _
 
 
 class ProductCategory(models.Model):
@@ -104,7 +90,7 @@ class ProductTemplate(models.Model):
                         'value_id': value.id,
                     })
         result = self._get_act_window_dict(
-            'product_variants_no_automatic_creation.attribute_price_action')
+            'product_variants_auto_creation_selectable.attribute_price_action')
         return result
 
     @api.model
@@ -167,6 +153,15 @@ class ProductProduct(models.Model):
                 if len(product.attribute_value_ids) == len(attr_values):
                     return product
         return False
+
+
+class ProductAttributeLine(models.Model):
+    _inherit = 'product.attribute.line'
+
+    _sql_constraints = [
+        ('product_attribute_uniq', 'unique(product_tmpl_id, attribute_id)',
+         'The attribute already exists for this product')
+    ]
 
 
 class ProductAttributePrice(models.Model):
