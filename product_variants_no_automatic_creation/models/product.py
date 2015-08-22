@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
+from openerp.tools import config
 
 
 class ProductCategory(models.Model):
@@ -83,13 +84,15 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def create_variant_ids(self):
+        if (config['test_enable'] and
+                not self.env.context.get('check_variant_creation')):
+            return super(ProductTemplate, self).create_variant_ids()
         for tmpl in self:
             if ((tmpl.no_create_variants == 'empty' and
                     not tmpl.categ_id.no_create_variants) or
-                    (tmpl.no_create_variants == 'no')):
-                return super(ProductTemplate, self).create_variant_ids()
-            else:
-                return True
+                    tmpl.no_create_variants == 'no'):
+                super(ProductTemplate, tmpl).create_variant_ids()
+        return True
 
     @api.multi
     def action_open_attribute_prices(self):
@@ -130,6 +133,15 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
+    product_attributes = fields.One2many(
+        comodel_name='product.product.attribute', inverse_name='product',
+        string='Product attributes', copy=False)
+
+    @api.onchange('product_tmpl_id')
+    def _onchange_product_template(self):
+        self.product_attributes = (
+            self.product_tmpl_id._get_product_attributes_dict())
+
     def _get_product_attributes_values_dict(self):
         # Retrieve first the attributes from template to preserve order
         res = self.product_tmpl_id._get_product_attributes_dict()
@@ -151,14 +163,10 @@ class ProductProduct(models.Model):
             attr_values = []
             for attr_line in product_attributes:
                 if isinstance(attr_line, dict):
-                    attribute_id = attr_line.get('attribute')
                     value_id = attr_line.get('value')
                 else:
-                    attribute_id = attr_line.attribute.id
                     value_id = attr_line.value.id
-                if value_id and len(product_template.attribute_line_ids.search(
-                        [('product_tmpl_id', '=', product_template.id),
-                         ('attribute_id', '=', attribute_id)]).value_ids) > 1:
+                if value_id:
                     domain.append(('attribute_value_ids', '=', value_id))
                     attr_values.append(value_id)
             products = self.search(domain)
@@ -167,6 +175,25 @@ class ProductProduct(models.Model):
                 if len(product.attribute_value_ids) == len(attr_values):
                     return product
         return False
+
+    @api.model
+    def create(self, values):
+        if (not values.get('attribute_value_ids') and
+                values.get('product_attributes')):
+            values['attribute_value_ids'] = (
+                (4, x[2]['value'])
+                for x in values.get('product_attributes', [])
+                if x[2].get('value'))
+        return super(ProductProduct, self).create(values)
+
+
+class ProductAttributeLine(models.Model):
+    _inherit = 'product.attribute.line'
+
+    _sql_constraints = [
+        ('product_attribute_uniq', 'unique(product_tmpl_id, attribute_id)',
+         'The attribute already exists for this product')
+    ]
 
 
 class ProductAttributePrice(models.Model):
