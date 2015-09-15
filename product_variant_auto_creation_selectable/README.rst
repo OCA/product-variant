@@ -31,12 +31,6 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 `here <https://github.com/OCA/product-variant/issues/new?body=module:%product_variant_auto_creation_selectable%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
-Known issues / Roadmap
-======================
-
-* Allow to manually create product variants from variant definition
-
-
 Credits
 =======
 
@@ -46,6 +40,7 @@ Contributors
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Ana Juaristi <anajuarist@avanzosc.es>
+* Oleg Kuryan <oleg.kuryan@xpansa.com>
 
 Maintainer
 ----------

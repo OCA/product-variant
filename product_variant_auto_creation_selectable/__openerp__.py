@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-#############################################################################
 # (c) 2015 Oihane Crucelaegui - AvanzOSC
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-#############################################################################
 
 {
     "name": "Product variant automatic creation selectable",
@@ -19,6 +17,7 @@
         "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
         "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
         "Ana Juaristi <anajuaristi@avanzosc.es>",
+        "Oleg Kuryan <oleg.kuryan@xpansa.com>",
     ],
     "depends": [
         "product",
