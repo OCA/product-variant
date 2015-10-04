@@ -84,6 +84,19 @@ class SaleOrderLine(models.Model):
     def _get_product_attributes_count(self):
         self.product_attributes_count = len(self.product_attributes)
 
+    @api.model
+    def _order_attributes(self, template, product_attribute_values):
+        res = template._get_product_attributes_dict()
+        res2 = []
+        for val in res:
+            value = product_attribute_values.filtered(
+                lambda x: x.attribute_id.id == val['attribute'])
+            if value:
+                val['value'] = value
+                res2.append(val)
+        return res2
+
+    @api.model
     def _get_product_description(self, template, product, product_attributes):
         name = product and product.name or template.name
         group = self.env.ref(
@@ -91,29 +104,31 @@ class SaleOrderLine(models.Model):
         extended = group in self.env.user.groups_id
         if not product_attributes and product:
             product_attributes = product.attribute_value_ids
+        values = self._order_attributes(template, product_attributes)
         if extended:
-            description = "\n".join(product_attributes.mapped(
-                lambda x: "%s: %s" % (x.attribute_id.name, x.name)))
+            description = "\n".join(
+                "%s: %s" % (x['value'].attribute_id.name, x['value'].name)
+                for x in values)
         else:
-            description = ", ".join(product_attributes.mapped('name'))
+            description = ", ".join([x['value'].name for x in values])
         if not description:
             return name
         return ("%s\n%s" if extended else "%s (%s)") % (name, description)
 
     @api.multi
     def product_id_change(
-            self, pricelist, product_id, qty=0, uom=False, qty_uos=0,
+            self, pricelist, product, qty=0, uom=False, qty_uos=0,
             uos=False, name='', partner_id=False, lang=False, update_tax=True,
             date_order=False, packaging=False, fiscal_position=False,
             flag=False):
         product_obj = self.env['product.product']
         res = super(SaleOrderLine, self).product_id_change(
-            pricelist, product_id, qty=qty, uom=uom, qty_uos=qty_uos, uos=uos,
+            pricelist, product, qty=qty, uom=uom, qty_uos=qty_uos, uos=uos,
             name=name, partner_id=partner_id, lang=lang, update_tax=update_tax,
             date_order=date_order, packaging=packaging,
             fiscal_position=fiscal_position, flag=flag)
-        if product_id:
-            product = product_obj.browse(product_id)
+        if product:
+            product = product_obj.browse(product)
             res['value']['product_attributes'] = (
                 product._get_product_attributes_values_dict())
             res['value']['name'] = self._get_product_description(
@@ -139,7 +154,9 @@ class SaleOrderLine(models.Model):
                 self.product_template.id, self.product_uom_qty or 1.0,
                 self.order_id.partner_id.id)[self.order_id.pricelist_id.id]
         self.product_attributes = (
-            self.product_template._get_product_attributes_dict())
+            [(2, x.id) for x in self.product_attributes] +
+            [(0, 0, x) for x in
+             self.product_template._get_product_attributes_dict()])
         # Update taxes
         fpos = self.order_id.fiscal_position
         if not fpos:
@@ -184,7 +201,7 @@ class SaleOrderLine(models.Model):
     def button_confirm(self):
         product_obj = self.env['product.product']
         for line in self:
-            if not line.product_id:
+            if not line.product_id and line.product_template:
                 line._check_line_confirmability()
                 attr_values = line.product_attributes.mapped('value')
                 domain = [('product_tmpl_id', '=', line.product_template.id)]
