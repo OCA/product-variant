@@ -16,6 +16,7 @@
 #
 ##############################################################################
 from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 from openerp.tools.float_utils import float_compare
 
 
@@ -27,8 +28,9 @@ class PurchaseOrder(models.Model):
         """Create possible product variants not yet created."""
         for order in self:
             for line in order.order_line:
-                if line.product_id:
+                if line.product_id or not line.product_template:
                     continue
+                line._check_line_confirmability()
                 product_obj = self.env['product.product']
                 att_values_ids = line.product_attributes.mapped('value.id')
                 domain = [('product_tmpl_id', '=', line.product_template.id)]
@@ -87,11 +89,24 @@ class PurchaseOrderLine(models.Model):
     order_state = fields.Selection(
         related='order_id.state', readonly=True)
 
+    @api.model
+    def _order_attributes(self, template, product_attribute_values):
+        res = template._get_product_attributes_dict()
+        res2 = []
+        for val in res:
+            value = product_attribute_values.filtered(
+                lambda x: x.attribute_id.id == val['attribute'])
+            if value:
+                val['value'] = value
+                res2.append(val)
+        return res2
+
     def _get_product_description(self, template, product, product_attributes):
         name = product and product.name or template.name
         if not product_attributes and product:
             product_attributes = product.attribute_value_ids
-        description = ", ".join(product_attributes.mapped('name'))
+        values = self._order_attributes(template, product_attributes)
+        description = ", ".join([x['value'].name for x in values])
         if not description:
             return name
         return "%s (%s)" % (name, description)
@@ -101,20 +116,22 @@ class PurchaseOrderLine(models.Model):
     def onchange_product_template(self):
         self.ensure_one()
         res = {}
-        product_attributes = []
-        if not self.product_template.attribute_line_ids:
-            self.product_id = (
-                self.product_template.product_variant_ids and
-                self.product_template.product_variant_ids[0])
-        if (self.product_id and self.product_id not in
-                self.product_template.product_variant_ids):
-            self.product_id = False
-        for attribute in self.product_template.attribute_line_ids:
-            product_attributes.append({'attribute':
-                                       attribute.attribute_id})
-        self.product_attributes = product_attributes
         self.name = self.product_template.name
-        self.product_uom = self.product_template.uom_po_id
+        if not self.product_template.attribute_line_ids:
+            self.product_id = self.product_template.product_variant_ids[:1]
+        else:
+            self.product_id = False
+            self.product_uom = self.product_template.uom_po_id
+            self.product_uos = self.product_template.uos_id
+            self.price_unit = self.order_id.pricelist_id.with_context(
+                {'uom': self.product_uom.id,
+                 'date': self.order_id.date_order}).template_price_get(
+                self.product_template.id, self.product_qty or 1.0,
+                self.order_id.partner_id.id)[self.order_id.pricelist_id.id]
+        self.product_attributes = (
+            [(2, x.id) for x in self.product_attributes] +
+            [(0, 0, x) for x in
+             self.product_template._get_product_attributes_dict()])
         # Get planned date and min quantity
         supplierinfo = False
         precision = self.env['decimal.precision'].precision_get(
@@ -147,7 +164,7 @@ class PurchaseOrderLine(models.Model):
                                 supplierinfo.product_uom.name)
                         }
                     self.product_qty = min_qty
-        if not self.date_planned:
+        if not self.date_planned and supplierinfo:
             dt = fields.Datetime.to_string(
                 self._get_date_planned(supplierinfo, self.order_id.date_order))
             self.date_planned = dt
@@ -197,7 +214,7 @@ class PurchaseOrderLine(models.Model):
     def action_duplicate(self):
         self.ensure_one()
         self.copy()
-        # Force reload of payment order view as a workaround for lp:1155525
+        # Force reload of view as a workaround for lp:1155525
         return {
             'context': self.env.context,
             'view_type': 'form',
@@ -206,3 +223,12 @@ class PurchaseOrderLine(models.Model):
             'res_id': self.order_id.id,
             'type': 'ir.actions.act_window',
         }
+
+    @api.multi
+    def _check_line_confirmability(self):
+        for line in self:
+            if (any(not bool(attr_line.value) for attr_line
+                    in line.product_attributes)):
+                raise UserError(
+                    _("You can not confirm before configuring all attribute "
+                      "values."))
