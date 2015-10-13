@@ -12,7 +12,7 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[product_variant_multi](__unported__/product_variant_multi/) | 1.0 (unported) | Products with multi-dimension variants
-[product_variant_multi_advanced](__unported__/product_variant_multi_advanced/) | 0.1 (unported) | Product Variant Multi Advanced
+[product_variant_multi](product_variant_multi/) | 1.0 (unported) | Products with multi-dimension variants
+[product_variant_multi_advanced](product_variant_multi_advanced/) | 0.1 (unported) | Product Variant Multi Advanced
 
 [//]: # (end addons)
