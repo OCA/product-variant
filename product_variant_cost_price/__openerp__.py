@@ -15,22 +15,28 @@
 #    along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 ##############################################################################
-
 {
-    "name": "Product Variant Cost",
-    "version": "1.0",
+    "name": "Product Variant Cost Price",
+    "summary": "",
+    "version": "8.0.1.0.0",
+    "category": "Product Management",
+    "license": "AGPL-3",
+    "author": "OdooMRP team, "
+              "AvanzOSC, "
+              "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
+              "Odoo Community Association (OCA)",
+    "website": "http://www.odoomrp.com",
+    "contributors": [
+        "Ainara Galdona <ainaragaldona@avanzosc.es>",
+        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
+        "Ana Juaristi <anajuaristi@avanzosc.es>",
+        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
+    ],
     "depends": [
         "product",
-        "stock_account"
+        "stock_account",
     ],
-    "author": "OdooMRP team,"
-              "AvanzOSC,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    "category": "Product",
-    "website": "http://www.odoomrp.com",
-    "summary": "",
     "data": [
-        "views/product_view.xml",
         "views/stock_quant_view.xml"
     ],
     "installable": True,
