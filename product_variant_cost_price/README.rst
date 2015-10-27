@@ -6,7 +6,6 @@
 Product Variant Cost
 ====================
 
-This module adds a new cost field in product variant.
 Updates the product variant's cost when product template cost is updated.
 Adds a new inventory field on quants, (product variant cost * quant quantity).
 New proceeding on the installation of the module to load the product template's
