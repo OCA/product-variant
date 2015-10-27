@@ -21,10 +21,10 @@ class ProductProduct(models.Model):
 
     @api.model
     def _set_standard_price(self, product, value):
-        '''
+        """
         Store the standard price change in order to be able to retrieve the
         cost of a product variant for a given date
-        '''
+        """
         price_history_obj = self.env['product.price.history']
         user_company = self.env.user.company_id.id
         company_id = self.env.context.get('force_company', user_company)
