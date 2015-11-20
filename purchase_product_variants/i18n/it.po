@@ -9,78 +9,78 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-20 18:11+0000\n"
 "PO-Revision-Date: 2015-10-23 14:47+0000\n"
-"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/odoomrp-wip-8-0/language/pt_BR/)\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Italian (http://www.transifex.com/oca/odoomrp-wip-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,attribute:0
 msgid "Attribute"
-msgstr "Atributo"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,create_uid:0
 msgid "Created by"
-msgstr "Criado por"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,create_date:0
 msgid "Created on"
-msgstr "Criado em"
+msgstr ""
 
 #. module: purchase_product_variants
 #: view:purchase.order:purchase_product_variants.purchase_order_extended_form_view
 msgid "Duplicate"
-msgstr "Duplicar"
+msgstr ""
 
 #. module: purchase_product_variants
 #: view:purchase.order:purchase_product_variants.purchase_order_extended_form_view
 msgid "Duplicate line"
-msgstr "Duplicar Linha"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,write_uid:0
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,write_date:0
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,purchase_line:0
 msgid "Order line"
-msgstr "Linha pedido de venda"
+msgstr ""
 
 #. module: purchase_product_variants
 #: field:purchase.order.line,product_template:0
 msgid "Product Template"
-msgstr "Produto Modelo"
+msgstr "Template prodotto"
 
 #. module: purchase_product_variants
 #: field:purchase.order.line,product_attributes:0
 msgid "Product attributes"
-msgstr "Atributos do Produto"
+msgstr ""
 
 #. module: purchase_product_variants
 #: model:ir.model,name:purchase_product_variants.model_purchase_order
 msgid "Purchase Order"
-msgstr "Pedido de compra"
+msgstr ""
 
 #. module: purchase_product_variants
 #: model:ir.model,name:purchase_product_variants.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr "Linha pedido de compra"
+msgstr ""
 
 #. module: purchase_product_variants
 #: code:addons/purchase_product_variants/models/purchase_order.py:158
@@ -99,7 +99,7 @@ msgstr ""
 #. module: purchase_product_variants
 #: field:purchase.order.line.attribute,value:0
 msgid "Value"
-msgstr "Valor"
+msgstr ""
 
 #. module: purchase_product_variants
 #: code:addons/purchase_product_variants/models/purchase_order.py:142
@@ -112,4 +112,4 @@ msgstr ""
 #: code:addons/purchase_product_variants/models/purchase_order.py:231
 #, python-format
 msgid "You can not confirm before configuring all attribute values."
-msgstr "Você não pode confirmar antes de configurar todos os valores de atributos."
+msgstr ""
