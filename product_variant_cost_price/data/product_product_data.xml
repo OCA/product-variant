@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record forcecreate="True" id="default_cost_method" model="ir.property">
+            <field name="name">Cost Method Property (Product variant)</field>
+            <field name="fields_id" search="[('model', '=', 'product.product'), ('name', '=', 'cost_method')]"/>
+            <field name="value">standard</field>
+            <field name="type">selection</field>
+        </record>
+
+    </data>
+</openerp>
