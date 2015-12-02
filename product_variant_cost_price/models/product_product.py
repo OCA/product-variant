@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Ainara Galdona - AvanzOSC
+# © 2015 Ainara Galdona - AvanzOSC
+# © 2015 Pedro M. Baeza - Serv. Tecnol. Avanzados
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from openerp import api, fields, models
@@ -14,18 +15,14 @@ class ProductProduct(models.Model):
         return self.env['product.template'].fields_get(
             allfields=['cost_method'])['cost_method']['selection']
 
-    def default_cost_method(self):
-        default_dict = self.env['product.template'].default_get(
-            ['cost_method'])
-        return default_dict.get('cost_method')
-
     @api.model
     def _set_standard_price(self, product, value):
-        """
-        Store the standard price change in order to be able to retrieve the
+        """Store the standard price change in order to be able to retrieve the
         cost of a product variant for a given date
         """
-        price_history_obj = self.env['product.price.history']
+        # With this, we make sure everyone can record the history
+        # independently from its ACL
+        price_history_obj = self.env['product.price.history.product'].sudo()
         user_company = self.env.user.company_id.id
         company_id = self.env.context.get('force_company', user_company)
         price_history_obj.create({
@@ -34,6 +31,10 @@ class ProductProduct(models.Model):
             'cost': value,
             'company_id': company_id,
         })
+        # Save the value in the template if there's only one variant.
+        template = product.product_tmpl_id
+        if template.product_variant_count == 1:
+            template.with_context(bypass_down_write=1).standard_price = value
 
     standard_price = fields.Float(
         string='Cost Price', digits=dp.get_precision('Product Price'),
@@ -43,15 +44,14 @@ class ProductProduct(models.Model):
         groups="base.group_user", company_dependent=True)
     cost_method = fields.Selection(
         string="Costing Method", selection='_get_selection_cost_method',
-        help="""Standard Price: The cost price is manually updated at the end
-                of a specific period (usually every year).
-                Average Price: The cost price is recomputed at each incoming
-                shipment and used for the product valuation.
-                Real Price: The cost price displayed is the price of the last
-                outgoing product (will be use in case of inventory loss for
-                example).""",
-        required=True, copy=True, company_dependent=True,
-        default='default_cost_method')
+        help="Standard Price: The cost price is manually updated at the end "
+             "of a specific period (usually every year).\n"
+             "Average Price: The cost price is recomputed at each incoming "
+             "shipment and used for the product valuation.\n"
+             "Real Price: The cost price displayed is the price of the last "
+             "outgoing product (will be use in case of inventory loss for "
+             "example).",
+        required=True, copy=True, company_dependent=True)
 
     @api.model
     def create(self, values):
@@ -69,6 +69,7 @@ class ProductProduct(models.Model):
 
 class ProductPriceHistory(models.Model):
     _inherit = 'product.price.history'
+    _name = 'product.price.history.product'
 
     product_id = fields.Many2one(
         comodel_name='product.product', string='Product', ondelete='cascade')
