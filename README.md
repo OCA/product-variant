@@ -8,6 +8,12 @@ Allows to create and manage product variants in OpenERP v6 and 7. A part of this
 
 
 [//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[product_variant_cost_price](product_variant_cost_price/) | 8.0.1.0.0 | Cost price by variant
+
 Unported addons
 ---------------
 addon | version | summary
