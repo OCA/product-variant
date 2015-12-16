@@ -1,3 +1,4 @@
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/137/7.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-product-variant-137)
 [![Build Status](https://travis-ci.org/OCA/product-variant.svg?branch=7.0)](https://travis-ci.org/OCA/product-variant)
 [![Coverage Status](https://coveralls.io/repos/OCA/product-variant/badge.png?branch=7.0)](https://coveralls.io/r/OCA/product-variant?branch=7.0)
 
