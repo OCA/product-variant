@@ -14,6 +14,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_variant_cost_price](product_variant_cost_price/) | 8.0.1.0.0 | Cost price by variant
+[product_variant_csv_import](product_variant_csv_import/) | 8.0.1.0.0 | Add menu entry to allow CSV import of templates with variants
 
 Unported addons
 ---------------
