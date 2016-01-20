@@ -173,10 +173,6 @@ class ProductProduct(models.Model):
                 for x in values.get('product_attributes'))
         return super(ProductProduct, self).create(values)
 
-    @api.one
-    def write(self, values):
-        return super(ProductProduct, self).write(values)
-
 
 class ProductAttributeLine(models.Model):
     _inherit = 'product.attribute.line'
