@@ -23,6 +23,7 @@
         "product",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "views/product_view.xml",
     ],
     "installable": True,
