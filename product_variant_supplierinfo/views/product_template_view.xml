@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="product_template_form_view_wo_sellers" model="ir.ui.view">
+            <field name="name">product.template.common.form.wo_sellers</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <separator string="Suppliers" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </separator>
+                <field name="seller_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_normal_form_view_sellers" model="ir.ui.view">
+            <field name="name">product.product.form.sellers</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <separator string="Suppliers" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </separator>
+                <field name="seller_ids" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
