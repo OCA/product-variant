@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Alex Comba - Agile Business Group
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data noupdate="1">
+
+        <!--
+        Resource: product.price.type
+        -->
+        <record id="variant_lst_price" model="product.price.type">
+            <field name="name">Variant Sale Price</field>
+            <field name="field">variant_lst_price</field>
+        </record>
+
+        <!--
+        Price list
+        -->
+        <record id="list1" model="product.pricelist">
+            <field name="name">Variant Sale Pricelist</field>
+            <field name="type">sale</field>
+        </record>
+        <record id="ver1" model="product.pricelist.version">
+            <field name="pricelist_id" ref="list1"/>
+            <field name="name">Default Variant Sale Pricelist Version</field>
+        </record>
+        <record id="item1" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver1"/>
+            <field name="base" ref="variant_lst_price"/>
+            <field name="sequence">1100</field>
+            <field name="name">Default Variant Sale Pricelist Line</field>
+        </record>
+
+    </data>
+</openerp>

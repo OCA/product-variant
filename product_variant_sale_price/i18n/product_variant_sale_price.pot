@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_variant_sale_price
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-07 16:08+0000\n"
+"PO-Revision-Date: 2016-01-07 16:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_variant_sale_price
+#: model:product.pricelist.version,name:product_variant_sale_price.ver1
+msgid "Default Variant Sale Pricelist Version"
+msgstr ""
+
+#. module: product_variant_sale_price
+#: model:ir.model,name:product_variant_sale_price.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: product_variant_sale_price
+#: model:product.price.type,name:product_variant_sale_price.variant_lst_price
+#: field:product.product,variant_lst_price:0
+msgid "Variant Sale Price"
+msgstr ""
+
+#. module: product_variant_sale_price
+#: model:product.pricelist,name:product_variant_sale_price.list1
+#: model:product.pricelist.type,name:product_variant_sale_price.pricelist_type_variant_sale
+msgid "Variant Sale Pricelist"
+msgstr ""
+
+#. module: product_variant_sale_price
+#: help:product.product,variant_lst_price:0
+msgid "Variant specific price, it can be used in pricelists"
+msgstr ""
+
