@@ -21,8 +21,8 @@
 ##############################################################################
 {
     "name": "Product Variant Multi",
-    "version": "1.0",
-    "author": "OpenERP SA, Akretion,Odoo Community Association (OCA)",
+    "version": "1.5",
+    "author": "OpenERP SA, Akretion",
     "category": "Sales Management",
     "license": "AGPL-3",
     "summary": "Products with multi-dimension variants",
@@ -60,7 +60,7 @@ transparent as OpenERP modules try to get their properties like name from produc
 and only from product.template if not found on product.product. But at least you
 will have been warned.
     """,
-    "depends": ["product"],
+    "depends": ["product", "point_of_sale"],
     "demo": ["demo_data.xml"],
     "data": [
         "security/ir.model.access.csv",
@@ -68,5 +68,5 @@ will have been warned.
     ],
     "application": True,
     "active": False,
-    "installable": False,
+    "installable": True,
 }
