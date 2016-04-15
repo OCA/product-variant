@@ -19,10 +19,13 @@ class TestProductProduct(TransactionCase):
             'name': self.supplier.id,
             'product_id': self.product.id,
         }
-
         supplierinfo = self.supplierinfo_obj.create(vals)
         self.assertEqual(
             supplierinfo.product_tmpl_id.id, self.product.product_tmpl_id.id)
 
+        vals = {
+            'name': self.supplier.id,
+            'product_tmpl_id': self.product.product_tmpl_id.id,
+        }
         supplierinfo.write(vals)
         self.assertEqual(supplierinfo.product_id.id, self.product.id)
