@@ -19,7 +19,7 @@
 
 {
     "name": "Sale - Product variants",
-    "version": "1.0",
+    "version": "8.0.1.1.0",
     "depends": [
         "product",
         "sale",
@@ -39,8 +39,6 @@
     "summary": "Product variants in sale management",
     "data": [
         "security/ir.model.access.csv",
-        "security/sale_product_variants_security.xml",
-        'views/res_config_view.xml',
         "views/sale_view.xml",
     ],
     "installable": True,

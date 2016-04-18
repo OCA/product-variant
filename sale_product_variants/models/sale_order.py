@@ -24,31 +24,33 @@ class ProductAttributeValueSaleLine(models.Model):
     _name = 'sale.order.line.attribute'
 
     @api.one
-    @api.depends('value', 'sale_line.product_template')
+    @api.depends('value_id', 'sale_line.product_template')
     def _get_price_extra(self):
         price_extra = 0.0
-        for price in self.value.price_ids:
+        for price in self.value_id.price_ids:
             if price.product_tmpl_id.id == self.sale_line.product_template.id:
                 price_extra = price.price_extra
         self.price_extra = price_extra
 
     @api.one
-    @api.depends('attribute', 'sale_line.product_template',
+    @api.depends('attribute_id', 'sale_line.product_template',
                  'sale_line.product_template.attribute_line_ids')
     def _get_possible_attribute_values(self):
         attr_values = self.env['product.attribute.value']
         for attr_line in self.sale_line.product_template.attribute_line_ids:
-            if attr_line.attribute_id.id == self.attribute.id:
+            if attr_line.attribute_id.id == self.attribute_id.id:
                 attr_values |= attr_line.value_ids
         self.possible_values = attr_values.sorted()
 
     sale_line = fields.Many2one(
         comodel_name='sale.order.line', string='Order line')
-    attribute = fields.Many2one(
-        comodel_name='product.attribute', string='Attribute')
-    value = fields.Many2one(
+    attribute_id = fields.Many2one(
+        comodel_name='product.attribute', string='Attribute',
+        oldname="attribute")
+    value_id = fields.Many2one(
         comodel_name='product.attribute.value', string='Value',
-        domain="[('id', 'in', possible_values[0][2])]")
+        domain="[('id', 'in', possible_values[0][2])]",
+        oldname="value")
     possible_values = fields.Many2many(
         comodel_name='product.attribute.value',
         compute='_get_possible_attribute_values', readonly=True)
@@ -91,27 +93,28 @@ class SaleOrderLine(models.Model):
         res2 = []
         for val in res:
             value = product_attribute_values.filtered(
-                lambda x: x.attribute_id.id == val['attribute'])
+                lambda x: x.attribute_id.id == val['attribute_id'])
             if value:
-                val['value'] = value
+                val['value_id'] = value
                 res2.append(val)
         return res2
 
     @api.model
     def _get_product_description(self, template, product, product_attributes):
         name = product and product.name or template.name
-        group = self.env.ref(
-            'sale_product_variants.group_product_variant_extended_description')
-        extended = group in self.env.user.groups_id
+        extended = self.user_has_groups(
+            'product_variants_no_automatic_creation.'
+            'group_product_variant_extended_description')
         if not product_attributes and product:
             product_attributes = product.attribute_value_ids
         values = self._order_attributes(template, product_attributes)
         if extended:
             description = "\n".join(
-                "%s: %s" % (x['value'].attribute_id.name, x['value'].name)
+                "%s: %s" % (x['value_id'].attribute_id.name,
+                            x['value_id'].name)
                 for x in values)
         else:
-            description = ", ".join([x['value'].name for x in values])
+            description = ", ".join([x['value_id'].name for x in values])
         if not description:
             return name
         return ("%s\n%s" if extended else "%s (%s)") % (name, description)
@@ -178,7 +181,7 @@ class SaleOrderLine(models.Model):
         if not self.product_id:
             self.name = self._get_product_description(
                 self.product_template, False,
-                self.product_attributes.mapped('value'))
+                self.product_attributes.mapped('value_id'))
         if self.product_template:
             self.update_price_unit()
 
@@ -198,7 +201,7 @@ class SaleOrderLine(models.Model):
 
     @api.one
     def _check_line_confirmability(self):
-        if any(not bool(line.value) for line in self.product_attributes):
+        if any(not bool(line.value_id) for line in self.product_attributes):
             raise exceptions.Warning(
                 _("You can not confirm before configuring all attribute "
                   "values."))
@@ -209,7 +212,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             if not line.product_id and line.product_template:
                 line._check_line_confirmability()
-                attr_values = line.product_attributes.mapped('value')
+                attr_values = line.product_attributes.mapped('value_id')
                 domain = [('product_tmpl_id', '=', line.product_template.id)]
                 for attr_value in attr_values:
                     domain.append(('attribute_value_ids', '=', attr_value.id))
