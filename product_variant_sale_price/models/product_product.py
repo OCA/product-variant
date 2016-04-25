@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from openerp import models, fields, api
 
@@ -9,9 +9,8 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     @api.multi
-    @api.depends('lst_price', 'product_tmpl_id.list_price')
+    @api.depends('lst_price')
     def _product_lst_price(self):
-        # TODO: review lst_price. Always false
         for product in self:
             price = product.lst_price or product.list_price
             if 'uom' in self.env.context:

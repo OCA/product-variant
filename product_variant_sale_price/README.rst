@@ -2,12 +2,15 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-========================
-Portal Access Select All
-========================
+==========================
+Product Variant Sale Price
+==========================
 
-This module extends the functionality of portal module to allow select all
-users in portal access management wizard
+This module allows to handle sale price at product variant level
+(product.product) instead at product level (product.template), which is the
+default.
+
+This module also hidden sale price at product template level.
 
 Usage
 =====
@@ -24,8 +27,8 @@ Bugs are tracked on `GitHub Issues
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
-social/issues/new?body=module:%20
-portal_access_select_all%0Aversion:%20
+product-variant/issues/new?body=module:%20
+product_variant_sale_price%0Aversion:%20
 8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits
@@ -39,8 +42,8 @@ Images
 Contributors
 ------------
 
-* Carlos Dauden <carlos@incaser.es>
-* Sergio Teruel <sergio@incaser.es>
+* Carlos Dauden <carlos.dauden@tecnativa.com>
+* Sergio Teruel <sergio.teruel@tecnativa.com>
 
 Maintainer
 ----------

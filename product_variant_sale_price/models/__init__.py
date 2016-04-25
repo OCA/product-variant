@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2015 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from . import product_product
