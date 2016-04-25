@@ -11,7 +11,7 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <field name="list_price" position="before">
-                    <field name="is_variant"/>
+                    <field name="is_variant" invisible="1"/>
                 </field>
                 <xpath expr="//field[@name='list_price']" position="attributes">
                     <attribute name="attrs">{'invisible': [('is_variant', '=', False)]}</attribute>
