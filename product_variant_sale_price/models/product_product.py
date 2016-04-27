@@ -9,10 +9,10 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     @api.multi
-    @api.depends('lst_price')
+    @api.depends('fix_price')
     def _product_lst_price(self):
         for product in self:
-            price = product.lst_price or product.list_price
+            price = product.fix_price or product.list_price
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
                 price = uom.with_context(uom='uom')._compute_price(price)
@@ -20,14 +20,17 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _set_product_lst_price(self):
-        if 'uom' in self.env.context:
-            for product in self:
+        for product in self:
+            if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                product.lst_price = uom.with_context(uom='uom')._compute_price(
+                product.fix_price = uom.with_context(uom='uom')._compute_price(
                     product.lst_price)
+            else:
+                product.fix_price = product.lst_price
 
     lst_price = fields.Float(
         compute='_product_lst_price',
         inverse='_set_product_lst_price',
-        store=True,
     )
+
+    fix_price = fields.Float(string='Fix Price')
