@@ -6,7 +6,7 @@
 def set_sale_price_on_variant(cr, registry):
     sql = """
             UPDATE product_product pp
-            SET lst_price = (SELECT list_price
+            SET fix_price = (SELECT list_price
                                 FROM product_template pt
                                 WHERE pp.product_tmpl_id = pt.id)
     """
