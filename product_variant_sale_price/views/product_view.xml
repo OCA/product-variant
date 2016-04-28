@@ -11,9 +11,7 @@
                 <field name="is_product_variant" invisible="1"/>
             </field>
             <xpath expr="//field[@name='list_price']" position="attributes">
-                <attribute name="attrs">
-                    {'invisible': [('is_product_variant', '=', False)]}
-                </attribute>
+                <attribute name="attrs">{'invisible': [('is_product_variant', '=', False)]}</attribute>
             </xpath>
         </field>
     </record>
