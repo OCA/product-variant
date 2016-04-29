@@ -56,7 +56,7 @@ class SaleOrder(models.Model):
                     'attribute_value_ids': [(6, 0, values.ids)],
                 })
             line.write({'product_id': product.id})
-        super(SaleOrderLine, self).action_confirm()
+        super(SaleOrder, self).action_confirm()
 
 
 class SaleOrderLine(models.Model):
@@ -116,7 +116,8 @@ class SaleOrderLine(models.Model):
     def _auto_init(self, cr, context=None):
         # Avoid the removal of the DB column due to sale_stock defining
         # this field as a related non stored one
-        if self._columns.get('product_tmpl_id'):
-            self._columns['product_tmpl_id'].store = True
-            self._columns['product_tmpl_id'].readonly = False
+        if self._fields.get('product_tmpl_id'):
+            self._fields['product_tmpl_id'].store = True
+            self._fields['product_tmpl_id'].readonly = False
+            self._fields['product_tmpl_id'].related = False
         super(SaleOrderLine, self)._auto_init(cr, context=context)
