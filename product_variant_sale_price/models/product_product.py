@@ -27,6 +27,7 @@ class ProductProduct(models.Model):
                     product.lst_price)
             else:
                 product.fix_price = product.lst_price
+            product.list_price = product.fix_price
 
     lst_price = fields.Float(
         compute='_product_lst_price',
