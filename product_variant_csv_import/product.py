@@ -20,7 +20,12 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import api, fields, models
+
+
+# values taken from openerp.addons.base.ir.ir_fields
+_CREATE = 0
+_UPDATE = 1
 
 
 class ProductProduct(models.Model):
@@ -29,3 +34,41 @@ class ProductProduct(models.Model):
     attribute_value_ids = fields.Many2many(readonly=False)
     # In the "product" module, attribute_value_ids is Readonly=True
     # but this blocks the import of products template with variants via CSV
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    @api.multi
+    def _write(self, vals):
+        # Avoid duplicating lines by changing CREATE commands for lines
+        # matching the subfield value of existing lines into update commands.
+        for field, subfield in [('attribute_line_ids', 'attribute_id'),
+                                ('product_variant_ids', 'default_code')]:
+            line_changes = vals.get(field)
+            if not line_changes:
+                # field modification not present in this write
+                continue
+
+            def get_line_key(line, subfield):
+                value = line[subfield]
+                return (
+                    value.id
+                    if subfield.endswith("_id")
+                    else value
+                )
+            # create map of subfield values to lines
+            line_map = {
+                get_line_key(line, subfield): line for line in self[field]
+            }
+            # check if there's already a line with the subfield value to be
+            # created
+            for i, (_command, _id, _writable) in enumerate(line_changes):
+                if ((_command, _id) == (_CREATE, False) and
+                        _writable.get(subfield) in line_map):
+                    # update it instead of creating a new one
+                    line = line_map[_writable[subfield]]
+                    line_changes[i] = (_UPDATE, line.id, _writable)
+
+        result = super(ProductTemplate, self)._write(vals)
+        return result
