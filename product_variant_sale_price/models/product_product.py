@@ -3,6 +3,15 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from openerp import models, fields, api
+import openerp.addons.decimal_precision as dp
+
+class ProductProduct(models.Model):
+    _inherit = "product.template"
+
+    @api.multi
+    @api.onchange('list_price')
+    def _compute_variant_price(self):
+        pass
 
 
 class ProductProduct(models.Model):
@@ -31,14 +40,11 @@ class ProductProduct(models.Model):
             else:
                 product.fix_price = product.lst_price
 
-            min_price = min(product.product_tmpl_id.mapped(
-                'product_variant_ids.fix_price'))
-            # if min_price != product.list_price:
-            product.product_tmpl_id.list_price = min_price
-
     lst_price = fields.Float(
         compute='_compute_lst_price',
         inverse='_inverse_product_lst_price',
     )
 
     fix_price = fields.Float(string='Fix Price')
+    impact_price = fields.Float(string="Price Impact",
+                            digits=dp.get_precision('Product Price'))
