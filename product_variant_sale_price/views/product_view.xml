@@ -9,10 +9,14 @@
         <field name="arch" type="xml">
             <field name="list_price" position="before">
                 <field name="is_product_variant" invisible="1"/>
+                <field name="product_variant_count" invisible="1"/>
             </field>
-            <xpath expr="//field[@name='list_price']" position="attributes">
-                <attribute name="attrs">{'invisible': [('is_product_variant', '=', False)]}</attribute>
-            </xpath>
+            <!--<xpath expr="//field[@name='list_price']" position="attributes">-->
+                <!--<attribute name="attrs">{'invisible': [-->
+                                            <!--('is_product_variant', '=', False),-->
+                                            <!--('product_variant_count', '>', 1)-->
+                                        <!--]}</attribute>-->
+            <!--</xpath>-->
         </field>
     </record>
 

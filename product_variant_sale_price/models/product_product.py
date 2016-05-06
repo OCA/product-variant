@@ -12,7 +12,10 @@ class ProductProduct(models.Model):
     @api.depends('fix_price')
     def _product_lst_price(self):
         for product in self:
-            price = product.fix_price or product.list_price
+            if product.product_variant_count == 1:
+                price = product.list_price
+            else:
+                price = product.fix_price or product.list_price
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
                 price = uom.with_context(uom='uom')._compute_price(price)
