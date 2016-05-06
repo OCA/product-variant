@@ -30,8 +30,11 @@ class ProductProduct(models.Model):
                     product.lst_price)
             else:
                 product.fix_price = product.lst_price
-            product.list_price = min(product.product_tmpl_id.mapped(
+
+            min_price = min(product.product_tmpl_id.mapped(
                 'product_variant_ids.fix_price'))
+            # if min_price != product.list_price:
+            product.product_tmpl_id.list_price = min_price
 
     lst_price = fields.Float(
         compute='_product_lst_price',
