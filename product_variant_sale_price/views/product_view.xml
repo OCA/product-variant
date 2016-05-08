@@ -11,6 +11,12 @@
                 <field name="is_product_variant" invisible="1"/>
                 <field name="product_variant_count" invisible="1"/>
             </field>
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [
+                                            ('is_product_variant', '=', False),
+                                            ('product_variant_count', '=', 1)
+                                        ]}</attribute>
+            </xpath>
             <!--<xpath expr="//field[@name='list_price']" position="attributes">-->
                 <!--<attribute name="attrs">{'invisible': [-->
                                             <!--('is_product_variant', '=', False),-->
@@ -25,7 +31,10 @@
        <field name="inherit_id" ref="product.product_normal_form_view" />
        <field name="arch" type="xml">
            <field name="default_code" position="after">
-                <field name="impact_price"/>
+                <field name="impact_price" attrs="{'invisible': [
+                                            ('is_product_variant', '=', True),
+                                            ('product_variant_count', '=', 1)
+                                            ]}"/>
            </field>
        </field>
     </record>
