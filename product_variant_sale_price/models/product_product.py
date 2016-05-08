@@ -5,14 +5,6 @@
 from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
-class ProductProduct(models.Model):
-    _inherit = "product.template"
-
-    @api.multi
-    @api.onchange('list_price')
-    def _compute_variant_price(self):
-        pass
-
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -33,18 +25,37 @@ class ProductProduct(models.Model):
     @api.multi
     def _inverse_product_lst_price(self):
         for product in self:
+            vals={}
+            tax = product.product_tmpl_id.taxes_id[:1]
+            factor_tax = tax.price_include and (1 + tax.amount) or 1.0
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                product.fix_price = uom.with_context(uom='uom')._compute_price(
+                vals['fix_price'] = uom.with_context(uom='uom')._compute_price(
                     product.lst_price)
             else:
-                product.fix_price = product.lst_price
+                vals['fix_price'] = product.lst_price
+            vals['impact_price'] = (
+                product.lst_price / factor_tax -
+                product.product_tmpl_id.list_price / factor_tax)
+            product.write(vals)
+
+    @api.multi
+    @api.depends('lst_price', 'product_tmpl_id.list_price')
+    def _compute_impact_price(self):
+        for product in self:
+            tax = product.product_tmpl_id.taxes_id[:1]
+            factor_tax = tax.price_include and (1 + tax.amount) or 1.0
+            product.impact_price = (
+                product.lst_price / factor_tax -
+                product.product_tmpl_id.list_price / factor_tax)
 
     lst_price = fields.Float(
         compute='_compute_lst_price',
         inverse='_inverse_product_lst_price',
     )
-
     fix_price = fields.Float(string='Fix Price')
-    impact_price = fields.Float(string="Price Impact",
-                            digits=dp.get_precision('Product Price'))
+    impact_price = fields.Float(
+        compute='_compute_impact_price',
+        string="Price Impact",
+        store=True,
+        digits=dp.get_precision('Product Price'))
