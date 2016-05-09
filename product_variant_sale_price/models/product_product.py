@@ -6,6 +6,19 @@ from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
 
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    @api.multi
+    def write(self, vals):
+        res = super(ProductTemplate, self).write(vals)
+        if 'list_price' in vals:
+            for variant in self.mapped('product_variant_ids'):
+                variant._onchange_impact_price()
+                variant._onchange_lst_price()
+        return res
+
+
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
@@ -14,15 +27,6 @@ class ProductProduct(models.Model):
     def _compute_lst_price(self):
         for product in self:
             price = product.fix_price or product.list_price
-            if product.product_variant_count == 1:
-                if price != product.list_price:
-                    product.product_tmpl_id.write({'list_price': price})
-            # else:
-            #     min_price = min(product.product_tmpl_id.mapped('product_variant_ids.lst_price'))
-                # product.product_tmpl_id.write({'list_price': min_price})
-                # product.list_price = price
-                # price = product.list_price
-            # else:
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
                 price = uom.with_context(uom='uom')._compute_price(price)
@@ -40,20 +44,16 @@ class ProductProduct(models.Model):
                     product.lst_price)
             else:
                 vals['fix_price'] = product.lst_price
-            vals['impact_price'] = (
-                product.lst_price / factor_tax -
-                product.product_tmpl_id.list_price / factor_tax)
             product.write(vals)
 
-    @api.multi
-    @api.depends('lst_price', 'product_tmpl_id.list_price')
-    def _compute_impact_price(self):
-        for product in self:
-            tax = product.product_tmpl_id.taxes_id[:1]
-            factor_tax = tax.price_include and (1 + tax.amount) or 1.0
-            product.impact_price = (
-                product.lst_price / factor_tax -
-                product.product_tmpl_id.list_price / factor_tax)
+    @api.onchange('lst_price')
+    def _onchange_lst_price(self):
+        self.impact_price = self.lst_price - self.list_price
+
+    @api.onchange('impact_price')
+    def _onchange_impact_price(self):
+        self.lst_price = self.list_price + self.impact_price
+
 
     lst_price = fields.Float(
         compute='_compute_lst_price',
@@ -61,7 +61,7 @@ class ProductProduct(models.Model):
     )
     fix_price = fields.Float(string='Fix Price')
     impact_price = fields.Float(
-        compute='_compute_impact_price',
+        # compute='_compute_impact_price',
         string="Price Impact",
-        store=True,
+        # store=True,
         digits=dp.get_precision('Product Price'))

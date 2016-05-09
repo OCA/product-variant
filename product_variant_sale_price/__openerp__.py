@@ -14,6 +14,7 @@
     'application': False,
     'installable': True,
     'depends': [
+        'account',
         'product',
     ],
     'data': [

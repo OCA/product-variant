@@ -30,12 +30,22 @@
        <field name="model">product.product</field>
        <field name="inherit_id" ref="product.product_normal_form_view" />
        <field name="arch" type="xml">
+           <field name="lst_price" position="before">
+               <field name="list_price" string="Price Template"></field>
+           </field>
            <field name="default_code" position="after">
                 <field name="impact_price" attrs="{'invisible': [
                                             ('is_product_variant', '=', True),
                                             ('product_variant_count', '=', 1)
                                             ]}"/>
            </field>
+            <xpath expr="//field[@name='lst_price']" position="attributes">
+                <attribute name="attrs">{'invisible': [
+                                            ('is_product_variant', '=', True),
+                                            ('product_variant_count', '=', 1)
+                                        ]}</attribute>
+            </xpath>
+
        </field>
     </record>
 
