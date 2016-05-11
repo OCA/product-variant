@@ -29,19 +29,17 @@ class ProductProduct(models.Model):
             price = product.fix_price or product.list_price
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                price = uom.with_context(uom='uom')._compute_price(price)
+                price = uom._compute_price(price, self.env.context['uom'])
             product.lst_price = price
 
     @api.multi
     def _inverse_product_lst_price(self):
         for product in self:
             vals={}
-            tax = product.product_tmpl_id.taxes_id[:1]
-            factor_tax = tax.price_include and (1 + tax.amount) or 1.0
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                vals['fix_price'] = uom.with_context(uom='uom')._compute_price(
-                    product.lst_price)
+                vals['fix_price'] = uom._compute_price(
+                    product.lst_price, self.env.context['uom'])
             else:
                 vals['fix_price'] = product.lst_price
             product.write(vals)
@@ -54,14 +52,10 @@ class ProductProduct(models.Model):
     def _onchange_impact_price(self):
         self.lst_price = self.list_price + self.impact_price
 
-
     lst_price = fields.Float(
         compute='_compute_lst_price',
         inverse='_inverse_product_lst_price',
     )
     fix_price = fields.Float(string='Fix Price')
     impact_price = fields.Float(
-        # compute='_compute_impact_price',
-        string="Price Impact",
-        # store=True,
-        digits=dp.get_precision('Product Price'))
+        string="Price Impact", digits=dp.get_precision('Product Price'))
