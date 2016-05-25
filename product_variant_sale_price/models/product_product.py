@@ -29,7 +29,8 @@ class ProductProduct(models.Model):
             price = product.fix_price or product.list_price
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                price = uom._compute_price(price, self.env.context['uom'])
+                price = uom._compute_price(
+                    product.uom_id.id, price, self.env.context['uom'])
             product.lst_price = price
 
     @api.multi
@@ -38,7 +39,7 @@ class ProductProduct(models.Model):
             vals={}
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                vals['fix_price'] = uom._compute_price(
+                vals['fix_price'] = uom._compute_price(product.uom_id.id,
                     product.lst_price, self.env.context['uom'])
             else:
                 vals['fix_price'] = product.lst_price
