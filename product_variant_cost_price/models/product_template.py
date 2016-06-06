@@ -30,6 +30,13 @@ class ProductTemplate(models.Model):
         res = super(ProductTemplate, self).write(vals)
         if ('standard_price' in vals and
                 not self.env.context.get('bypass_down_write')):
-            self.mapped('product_variant_ids').write(
+            self.mapped('product_variant_ids').with_context(
+                template_write=1).write(
                 {'standard_price': vals['standard_price']})
         return res
+
+    @api.model
+    def _set_standard_price(self, product_tmpl_id, value):
+        if not self.env.context.get('template_write'):
+            super(ProductTemplate,
+                  self)._set_standard_price(product_tmpl_id, value)
