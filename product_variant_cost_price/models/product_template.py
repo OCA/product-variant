@@ -16,11 +16,13 @@ class ProductTemplate(models.Model):
         for template in self:
             variants_per_template[template] = (
                 template.standard_price, template.product_variant_ids)
-        obj = self.with_context(bypass_down_write=True)
+        obj = self.with_context(bypass_down_write=True,
+                                bypass_template_history=True)
         res = super(ProductTemplate, obj).create_variant_ids()
         for template in self:
             (template.product_variant_ids -
-             variants_per_template[template][1]).write(
+             variants_per_template[template][1]).with_context(
+                bypass_template_history=True).write(
                 {'standard_price': variants_per_template[template][0]})
         return res
 
@@ -31,12 +33,16 @@ class ProductTemplate(models.Model):
         if ('standard_price' in vals and
                 not self.env.context.get('bypass_down_write')):
             self.mapped('product_variant_ids').with_context(
-                template_write=1).write(
+                bypass_template_history=True).write(
                 {'standard_price': vals['standard_price']})
         return res
 
+
+class ProductPriceHistory(models.Model):
+    _inherit = 'product.price.history'
+
     @api.model
-    def _set_standard_price(self, product_tmpl_id, value):
-        if not self.env.context.get('template_write'):
-            super(ProductTemplate,
-                  self)._set_standard_price(product_tmpl_id, value)
+    def create(self, values):
+        if self.env.context.get('bypass_template_history'):
+            return self
+        return super(ProductPriceHistory, self).create(values)
