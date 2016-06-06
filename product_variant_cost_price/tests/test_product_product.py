@@ -57,6 +57,26 @@ class TestProductProduct(TransactionCase):
             [('product_id', '=', self.product.id)])
         self.assertEqual(len(history), 2)
 
+    def test_product_template_price_history(self):
+        price_history_obj = self.env['product.price.history']
+        variant_history_obj = self.env['product.price.history.product']
+        history = price_history_obj.search(
+            [('product_template_id', '=', self.template_single.id)])
+        variant_history = variant_history_obj.search(
+            [('product_id', '=', self.product_single.id)])
+        self.assertEqual(len(history), 1)
+        self.assertEqual(len(variant_history), 1)
+        self.assertEqual(self.template_single.standard_price, history.cost)
+        self.template_single.standard_price = 20.00
+        history = price_history_obj.search(
+            [('product_template_id', '=', self.template_single.id)])
+        variant_history = variant_history_obj.search(
+            [('product_id', '=', self.product_single.id)])
+        self.assertEqual(self.product_single.standard_price,
+                         self.template_single.standard_price)
+        self.assertEqual(len(history), 2)
+        self.assertEqual(len(variant_history), 2)
+
     def test_product_variant_cost_prices(self):
         self.assertEqual(self.template_multi.standard_price, 5)
         self.assertEqual(self.product_multi_1.standard_price, 10)
