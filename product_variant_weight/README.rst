@@ -7,12 +7,20 @@ Product Variant Weight
 ======================
 
 This module allows to have product weight at product level instead of
-product template
+product template.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/137/8.0
+
+
+Usage
+=====
+
+You can write weight and weight net fields in product template and product
+variant, when writing these fields on the template they propagate to
+the variants.
 
 
 Bug Tracker

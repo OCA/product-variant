@@ -5,8 +5,18 @@
 
 def post_init_hook(cr, registry):
     """This post-init-hook will update all existing product.product weight"""
-    cr.execute("""UPDATE product_product pp
-                  SET weight = pt.weight, weight_net = pt.weight_net
-                  FROM product_template pt
-                  WHERE pt.id = pp.product_tmpl_id;
-              """)
+    cr.execute("""UPDATE product_product
+                  SET weight = product_template.weight
+                  FROM product_template
+                    WHERE product_template.id = product_product.product_tmpl_id
+                    AND (product_product.weight = 0 OR
+                            product_product.weight IS NULL);
+                  """)
+
+    cr.execute("""UPDATE product_product
+        SET weight_net = product_template.weight
+        FROM product_template
+          WHERE product_template.id = product_product.product_tmpl_id
+          AND (product_product.weight_net = 0 OR
+                product_product.weight_net IS NULL);
+        """)

@@ -10,12 +10,38 @@ class TestProductVariantWeight(TransactionCase):
     def setUp(self):
         super(TestProductVariantWeight, self).setUp()
         self.template = self.env['product.template']
+        self.product_product = self.env['product.product']
+
         self.product_template = self.template.create({
-            'name': 'Product',
+            'name': 'Product Template',
             'weight': 50,
             'weight_net': 50,
         })
-        self.product = self.env.ref('product.product_product_4')
+
+        self.product = self.product_product.create({
+            'product_tmpl_id': self.product_template.id,
+            'name_template': 'Product Template',
+        })
+        self.product_1 = self.product_product.create({
+            'product_tmpl_id': self.product_template.id
+        })
+
+    def test_post_init_hook(self):
+        from ..hooks import post_init_hook
+        self.product_template.product_variant_ids.write({
+            'weight': 0.0,
+            'weight_net': 0.0,
+        })
+        post_init_hook(self.cr, None)
+        self.product_template.product_variant_ids.invalidate_cache()
+        self.assertEqual(
+            self.product_template.weight, self.product.weight)
+        self.assertEqual(
+            self.product_template.weight_net, self.product.weight_net)
+        self.assertEqual(
+            self.product_template.weight, self.product_1.weight)
+        self.assertEqual(
+            self.product_template.weight_net, self.product_1.weight_net)
 
     def test_create_product_template(self):
         self.assertEqual(
@@ -24,6 +50,14 @@ class TestProductVariantWeight(TransactionCase):
         self.assertEqual(
             self.product_template.weight_net,
             self.product_template.product_variant_ids[:1].weight_net)
+
+    def test_create_variant(self):
+        new_variant = self.product_product.create({
+            'product_tmpl_id': self.product_template.id
+        })
+        self.assertEqual(self.product_template.weight, new_variant.weight)
+        self.assertEqual(
+            self.product_template.weight_net, new_variant.weight_net)
 
     def test_update_variant(self):
         self.product.weight = 75

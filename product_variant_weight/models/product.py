@@ -45,3 +45,12 @@ class ProductProduct(models.Model):
     weight_net = fields.Float(
         string='Weight Net', digits=dp.get_precision('Stock Weight'),
         help='The net weight in Kg.')
+
+    @api.model
+    def create(self, vals):
+        product = super(ProductProduct, self).create(vals)
+        product.write({
+            'weight': product.product_tmpl_id.weight,
+            'weight_net': product.product_tmpl_id.weight_net,
+        })
+        return product
