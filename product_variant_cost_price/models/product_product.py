@@ -55,6 +55,12 @@ class ProductProduct(models.Model):
 
     @api.model
     def create(self, values):
+        if 'product_tmpl_id' in values and 'standard_price' not in values:
+            template = self.env['product.template'].browse(
+                values.get('product_tmpl_id'))
+            values.update({
+                'standard_price': template.standard_price,
+            })
         product = super(ProductProduct, self).create(values)
         self._set_standard_price(product, values.get('standard_price', 0.0))
         return product

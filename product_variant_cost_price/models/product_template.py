@@ -20,10 +20,11 @@ class ProductTemplate(models.Model):
                                 bypass_template_history=True)
         res = super(ProductTemplate, obj).create_variant_ids()
         for template in self:
-            (template.product_variant_ids -
-             variants_per_template[template][1]).with_context(
-                bypass_template_history=True).write(
-                {'standard_price': variants_per_template[template][0]})
+            if variants_per_template[template][1]:
+                (template.product_variant_ids -
+                 variants_per_template[template][1]).with_context(
+                    bypass_template_history=True).write(
+                    {'standard_price': variants_per_template[template][0]})
         return res
 
     @api.multi
