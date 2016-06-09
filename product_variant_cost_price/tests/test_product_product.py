@@ -12,10 +12,22 @@ class TestProductProduct(TransactionCase):
         super(TestProductProduct, self).setUp()
         self.template_model = self.env['product.template']
         self.product_model = self.env['product.product']
+        self.attribute = self.env['product.attribute'].create(
+            {'name': 'Test attribute'})
+        self.value1 = self.env['product.attribute.value'].create(
+            {'name': 'Test value 1',
+             'attribute_id': self.attribute.id})
+        self.value2 = self.env['product.attribute.value'].create(
+            {'name': 'Test value 2',
+             'attribute_id': self.attribute.id})
         self.product = self.product_model.create(
             {'name': 'Product',
              'standard_price': 15})
-        self.template_single = self.template_model.create({'name': 'Template'})
+        self.template_single = self.template_model.create(
+            {'name': 'Template',
+             'attribute_line_ids': [
+                 [0, 0, {'attribute_id': self.attribute.id,
+                         'value_ids': [[6, 0, [self.value1.id]]]}]]})
         self.product_single = self.template_single.product_variant_ids[0]
         self.template_multi = self.template_model.create(
             {'name': 'Template multi',
@@ -82,3 +94,12 @@ class TestProductProduct(TransactionCase):
         self.assertEqual(self.product_multi_1.standard_price, 10)
         self.assertEqual(self.product_multi_2.standard_price, 20)
         self.assertEqual(self.product_multi_3.standard_price, 30)
+
+    def test_new_variant_creation_prices(self):
+        self.template_single.write(
+            {'attribute_line_ids': [
+                [1, self.template_single.attribute_line_ids[:1].id,
+                 {'value_ids': [[6, 0, [self.value1.id, self.value2.id]]]}]]})
+        for product in self.template_single.product_variant_ids:
+            self.assertEqual(self.template_single.standard_price,
+                             product.standard_price)
