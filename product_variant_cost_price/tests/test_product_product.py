@@ -96,10 +96,18 @@ class TestProductProduct(TransactionCase):
         self.assertEqual(self.product_multi_3.standard_price, 30)
 
     def test_new_variant_creation_prices(self):
+        price_history_obj = self.env['product.price.history']
+        variant_history_obj = self.env['product.price.history.product']
         self.template_single.write(
             {'attribute_line_ids': [
                 [1, self.template_single.attribute_line_ids[:1].id,
                  {'value_ids': [[6, 0, [self.value1.id, self.value2.id]]]}]]})
+        history = price_history_obj.search(
+            [('product_template_id', '=', self.template_single.id)])
+        self.assertEqual(len(history), 1)
         for product in self.template_single.product_variant_ids:
+            variant_history = variant_history_obj.search(
+                [('product_id', '=', product.id)])
+            self.assertEqual(len(variant_history), 1)
             self.assertEqual(self.template_single.standard_price,
                              product.standard_price)
