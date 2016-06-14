@@ -12,16 +12,9 @@ class ProductTemplate(models.Model):
     def create_variant_ids(self):
         """Write in the new created variants the current template cost price.
         """
-        variants_per_template = {}
-        for template in self:
-            variants_per_template[template] = (
-                template.standard_price, template.product_variant_ids)
-        obj = self.with_context(bypass_down_write=True)
+        obj = self.with_context(bypass_down_write=True,
+                                bypass_template_history=True)
         res = super(ProductTemplate, obj).create_variant_ids()
-        for template in self:
-            (template.product_variant_ids -
-             variants_per_template[template][1]).write(
-                {'standard_price': variants_per_template[template][0]})
         return res
 
     @api.multi
@@ -30,6 +23,17 @@ class ProductTemplate(models.Model):
         res = super(ProductTemplate, self).write(vals)
         if ('standard_price' in vals and
                 not self.env.context.get('bypass_down_write')):
-            self.mapped('product_variant_ids').write(
+            self.mapped('product_variant_ids').with_context(
+                bypass_template_history=True).write(
                 {'standard_price': vals['standard_price']})
         return res
+
+
+class ProductPriceHistory(models.Model):
+    _inherit = 'product.price.history'
+
+    @api.model
+    def create(self, values):
+        if self.env.context.get('bypass_template_history'):
+            return self
+        return super(ProductPriceHistory, self).create(values)
