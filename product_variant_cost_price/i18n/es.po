@@ -1,43 +1,82 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* product_variant_cost
-# Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>, 2015.
-#
+# * product_variant_cost_price
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+# Oihane Crucelaegui <oihanecruce@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-28 15:49+0000\n"
-"PO-Revision-Date: 2015-06-26 14:59+0200\n"
-"Last-Translator: Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>\n"
-"Language-Team: Español; Castellano <>\n"
+"POT-Creation-Date: 2016-06-30 10:38+0000\n"
+"PO-Revision-Date: 2016-06-30 10:38+0000\n"
+"Last-Translator: Oihane Crucelaegui <oihanecruce@gmail.com>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
 
-#. module: product_variant_cost
-#: field:stock.quant,variant_inventory_value:0
-msgid "Inventory Value"
-msgstr "Valor de inventario"
+#. module: product_variant_cost_price
+#: field:product.price.history.product,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
 
-#. module: product_variant_cost
-#: model:ir.model,name:product_variant_cost.model_product_product
+#. module: product_variant_cost_price
+#: field:product.price.history.product,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,display_name:0
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,datetime:0
+msgid "Historization Time"
+msgstr "Fecha de historificación"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,cost:0
+msgid "Historized Cost"
+msgstr "Coste"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,__last_update:0
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: product_variant_cost_price
+#: model:ir.model,name:product_variant_cost_price.model_product_product
+#: field:product.price.history.product,product_id:0
 msgid "Product"
 msgstr "Producto"
 
-#. module: product_variant_cost
-#: model:ir.model,name:product_variant_cost.model_stock_quant
-msgid "Quants"
-msgstr "Quants"
+#. module: product_variant_cost_price
+#: model:ir.model,name:product_variant_cost_price.model_product_template
+#: field:product.price.history.product,product_template_id:0
+msgid "Product Template"
+msgstr "Plantilla de producto"
 
-#. module: product_variant_cost
-#: model:ir.model,name:product_variant_cost.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de stock"
-
-#. module: product_variant_cost
-#: field:product.product,cost_price:0
-msgid "Variant Cost Price"
-msgstr "Precio de coste (variante)"
+#. module: product_variant_cost_price
+#: field:product.price.history.product,company_id:0
+msgid "unknown"
+msgstr "desconocido"
