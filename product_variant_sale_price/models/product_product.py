@@ -35,10 +35,11 @@ class ProductProduct(models.Model):
     @api.multi
     def _inverse_product_lst_price(self):
         for product in self:
-            vals={}
+            vals = {}
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                vals['fix_price'] = uom._compute_price(product.uom_id.id,
+                vals['fix_price'] = uom._compute_price(
+                    product.uom_id.id,
                     product.lst_price, self.env.context['uom'])
             else:
                 vals['fix_price'] = product.lst_price
