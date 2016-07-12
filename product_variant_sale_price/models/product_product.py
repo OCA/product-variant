@@ -12,9 +12,8 @@ class ProductTemplate(models.Model):
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
         if 'list_price' in vals:
-            for product in self:
-                for variant in product.mapped('product_variant_ids'):
-                    variant._onchange_lst_price()
+            for variant in self.mapped('product_variant_ids'):
+                variant._onchange_lst_price()
         return res
 
 
@@ -35,10 +34,11 @@ class ProductProduct(models.Model):
     @api.multi
     def _inverse_product_lst_price(self):
         for product in self:
-            vals={}
+            vals = {}
             if 'uom' in self.env.context:
                 uom = product.uos_id or product.uom_id
-                vals['fix_price'] = uom._compute_price(product.uom_id.id,
+                vals['fix_price'] = uom._compute_price(
+                    product.uom_id.id,
                     product.lst_price, self.env.context['uom'])
             else:
                 vals['fix_price'] = product.lst_price
