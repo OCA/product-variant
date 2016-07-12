@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Alex Comba - Agile Business Group
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+        
+        <record id="product_form_view_variant_price" model="ir.ui.view">
+            <field name="name">product_form_view_variant_price</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="after">
+                    <field name="variant_lst_price"></field>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_tree_view_variant_price" model="ir.ui.view">
+            <field name="name">product_tree_view_variant_price</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="after">
+                    <field name="variant_lst_price"></field>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
