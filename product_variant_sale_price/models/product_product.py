@@ -12,9 +12,8 @@ class ProductTemplate(models.Model):
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
         if 'list_price' in vals:
-            for product in self:
-                for variant in product.mapped('product_variant_ids'):
-                    variant._onchange_lst_price()
+            for variant in self.mapped('product_variant_ids'):
+                variant._onchange_lst_price()
         return res
 
 
