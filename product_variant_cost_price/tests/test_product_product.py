@@ -111,3 +111,24 @@ class TestProductProduct(TransactionCase):
             self.assertEqual(len(variant_history), 1)
             self.assertEqual(self.template_single.standard_price,
                              product.standard_price)
+
+    def test_synchro_cost_method_single(self):
+        self.template_single.cost_method = 'real'
+        self.assertEqual(
+            self.product_single.cost_method, self.template_single.cost_method,
+            'Not synchronized from template.')
+        self.product_single.cost_method = 'average'
+        self.assertEqual(
+            self.template_single.cost_method, self.product_single.cost_method,
+            'Not synchronized from variant')
+
+    def test_synchro_cost_method_multi(self):
+        self.template_multi.cost_method = 'average'
+        self.product_multi_1.cost_method = 'real'
+        self.assertEqual(
+            self.template_multi.cost_method, 'average',
+            'Bad synchronize when multiple variants for template.')
+        self.template_multi.cost_method = 'standard'
+        self.assertEqual(
+            self.product_multi_1.cost_method, 'real',
+            'Bad synchronize when multiple variants for template.')

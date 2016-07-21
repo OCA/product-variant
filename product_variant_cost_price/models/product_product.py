@@ -70,6 +70,14 @@ class ProductProduct(models.Model):
         if 'standard_price' in values:
             for product in self:
                 product._set_standard_price(product, values['standard_price'])
+        if (values.get('cost_method', False) and not
+                self.env.context.get('force_not_load', False)):
+            cost_method = values.get('cost_method', False)
+            templates = self.mapped('product_tmpl_id').filtered(
+                lambda x: len(x.product_variant_ids) == 1 and
+                x.cost_method != cost_method)
+            templates.with_context(force_not_load=True).write(
+                {'cost_method': cost_method})
         return super(ProductProduct, self).write(values)
 
 
