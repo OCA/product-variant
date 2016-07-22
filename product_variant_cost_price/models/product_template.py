@@ -26,6 +26,15 @@ class ProductTemplate(models.Model):
             self.mapped('product_variant_ids').with_context(
                 bypass_template_history=True).write(
                 {'standard_price': vals['standard_price']})
+        if (vals.get('cost_method', False) and not self.env.context.get(
+                'force_not_load', False)):
+            cost_method = vals.get('cost_method', False)
+            products = self.filtered(
+                lambda x: len(x.product_variant_ids) == 1 and
+                x.product_variant_ids.cost_method != cost_method).mapped(
+                'product_variant_ids')
+            products.with_context(force_not_load=True).write(
+                {'cost_method': cost_method})
         return res
 
 
