@@ -12,8 +12,7 @@ the same record for all variants.
 Installation
 ============
 
-When you install the module, a copy of each supplier info record is made for
-each variant, so the process can take a long time.
+This module depend of purchase module
 
 Usage
 =====
@@ -49,6 +48,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Alex Comba <alex.comba@agilebg.com>
 * Sergio Teruel <sergio.teruel@tecnativa.com>
+* BEAU Sébastien <sebastien.beau@akretion.com>
 
 Maintainer
 ----------

@@ -10,11 +10,15 @@
               'Odoo Community Association (OCA)',
     'category': 'Product Management',
     'depends': [
-        'product',
+        'purchase',
     ],
     'data': [
-        'views/product_template_view.xml',
+        'views/product_product_view.xml',
+        'views/product_supplierinfo_view.xml',
+    ],
+    'demo': [
+        'demo/product_demo.xml',
+        'demo/procurement_demo.xml',
     ],
     'installable': True,
-    "post_init_hook": "duplicate_supplierinfo_per_variant",
 }

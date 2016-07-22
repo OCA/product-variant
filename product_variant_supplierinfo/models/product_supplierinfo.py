@@ -9,8 +9,10 @@ class ProductSupplierInfo(models.Model):
     _inherit = "product.supplierinfo"
 
     product_id = fields.Many2one(
-        comodel_name='product.product', string="Product variant",
-        required=True)
+        comodel_name='product.product',
+        string="Product variant",
+        help=("When this field is filled in, the vendor data will only"
+              "apply to the variant."))
 
     def _check_product_template(self, vals):
         # Make a copy in case original dictionary is preferred to be kept
@@ -18,12 +20,6 @@ class ProductSupplierInfo(models.Model):
         if vals.get('product_id'):
             product = self.env['product.product'].browse(vals['product_id'])
             vals['product_tmpl_id'] = product.product_tmpl_id.id
-        elif vals.get('product_tmpl_id'):
-            product = self.env['product.product'].search([
-                ('product_tmpl_id', '=', vals['product_tmpl_id']),
-            ], limit=1)
-            if product:
-                vals['product_id'] = product.id
         return vals
 
     @api.model

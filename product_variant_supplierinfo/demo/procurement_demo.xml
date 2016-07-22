@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="procurement_1" model="procurement.order">
+    <field name="product_id" ref="product.product_product_4b"/>
+    <field name="product_qty">1</field>
+    <field name="product_uom" ref="product.product_uom_unit"/>
+    <field name="warehouse_id" ref="stock.warehouse0"/>
+    <field name="location_id" ref="stock.stock_location_stock"/>
+    <field name="name">iPad Retina Display A2324</field>
+    <field name="route_ids" eval="[(6, 0, [ref('purchase.route_warehouse0_buy')])]"/>
+</record>
+
+<record id="procurement_2" model="procurement.order">
+    <field name="product_id" ref="product.product_product_4c"/>
+    <field name="product_qty">1</field>
+    <field name="product_uom" ref="product.product_uom_unit"/>
+    <field name="warehouse_id" ref="stock.warehouse0"/>
+    <field name="location_id" ref="stock.stock_location_stock"/>
+    <field name="name">iPad Retina Display A2325</field>
+    <field name="route_ids" eval="[(6, 0, [ref('purchase.route_warehouse0_buy')])]"/>
+</record>
+
+    </data>
+</openerp>
