@@ -38,15 +38,9 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _compute_seller_ids(self):
-        supplier_obj = self.env['product.supplierinfo']
         for product in self:
-            seller = supplier_obj.browse(False)
-            tmpl_seller = supplier_obj.browse(False)
-            for supplierinfo in product.product_tmpl_id.seller_ids:
-                if not supplierinfo.product_id:
-                    seller |= supplierinfo
-                    tmpl_seller |= supplierinfo
-                if supplierinfo.product_id == product:
-                    seller |= supplierinfo
-            product.seller_ids = seller
-            product.tmpl_seller_ids = tmpl_seller
+            sellers = product.product_tmpl_id.seller_ids
+            product.tmpl_seller_ids = sellers.filtered(
+                lambda x: not x.product_id)
+            product.seller_ids = sellers.filtered(
+                lambda x: not x.product_id or x.product_id == product)
