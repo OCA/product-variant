@@ -12,8 +12,8 @@ class ProcurementOrder(models.Model):
     # Do not call super as we do not want the native behaviour
     @api.model
     def _get_product_supplier(self, procurement):
-        '''returns the main supplier of the procurement's product
-           given as argument'''
+        """returns the main supplier of the procurement's product
+           given as argument"""
         product = procurement.product_id
         company_supplier = self.env['product.supplierinfo'].search([
             '|',
