@@ -6,7 +6,7 @@
     'name': 'Product supplier info per variant',
     'summary': 'Supplier info to product variant scope',
     'version': '8.0.1.0.0',
-    'author': 'Serv. Tecnol. Avanzados - Pedro M. Baeza, '
+    'author': 'Tecnativa, Akretion,'
               'Odoo Community Association (OCA)',
     'category': 'Product Management',
     'depends': [
