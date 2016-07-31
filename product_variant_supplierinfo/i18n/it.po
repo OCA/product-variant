@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * product_variant_supplierinfo
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Paolo Valier <paolo.valier@hotmail.it>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 08:37+0000\n"
+"PO-Revision-Date: 2017-12-30 08:37+0000\n"
+"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2018\n"
+"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: product_variant_supplierinfo
+#: model:ir.model,name:product_variant_supplierinfo.model_product_supplierinfo
+msgid "Information about a product vendor"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,field_description:product_variant_supplierinfo.field_product_product_seller_id
+msgid "Main Supplier"
+msgstr "Fornitore principale"
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,help:product_variant_supplierinfo.field_product_product_seller_id
+msgid "Main Supplier who has highest priority in Supplier List."
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model,name:product_variant_supplierinfo.model_procurement_order
+msgid "Procurement"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model,name:product_variant_supplierinfo.model_product_product
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,field_description:product_variant_supplierinfo.field_product_product_seller_delay
+msgid "Supplier Lead Time"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,field_description:product_variant_supplierinfo.field_product_product_seller_qty
+msgid "Supplier Min Quantity"
+msgstr "Quantità Min Fornitore"
+
+#. module: product_variant_supplierinfo
+#: model:ir.ui.view,arch_db:product_variant_supplierinfo.product_normal_form_view_sellers
+msgid "Template Vendors"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,help:product_variant_supplierinfo.field_product_product_seller_qty
+msgid "This is minimum quantity to purchase from Main Supplier."
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,help:product_variant_supplierinfo.field_product_product_seller_delay
+msgid ""
+"This is the average delay in days between the purchase order confirmation "
+"and the receipts for this product and for the default supplier. It is used "
+"by the scheduler to order requests based on reordering delays."
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,field_description:product_variant_supplierinfo.field_product_product_tmpl_seller_ids
+msgid "Tmpl seller ids"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.ui.view,arch_db:product_variant_supplierinfo.product_normal_form_view_sellers
+msgid "Variant Vendors"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.model.fields,field_description:product_variant_supplierinfo.field_product_product_variant_seller_ids
+msgid "Variant seller ids"
+msgstr ""
+
+#. module: product_variant_supplierinfo
+#: model:ir.ui.view,arch_db:product_variant_supplierinfo.product_normal_form_view_sellers
+msgid "Vendors"
+msgstr "Venditore"
