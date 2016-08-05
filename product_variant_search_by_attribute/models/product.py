@@ -64,12 +64,14 @@ class ProductProduct(models.Model):
     def search(self, cr, uid, domain, offset=0, limit=None,
                order=None, context=None, count=False):
         _logger.debug('Initial domain search %s' % domain)
-        domain = self.domain_replacement(domain, 'attribute_str')
+        separator = self.pool['ir.config_parameter'].get_param(
+            cr, uid, 'search.by.attribute.separator', ' ')
+        domain = self.domain_replacement(domain, 'attribute_str', separator)
         return super(ProductProduct, self).search(
             cr, uid, domain, offset=offset, limit=limit, order=order,
             context=context, count=count)
 
-    def domain_replacement(self, domain, field, separator=' '):
+    def domain_replacement(self, domain, field, separator):
         """ convert [expr1, expr2, expr3] in [expr1, expr2a, expr2b, expr3]
             according to expr => (field, 'ilike', mystring)
         """
@@ -95,8 +97,8 @@ class ProductProduct(models.Model):
         """ convert this string 'first second third' in this list
             ['&', '&',
              ('myfield', 'like', 'first'),
-             ('myfield', 'ilike', 'second'),
-             ('myfield', 'ilike', 'third')]
+             ('myfield', 'like', 'second'),
+             ('myfield', 'like', 'third')]
         """
         words = value.lower().split(separator)
         # we create as many expression as words in this field

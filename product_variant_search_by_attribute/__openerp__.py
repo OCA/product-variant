@@ -5,8 +5,8 @@
 
 {
     'name': 'Product Variant Search by Attributes',
-    'summary': """Allows to search product variants matching several keywords
-                  in their attribute values.""",
+    'summary': """Allows searching inside the product variant attributes
+                  all attributes at once with multiple keywords""",
     'version': '8.0.1.0.0',
     'category': 'Product',
     'author': ['Akretion', 'Odoo Community Association (OCA)'],
@@ -15,6 +15,7 @@
     ],
     'website': 'http://www.akretion.com/',
     'data': [
+        'data/config_data.xml',
         'views/product_view.xml',
     ],
     'installable': True,
