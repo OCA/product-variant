@@ -7,9 +7,9 @@
     'name': 'Product Variant Search by Attributes',
     'summary': """Allows to search product variants matching several keywords
                   in their attribute values.""",
-    'version': '8.0.0.0.1',
+    'version': '8.0.1.0.0',
     'category': 'Product',
-    'author': 'Akretion',
+    'author': ['Akretion', 'Odoo Community Association (OCA)'],
     'depends': [
         'product',
     ],

@@ -25,7 +25,7 @@ class ProductProduct(models.Model):
     def _compute_attribute_str(self):
         for prd in self:
             if prd.attribute_value_ids:
-                attrs = [x.name for x in prd.attribute_value_ids]
+                attrs = [x.name.lower() for x in prd.attribute_value_ids]
                 prd.attribute_str = u' '.join(attrs)
 
     @api.multi

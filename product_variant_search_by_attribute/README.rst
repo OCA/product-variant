@@ -13,11 +13,11 @@ Allows to search product variants according all its attributes at once:
 
 
 .. figure:: product_variant_search_by_attribute/src/description/1.png
-   :alt: alternative description
+   :alt: search with multiple keywords
    :width: 600 px
 
 
-.. figure:: src/description/2.png
+.. figure:: product_variant_search_by_attribute/src/description/2.png
    :alt: alternative description
    :width: 600 px
 
@@ -40,10 +40,6 @@ To use this module, you need to:
    :target: https://runbot.odoo-community.org/runbot/137/8.0
 
 
-Known issues / Roadmap
-======================
-
-* ...
 
 Bug Tracker
 ===========

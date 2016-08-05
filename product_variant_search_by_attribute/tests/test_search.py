@@ -6,12 +6,14 @@ from openerp.tests.common import TransactionCase
 
 
 class TestSearchByAttribute(TransactionCase):
+    def test_attribute_str(self):
+        self.assertEqual(self.ipod16.attribute_str, '16 gb')
+
     def test_change_attribute_value(self):
         self.attrib16.write({'name': '16 GBsuffix'})
-        self.assertEqual(self.ipod16.attribute_str, '16 GBsuffix')
+        self.assertEqual(self.ipod16.attribute_str, '16 gbsuffix')
 
     def setUp(self):
         super(TestSearchByAttribute, self).setUp()
-        # self.prd_m = self.env['product.product']
         self.ipod16 = self.env.ref('product.product_product_11')
         self.attrib16 = self.env.ref('product.product_attribute_value_1')
