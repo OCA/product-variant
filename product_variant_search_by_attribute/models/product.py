@@ -16,7 +16,7 @@ class ProductProduct(models.Model):
 
     attribute_str = fields.Char(
         string='Attribute string', compute='_compute_attribute_str',
-        store=True,
+        store=True, index=True,
         help="Store all attribute values. Required to search variants "
              "from attributes")
 
