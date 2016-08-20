@@ -4,7 +4,7 @@
 
 {
     'name': 'Product Variant Sale Price',
-    'summary': 'Allow write fixed prices in product variants',
+    'summary': 'Allows write fixed prices in product variants',
     'version': '8.0.1.0.0',
     'category': 'Product Management',
     'website': 'https://odoo-community.org/',
