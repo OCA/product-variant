@@ -7,22 +7,11 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <field name="list_price" position="before">
-                <field name="is_product_variant" invisible="1"/>
-                <field name="product_variant_count" invisible="1"/>
-            </field>
             <xpath expr="//field[@name='list_price']" position="attributes">
-                <attribute name="attrs">{'readonly': [
-                                            ('is_product_variant', '=', False),
-                                            ('product_variant_count', '=', 1)
+                <attribute name="attrs">{'invisible': [
+                                            ('product_variant_count', '>', 1)
                                         ]}</attribute>
             </xpath>
-            <!--<xpath expr="//field[@name='list_price']" position="attributes">-->
-                <!--<attribute name="attrs">{'invisible': [-->
-                                            <!--('is_product_variant', '=', False),-->
-                                            <!--('product_variant_count', '>', 1)-->
-                                        <!--]}</attribute>-->
-            <!--</xpath>-->
         </field>
     </record>
 
@@ -30,16 +19,10 @@
        <field name="model">product.product</field>
        <field name="inherit_id" ref="product.product_normal_form_view" />
        <field name="arch" type="xml">
-           <field name="lst_price" position="before">
-               <field name="list_price" string="Price Template"></field>
-           </field>
-            <xpath expr="//field[@name='lst_price']" position="attributes">
-                <attribute name="attrs">{'invisible': [
-                                            ('is_product_variant', '=', True),
-                                            ('product_variant_count', '=', 1)
-                                        ]}</attribute>
+            <xpath expr="//field[@name='uom_id']" position="after">
+                <field name="fix_price"
+                       attrs="{'invisible': [('product_variant_count', '=', 1)]}"/>
             </xpath>
-
        </field>
     </record>
 
