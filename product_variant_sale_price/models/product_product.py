@@ -12,10 +12,9 @@ class ProductTemplate(models.Model):
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
         if 'list_price' in vals:
-            for product in self:
-                product.mapped('product_variant_ids').write({
-                   'fix_price': vals['list_price'],
-                })
+            self.mapped('product_variant_ids').write({
+                'fix_price': vals['list_price'],
+            })
         return res
 
 
@@ -55,7 +54,7 @@ class ProductProduct(models.Model):
             else:
                 vals['fix_price'] = product.lst_price
             if product.product_variant_count == 1:
-                    product.product_tmpl_id.list_price = vals['fix_price']
+                product.product_tmpl_id.list_price = vals['fix_price']
             product.write(vals)
 
     lst_price = fields.Float(
