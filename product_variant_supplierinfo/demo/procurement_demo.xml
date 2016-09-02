@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
 <record id="procurement_1" model="procurement.order">
     <field name="product_id" ref="product.product_product_4b"/>
@@ -22,5 +21,4 @@
     <field name="route_ids" eval="[(6, 0, [ref('purchase.route_warehouse0_buy')])]"/>
 </record>
 
-    </data>
-</openerp>
+</odoo>
