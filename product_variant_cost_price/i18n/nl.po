@@ -11,27 +11,27 @@ msgstr ""
 "POT-Creation-Date: 2016-09-07 02:42+0000\n"
 "PO-Revision-Date: 2016-09-07 02:42+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,create_uid:0
 msgid "Created by"
-msgstr "Criado por"
+msgstr ""
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,create_date:0
 msgid "Created on"
-msgstr "Criado em"
+msgstr ""
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Te tonen naam"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,datetime:0
@@ -46,28 +46,28 @@ msgstr ""
 #. module: product_variant_cost_price
 #: field:product.price.history.product,id:0
 msgid "ID"
-msgstr "Identificação"
+msgstr ""
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_uid:0
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr ""
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_date:0
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr ""
 
 #. module: product_variant_cost_price
 #: model:ir.model,name:product_variant_cost_price.model_product_product
 #: field:product.price.history.product,product_id:0
 msgid "Product"
-msgstr "Produto"
+msgstr ""
 
 #. module: product_variant_cost_price
 #: model:ir.model,name:product_variant_cost_price.model_product_template
