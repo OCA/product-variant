@@ -8,13 +8,22 @@ from openerp import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    def _update_fix_price(self, vals):
+        if 'list_price' in vals:
+            self.mapped('product_variant_ids').write({
+                'fix_price': vals['list_price']})
+
+    @api.model
+    def create(self, vals):
+        product_tmpl = super(ProductTemplate, self).create(vals)
+        product_tmpl._update_fix_price(vals)
+        return product_tmpl
+
     @api.multi
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
-        if 'list_price' in vals:
-            self.mapped('product_variant_ids').write({
-                'fix_price': vals['list_price'],
-            })
+        for template in self:
+            template._update_fix_price(vals)
         return res
 
 
@@ -55,6 +64,11 @@ class ProductProduct(models.Model):
                 vals['fix_price'] = product.lst_price
             if product.product_variant_count == 1:
                 product.product_tmpl_id.list_price = vals['fix_price']
+            else:
+                fix_prices = product.product_tmpl_id.mapped(
+                    'product_variant_ids.fix_price')
+                # for consistency with price shown in the shop
+                product.product_tmpl_id.list_price = min(fix_prices)
             product.write(vals)
 
     lst_price = fields.Float(
