@@ -64,6 +64,11 @@ class ProductProduct(models.Model):
                 vals['fix_price'] = product.lst_price
             if product.product_variant_count == 1:
                 product.product_tmpl_id.list_price = vals['fix_price']
+            else:
+                fix_prices = product.product_tmpl_id.mapped(
+                    'product_variant_ids.fix_price')
+                # for consistency with price shown in the shop
+                product.product_tmpl_id.list_price = min(fix_prices)
             product.write(vals)
 
     lst_price = fields.Float(
