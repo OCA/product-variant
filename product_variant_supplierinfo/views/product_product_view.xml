@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 2015 Serv. Tecnol. Avanzados - Pedro M. Baeza
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<odoo>
+
+    <record id="product_normal_form_view_sellers" model="ir.ui.view">
+        <field name="name">product.product.form.sellers</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//field[@name='seller_ids']/preceding-sibling::separator"
+               position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="seller_ids" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="seller_ids" position="after">
+                <separator string="Variant Suppliers"/>
+                <field name="variant_seller_ids"
+                       context="{'hide_product_id': True}"/>
+                <separator string="Template Suppliers"/>
+                <field name="tmpl_seller_ids"
+                       domain="[('product_id', '=', False)]"
+                       context="{'hide_product_id': True}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
