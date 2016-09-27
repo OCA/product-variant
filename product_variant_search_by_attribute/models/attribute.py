@@ -27,8 +27,8 @@ class ProductAttributeValue(models.Model):
             if product_ids:
                 product_ids = [x[0] for x in product_ids]
                 products = self.env['product.product'].browse(product_ids)
-                _logger.info(" >>> '%s' products to update after attribute "
-                             "('%s') modified" % (len(product_ids), self.id))
+                _logger.debug(" >>> '%s' products to update after attribute "
+                              "('%s') modified" % (len(product_ids), self.id))
                 products._compute_attrib_str_after_attrib_value_change()
-                _logger.info(" >>> '%s' products update done")
+                _logger.debug(" >>> '%s' products update done")
         return res

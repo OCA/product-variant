@@ -43,9 +43,9 @@ class ProductProduct(models.Model):
         for prd in self:
             if products_map.get(prd.id):
                 # We do not use previous method compute_attribute_str()
-                # for performance reason:
-                # 30 000 products: 5 seconds here
-                #      or 3 minutes for method above
+                # for performance reason: ie 30 000 products to update
+                #     5 seconds with this method
+                #  or 3 minutes for _compute_attribute_str() method above
                 query_params = {'info': products_map[prd.id], 'id': prd.id}
                 sql += self._cr.mogrify(update_statement, query_params)
         if sql:
