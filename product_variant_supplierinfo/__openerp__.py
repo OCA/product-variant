@@ -20,5 +20,5 @@
         'demo/product_demo.xml',
         'demo/procurement_demo.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
