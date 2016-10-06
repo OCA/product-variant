@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# Copyright 2016 ACSONE SA/NV
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from openerp import api, fields, models, _
+
+
+class ProductCategory(models.Model):
+
+    _inherit = 'product.category'
+
+    no_create_variants = fields.Boolean(
+        string="Don't create variants automatically",
+        help='This check disables the automatic creation of product variants '
+             'for all the products of this category.',
+        default=True)
+
+    @api.onchange('no_create_variants')
+    def onchange_no_create_variants(self):
+        if not self._origin:
+            return {}
+        return {'warning': {'title': _('Change warning!'),
+                            'message': _('Changing this parameter may cause'
+                                         ' automatic variants creation')}}
+
+    @api.multi
+    def write(self, values):
+        res = super(ProductCategory, self).write(values)
+        if ('no_create_variants' in values and
+                not values.get('no_create_variants')):
+            self.env['product.template'].search(
+                [('categ_id', '=', self.id),
+                 ('no_create_variants', '=', 'empty')]).create_variant_ids()
+        return res
