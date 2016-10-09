@@ -3,35 +3,35 @@
 # * product_variant_cost_price
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# Bole <bole@dajmi5.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-18 01:17+0000\n"
 "PO-Revision-Date: 2016-09-18 01:17+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2016\n"
+"Language-Team: Croatian (Croatia) (https://www.transifex.com/oca/teams/23907/hr_HR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: hr_HR\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,create_uid:0
 msgid "Created by"
-msgstr "Criado por"
+msgstr "Kreirao"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,create_date:0
 msgid "Created on"
-msgstr "Criado em"
+msgstr "Kreirano"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,display_name:0
 msgid "Display Name"
-msgstr "Nome para Mostrar"
+msgstr "Naziv"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,datetime:0
@@ -46,28 +46,28 @@ msgstr ""
 #. module: product_variant_cost_price
 #: field:product.price.history.product,id:0
 msgid "ID"
-msgstr "Identificação"
+msgstr "ID"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,__last_update:0
 msgid "Last Modified on"
-msgstr "Última atualização em"
+msgstr "Zadnje modificirano"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_uid:0
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr "Zadnji ažurirao"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_date:0
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr "Zadnje ažurirano"
 
 #. module: product_variant_cost_price
 #: model:ir.model,name:product_variant_cost_price.model_product_product
 #: field:product.price.history.product,product_id:0
 msgid "Product"
-msgstr "Produto"
+msgstr "Proizvod"
 
 #. module: product_variant_cost_price
 #: model:ir.model,name:product_variant_cost_price.model_product_template
