@@ -15,6 +15,7 @@ class ProcurementOrder(models.Model):
         """returns the main supplier of the procurement's product
            given as argument"""
         product = procurement.product_id
+        seller = product.suspend_security().seller_id
         company_supplier = self.env['product.supplierinfo'].search([
             '|',
             '&',
@@ -22,7 +23,9 @@ class ProcurementOrder(models.Model):
             ('product_id', '=', False),
             ('product_id', '=', product.id),
             ('company_id', '=', procurement.company_id.id),
-            ], limit=1)
+        ], limit=1)
         if company_supplier:
             return company_supplier.name
-        return procurement.product_id.seller_id
+        elif (seller.company_id == procurement.company_id or
+                not seller.company_id):
+            return procurement.product_id.seller_id
