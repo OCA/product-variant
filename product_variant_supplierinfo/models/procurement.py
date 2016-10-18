@@ -26,6 +26,9 @@ class ProcurementOrder(models.Model):
         ], limit=1)
         if company_supplier:
             return company_supplier.name
+        # Add this test because in multi-companies, if the user does not belong
+        # to the company's main product supplier then the user is not allowed
+        # to access the supplier's infos
         elif (seller.company_id == procurement.company_id or
                 not seller.company_id):
             return procurement.product_id.seller_id
