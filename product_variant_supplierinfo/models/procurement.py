@@ -15,7 +15,7 @@ class ProcurementOrder(models.Model):
         """returns the main supplier of the procurement's product
            given as argument"""
         product = procurement.product_id
-        seller = product.suspend_security().seller_id
+        seller = product.sudo().seller_id
         company_supplier = self.env['product.supplierinfo'].search([
             '|',
             '&',
