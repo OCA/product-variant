@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2015 Oihane Crucelaegui - AvanzOSC
 # © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# © 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
 from openerp import api, exceptions, fields, models, _
@@ -27,7 +28,11 @@ class ProductProduct(models.Model):
     def _get_product_attributes_values_text(self):
         description = self.attribute_value_ids.mapped(
             lambda x: "%s: %s" % (x.attribute_id.name, x.name))
-        return "%s\n%s" % (self.product_tmpl_id.name, "\n".join(description))
+        if description:
+            return "%s\n%s" % (
+                self.product_tmpl_id.name, "\n".join(description))
+        else:
+            return self.product_tmpl_id.name
 
     @api.model
     def _build_attributes_domain(self, product_template, product_attributes):
@@ -74,8 +79,9 @@ class ProductProduct(models.Model):
 
     @api.constrains('product_tmpl_id', 'attribute_value_ids')
     def _check_configuration_validity(self):
-        """This method checks that the current selection values are correct
-        according rules. As default, the validity means that all the attributes
+        """The method checks that the current selection values are correct.
+
+        As default, the validity means that all the attributes
         values are set. This can be overridden to set another rules.
 
         :raises: exceptions.ValidationError: If the check is not valid.

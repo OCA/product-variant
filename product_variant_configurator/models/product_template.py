@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2015 Oihane Crucelaegui - AvanzOSC
 # © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# © 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
 from openerp import models, fields, api, _
@@ -19,19 +20,18 @@ class ProductTemplate(models.Model):
              "combinations are going to be created automatically at saving "
              "time.")
 
-    @api.multi
     @api.onchange('no_create_variants')
     def onchange_no_create_variants(self):
-        self.ensure_one()
-        if not self._origin:
-            return {}
-        return {'warning': {'title': _('Change warning!'),
-                            'message': _('Changing this parameter may cause'
-                                         ' automatic variants creation')}}
+        if self.no_create_variants in ['no', 'empty']:
+            return {'warning':
+                    {'title': _('Change warning!'),
+                     'message': _('Changing this parameter may cause'
+                                  ' automatic variants creation')}
+                    }
 
     @api.model
     def create(self, vals):
-        if self.env.context.get('product_name'):
+        if 'product_name' in self.env.context:
             # Needed because ORM removes this value from the dictionary
             vals['name'] = self.env.context['product_name']
         return super(ProductTemplate, self).create(vals)
@@ -45,9 +45,6 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def _get_product_attributes_dict(self):
-        if not self:
-            return []
-        self.ensure_one()
         return self.attribute_line_ids.mapped(
             lambda x: {'attribute_id': x.attribute_id.id})
 
@@ -65,6 +62,7 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def action_open_attribute_prices(self):
+        self.ensure_one()
         price_obj = self.env['product.attribute.price']
         for line in self.attribute_line_ids:
             for value in line.value_ids:
@@ -75,7 +73,7 @@ class ProductTemplate(models.Model):
                         'product_tmpl_id': self.id,
                         'value_id': value.id,
                     })
-        return self.env.ref('product_variants_no_automatic_creation.'
+        return self.env.ref('product_variant_configurator.'
                             'attribute_price_action').read()[0]
 
     @api.model
