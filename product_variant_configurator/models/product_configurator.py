@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2015 Oihane Crucelaegui - AvanzOSC
 # © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# © 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
 from openerp import api, fields, models, exceptions, _
@@ -11,7 +12,8 @@ class ProductConfigurator(models.AbstractModel):
     _name = 'product.configurator'
 
     product_tmpl_id = fields.Many2one(
-        comodel_name='product.template', string='Product Template',
+        string='Product Template',
+        comodel_name='product.template',
         auto_join=True)
     product_attribute_ids = fields.One2many(
         comodel_name='product.configurator.attribute',
@@ -24,17 +26,16 @@ class ProductConfigurator(models.AbstractModel):
              "selected attributes values on sale price. eg. 200 price extra, "
              "1000 + 200 = 1200.")
     product_id = fields.Many2one(
-        comodel_name="product.product", string="Product")
+        string="Product",
+        comodel_name="product.product")
     name = fields.Char()
 
-    @api.multi
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
     def _compute_price_extra(self):
         for record in self:
             record.price_extra = sum(
                 record.mapped('product_attribute_ids.price_extra'))
 
-    @api.multi
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
         # First, empty current list
@@ -60,7 +61,6 @@ class ProductConfigurator(models.AbstractModel):
         domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
         return {'domain': {'product_id': domain}}
 
-    @api.multi
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
         product_obj = self.env['product.product']
@@ -77,7 +77,7 @@ class ProductConfigurator(models.AbstractModel):
         if not self.product_id:
             product_tmpl = self.product_tmpl_id
             values = self.product_attribute_ids.mapped('value_id')
-            if self._fields.get('partner_id'):
+            if 'partner_id' in self._fields:
                 # If our model has a partner_id field, language is got from it
                 obj = self.env['product.attribute.value'].with_context(
                     lang=self.partner_id.lang)
@@ -90,7 +90,6 @@ class ProductConfigurator(models.AbstractModel):
                 product_tmpl, False, values)
         return {'domain': {'product_id': domain}}
 
-    @api.multi
     @api.onchange('product_id')
     def onchange_product_id_product_configurator(self):
         # First, empty current list
@@ -104,22 +103,25 @@ class ProductConfigurator(models.AbstractModel):
                 val['owner_model'] = self._name
                 val['owner_id'] = self.id
             product = self.product_id
-            if self._fields.get('partner_id'):
+            if 'partner_id' in self._fields:
                 # If our model has a partner_id field, language is got from it
                 product = self.env['product.product'].with_context(
                     lang=self.partner_id.lang).browse(self.product_id.id)
             self.product_attribute_ids = [(0, 0, x) for x in attribute_list]
+            self.product_tmpl_id = product.product_tmpl_id.id
             self.name = self._get_product_description(
                 product.product_tmpl_id, product, product.attribute_value_ids)
 
     @api.multi
-    def onchange_product_id_product_configurator_old_api(self, product_id,
-                                                         partner_id=None):
+    def onchange_product_id_product_configurator_old_api(
+            self, product_id, partner_id=None):
         """Method to be called in case inherited model use old API on_change.
+
         The returned result has to be merged with current 'value' key in the
         regular on_change method, not with the complete dictionary.
 
         :param product_id: ID of the changed product.
+        :param partner_id: ID of the partner in the model.
         :return: Dictionary with the changed values.
         """
         res = {}
@@ -136,6 +138,7 @@ class ProductConfigurator(models.AbstractModel):
                 val['owner_id'] = self.id
             attr_values = [(0, 0, values) for values in attr_values_dict]
             res['product_attribute_ids'] = attr_values
+            res['product_tmpl_id'] = product.product_tmpl_id.id
             res['name'] = self._get_product_description(
                 product.product_tmpl_id, product,
                 product.attribute_value_ids)
@@ -157,7 +160,7 @@ class ProductConfigurator(models.AbstractModel):
     def _get_product_description(self, template, product, product_attributes):
         name = product and product.name or template.name
         extended = self.user_has_groups(
-            'product_variants_no_automatic_creation.'
+            'product_variant_configurator.'
             'group_product_variant_extended_description')
         if not product_attributes and product:
             product_attributes = product.attribute_value_ids
@@ -184,8 +187,9 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.model
     def check_configuration_validity(self, vals):
-        """This method checks that the current selection values are correct
-        according rules. As default, the validity means that all the attributes
+        """The method checks that the current selection values are correct.
+
+        As default, the validity means that all the attributes
         values are set. This can be overridden to set another rules.
 
         :param vals: Dictionary of values that creates the record
@@ -199,10 +203,11 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.multi
     def _create_variant_from_vals(self, vals):
-        """This method creates a product variant extracting the needed values
-        from the values dictionary passed to the ORM methods create/write. It
-        also takes the rest of the values from the associated recordset in self
-        if needed, or raise an ensure_one exception if not provided.
+        """The method creates a product variant extracting the needed values.
+
+        the values dictionary is provided from the ORM methods create/write.
+        It also takes the rest of the values from the associated recordset
+        in self if needed, or raise an ensure_one exception if not provided.
         :param vals: Dictionary of values for the record creation/update.
         :return: The same values dictionary with the ID of the created product
         in it under the key `product_id`.
@@ -229,57 +234,12 @@ class ProductConfigurator(models.AbstractModel):
                         value_ids.append(attribute.value_id.id)
             elif op[0] == 6:
                 value_ids = []
-                for attribute_id in op[2]:
-                    attribute = attribute_obj.browse(attribute_id)
-                    if attribute.value_id:
-                        value_ids.append(attribute.value_id.id)
+                attribute_values = attribute_obj.browse(op[2]).mapped(
+                    'value_id')
+                value_ids.extend(attribute_values.ids)
         product = self.env['product.product'].create({
             'product_tmpl_id': product_tmpl_id,
             'attribute_value_ids': [(6, 0, value_ids)],
         })
         vals['product_id'] = product.id
         return vals
-
-
-class ProductConfiguratorAttribute(models.Model):
-    _name = 'product.configurator.attribute'
-
-    owner_id = fields.Integer(string="Owner", required=True)
-    owner_model = fields.Char(required=True)
-    product_tmpl_id = fields.Many2one(
-        comodel_name='product.template', string='Product Template',
-        required=True)
-    attribute_id = fields.Many2one(
-        comodel_name='product.attribute', string='Attribute', readonly=True)
-    value_id = fields.Many2one(
-        comodel_name='product.attribute.value',
-        domain="[('attribute_id', '=', attribute_id), "
-               " ('id', 'in', possible_value_ids[0][2])]",
-        string='Value')
-    possible_value_ids = fields.Many2many(
-        comodel_name='product.attribute.value',
-        compute='_compute_possible_value_ids')
-    price_extra = fields.Float(
-        compute='_compute_price_extra',
-        digits=dp.get_precision('Product Price'),
-        help="Price Extra: Extra price for the variant with this attribute "
-             "value on sale price. eg. 200 price extra, 1000 + 200 = 1200.")
-
-    @api.multi
-    @api.depends('attribute_id')
-    def _compute_possible_value_ids(self):
-        for record in self:
-            # This should be unique due to the new constraint added
-            attribute = record.product_tmpl_id.attribute_line_ids.filtered(
-                lambda x: x.attribute_id == record.attribute_id)
-            record.possible_value_ids = attribute.value_ids.sorted()
-
-    @api.multi
-    @api.depends('value_id')
-    def _compute_price_extra(self):
-        for record in self:
-            record.price_extra = sum(
-                record.value_id.price_ids.filtered(
-                    lambda x: (
-                        x.product_tmpl_id == record.product_tmpl_id)
-                ).mapped('price_extra'))

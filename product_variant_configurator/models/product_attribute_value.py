@@ -11,10 +11,11 @@ class ProductAttributeValue(models.Model):
     @api.model
     def create(self, vals):
         """Link created attribute value to the associated template if proceed.
+
         This happens when quick-creating values from the product configurator.
         """
         attr_value = super(ProductAttributeValue, self).create(vals)
-        if self.env.context.get('template_for_attribute_value'):
+        if 'template_for_attribute_value' in self.env.context:
             template = self.env['product.template'].browse(
                 self.env.context['template_for_attribute_value'])
             line = template.attribute_line_ids.filtered(
