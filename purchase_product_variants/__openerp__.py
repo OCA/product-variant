@@ -9,22 +9,25 @@
     "depends": [
         "product",
         "purchase",
-        "product_variants_no_automatic_creation",
+        "product_variant_configurator",
     ],
     "author": "OdooMRP team, "
               "AvanzOSC, "
               "Tecnativa, "
               "Serv. Tecnol. Avanzados - Pedro M. Baeza",
+              "ACSONE SA/NV"
     "contributors": [
         "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
         "David Díaz <d.diazp@gmail.com>",
         "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
         "Ana Juaristi <ajuaristio@gmail.com>",
+        "Zakaria Makrelouf(Acsone) <z.makrelouf@gmail.com>",
     ],
     "category": "Purchase Management",
     "website": "http://www.odoomrp.com",
     "data": [
-        "views/purchase_view.xml",
+        "views/inherited_purchase_order_views.xml",
+        "views/inherited_purchase_order_line_views.xml",
     ],
     "installable": True,
     "post_init_hook": "assign_product_template",
