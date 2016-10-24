@@ -13,9 +13,6 @@
                 <field name="type" position="after">
                     <field name="no_create_variants" />
                 </field>
-                <group name="parent" position="attributes">
-                    <attribute name="col">4</attribute>
-                </group>
             </field>
         </record>
 
