@@ -18,7 +18,9 @@ class ProductConfigurator(models.AbstractModel):
     product_attribute_ids = fields.One2many(
         comodel_name='product.configurator.attribute',
         domain=lambda self: [("owner_model", "=", self._name)],
-        inverse_name='owner_id', string='Product attributes', copy=True)
+        inverse_name='owner_id',
+        string='Product attributes',
+        copy=True)
     price_extra = fields.Float(
         compute='_compute_price_extra',
         digits=dp.get_precision('Product Price'),
@@ -38,31 +40,37 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
+        if not self.product_tmpl_id:
+            return {}
+
         # First, empty current list
         self.product_attribute_ids = [
             (2, x.id) for x in self.product_attribute_ids]
         if not self.product_tmpl_id.attribute_line_ids:
-            self.product_id = self.product_tmpl_id.product_variant_ids
+            self.product_id = \
+                self.product_tmpl_id.product_variant_ids[0].id
         else:
             if not self.env.context.get('not_reset_product'):
                 self.product_id = False
-            attribute_list = []
+
+            attribute_lines = []
             for attribute_line in self.product_tmpl_id.attribute_line_ids:
-                attribute_list.append({
+                attribute_lines.append((0, 0, {
                     'attribute_id': attribute_line.attribute_id.id,
                     'product_tmpl_id': self.product_tmpl_id.id,
                     'owner_model': self._name,
                     'owner_id': self.id,
-                })
-            self.product_attribute_ids = [(0, 0, x) for x in attribute_list]
-        # Needed because the compute method is not triggered
-        self.product_attribute_ids._compute_possible_value_ids()
+                }))
+            self.product_attribute_ids = attribute_lines
+
         # Restrict product possible values to current selection
         domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
         return {'domain': {'product_id': domain}}
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
+        if not self.product_attribute_ids:
+            return {}
         product_obj = self.env['product.product']
         domain, cont = product_obj._build_attributes_domain(
             self.product_tmpl_id, self.product_attribute_ids)
@@ -90,18 +98,19 @@ class ProductConfigurator(models.AbstractModel):
                 product_tmpl, False, values)
         return {'domain': {'product_id': domain}}
 
-    @api.onchange('product_id')
+    @api.multi
     def onchange_product_id_product_configurator(self):
         # First, empty current list
-        self.product_attribute_ids = [
-            (2, x.id) for x in self.product_attribute_ids]
+
+        self.ensure_one()
         if self.product_id:
+            self.product_attribute_ids = [
+                (2, x.id) for x in self.product_attribute_ids]
             attribute_list = (
                 self.product_id._get_product_attributes_values_dict())
             for val in attribute_list:
                 val['product_tmpl_id'] = self.product_id.product_tmpl_id
                 val['owner_model'] = self._name
-                val['owner_id'] = self.id
             product = self.product_id
             if 'partner_id' in self._fields:
                 # If our model has a partner_id field, language is got from it
