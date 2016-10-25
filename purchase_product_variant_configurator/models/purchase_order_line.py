@@ -48,6 +48,13 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
+        if not self.product_tmpl_id:
+            if not self.product_uom:
+                uom_id = \
+                    self.default_get(['product_uom']).get('product_uom', False)
+                self.product_uom = uom_id
+            return {}
+
         res = super(PurchaseOrderLine, self).onchange_product_tmpl_id()
         if self.product_tmpl_id.description_purchase:
             self.name += '\n' + self.product_tmpl_id.description_purchase
