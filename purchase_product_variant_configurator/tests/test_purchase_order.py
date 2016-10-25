@@ -160,3 +160,39 @@ class TestPurchaseOrder(SavepointCase):
         self.assertEqual(len(result['value']['product_attribute_ids']), 1)
         self.assertEqual(result['value']['product_tmpl_id'],
                          self.product_template_yes.id)
+
+    def test_wkf_confirm_order(self):
+
+        location = self.env['stock.picking.type'].browse(
+            self.purchase_order._get_picking_in()
+        )[0].default_location_dest_id.id
+        order = self.purchase_order.create({
+            'partner_id': self.supplier.id,
+            'location_id': location,
+            'pricelist_id': self.env.ref('purchase.list0').id,
+            'order_line': [(0, 0, {
+                'product_tmpl_id': self.product_template_yes.id,
+                'price_unit': 100,
+                'name': 'Line 1',
+                'date_planned': '2016-01-01',
+                'product_attribute_ids': [(0, 0, {
+                    'product_tmpl_id': self.product_template_yes.id,
+                    'attribute_id': self.attribute1.id,
+                    'value_id': self.value1.id,
+                    'owner_model': 'purchase.order.line'
+                })]
+            }), (0, 0, {
+                'product_tmpl_id': self.product_template_no.id,
+                'price_unit': 200,
+                'name': 'Line 2',
+                'date_planned': '2016-01-01',
+            })]
+        })
+
+        order.wkf_confirm_order()
+
+        order_line_without_product = order.order_line.filtered(
+            lambda x: not x.product_id)
+
+        self.assertEqual(len(order_line_without_product), 0,
+                         "All purchase lines must have a product")
