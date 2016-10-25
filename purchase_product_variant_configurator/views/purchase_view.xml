@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="purchase_order_extended_form_view">
+            <field name="name">purchase.order.extended.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                       position="before">
+                    <field name="product_tmpl_id" />
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']"
+                       position="after">
+                    <field name="order_state" invisible="1"/>
+                    <button name="action_duplicate"
+                            state="draft"
+                            string="Duplicate"
+                            type="object"
+                            icon="STOCK_COPY"
+                            attrs="{'invisible': [('order_state', 'not in', ['draft', 'sent'])]}"
+                            help="Duplicate line"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_line_extended_form_view">
+            <field name="name">purchase.order.line.extended.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="product_tmpl_id" />
+                    <field name="product_attribute_ids"
+                           context="{'default_owner_model': 'purchase.order.line', 'default_owner_id': id}"
+                           attrs="{'invisible':[('product_attribute_ids','=',[])]}"
+                    />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_line_extended_form_view2">
+            <field name="name">purchase.order.line.extended.form2</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form2" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="product_tmpl_id" />
+                    <field name="product_attribute_ids"
+                           context="{'default_owner_model': 'purchase.order.line', 'default_owner_id': id}"
+                           attrs="{'invisible':[('product_attribute_ids','=',[])]}"
+                    />
+                </field>
+                <field name="product_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_line_extended_tree_view">
+            <field name="name">purchase.order.line.extended.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_tree" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="product_tmpl_id" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
