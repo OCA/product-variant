@@ -12,6 +12,7 @@ from openerp import models, fields, tools, api, exceptions, _
 class ProductPricelist(models.Model):
     _inherit = 'product.pricelist'
 
+    @api.multi
     def _price_rule_get_multi(self, products_qty_partner):
 
         self.ensure_one()
@@ -134,10 +135,8 @@ class ProductPricelist(models.Model):
                         price_tmp, self.currency_id, round=False)
 
                 else:
-
                     price = self.env['product.template']._price_get(
                             [product], rule.base)[product.id]
-
                 convert_to_price_uom = (
                     lambda price:
                         product.uom_id._compute_price(price_uom, price)
@@ -199,6 +198,13 @@ class ProductPricelist(models.Model):
         return dict((key, price[0]) for key, price in
                     self.template_price_rule_get(prod_id, qty,
                                                  partner=partner).items())
+
+    @api.model
+    def _price_get_multi(self, pricelist, products_by_qty_by_partner):
+        return dict(
+            (key, price[0]) for key, price in
+            pricelist._price_rule_get_multi(products_by_qty_by_partner).items()
+        )
 
     @api.multi
     def template_price_rule_get(self, prod_id, qty, partner=None):
