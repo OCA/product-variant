@@ -63,48 +63,51 @@ class TestProductPriceList(SavepointCase):
                         'value_ids': [(6, 0, [cls.value3.id, cls.value4.id])]
                         })
             ],
-        })
-
-        cls.iphone_template_info = cls.supplier_info.create({
-            'name': cls.env.ref('base.res_partner_1').id,
-            'product_tmpl_id': cls.iphone_template.id,
-            'delay': 3,
-            'min_qty': 3,
-            'pricelist_ids': [
+            'seller_ids': [
                 (0, False, {
-                    'min_quantity': 3,
+                    'name': cls.env.ref('base.res_partner_1').id,
+                    'delay': 3,
+                    'min_qty': 1,
                     'price': 300
                 }),
                 (0, False, {
-                    'min_quantity': 4,
+                    'name': cls.env.ref('base.res_partner_1').id,
+                    'delay': 3,
+                    'min_qty': 4,
                     'price': 290
-                }),
-            ]
+                })]
         })
 
         cls.pricelist = cls.product_pricelist.create({
             'name': 'Pricelist 1',
-            'type': 'sale',
-            'items_id': [
+            'item_ids': [
                 (0, False, {
                     'name': 'Rule 20% on ipad product',
                     'product_id': cls.ipad_product.id,
                     'sequence': 1,
-                    'base': 2,
-                    'price_discount': -0.2
+                    'min_quantity': 1,
+                    'base': 'list_price',
+                    'applied_on': '0_product_variant',
+                    'percent_price': 20,
+                    'compute_price': 'formula',
                 }),
                 (0, False, {
                     'name': 'Rule 10% on ipad template ',
                     'product_tmpl_id': cls.ipad_template.id,
-                    'base': 2,
-                    'price_discount': -0.1
+                    'applied_on': '1_product',
+                    'min_quantity': 1,
+                    'base': 'list_price',
+                    'compute_price': 'formula',
+                    'percent_price': 10
                 }),
                 (0, False, {
                     'name': 'Rule Min qty 4 10% discount iphone template',
                     'product_tmpl_id': cls.iphone_template.id,
-                    'base': -2,
+                    'applied_on': '1_product',
+                    'base': 'list_price',
                     'min_quantity': 4,
-                    'price_discount': -0.1
+                    'compute_price': 'formula',
+                    'percent_price': 10
                 })
             ]
         })
@@ -112,35 +115,28 @@ class TestProductPriceList(SavepointCase):
     def test_price_rule_get_multi(self):
 
         # Price for ipad product
-        # Must be 400
+        # Must be 600
+
         price = self.pricelist.with_context(
             uom=self.ipad_product.uom_po_id.id, date='2016-01-01'
         ).price_get(self.ipad_product.id, 1)[self.pricelist.id]
 
-        self.assertEqual(price, 500 * 0.8)
-
-        # Price for iphone template without partner
-        # must return False
-        price = self.pricelist.with_context(
-            uom=self.iphone_template.uom_po_id.id, date='2016-01-01'
-        ).template_price_get(self.iphone_template.id, 4)[self.pricelist.id]
-
-        self.assertFalse(price)
+        self.assertEqual(price, 750 * 0.8)
 
         # Price for iphone template with correct partner
-        # Price must be 261
+        # Price must be 450
         price = self.pricelist.with_context(
             uom=self.iphone_template.uom_po_id.id, date='2016-01-01'
         ).template_price_get(
             self.iphone_template.id, 4, self.env.ref('base.res_partner_1').id
         )[self.pricelist.id]
 
-        self.assertEqual(price, 290 * 0.9)
+        self.assertEqual(price, 500 * 0.9)
 
         # Price for ipad template
-        # must be 450
+        # must be 500
         price = self.pricelist.with_context(
             uom=self.iphone_template.uom_po_id.id, date='2016-01-01'
-        ).template_price_get(self.ipad_template.id, 1)[self.pricelist.id]
+        ).template_price_get(self.iphone_template.id, 1)[self.pricelist.id]
 
-        self.assertEqual(price, 500 * 0.9)
+        self.assertEqual(price, 500)
