@@ -11,7 +11,7 @@ class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     @api.multi
-    def wkf_confirm_order(self):
+    def button_confirm(self):
         """Create possible product variants not yet created."""
         product_obj = self.env['product.product']
         lines_without_product = self.order_line.filtered(
@@ -26,4 +26,4 @@ class PurchaseOrder(models.Model):
                         [(6, 0,
                           line.product_attribute_ids.mapped('value_id').ids)]})
             line.write({'product_id': product.id})
-        return super(PurchaseOrder, self).wkf_confirm_order()
+        return super(PurchaseOrder, self).button_confirm()

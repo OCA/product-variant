@@ -15,10 +15,11 @@ class ProductConfigurator(models.AbstractModel):
         string='Product Template',
         comodel_name='product.template',
         auto_join=True)
-    product_attribute_ids = fields.One2many(
+    product_attribute_ids = fields.Many2many(
         comodel_name='product.configurator.attribute',
         domain=lambda self: [("owner_model", "=", self._name)],
-        inverse_name='owner_id', string='Product attributes', copy=True)
+        string='Product attributes',
+        copy=True)
     price_extra = fields.Float(
         compute='_compute_price_extra',
         digits=dp.get_precision('Product Price'),
@@ -38,28 +39,31 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
-        # First, empty current list
-        self.product_attribute_ids = [
-            (2, x.id) for x in self.product_attribute_ids]
-        if not self.product_tmpl_id.attribute_line_ids:
-            self.product_id = self.product_tmpl_id.product_variant_ids
-        else:
-            if not self.env.context.get('not_reset_product'):
-                self.product_id = False
-            attribute_list = []
-            for attribute_line in self.product_tmpl_id.attribute_line_ids:
-                attribute_list.append({
-                    'attribute_id': attribute_line.attribute_id.id,
-                    'product_tmpl_id': self.product_tmpl_id.id,
-                    'owner_model': self._name,
-                    'owner_id': self.id,
-                })
-            self.product_attribute_ids = [(0, 0, x) for x in attribute_list]
-        # Needed because the compute method is not triggered
-        self.product_attribute_ids._compute_possible_value_ids()
-        # Restrict product possible values to current selection
-        domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
-        return {'domain': {'product_id': domain}}
+        if self.product_tmpl_id:
+            values = {}
+            # First, empty current list
+            self.product_attribute_ids = [
+                (2, x.id) for x in self.product_attribute_ids]
+            if not self.product_tmpl_id.attribute_line_ids:
+                self.product_id = \
+                    self.product_tmpl_id.product_variant_ids[0].id
+            else:
+                if not self.env.context.get('not_reset_product'):
+                    self.product_id = False
+
+                for attribute_line in self.product_tmpl_id.attribute_line_ids:
+                    self.product_attribute_ids +=\
+                        self.env['product.configurator.attribute'].new({
+                            'attribute_id': attribute_line.attribute_id.id,
+                            'product_tmpl_id': self.product_tmpl_id.id,
+                            'owner_model': self._name,
+                        })
+                # Needed because the compute method is not triggered
+                self.product_attribute_ids._compute_possible_value_ids()
+                self
+            # Restrict product possible values to current selection
+            domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
+            return {'domain': {'product_id': domain}}
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
@@ -101,7 +105,6 @@ class ProductConfigurator(models.AbstractModel):
             for val in attribute_list:
                 val['product_tmpl_id'] = self.product_id.product_tmpl_id
                 val['owner_model'] = self._name
-                val['owner_id'] = self.id
             product = self.product_id
             if 'partner_id' in self._fields:
                 # If our model has a partner_id field, language is got from it
@@ -135,7 +138,6 @@ class ProductConfigurator(models.AbstractModel):
             for val in attr_values_dict:
                 val['product_tmpl_id'] = product.product_tmpl_id.id
                 val['owner_model'] = self._name
-                val['owner_id'] = self.id
             attr_values = [(0, 0, values) for values in attr_values_dict]
             res['product_attribute_ids'] = attr_values
             res['product_tmpl_id'] = product.product_tmpl_id.id

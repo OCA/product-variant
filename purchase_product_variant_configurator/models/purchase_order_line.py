@@ -6,16 +6,14 @@
 
 from openerp import api, fields, models, _
 from openerp.tools.float_utils import float_compare
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class PurchaseOrderLine(models.Model):
     _inherit = ['purchase.order.line', 'product.configurator']
     _name = 'purchase.order.line'
 
-    order_state = fields.Selection(
-        related='order_id.state', readonly=True)
-    # Needed for getting the lang variable for translating descriptions
-    partner_id = fields.Many2one(related='order_id.partner_id', readonly=True)
+    product_id = fields.Many2one(required=False)
 
     @api.multi
     def action_duplicate(self):
@@ -23,50 +21,27 @@ class PurchaseOrderLine(models.Model):
         self.copy()
 
     @api.multi
-    def onchange_product_id(
-            self, pricelist_id, product_id, qty, uom_id, partner_id,
-            date_order=False, fiscal_position_id=False, date_planned=False,
-            name=False, price_unit=False, state='draft'):
-        res = super(PurchaseOrderLine, self).onchange_product_id(
-            pricelist_id, product_id, qty, uom_id, partner_id,
-            date_order=date_order, fiscal_position_id=fiscal_position_id,
-            date_planned=date_planned, name=name, price_unit=price_unit,
-            state=state)
-        new_value = self.onchange_product_id_product_configurator_old_api(
-            product_id=product_id, partner_id=partner_id)
+    def onchange_product_id(self):
+        res = super(PurchaseOrderLine, self).onchange_product_id()
+        new_value = self.onchange_product_id_product_configurator()
         value = res.setdefault('value', {})
         value.update(new_value)
-        if product_id:
-            product_obj = self.env['product.product']
-            if partner_id:
-                partner = self.env['res.partner'].browse(partner_id)
-                product_obj = product_obj.with_context(lang=partner.lang)
-            prod = product_obj.browse(product_id)
-            if prod.description_purchase:
-                value['name'] += '\n' + prod.description_purchase
+        if self.product_id:
+            if self.product_id.description_purchase:
+                value['name'] += '\n' + self.product_id.description_purchase
         return res
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
         if not self.product_tmpl_id:
-            if not self.product_uom:
-                uom_id = \
-                    self.default_get(['product_uom']).get('product_uom', False)
-                self.product_uom = uom_id
             return {}
-
         res = super(PurchaseOrderLine, self).onchange_product_tmpl_id()
         if self.product_tmpl_id.description_purchase:
             self.name += '\n' + self.product_tmpl_id.description_purchase
 
-        if not self.product_id:
-            self.product_uom = self.product_tmpl_id.uom_po_id
-            self.product_uos = self.product_tmpl_id.uos_id
-            self.price_unit = self.order_id.pricelist_id.with_context(
-                {'uom': self.product_uom.id,
-                 'date': self.order_id.date_order}).template_price_get(
-                self.product_tmpl_id.id, self.product_qty or 1.0,
-                self.order_id.partner_id.id)[self.order_id.pricelist_id.id]
+        self.product_uom = self.product_tmpl_id.uom_po_id \
+                           or self.product_tmpl_id.uom_id
+
         # Get planned date and min quantity
         supplierinfo = False
         precision = self.env['decimal.precision'].precision_get(
@@ -101,9 +76,9 @@ class PurchaseOrderLine(models.Model):
                     self.product_qty = min_qty
         if not self.date_planned and supplierinfo:
             dt = fields.Datetime.to_string(
-                self._get_date_planned(supplierinfo, self.order_id.date_order))
+                self._get_date_planned(supplierinfo, self.order_id))
             self.date_planned = dt
         # Get taxes
         taxes = self.product_tmpl_id.supplier_taxes_id
-        self.taxes_id = self.order_id.fiscal_position.map_tax(taxes)
+        self.taxes_id = self.order_id.fiscal_position_id.map_tax(taxes)
         return res
