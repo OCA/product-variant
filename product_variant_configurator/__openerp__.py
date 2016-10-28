@@ -8,7 +8,7 @@
     'name': 'Product Variant Configurator',
     'summary': """
         Provides an abstract model for product variant configuration.""",
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Product Variant',
     'license': 'AGPL-3',
     'author': 'AvanzOSC,'

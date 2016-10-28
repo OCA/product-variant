@@ -4,7 +4,7 @@
 {
     "name": "Purchase - Product variants",
     "summary": "Product variants in purchase management",
-    "version": "8.0.2.1.0",
+    'version': '9.0.1.0.0',
     "license": "AGPL-3",
     "depends": [
         "product",
