@@ -39,31 +39,35 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
-        if self.product_tmpl_id:
-            values = {}
-            # First, empty current list
-            self.product_attribute_ids = [
-                (2, x.id) for x in self.product_attribute_ids]
-            if not self.product_tmpl_id.attribute_line_ids:
-                self.product_id = \
-                    self.product_tmpl_id.product_variant_ids[0].id
-            else:
-                if not self.env.context.get('not_reset_product'):
-                    self.product_id = False
+        if not self.product_tmpl_id:
+            return {}
 
-                for attribute_line in self.product_tmpl_id.attribute_line_ids:
-                    self.product_attribute_ids +=\
-                        self.env['product.configurator.attribute'].new({
-                            'attribute_id': attribute_line.attribute_id.id,
-                            'product_tmpl_id': self.product_tmpl_id.id,
-                            'owner_model': self._name,
-                        })
-                # Needed because the compute method is not triggered
-                self.product_attribute_ids._compute_possible_value_ids()
-                self
-            # Restrict product possible values to current selection
-            domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
-            return {'domain': {'product_id': domain}}
+        # First, empty current list
+        self.product_attribute_ids = [
+                (2, x.id) for x in self.product_attribute_ids]
+        if not self.product_tmpl_id.attribute_line_ids:
+            self.product_id = \
+                self.product_tmpl_id.product_variant_ids[0].id
+        else:
+            if not self.env.context.get('not_reset_product'):
+                self.product_id = False
+
+            attribute_lines = []
+            for attribute_line in self.product_tmpl_id.attribute_line_ids:
+                attribute_lines.append((0, 0, {
+                    'attribute_id': attribute_line.attribute_id.id,
+                    'product_tmpl_id': self.product_tmpl_id.id,
+                    'owner_model':
+                    self.env.context.get('default_owner_model', False)
+                    or self._name,
+                }))
+            self.product_attribute_ids = attribute_lines
+            # Needed because the compute method is not triggered
+            self.product_attribute_ids._compute_possible_value_ids()
+
+        # Restrict product possible values to current selection
+        domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
+        return {'domain': {'product_id': domain}}
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
