@@ -96,7 +96,8 @@ class TestProductVariantConfigurator(SavepointCase):
             'name': 'No variants template',
             'no_create_variants': 'yes',
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        # default behavior: one variant should be created
+        self.assertEquals(len(tmpl.product_variant_ids), 1)
 
     def test_no_create_variants_category(self):
         self.assertTrue(self.category1.no_create_variants)
@@ -115,7 +116,8 @@ class TestProductVariantConfigurator(SavepointCase):
             'categ_id': self.category1.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        # default behavior: one variant should be created
+        self.assertEquals(len(tmpl.product_variant_ids), 1)
 
     def test_create_variants(self):
         tmpl = self.product_template.create({
@@ -215,15 +217,6 @@ class TestProductVariantConfigurator(SavepointCase):
         })
         with self.cr.savepoint(), self.assertRaises(ValidationError):
             product.product_tmpl_id = self.product_template_no
-
-        with self.cr.savepoint():
-            product.product_tmpl_id = self.product_template_empty_no
-            res = product.onchange_product_tmpl_id()
-            self.assertEquals(
-                res,
-                {'domain': {'product_id': [
-                    ('product_tmpl_id', '=', self.product_template_empty_no.id)
-                ]}})
 
     def test_templ_name_search(self):
         res = self.product_template.name_search('Product template 222')
