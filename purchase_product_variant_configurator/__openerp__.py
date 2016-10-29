@@ -14,8 +14,9 @@
     "author": "OdooMRP team, "
               "AvanzOSC, "
               "Tecnativa, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-              "ACSONE SA/NV"
+              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "ACSONE SA/NV,"
+              "Odoo Community Association (OCA)"
     "contributors": [
         "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
         "David Díaz <d.diazp@gmail.com>",
