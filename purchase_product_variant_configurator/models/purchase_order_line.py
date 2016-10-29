@@ -23,16 +23,14 @@ class PurchaseOrderLine(models.Model):
     @api.multi
     def onchange_product_id(self):
         res = super(PurchaseOrderLine, self).onchange_product_id()
-        new_value = self.onchange_product_id_product_configurator()
-        value = res.setdefault('value', {})
-        value.update(new_value)
+        self.onchange_product_id_product_configurator()
         if self.product_id:
             product_lang = self.product_id.with_context({
                 'lang': self.partner_id.lang,
                 'partner_id': self.partner_id.id,
             })
             if product_lang.description_purchase:
-                value['name'] += '\n' + self.product_id.description_purchase
+                self.name += '\n' + self.product_id.description_purchase
         return res
 
     @api.onchange('product_tmpl_id')
@@ -47,10 +45,10 @@ class PurchaseOrderLine(models.Model):
         self.price_unit = self.product_qty = 0.0
         self.product_uom = self.product_tmpl_id.uom_po_id\
             or self.product_tmpl_id.uom_id
-        result['domain'] = {
+        result['domain'].update({
             'product_uom':
             [('category_id', '=', self.product_tmpl_id.uom_id.category_id.id)]
-        }
+        })
 
         product_lang = self.product_tmpl_id.with_context({
             'lang': self.partner_id.lang,

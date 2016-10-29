@@ -95,7 +95,7 @@ class TestPurchaseOrder(SavepointCase):
         expected_domain = [
             ('product_tmpl_id', '=', self.product_template_yes.id)
         ]
-        self.assertEqual(result['domain'], {'product_id': expected_domain})
+        self.assertEqual(result['domain']['product_id'], expected_domain)
         line2.onchange_product_tmpl_id()
         self.assertEqual(line2.product_id,
                          self.product_template_no.product_variant_ids)
@@ -153,11 +153,25 @@ class TestPurchaseOrder(SavepointCase):
             })]
         })
 
-        result = self.purchase_order_line.onchange_product_id()
+        order = self.purchase_order.create({
+            'partner_id': self.supplier.id,
 
-        self.assertEqual(len(result['value']['product_attribute_ids']), 1)
-        self.assertEqual(result['value']['product_tmpl_id'],
-                         self.product_template_yes.id)
+            'order_line': [(0, 0, {
+                'product_id': product.id,
+                'price_unit': 100,
+                'name': 'Line 1',
+                'product_qty': 1,
+                'date_planned': '2016-01-01',
+                'product_uom': product.uom_id.id,
+
+            })]
+        })
+
+        line = order.order_line[0]
+        with self.cr.savepoint():
+            line.onchange_product_id()
+            self.assertEqual(len(line.product_attribute_ids), 1)
+            self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
     def test_button_confirm(self):
 
