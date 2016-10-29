@@ -20,18 +20,19 @@ class PurchaseOrderLine(models.Model):
         self.ensure_one()
         self.copy()
 
-    @api.multi
+    @api.onchange('product_id')
     def onchange_product_id(self):
-        res = super(PurchaseOrderLine, self).onchange_product_id()
-        self.onchange_product_id_product_configurator()
         if self.product_id:
+            res = super(PurchaseOrderLine, self).onchange_product_id()
+            self.onchange_product_id_product_configurator()
             product_lang = self.product_id.with_context({
                 'lang': self.partner_id.lang,
                 'partner_id': self.partner_id.id,
             })
             if product_lang.description_purchase:
                 self.name += '\n' + self.product_id.description_purchase
-        return res
+            return res
+        return {}
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
@@ -65,4 +66,5 @@ class PurchaseOrderLine(models.Model):
         )
         self._suggest_quantity()
         self._onchange_quantity()
+
         return result
