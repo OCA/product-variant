@@ -11,19 +11,13 @@ from openerp.addons import decimal_precision as dp
 class ProductConfiguratorAttribute(models.Model):
     _name = 'product.configurator.attribute'
 
+    owner_id = fields.Integer(string="Owner", required=True)
     owner_model = fields.Char(required=True)
-
-    owner_id = fields.Integer(string="Owner",
-                              required=True,
-                              ondelete="cascade")
     product_tmpl_id = fields.Many2one(
-        comodel_name='product.template',
-        string='Product Template',
+        comodel_name='product.template', string='Product Template',
         required=True)
     attribute_id = fields.Many2one(
-        comodel_name='product.attribute',
-        string='Attribute',
-        readonly=True)
+        comodel_name='product.attribute', string='Attribute', readonly=True)
     value_id = fields.Many2one(
         comodel_name='product.attribute.value',
         domain="[('attribute_id', '=', attribute_id), "
@@ -31,7 +25,8 @@ class ProductConfiguratorAttribute(models.Model):
         string='Value')
     possible_value_ids = fields.Many2many(
         comodel_name='product.attribute.value',
-        compute='_compute_possible_value_ids')
+        compute='_compute_possible_value_ids',
+        readonly=True)
 
     price_extra = fields.Float(
         compute='_compute_price_extra',
