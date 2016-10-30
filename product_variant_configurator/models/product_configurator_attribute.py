@@ -31,7 +31,8 @@ class ProductConfiguratorAttribute(models.Model):
         string='Value')
     possible_value_ids = fields.Many2many(
         comodel_name='product.attribute.value',
-        compute='_compute_possible_value_ids')
+        compute='_compute_possible_value_ids',
+        readonly=True)
 
     price_extra = fields.Float(
         compute='_compute_price_extra',
