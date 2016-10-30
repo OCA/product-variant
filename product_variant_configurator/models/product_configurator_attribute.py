@@ -22,25 +22,26 @@ class ProductConfiguratorAttribute(models.Model):
         readonly=True)
     value_id = fields.Many2one(
         comodel_name='product.attribute.value',
-        domain="[('attribute_id', '=', attribute_id), "
-               " ('id', 'in', possible_value_ids[0][2])]",
+        domain="[('attribute_id', '=', attribute_id)]",
         string='Value')
-    possible_value_ids = fields.Many2many(
-        comodel_name='product.attribute.value',
-        compute='_compute_possible_value_ids')
+
     price_extra = fields.Float(
         compute='_compute_price_extra',
         digits=dp.get_precision('Product Price'),
         help="Price Extra: Extra price for the variant with this attribute "
              "value on sale price. eg. 200 price extra, 1000 + 200 = 1200.")
 
-    @api.depends('attribute_id')
-    def _compute_possible_value_ids(self):
-        for record in self:
-            # This should be unique due to the new constraint added
-            attribute = record.product_tmpl_id.attribute_line_ids.filtered(
-                lambda x: x.attribute_id == record.attribute_id)
-            record.possible_value_ids = attribute.value_ids.sorted()
+    @api.onchange('attribute_id')
+    def onchange_attribute_id(self):
+        if self.attribute_id and self.product_tmpl_id:
+            attribute = self.product_tmpl_id.attribute_line_ids.filtered(
+                lambda rec: rec.attribute_id == self.attribute_id
+            )
+            possible_value_ids = attribute.value_ids.sorted()
+            return {
+                'domain': {'value_id':
+                           [('attribute_id', '=', self.attribute_id.id),
+                            ('id', 'in', possible_value_ids[0][2])]}}
 
     @api.depends('value_id')
     def _compute_price_extra(self):
