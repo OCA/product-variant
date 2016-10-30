@@ -265,7 +265,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'product_tmpl_id': self.product_template_yes.id,
             'attribute_id': self.attribute1.id,
             'value_id': self.value2.id,
-            'owner_model': 'res.partner',
+            'owner_model': 'product.product',
         }
         with self.cr.savepoint():
             product.product_attribute_ids = [(0, 0, product_attribute_vals)]

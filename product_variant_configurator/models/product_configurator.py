@@ -39,7 +39,7 @@ class ProductConfigurator(models.AbstractModel):
                 record.mapped('product_attribute_ids.price_extra'))
 
     @api.onchange('product_tmpl_id')
-    def onchange_product_tmpl_id(self):
+    def onchange_product_tmpl_id_configurator(self):
         if not self.product_tmpl_id:
             return {}
 
@@ -96,11 +96,9 @@ class ProductConfigurator(models.AbstractModel):
                 product_tmpl, False, values)
         return {'domain': {'product_id': domain}}
 
-    @api.multi
-    def onchange_product_id_product_configurator(self):
+    @api.onchange('product_id')
+    def onchange_product_id_configurator(self):
         # First, empty current list
-
-        self.ensure_one()
         if self.product_id:
             self.product_attribute_ids = [
                 (2, x.id) for x in self.product_attribute_ids]

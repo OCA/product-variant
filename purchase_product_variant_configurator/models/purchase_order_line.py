@@ -20,36 +20,22 @@ class PurchaseOrderLine(models.Model):
         self.ensure_one()
         self.copy()
 
-    @api.onchange('product_id')
-    def onchange_product_id(self):
-        if self.product_id:
-            res = super(PurchaseOrderLine, self).onchange_product_id()
-            self.onchange_product_id_product_configurator()
-            product_lang = self.product_id.with_context({
-                'lang': self.partner_id.lang,
-                'partner_id': self.partner_id.id,
-            })
-            if product_lang.description_purchase:
-                self.name += '\n' + self.product_id.description_purchase
-            return res
-        return {}
-
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
+        # this method is copied from the standard onchange_product_id
+        result = {}
         if not self.product_tmpl_id:
             return {}
-
-        result = super(PurchaseOrderLine, self).onchange_product_tmpl_id()
 
         self.date_planned = datetime.today().strftime(
             DEFAULT_SERVER_DATETIME_FORMAT)
         self.price_unit = self.product_qty = 0.0
         self.product_uom = self.product_tmpl_id.uom_po_id\
             or self.product_tmpl_id.uom_id
-        result['domain'].update({
+        result['domain'] = {
             'product_uom':
             [('category_id', '=', self.product_tmpl_id.uom_id.category_id.id)]
-        })
+        }
 
         product_lang = self.product_tmpl_id.with_context({
             'lang': self.partner_id.lang,
