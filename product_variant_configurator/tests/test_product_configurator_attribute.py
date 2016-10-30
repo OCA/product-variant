@@ -58,7 +58,8 @@ class TestProductConfiguratorAttribute(SavepointCase):
             'product_tmpl_id': self.product_template1.id,
             'attribute_id': self.attribute1.id,
             'value_id': self.value1.id,
-            'owner_model': 'product_product',
+            'owner_model': 'product.product',
+            'owner_id': 1
         })
 
         # Price Extra for conf_attr should be equal to 100.

@@ -267,13 +267,13 @@ class TestProductVariantConfigurator(SavepointCase):
             'value_id': self.value2.id,
             'owner_model': 'res.partner',
         }
-        product.write(
-            {'product_attribute_ids': [(0, 0, product_attribute_vals)]})
-        result = product.onchange_product_attribute_ids()
-        self.assertTrue(
-            ('product_tmpl_id', '=', self.product_template_yes.id)
-            in result['domain']['product_id']
-        )
+        with self.cr.savepoint():
+            product.product_attribute_ids = [(0, 0, product_attribute_vals)]
+            result = product.onchange_product_attribute_ids()
+            self.assertTrue(
+                ('product_tmpl_id', '=', self.product_template_yes.id)
+                in result['domain']['product_id']
+            )
 
     def test_get_product_attributes_values_dict(self):
         product = self.product_product.create({
@@ -323,6 +323,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_id': 1,
                 'owner_model': 'purchase.order.line'
             })]
         }
