@@ -15,9 +15,10 @@ class ProductConfigurator(models.AbstractModel):
         string='Product Template',
         comodel_name='product.template',
         auto_join=True)
-    product_attribute_ids = fields.Many2many(
+    product_attribute_ids = fields.One2many(
         comodel_name='product.configurator.attribute',
         domain=lambda self: [("owner_model", "=", self._name)],
+        inverse_name='owner_id',
         string='Product attributes',
         copy=True)
     price_extra = fields.Float(
@@ -57,9 +58,8 @@ class ProductConfigurator(models.AbstractModel):
                 attribute_lines.append((0, 0, {
                     'attribute_id': attribute_line.attribute_id.id,
                     'product_tmpl_id': self.product_tmpl_id.id,
-                    'owner_model':
-                    self.env.context.get('default_owner_model', False) or
-                    self._name,
+                    'owner_model': self._name,
+                    'owner_id': self.id,
                 }))
             self.product_attribute_ids = attribute_lines
 
@@ -144,6 +144,7 @@ class ProductConfigurator(models.AbstractModel):
             for val in attr_values_dict:
                 val['product_tmpl_id'] = product.product_tmpl_id.id
                 val['owner_model'] = self._name
+                val['owner_id'] = self.id
             attr_values = [(0, 0, values) for values in attr_values_dict]
             res['product_attribute_ids'] = attr_values
             res['product_tmpl_id'] = product.product_tmpl_id.id
