@@ -58,12 +58,10 @@ class ProductConfigurator(models.AbstractModel):
                     'attribute_id': attribute_line.attribute_id.id,
                     'product_tmpl_id': self.product_tmpl_id.id,
                     'owner_model':
-                    self.env.context.get('default_owner_model', False)
-                    or self._name,
+                    self.env.context.get('default_owner_model', False) or
+                    self._name,
                 }))
             self.product_attribute_ids = attribute_lines
-            # Needed because the compute method is not triggered
-            self.product_attribute_ids._compute_possible_value_ids()
 
         # Restrict product possible values to current selection
         domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
