@@ -65,3 +65,9 @@ class TestProductConfiguratorAttribute(SavepointCase):
         # Price Extra for conf_attr should be equal to 100.
         # Result OK.
         self.assertEqual(conf_attr.price_extra, 100.00)
+
+        # Possible Values for the selected Attribute
+        # should be equal to the value_ids set.
+        # Result OK.
+        self.assertEqual(conf_attr.possible_value_ids,
+                         self.attribute1.value_ids)
