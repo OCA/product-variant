@@ -6,7 +6,7 @@
 
 from itertools import chain
 
-from openerp import models, fields, tools, api, exceptions, _
+from openerp import models, fields, api, exceptions
 
 
 class ProductPricelist(models.Model):
@@ -66,12 +66,11 @@ class ProductPricelist(models.Model):
             'AND (item.date_start IS NULL OR item.date_start<=%s) '
             'AND (item.date_end IS NULL OR item.date_end>=%s)'
             'ORDER BY item.applied_on, item.min_quantity desc, '
-                     'categ.parent_left desc',
+            'categ.parent_left desc',
             (prod_tmpl_ids, prod_ids, categ_ids, self.id, date, date))
 
         item_ids = [x[0] for x in self._cr.fetchall()]
         items = self.env['product.pricelist.item'].browse(item_ids)
-        price_types = {}
         results = {}
         for product, qty, partner in products_qty_partner:
             results[product.id] = 0.0
@@ -136,7 +135,7 @@ class ProductPricelist(models.Model):
 
                 else:
                     price = self.env['product.template']._price_get(
-                            [product], rule.base)[product.id]
+                        [product], rule.base)[product.id]
                 convert_to_price_uom = (
                     lambda price:
                         product.uom_id._compute_price(price_uom, price)
