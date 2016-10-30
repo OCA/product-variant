@@ -266,6 +266,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'attribute_id': self.attribute1.id,
             'value_id': self.value2.id,
             'owner_model': 'res.partner',
+            'owner_id': int(product.id)
         }
         with self.cr.savepoint():
             product.product_attribute_ids = [(0, 0, product_attribute_vals)]
@@ -335,11 +336,14 @@ class TestProductVariantConfigurator(SavepointCase):
         product = self.product_product.create({
             'name': 'Test product Check',
             'product_tmpl_id': self.product_template_yes.id,
-            'product_attribute_ids': [
-                (0, 0, {'attribute_id': self.attribute1.id,
-                        'value_id': self.value1.id,
-                        'product_tmpl_id': self.product_template_yes.id,
-                        })
-            ]})
+        })
 
+        product_attribute = self.env['product.configurator.attribute'] \
+            .create({'attribute_id': self.attribute1.id,
+                     'value_id': self.value1.id,
+                     'product_tmpl_id': self.product_template_yes.id,
+                     'owner_id': product.id,
+                     'owner_model': 'product.product'})
+
+        product.product_attribute_ids = [(4, product_attribute.id)]
         self.assertTrue(product.unlink())
