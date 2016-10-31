@@ -18,9 +18,7 @@ class ProductConfigurator(models.AbstractModel):
     product_attribute_ids = fields.One2many(
         comodel_name='product.configurator.attribute',
         domain=lambda self: [("owner_model", "=", self._name)],
-        inverse_name='owner_id',
-        string='Product attributes',
-        copy=True)
+        inverse_name='owner_id', string='Product attributes', copy=True)
     price_extra = fields.Float(
         compute='_compute_price_extra',
         digits=dp.get_precision('Product Price'),
@@ -67,8 +65,6 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
-        if not self.product_attribute_ids:
-            return {}
         product_obj = self.env['product.product']
         domain, cont = product_obj._build_attributes_domain(
             self.product_tmpl_id, self.product_attribute_ids)
@@ -107,6 +103,7 @@ class ProductConfigurator(models.AbstractModel):
             for val in attribute_list:
                 val['product_tmpl_id'] = self.product_id.product_tmpl_id
                 val['owner_model'] = self._name
+                val['owner_id'] = self.id
             product = self.product_id
             if 'partner_id' in self._fields:
                 # If our model has a partner_id field, language is got from it
