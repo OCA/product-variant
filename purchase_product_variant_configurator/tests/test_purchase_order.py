@@ -90,13 +90,17 @@ class TestPurchaseOrder(SavepointCase):
         })
         line1 = order.order_line[0]
         line2 = order.order_line[1]
-        result = line1.onchange_product_tmpl_id()
+        res1 = line1.onchange_product_tmpl_id()
+        res2 = line1.onchange_product_tmpl_id_configurator()
+        result = dict(res1)
+        result.update(res2)
         self.assertEqual(len(line1.product_attribute_ids), 1)
         expected_domain = [
             ('product_tmpl_id', '=', self.product_template_yes.id)
         ]
         self.assertEqual(result['domain']['product_id'], expected_domain)
         line2.onchange_product_tmpl_id()
+        line2.onchange_product_tmpl_id_configurator()
         self.assertEqual(line2.product_id,
                          self.product_template_no.product_variant_ids)
         self.assertEqual(line2.name,
@@ -170,6 +174,7 @@ class TestPurchaseOrder(SavepointCase):
         line = order.order_line[0]
         with self.cr.savepoint():
             line.onchange_product_id()
+            line.onchange_product_id_configurator()
             self.assertEqual(len(line.product_attribute_ids), 1)
             self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
