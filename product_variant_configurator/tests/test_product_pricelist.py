@@ -84,6 +84,7 @@ class TestProductPriceList(SavepointCase):
                 (0, False, {
                     'name': 'Rule 20% on ipad product',
                     'product_id': cls.ipad_product.id,
+                    'categ_id': cls.physical.id,
                     'sequence': 1,
                     'min_quantity': 1,
                     'base': 'list_price',
