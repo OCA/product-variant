@@ -170,18 +170,6 @@ class TestProductVariantConfigurator(SavepointCase):
         self.category1.no_create_variants = False
         self.assertEquals(len(tmpl.product_variant_ids), 2)
 
-    def test_onchange_no_create_variants(self):
-        with self.cr.savepoint():
-            self.product_template_yes.no_create_variants = 'no'
-            result = self.product_template_yes.onchange_no_create_variants()
-            self.assertTrue('warning' in result)
-
-    def test_onchange_no_create_variants_category(self):
-        with self.cr.savepoint():
-            self.category1.no_create_variants = False
-            result = self.category1.onchange_no_create_variants()
-            self.assertTrue('warning' in result)
-
     def test_open_attribute_prices(self):
         result = self.product_template_yes.action_open_attribute_prices()
         self.assertEqual(result['type'], u'ir.actions.act_window')
