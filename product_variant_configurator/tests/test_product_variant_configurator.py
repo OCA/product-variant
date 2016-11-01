@@ -16,7 +16,8 @@ class TestProductVariantConfigurator(SavepointCase):
         # ENVIRONMENTS
         cls.product_attribute = cls.env['product.attribute']
         cls.product_attribute_value = cls.env['product.attribute.value']
-        cls.product_configuration_attribute = cls.env['product.configurator.attribute']
+        cls.product_configuration_attribute = \
+            cls.env['product.configurator.attribute']
         cls.product_category = cls.env['product.category']
         cls.product_product = cls.env['product.product']
         cls.product_template = cls.env['product.template'].with_context(
@@ -170,18 +171,6 @@ class TestProductVariantConfigurator(SavepointCase):
         self.category1.no_create_variants = False
         self.assertEquals(len(tmpl.product_variant_ids), 2)
 
-    def test_onchange_no_create_variants(self):
-        with self.cr.savepoint():
-            self.product_template_yes.no_create_variants = 'no'
-            result = self.product_template_yes.onchange_no_create_variants()
-            self.assertTrue('warning' in result)
-
-    def test_onchange_no_create_variants_category(self):
-        with self.cr.savepoint():
-            self.category1.no_create_variants = False
-            result = self.category1.onchange_no_create_variants()
-            self.assertTrue('warning' in result)
-
     def test_open_attribute_prices(self):
         result = self.product_template_yes.action_open_attribute_prices()
         self.assertEqual(result['type'], u'ir.actions.act_window')
@@ -232,7 +221,8 @@ class TestProductVariantConfigurator(SavepointCase):
 
         self.assertEquals(
             res, {'domain': {'product_id': [
-                ('product_tmpl_id', '=', self.product_template_empty_yes.id)]}})
+                ('product_tmpl_id', '=',
+                 self.product_template_empty_yes.id)]}})
 
     def test_templ_name_search(self):
         res = self.product_template.name_search('Product template 222')
@@ -361,7 +351,8 @@ class TestProductVariantConfigurator(SavepointCase):
                 'value_id': self.value2.id,
             })]
         })
-        res = product1.onchange_product_id_product_configurator_old_api(product2.id)
+        res = product1.onchange_product_id_product_configurator_old_api(
+            product2.id)
         self.assertTrue(res)
 
     def test_get_product_attributes_values_dict(self):
@@ -507,7 +498,8 @@ class TestProductVariantConfigurator(SavepointCase):
                 'value_id': self.value1.id,
             })]
         })
-        res = self.product_product._product_find(self.product_template_yes, [conf_attr])
+        res = self.product_product._product_find(
+            self.product_template_yes, [conf_attr])
         self.assertEqual(res, product)
 
         res = self.product_product._product_find(False, [conf_attr])
