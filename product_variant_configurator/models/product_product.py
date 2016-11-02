@@ -89,7 +89,7 @@ class ProductProduct(models.Model):
         for product in self:
             if bool(product.product_tmpl_id.attribute_line_ids.mapped(
                     'attribute_id') -
-                    product.attribute_line_ids.mapped('attribute_id')):
+                    product.attribute_value_ids.mapped('attribute_id')):
                 raise exceptions.ValidationError(
                     _("You have to fill all the attributes values."))
 
