@@ -9,11 +9,11 @@
             <div name="button_box" position="inside">
                 <button class="oe_stat_button"
                         name="action_open_attribute_prices"
-                        attrs="{'invisible': [('product_variant_count', '&lt;=', 1)]}"
+                        attrs="{'invisible': [('attribute_line_ids', '=', [])]}"
                         groups="product.group_product_variant"
                         icon="fa-strikethrough"
                         type="object"
-                        string="Variant Prices"/>
+                        string="Variant Sale Prices"/>
             </div>
             <field name="attribute_line_ids" position="before">
                 <group>
