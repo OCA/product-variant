@@ -15,11 +15,6 @@ class PurchaseOrderLine(models.Model):
 
     product_id = fields.Many2one(required=False)
 
-    @api.multi
-    def action_duplicate(self):
-        self.ensure_one()
-        self.copy()
-
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
         print "onchange_product_attribute_ids"
