@@ -15,10 +15,19 @@ class PurchaseOrderLine(models.Model):
 
     product_id = fields.Many2one(required=False)
 
-    @api.multi
-    def action_duplicate(self):
-        self.ensure_one()
-        self.copy()
+    @api.onchange('product_attribute_ids')
+    def onchange_product_attribute_ids(self):
+        result = super(PurchaseOrderLine, self).\
+            onchange_product_attribute_ids()
+        if self.product_attribute_ids and not self.product_id:
+            product_obj = self.env['product.product']
+            values = self.product_attribute_ids.mapped('value_id.id')
+            if len(values) == len(self.product_attribute_ids):
+                self.product_id = product_obj.create({
+                    'product_tmpl_id': self.product_tmpl_id.id,
+                    'attribute_value_ids': [(4, value) for value in values]
+                })
+        return result
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
