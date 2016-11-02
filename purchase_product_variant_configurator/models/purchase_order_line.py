@@ -29,7 +29,6 @@ class PurchaseOrderLine(models.Model):
                 })
         return result
 
-
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
         # this method is copied from the standard onchange_product_id
