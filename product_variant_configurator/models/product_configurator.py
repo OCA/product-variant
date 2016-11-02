@@ -95,8 +95,11 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
-        if not self.product_tmpl_id or not self.product_attribute_ids:
-            return
+        if not self.product_tmpl_id:
+            return {'domain': {'product_id': []}}
+        if not self.product_attribute_ids:
+            domain = [('product_tmpl_id', '=', self.product_tmpl_id.id)]
+            return {'domain': {'product_id': domain}}
         product_obj = self.env['product.product']
         domain, cont = product_obj._build_attributes_domain(
             self.product_tmpl_id, self.product_attribute_ids)
