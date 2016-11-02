@@ -17,7 +17,6 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
-        print "onchange_product_attribute_ids"
         result = super(PurchaseOrderLine, self).\
             onchange_product_attribute_ids()
         if self.product_attribute_ids and not self.product_id:
@@ -28,7 +27,6 @@ class PurchaseOrderLine(models.Model):
                     'product_tmpl_id': self.product_tmpl_id.id,
                     'attribute_value_ids': [(4, value) for value in values]
                 })
-                print "product", self.product_id
         return result
 
 
