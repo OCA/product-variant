@@ -12,6 +12,10 @@
                     <!-- force using the form -->
                     <attribute name="editable"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                       position="before">
+                    <field name="product_tmpl_id" />
+                </xpath>
                 <xpath expr="//field[@name='order_line']/form/sheet/group" position="before">
                     <group>
                         <field name="product_tmpl_id"/>
