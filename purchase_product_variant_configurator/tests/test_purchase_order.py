@@ -147,6 +147,29 @@ class TestPurchaseOrder(SavepointCase):
         ]
         self.assertEqual(result['domain'], {'product_id': expected_domain})
 
+    def test_onchange_product_attribute_ids_01(self):
+        order = self.purchase_order.create({
+            'partner_id': self.supplier.id,
+
+            'order_line': [(0, 0, {
+                'product_tmpl_id': self.product_template_yes.id,
+                'price_unit': 100,
+                'name': 'Line 1',
+                'product_qty': 1,
+                'date_planned': '2016-01-01',
+                'product_uom': self.product_template_yes.uom_id.id,
+                'product_attribute_ids': [(0, 0, {
+                    'product_tmpl_id': self.product_template_yes.id,
+                    'attribute_id': self.attribute1.id,
+                    'value_id': self.value1.id,
+                    'owner_model': 'purchase.order.line'
+                })]
+            })]
+        })
+        line = order.order_line[0]
+        line.onchange_product_attribute_ids()
+        self.assertTrue(line.product_id)
+
     def test_onchange_product_id(self):
         product = self.product_product.create({
             'product_tmpl_id': self.product_template_yes.id,
