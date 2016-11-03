@@ -9,23 +9,20 @@
             <field name="priority" eval="20" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <!-- force using the form -->
                     <attribute name="editable"/>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']"
                        position="before">
                     <field name="product_tmpl_id" />
                 </xpath>
-                <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']"
-                       position="after">
-                    <field name="state" invisible="1"/>
-                </xpath>
-                <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="before">
-                    <field name="product_tmpl_id" required="1"/>
-                    <field name="state" invisible="1"/>
-                </xpath>
-                <xpath expr="//field[@name='order_line']/form//notebook/page[1]" position="before">
-                    <page string="Product Variant" name="product_attribute">
-                        <field name="product_attribute_ids" widget="one2many" nolabe="1">
+                <xpath expr="//field[@name='order_line']/form/sheet/group" position="before">
+                    <group>
+                        <field name="product_tmpl_id"/>
+                        <field name="product_attribute_ids" widget="one2many"
+                               context="{'default_owner_model': 'purchase.order.line'}"
+                               attrs="{'invisible': [('product_attribute_ids','=',[])]}"
+                               nolabel="1" colspan="2">
                             <tree create="0" delete="0" editable="1">
                                 <field name="owner_model" invisible="1"/>
                                 <field name="owner_id" invisible="1"/>
@@ -33,14 +30,12 @@
                                 <field name="possible_value_ids" widget="many2many_tags" invisible="1"/>
                                 <field name="product_tmpl_id" invisible="1"/>
                                 <field name="value_id"/>
-                                <field name="price_extra"/>
+                                <!-- TODO price_extra is for sale only for now -->
+                                <!--field name="price_extra"/-->
                             </tree>
                         </field>
-                    </page>
+                    </group>
                 </xpath>
-                <field name="order_line" position="attributes">
-                    <attribute name="options">{'reload_on_button': true}</attribute>
-                </field>
             </field>
         </record>
 
