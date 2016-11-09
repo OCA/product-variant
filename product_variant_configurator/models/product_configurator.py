@@ -42,6 +42,11 @@ class ProductConfigurator(models.AbstractModel):
                  'product_id')
     def _compute_can_be_created(self):
         if self.product_id:
+            # product already selected
+            self.can_create_product = False
+            return
+        if not self.product_tmpl_id:
+            # no product nor template
             self.can_create_product = False
             return
         self.can_create_product = not bool(
