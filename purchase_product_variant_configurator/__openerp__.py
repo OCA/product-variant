@@ -29,6 +29,7 @@
     "data": [
         "views/inherited_purchase_order_views.xml",
         "views/inherited_purchase_order_line_views.xml",
+        "views/inherited_product_product_views.xml"
     ],
     "installable": True,
     "post_init_hook": "assign_product_template",
