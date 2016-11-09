@@ -4,8 +4,11 @@
 # © 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
+import logging
 from openerp import api, fields, models, exceptions, _
 from openerp.addons import decimal_precision as dp
+
+_logger = logging.getLogger(__name__)
 
 
 class ProductConfigurator(models.AbstractModel):
@@ -29,8 +32,21 @@ class ProductConfigurator(models.AbstractModel):
         string="Product",
         comodel_name="product.product")
     name = fields.Char()
+    can_create_product = fields.Boolean(
+        compute='_compute_can_be_created',
+        store=False)
     create_product_variant = fields.Boolean(
         string="Create product now!")
+
+    @api.depends('product_attribute_ids', 'product_attribute_ids.value_id',
+                 'product_id')
+    def _compute_can_be_created(self):
+        if self.product_id:
+            self.can_create_product = False
+            return
+        self.can_create_product = not bool(
+            len(self.product_tmpl_id.attribute_line_ids.mapped('attribute_id')) -
+            len(filter(None, self.product_attribute_ids.mapped('value_id'))))
 
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
     def _compute_price_extra(self):
@@ -152,8 +168,10 @@ class ProductConfigurator(models.AbstractModel):
             return
         self.create_product_variant = False
         try:
-            self.product_id = self.create_variant_if_needed()
+            with self.env.cr.savepoint():
+                self.product_id = self.create_variant_if_needed()
         except exceptions.ValidationError as e:
+            _logger.exception('Product not created!')
             return {'warning': {
                 'title': _('Product not created!'),
                 'message': e.name,
