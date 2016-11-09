@@ -30,9 +30,11 @@
                                 <!--field name="price_extra"/-->
                             </tree>
                         </field>
+                        <field name="price_extra"/>
+                        <field name="can_create_product" invisible="1"/>
                         <field name="create_product_variant"
                             attrs="{'invisible': 
-                            ['|',('product_id','!=',False),('product_attribute_ids','=',[])]}"/>
+                            [('can_create_product', '=', False)]}"/>
                     </group>
                 </xpath>
             </field>
