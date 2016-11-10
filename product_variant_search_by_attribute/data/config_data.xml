@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data noupdate="1">
+
+
+    <record id="search_by_attribute_separator" model="ir.config_parameter">
+        <field name="key">search.by.attribute.separator</field>
+        <field name="value"> </field>
+    </record>
+
+
+</data>
+</openerp>
