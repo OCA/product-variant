@@ -70,6 +70,8 @@ Contributors
 * Ana Juaristi <ajuaristio@gmail.com>
 * Thomas Binsfeld <thomas.binsfeld@acsone.eu>
 * Zakaria Makrelouf (acsone) <z.makrelouf@gmail.com>
+* Stéphane Bidoul <stephane.bidoul@acsone.eu>
+* Laurent Mignon <laurent.mignon@acsone.eu>
 
 Maintainer
 ----------
