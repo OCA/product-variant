@@ -30,7 +30,6 @@
                                 <!--field name="price_extra"/-->
                             </tree>
                         </field>
-                        <field name="price_extra"/>
                         <field name="can_create_product" invisible="1"/>
                         <field name="create_product_variant"
                             attrs="{'invisible': 
