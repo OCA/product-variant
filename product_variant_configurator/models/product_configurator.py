@@ -237,50 +237,23 @@ class ProductConfigurator(models.AbstractModel):
         self.ensure_one()
         # TODO: search for existing product matching the attribute values
         values = self.product_attribute_ids.mapped('value_id.id')
-        return self.env['product.product'].create({
+        # When an object inheriting from mail.thread is created, the creation
+        # of followers causes the invalidation of all caches. (
+        # call to self.invalidate_cache in overridden methods *unlink* and
+        # *create*) The cache invalidation remove all instances from the cache
+        # even in memory instance. The deletion of these in memory instances
+        # has for consequence that some computed fields or values
+        # initialized  by a call to onchange are no more computed if these
+        # methods rely on the values stored in these in memory records. It's
+        # clearly a bug in Odoo and is not tied to the current case but
+        # since we are not able to provide a solution for all the cases we
+        # implement a specific work around by taking a copy of the cache
+        # before the call to create and restoring the cache after the create
+        # https://github.com/odoo/odoo/issues/14275
+        cache = self.env.cache.copy()
+        ret = self.env['product.product'].create({
             'product_tmpl_id': self.product_tmpl_id.id,
             'attribute_value_ids': [(4, value) for value in values]
         })
-
-    @api.multi
-    def _create_variant_from_vals(self, vals):
-        """The method creates a product variant extracting the needed values.
-
-        the values dictionary is provided from the ORM methods create/write.
-        It also takes the rest of the values from the associated recordset
-        in self if needed, or raise an ensure_one exception if not provided.
-        :param vals: Dictionary of values for the record creation/update.
-        :return: The same values dictionary with the ID of the created product
-        in it under the key `product_id`.
-        """
-        attribute_obj = self.env['product.configurator.attribute']
-        product_attributes_dict = vals.get('product_attribute_ids')
-        if not vals.get('product_attribute_ids'):
-            self.ensure_one()
-            product_attributes_dict = self._convert_to_write(self._cache)
-        product_tmpl_id = vals.get('product_tmpl_id', self.product_tmpl_id.id)
-        value_ids = []
-        for op in product_attributes_dict:
-            if op[0] == 4:
-                attribute = attribute_obj.browse(op[1])
-                if attribute.value_id:
-                    value_ids.append(attribute.value_id.id)
-            elif op[0] in (0, 1):
-                if 'value_id' in op[2]:
-                    if op[2]['value_id']:
-                        value_ids.append(op[2]['value_id'])
-                else:
-                    attribute = attribute_obj.browse(op[1])
-                    if attribute.value_id:
-                        value_ids.append(attribute.value_id.id)
-            elif op[0] == 6:
-                value_ids = []
-                attribute_values = attribute_obj.browse(op[2]).mapped(
-                    'value_id')
-                value_ids.extend(attribute_values.ids)
-        product = self.env['product.product'].create({
-            'product_tmpl_id': product_tmpl_id,
-            'attribute_value_ids': [(6, 0, value_ids)],
-        })
-        vals['product_id'] = product.id
-        return vals
+        self.env.cache.update(cache)
+        return ret
