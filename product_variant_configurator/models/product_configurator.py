@@ -29,6 +29,8 @@ class ProductConfigurator(models.AbstractModel):
         string="Product",
         comodel_name="product.product")
     name = fields.Char()
+    create_product_variant = fields.Boolean(
+        string="Create product now!")
 
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
     def _compute_price_extra(self):
@@ -144,6 +146,19 @@ class ProductConfigurator(models.AbstractModel):
         else:
             self._empty_attributes()
 
+    @api.onchange('create_product_variant')
+    def onchange_create_product_variant(self):
+        if not self.create_product_variant:
+            return
+        self.create_product_variant = False
+        try:
+            self.product_id = self.create_variant_if_needed()
+        except exceptions.ValidationError as e:
+            return {'warning': {
+                'title': _('Product not created!'),
+                'message': e.name,
+            }}
+
     @api.model
     def _order_attributes(self, template, product_attribute_values):
         res = template._get_product_attributes_dict()
@@ -186,27 +201,23 @@ class ProductConfigurator(models.AbstractModel):
         return result
 
     @api.multi
-    def check_configuration_validity(self):
-        for rec in self:
-            if any(not x.value_id for x in rec.product_attribute_ids):
-                raise exceptions.ValidationError(
-                    _("You have to fill all the attributes values."))
+    def create_variant_if_needed(self):
+        """ Create the product variant
 
-    @api.model
-    def check_configuration_validity_from_vals(self, vals):
-        """The method checks that the current selection values are correct.
+        Check if the configuration if valid by calling
+        check_configuration_validity. The search for an existing
+        product with the selected attributes. If not found, create
+        a new product.
 
-        As default, the validity means that all the attributes
-        values are set. This can be overridden to set another rules.
-
-        :param vals: Dictionary of values that creates the record
-        :type vals: dict
-        :raises: exceptions.ValidationError: If the check is not valid.
+        :returns: the product (found our newly created)
         """
-        if any(not x[2].get('value_id') for
-               x in vals.get('product_attribute_ids', [])):
-            raise exceptions.ValidationError(
-                _("You have to fill all the attributes values."))
+        self.ensure_one()
+        # TODO: search for existing product matching the attribute values
+        values = self.product_attribute_ids.mapped('value_id.id')
+        return self.env['product.product'].create({
+            'product_tmpl_id': self.product_tmpl_id.id,
+            'attribute_value_ids': [(4, value) for value in values]
+        })
 
     @api.multi
     def _create_variant_from_vals(self, vals):
