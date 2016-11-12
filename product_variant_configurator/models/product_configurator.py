@@ -185,8 +185,15 @@ class ProductConfigurator(models.AbstractModel):
             attributes.unlink()
         return result
 
+    @api.multi
+    def check_configuration_validity(self):
+        for rec in self:
+            if any(not x.value_id for x in rec.product_attribute_ids):
+                raise exceptions.ValidationError(
+                    _("You have to fill all the attributes values."))
+
     @api.model
-    def check_configuration_validity(self, vals):
+    def check_configuration_validity_from_vals(self, vals):
         """The method checks that the current selection values are correct.
 
         As default, the validity means that all the attributes
