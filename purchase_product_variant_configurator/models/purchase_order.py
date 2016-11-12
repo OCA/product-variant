@@ -16,7 +16,10 @@ class PurchaseOrder(models.Model):
         product_obj = self.env['product.product']
         lines_without_product = self.order_line.filtered(
             lambda x: not x.product_id and x.product_tmpl_id)
+
+        lines_without_product.check_configuration_validity()
         for line in lines_without_product:
+
             product = product_obj._product_find(
                 line.product_tmpl_id, line.product_attribute_ids)
             if not product:
