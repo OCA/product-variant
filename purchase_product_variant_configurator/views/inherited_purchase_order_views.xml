@@ -12,10 +12,6 @@
                     <!-- force using the form -->
                     <attribute name="editable"/>
                 </xpath>
-                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']"
-                       position="before">
-                    <field name="product_tmpl_id" />
-                </xpath>
                 <xpath expr="//field[@name='order_line']/form/sheet/group" position="before">
                     <group>
                         <field name="product_tmpl_id"/>
@@ -34,6 +30,9 @@
                                 <!--field name="price_extra"/-->
                             </tree>
                         </field>
+                        <field name="create_product_variant"
+                            attrs="{'invisible': 
+                            ['|',('product_id','!=',False),('product_attribute_ids','=',[])]}"/>
                     </group>
                 </xpath>
             </field>
