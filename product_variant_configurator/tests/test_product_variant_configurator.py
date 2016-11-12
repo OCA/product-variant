@@ -235,7 +235,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 return
         self.fail()
 
-    def test_check_configuration_validity(self):
+    def test_check_configuration_validity_from_vals(self):
 
         tmpl = self.product_template.create({
             'name': 'Product template Check',
@@ -260,7 +260,8 @@ class TestProductVariantConfigurator(SavepointCase):
                     'value_id': None
                 })]
             }
-            self.product_product.check_configuration_validity(product_vals)
+            self.product_product.check_configuration_validity_from_vals(
+                product_vals)
 
     def test_onchange_product_attribute_ids(self):
         product = self.product_product.create({
