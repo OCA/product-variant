@@ -6,7 +6,6 @@ from openerp.tests.common import SavepointCase
 
 
 class TestPurchaseOrder(SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super(TestPurchaseOrder, cls).setUpClass()
@@ -68,77 +67,70 @@ class TestPurchaseOrder(SavepointCase):
 
     def test_onchange_product_tmpl_id(self):
 
-        order = self.purchase_order.create({
-            'partner_id': self.supplier.id,
+        line1 = self.purchase_order_line.new({
+            'product_tmpl_id': self.product_template_yes.id,
+            'price_unit': 100,
+            'product_uom': self.product_template_yes.uom_id.id,
+            'product_qty': 1,
+            'name': 'Line 1',
+            'date_planned': '2016-01-01',
 
-            'order_line': [(0, 0, {
-                'product_tmpl_id': self.product_template_yes.id,
-                'price_unit': 100,
-                'product_uom': self.product_template_yes.uom_id.id,
-                'product_qty': 1,
-                'name': 'Line 1',
-                'date_planned': '2016-01-01',
-
-            }), (0, 0, {
-                'product_tmpl_id': self.product_template_no.id,
-                'product_uom': self.product_template_no.uom_id.id,
-                'product_qty': 1,
-                'price_unit': 200,
-                'name': 'Line 2',
-                'date_planned': '2016-01-01',
-            })]
         })
-        line1 = order.order_line[0]
-        line2 = order.order_line[1]
-        res1 = line1.onchange_product_tmpl_id()
-        res2 = line1.onchange_product_tmpl_id_configurator()
-        result = dict(res1)
-        result.update(res2)
+
+        result = line1.onchange_product_tmpl_id_configurator()
         self.assertEqual(len(line1.product_attribute_ids), 1)
         expected_domain = [
             ('product_tmpl_id', '=', self.product_template_yes.id)
         ]
         self.assertEqual(result['domain']['product_id'], expected_domain)
-        line2.onchange_product_tmpl_id()
+
+        line2 = self.purchase_order_line.new({
+            'product_tmpl_id': self.product_template_no.id,
+            'product_uom': self.product_template_no.uom_id.id,
+            'product_qty': 1,
+            'price_unit': 200,
+            'name': 'Line 2',
+            'date_planned': '2016-01-01',
+        })
+
         line2.onchange_product_tmpl_id_configurator()
+        line2.onchange_product_id_configurator()
+        line2.onchange_product_id()
         self.assertEqual(line2.product_id,
                          self.product_template_no.product_variant_ids)
         self.assertEqual(line2.name,
-                         'Line 2\n%s' %
-                         self.product_template_no.description_purchase)
+                         '%s\n%s' % (
+                             self.product_template_no.name,
+                             self.product_template_no.description_purchase
+                         ))
 
     def test_onchange_product_attribute_ids(self):
-
-        order = self.purchase_order.create({
-            'partner_id': self.supplier.id,
-
-            'order_line': [(0, 0, {
+        product = self.product_product.create({
+            'product_tmpl_id': self.product_template_yes.id,
+            'product_attribute_ids': [(0, 0, {
                 'product_tmpl_id': self.product_template_yes.id,
-                'price_unit': 100,
-                'name': 'Line 1',
-                'product_qty': 1,
-                'date_planned': '2016-01-01',
-                'product_uom': self.product_template_yes.uom_id.id,
-                'product_attribute_ids': [(0, 0, {
-                    'product_tmpl_id': self.product_template_yes.id,
-                    'attribute_id': self.attribute1.id,
-                    'value_id': self.value1.id,
-                    'owner_model': 'purchase.order.line'
-                })]
+                'attribute_id': self.attribute1.id,
+                'value_id': self.value1.id
             })]
         })
-        line = order.order_line[0]
-        with self.cr.savepoint():
-            product = self.product_product.create({
+
+        line = self.purchase_order_line.new({
+            'product_tmpl_id': self.product_template_yes.id,
+            'price_unit': 100,
+            'name': 'Line 1',
+            'product_qty': 1,
+            'date_planned': '2016-01-01',
+            'product_uom': self.product_template_yes.uom_id.id,
+            'product_attribute_ids': [(0, 0, {
                 'product_tmpl_id': self.product_template_yes.id,
-                'product_attribute_ids': [(0, 0, {
-                    'product_tmpl_id': self.product_template_yes.id,
-                    'attribute_id': self.attribute1.id,
-                    'value_id': self.value1.id
-                })]
-            })
-            line.onchange_product_attribute_ids()
-            self.assertEqual(line.product_id, product)
+                'attribute_id': self.attribute1.id,
+                'value_id': self.value1.id,
+                'owner_model': 'purchase.order.line'
+            })]
+        })
+
+        line.onchange_product_attribute_ids()
+        self.assertEqual(line.product_id, product)
 
         result = line.onchange_product_attribute_ids()
         expected_domain = [
@@ -147,28 +139,30 @@ class TestPurchaseOrder(SavepointCase):
         ]
         self.assertEqual(result['domain'], {'product_id': expected_domain})
 
-    def test_onchange_product_attribute_ids_01(self):
-        order = self.purchase_order.create({
-            'partner_id': self.supplier.id,
-
-            'order_line': [(0, 0, {
-                'product_tmpl_id': self.product_template_yes.id,
-                'price_unit': 100,
-                'name': 'Line 1',
-                'product_qty': 1,
-                'date_planned': '2016-01-01',
-                'product_uom': self.product_template_yes.uom_id.id,
-                'product_attribute_ids': [(0, 0, {
-                    'product_tmpl_id': self.product_template_yes.id,
-                    'attribute_id': self.attribute1.id,
-                    'value_id': self.value1.id,
-                    'owner_model': 'purchase.order.line'
-                })]
-            })]
+    def test_can_create_product_variant(self):
+        line = self.purchase_order_line.new({
+            'product_tmpl_id': self.product_template_yes.id,
+            'price_unit': 100,
+            'name': 'Line 1',
+            'product_qty': 1,
+            'date_planned': '2016-01-01',
+            'product_uom': self.product_template_yes.uom_id.id,
         })
-        line = order.order_line[0]
+        self.assertFalse(line.can_create_product)
+        attributes = self.env['product.configurator.attribute'].create({
+            'product_tmpl_id': self.product_template_yes.id,
+            'attribute_id': self.attribute1.id,
+            'value_id': self.value1.id,
+            'owner_model': 'purchase.order.line',
+            'owner_id': line.id,
+        })
+        line.product_attribute_ids = attributes
         line.onchange_product_attribute_ids()
+        self.assertTrue(line.can_create_product)
+        line.create_product_variant = True
+        line.onchange_create_product_variant()
         self.assertTrue(line.product_id)
+        self.assertFalse(line.create_product_variant)
 
     def test_onchange_product_id(self):
         product = self.product_product.create({
@@ -202,33 +196,46 @@ class TestPurchaseOrder(SavepointCase):
             self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
     def test_button_confirm(self):
-
         order = self.purchase_order.create({
             'partner_id': self.supplier.id,
 
-            'order_line': [(0, 0, {
+        })
+        line_1 = self.purchase_order_line.new({
+            'product_tmpl_id': self.product_template_yes.id,
+            'price_unit': 100,
+            'name': 'Line 1',
+            'product_qty': 1,
+            'date_planned': '2016-01-01',
+            'product_uom': self.product_template_yes.uom_id.id,
+            'product_attribute_ids': [(0, 0, {
                 'product_tmpl_id': self.product_template_yes.id,
-                'price_unit': 100,
-                'name': 'Line 1',
-                'product_qty': 1,
-                'date_planned': '2016-01-01',
-                'product_uom': self.product_template_yes.uom_id.id,
-                'product_attribute_ids': [(0, 0, {
-                    'product_tmpl_id': self.product_template_yes.id,
-                    'attribute_id': self.attribute1.id,
-                    'value_id': self.value1.id,
-                    'owner_model': 'purchase.order.line'
-                })]
-            }), (0, 0, {
-                'product_tmpl_id': self.product_template_no.id,
-                'product_uom': self.product_template_no.uom_id.id,
-                'product_qty': 1,
-                'price_unit': 200,
-                'name': 'Line 2',
-                'date_planned': '2016-01-01',
-            })]
+                'attribute_id': self.attribute1.id,
+                'value_id': self.value1.id,
+                'owner_model': 'purchase.order.line'
+            })],
+            'create_product_variant': True,
+        })
+        line_2 = self.purchase_order_line.new({
+            'product_tmpl_id': self.product_template_no.id,
+            'product_uom': self.product_template_no.uom_id.id,
+            'product_qty': 1,
+            'price_unit': 200,
+            'name': 'Line 2',
+            'date_planned': '2016-01-01',
+            'create_product_variant': True,
         })
 
+        for line in (line_1, line_2):
+            line.onchange_product_tmpl_id_configurator()
+            line.onchange_product_id_configurator()
+            line.onchange_product_id()
+            line.onchange_product_attribute_ids()
+            if line.can_create_product:
+                line.create_variant_if_needed()
+                line.create_product_variant = True
+                line.onchange_create_product_variant()
+
+        order.write({'order_line': [(4, line_1.id), (4, line_2.id)]})
         order.button_confirm()
 
         order_line_without_product = order.order_line.filtered(

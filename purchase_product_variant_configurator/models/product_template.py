@@ -8,7 +8,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 import time
 
 
-class PurchaseOrderLine(models.Model):
+class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
 
