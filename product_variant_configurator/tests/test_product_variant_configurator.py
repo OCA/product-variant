@@ -200,7 +200,7 @@ class TestProductVariantConfigurator(SavepointCase):
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
 
-    def test_onchange_product_tmpl_id(self):
+    def test_product_check_configuration_validity(self):
         product = self.product_product.create({
             'name': 'Test product',
             'product_tmpl_id': self.product_template_yes.id
@@ -208,13 +208,11 @@ class TestProductVariantConfigurator(SavepointCase):
         with self.cr.savepoint(), self.assertRaises(ValidationError):
             product.product_tmpl_id = self.product_template_no
 
-    def test_onchange_product_tmpl_id_01(self):
-        product = self.product_product.create({
+    def test_onchange_product_tmpl_id(self):
+        product = self.product_product.new({
             'name': 'Test product',
-            'product_tmpl_id': self.product_template_yes.id
+            'product_tmpl_id': self.product_template_yes.id,
         })
-        with self.cr.savepoint(), self.assertRaises(ValidationError):
-            product.product_tmpl_id = self.product_template_no
 
         product.product_tmpl_id = self.product_template_empty_yes
         res = product.onchange_product_tmpl_id_configurator()
@@ -235,7 +233,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 return
         self.fail()
 
-    def test_check_configuration_validity_from_vals(self):
+    def test_check_configuration_validity(self):
 
         tmpl = self.product_template.create({
             'name': 'Product template Check',
@@ -251,7 +249,7 @@ class TestProductVariantConfigurator(SavepointCase):
         })
 
         with self.cr.savepoint(), self.assertRaises(ValidationError):
-            product_vals = {
+            self.product_product.create({
                 'name': 'Test product Check',
                 'product_tmpl_id': tmpl.id,
                 'product_attribute_ids': [(0, 0, {
@@ -259,9 +257,7 @@ class TestProductVariantConfigurator(SavepointCase):
                     'attribute_id': self.attribute1.id,
                     'value_id': None
                 })]
-            }
-            self.product_product.check_configuration_validity_from_vals(
-                product_vals)
+            })
 
     def test_onchange_product_attribute_ids(self):
         product = self.product_product.create({
@@ -331,30 +327,6 @@ class TestProductVariantConfigurator(SavepointCase):
         product1.product_id = product2
         product1.onchange_product_id_configurator()
         self.assertEquals(product1.product_id.id, product2.id)
-
-    def test_onchange_product_id_product_configurator_old_api(self):
-        product1 = self.product_product.create({
-            'name': 'Product 1',
-            'product_tmpl_id': self.product_template_yes.id,
-            'product_attribute_ids': [(0, 0, {
-                'product_tmpl_id': self.product_template_yes.id,
-                'attribute_id': self.attribute1.id,
-                'value_id': self.value1.id,
-            })]
-        })
-
-        product2 = self.product_product.create({
-            'name': 'Product 1',
-            'product_tmpl_id': self.product_template_yes.id,
-            'product_attribute_ids': [(0, 0, {
-                'product_tmpl_id': self.product_template_yes.id,
-                'attribute_id': self.attribute2.id,
-                'value_id': self.value2.id,
-            })]
-        })
-        res = product1.onchange_product_id_product_configurator_old_api(
-            product2.id)
-        self.assertTrue(res)
 
     def test_get_product_attributes_values_dict(self):
         product = self.product_product.create({
