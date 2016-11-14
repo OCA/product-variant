@@ -50,7 +50,8 @@ class ProductConfigurator(models.AbstractModel):
             self.can_create_product = False
             return
         self.can_create_product = not bool(
-            len(self.product_tmpl_id.attribute_line_ids.mapped('attribute_id')) -
+            len(self.product_tmpl_id.attribute_line_ids.mapped(
+                'attribute_id')) -
             len(filter(None, self.product_attribute_ids.mapped('value_id'))))
 
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
