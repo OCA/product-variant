@@ -16,7 +16,7 @@ class TestProductVariantConfigurator(SavepointCase):
         # ENVIRONMENTS
         cls.product_attribute = cls.env['product.attribute']
         cls.product_attribute_value = cls.env['product.attribute.value']
-        cls.product_configuration_attribute = \
+        cls.product_configurator_attribute = \
             cls.env['product.configurator.attribute']
         cls.product_category = cls.env['product.category']
         cls.product_product = cls.env['product.product']
@@ -136,6 +136,28 @@ class TestProductVariantConfigurator(SavepointCase):
             'no_create_variants': 'no',
         })
         self.assertEquals(len(tmpl.product_variant_ids), 1)
+
+    def test_update_product_tempalte(self):
+        tmpl = self.product_template.create({
+            'name': 'Create variants template',
+            'no_create_variants': 'no',
+            'attribute_line_ids': [
+                (0, 0, {'attribute_id': self.attribute1.id,
+                        'value_ids': [(6, 0, [self.value1.id,
+                                              self.value2.id])]})],
+        })
+        # check that even if the OneToMany
+        # from product.configurator.product_attribute_ids to
+        # product.configurator.attribute declare an inverse on owner_id
+        # declared as fields.Integer, the cascade works as expected
+        product = tmpl.product_variant_ids[0]
+        self.assertEqual(1, len(product))
+        product.write(
+            {'product_attribute_ids': [(5,)]})
+        res_count = self.product_configurator_attribute.search_count(
+            [('owner_id', '=', product.id)]
+        )
+        self.assertEqual(0, res_count)
 
     def test_create_variants_category(self):
         self.assertFalse(self.category2.no_create_variants)
@@ -387,7 +409,7 @@ class TestProductVariantConfigurator(SavepointCase):
         self.assertTrue(product.unlink())
 
     def test_product_find(self):
-        conf_attr = self.product_configuration_attribute.create({
+        conf_attr = self.product_configurator_attribute.create({
             'product_tmpl_id': self.product_template_yes.id,
             'attribute_id': self.attribute1.id,
             'value_id': self.value1.id,
