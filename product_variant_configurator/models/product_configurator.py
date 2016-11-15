@@ -38,6 +38,7 @@ class ProductConfigurator(models.AbstractModel):
     create_product_variant = fields.Boolean(
         string="Create product now!")
 
+    @api.multi
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id',
                  'product_id')
     def _compute_can_be_created(self):
@@ -45,17 +46,18 @@ class ProductConfigurator(models.AbstractModel):
             if rec.product_id:
                 # product already selected
                 rec.can_create_product = False
-                return
+                continue
             if not rec.product_tmpl_id:
                 # no product nor template
                 rec.can_create_product = False
-                return
+                continue
             rec.can_create_product = not bool(
                 len(rec.product_tmpl_id.attribute_line_ids.mapped(
                     'attribute_id')) -
                 len(filter(None,
                            rec.product_attribute_ids.mapped('value_id'))))
 
+    @api.multi
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
     def _compute_price_extra(self):
         for record in self:
@@ -89,6 +91,7 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id_configurator(self):
+        self.ensure_one()
         if not self.product_tmpl_id:
             self.product_id = False
             self._empty_attributes()
@@ -121,6 +124,7 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_attribute_ids')
     def onchange_product_attribute_ids(self):
+        self.ensure_one()
         if not self.product_tmpl_id:
             return {'domain': {'product_id': []}}
         if not self.product_attribute_ids:
@@ -155,6 +159,7 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('product_id')
     def onchange_product_id_configurator(self):
+        self.ensure_one()
         if self.product_id:
             product = self.product_id
             if 'partner_id' in self._fields:
@@ -172,6 +177,7 @@ class ProductConfigurator(models.AbstractModel):
 
     @api.onchange('create_product_variant')
     def onchange_create_product_variant(self):
+        self.ensure_one()
         if not self.create_product_variant:
             return
         self.create_product_variant = False
