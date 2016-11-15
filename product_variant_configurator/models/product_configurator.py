@@ -41,18 +41,20 @@ class ProductConfigurator(models.AbstractModel):
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id',
                  'product_id')
     def _compute_can_be_created(self):
-        if self.product_id:
-            # product already selected
-            self.can_create_product = False
-            return
-        if not self.product_tmpl_id:
-            # no product nor template
-            self.can_create_product = False
-            return
-        self.can_create_product = not bool(
-            len(self.product_tmpl_id.attribute_line_ids.mapped(
-                'attribute_id')) -
-            len(filter(None, self.product_attribute_ids.mapped('value_id'))))
+        for rec in self:
+            if rec.product_id:
+                # product already selected
+                rec.can_create_product = False
+                return
+            if not rec.product_tmpl_id:
+                # no product nor template
+                rec.can_create_product = False
+                return
+            rec.can_create_product = not bool(
+                len(rec.product_tmpl_id.attribute_line_ids.mapped(
+                    'attribute_id')) -
+                len(filter(None,
+                           rec.product_attribute_ids.mapped('value_id'))))
 
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
     def _compute_price_extra(self):
