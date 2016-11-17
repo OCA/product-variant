@@ -17,18 +17,10 @@
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
               "ACSONE SA/NV,"
               "Odoo Community Association (OCA)",
-    "contributors": [
-        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
-        "David Díaz <d.diazp@gmail.com>",
-        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <ajuaristio@gmail.com>",
-        "Zakaria Makrelouf(Acsone) <z.makrelouf@gmail.com>",
-    ],
     "category": "Purchase Management",
     "website": "http://www.odoomrp.com",
     "data": [
         "views/inherited_purchase_order_views.xml",
-        "views/inherited_purchase_order_line_views.xml",
         "views/inherited_product_product_views.xml"
     ],
     "installable": True,
