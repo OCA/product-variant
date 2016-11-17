@@ -2,7 +2,7 @@
 <openerp>
     <data>
         <record id="variant_purchase_action" model="ir.actions.act_window">
-            <field name="name">Variantes</field>
+            <field name="name">Product Variants</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
             <field name="view_type">form</field>
