@@ -90,7 +90,7 @@ class ProductConfigurator(models.AbstractModel):
         self.product_attribute_ids = self.product_attribute_ids.browse([])
 
     @api.onchange('product_tmpl_id')
-    def onchange_product_tmpl_id_configurator(self):
+    def _onchange_product_tmpl_id_configurator(self):
         self.ensure_one()
         if not self.product_tmpl_id:
             self.product_id = False
@@ -123,7 +123,7 @@ class ProductConfigurator(models.AbstractModel):
         return {'domain': {'product_id': domain}}
 
     @api.onchange('product_attribute_ids')
-    def onchange_product_attribute_ids(self):
+    def _onchange_product_attribute_ids_configurator(self):
         self.ensure_one()
         if not self.product_tmpl_id:
             return {'domain': {'product_id': []}}
@@ -158,7 +158,7 @@ class ProductConfigurator(models.AbstractModel):
         return {'domain': {'product_id': domain}}
 
     @api.onchange('product_id')
-    def onchange_product_id_configurator(self):
+    def _onchange_product_id_configurator(self):
         self.ensure_one()
         if self.product_id:
             product = self.product_id
@@ -176,7 +176,7 @@ class ProductConfigurator(models.AbstractModel):
             self._empty_attributes()
 
     @api.onchange('create_product_variant')
-    def onchange_create_product_variant(self):
+    def _onchange_create_product_variant(self):
         self.ensure_one()
         if not self.create_product_variant:
             return

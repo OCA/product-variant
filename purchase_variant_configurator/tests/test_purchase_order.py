@@ -77,7 +77,7 @@ class TestPurchaseOrder(SavepointCase):
 
         })
 
-        result = line1.onchange_product_tmpl_id_configurator()
+        result = line1._onchange_product_tmpl_id_configurator()
         self.assertEqual(len(line1.product_attribute_ids), 1)
         expected_domain = [
             ('product_tmpl_id', '=', self.product_template_yes.id)
@@ -93,8 +93,8 @@ class TestPurchaseOrder(SavepointCase):
             'date_planned': '2016-01-01',
         })
 
-        line2.onchange_product_tmpl_id_configurator()
-        line2.onchange_product_id_configurator()
+        line2._onchange_product_tmpl_id_configurator()
+        line2._onchange_product_id_configurator()
         line2.onchange_product_id()
         self.assertEqual(line2.product_id,
                          self.product_template_no.product_variant_ids)
@@ -129,10 +129,10 @@ class TestPurchaseOrder(SavepointCase):
             })]
         })
 
-        line.onchange_product_attribute_ids()
+        line._onchange_product_attribute_ids_configurator()
         self.assertEqual(line.product_id, product)
 
-        result = line.onchange_product_attribute_ids()
+        result = line._onchange_product_attribute_ids_configurator()
         expected_domain = [
             ('product_tmpl_id', '=', self.product_template_yes.id),
             ('attribute_value_ids', '=', self.value1.id)
@@ -157,7 +157,7 @@ class TestPurchaseOrder(SavepointCase):
             'owner_id': line.id,
         })
         line.product_attribute_ids = attributes
-        line.onchange_product_attribute_ids()
+        line._onchange_product_attribute_ids_configurator()
         self.assertTrue(line.can_create_product)
         line.create_product_variant = True
         line.onchange_create_product_variant()
@@ -191,7 +191,7 @@ class TestPurchaseOrder(SavepointCase):
         line = order.order_line[0]
         with self.cr.savepoint():
             line.onchange_product_id()
-            line.onchange_product_id_configurator()
+            line._onchange_product_id_configurator()
             self.assertEqual(len(line.product_attribute_ids), 1)
             self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
@@ -226,14 +226,14 @@ class TestPurchaseOrder(SavepointCase):
         })
 
         for line in (line_1, line_2):
-            line.onchange_product_tmpl_id_configurator()
-            line.onchange_product_id_configurator()
+            line._onchange_product_tmpl_id_configurator()
+            line._onchange_product_id_configurator()
             line.onchange_product_id()
-            line.onchange_product_attribute_ids()
+            line._onchange_product_attribute_ids_configurator()
             if line.can_create_product:
                 line.create_variant_if_needed()
                 line.create_product_variant = True
-                line.onchange_create_product_variant()
+                line._onchange_create_product_variant()
 
         order.write({'order_line': [(4, line_1.id), (4, line_2.id)]})
         order.button_confirm()
