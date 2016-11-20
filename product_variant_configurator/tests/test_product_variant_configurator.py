@@ -237,7 +237,7 @@ class TestProductVariantConfigurator(SavepointCase):
         })
 
         product.product_tmpl_id = self.product_template_empty_yes
-        res = product.onchange_product_tmpl_id_configurator()
+        res = product._onchange_product_tmpl_id_configurator()
 
         self.assertEquals(
             res, {'domain': {'product_id': [
@@ -295,7 +295,7 @@ class TestProductVariantConfigurator(SavepointCase):
         }
         with self.cr.savepoint():
             product.product_attribute_ids = [(0, 0, product_attribute_vals)]
-            result = product.onchange_product_attribute_ids()
+            result = product._onchange_product_attribute_ids_configurator()
             self.assertTrue(
                 ('product_tmpl_id', '=', self.product_template_yes.id)
                 in result['domain']['product_id']
@@ -319,7 +319,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'owner_id': int(product.id)
         }
         product.product_attribute_ids = [(0, 0, product_attribute_vals)]
-        result = product.onchange_product_attribute_ids()
+        result = product._onchange_product_attribute_ids_configurator()
         self.assertTrue(
             ('product_tmpl_id', '=', self.product_template_yes.id)
             in result['domain']['product_id']
@@ -347,7 +347,7 @@ class TestProductVariantConfigurator(SavepointCase):
         })
 
         product1.product_id = product2
-        product1.onchange_product_id_configurator()
+        product1._onchange_product_id_configurator()
         self.assertEquals(product1.product_id.id, product2.id)
 
     def test_get_product_attributes_values_dict(self):
