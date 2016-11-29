@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * product_variant_cost_price
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-11 03:45+0000\n"
+"PO-Revision-Date: 2016-11-11 03:45+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Swedish (https://www.transifex.com/oca/teams/23907/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,create_uid:0
+msgid "Created by"
+msgstr "Skapad av"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,create_date:0
+msgid "Created on"
+msgstr "Skapad den"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,display_name:0
+msgid "Display Name"
+msgstr "Visa namn"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,datetime:0
+msgid "Historization Time"
+msgstr ""
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,cost:0
+msgid "Historized Cost"
+msgstr ""
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,__last_update:0
+msgid "Last Modified on"
+msgstr "Senast redigerad"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,write_uid:0
+msgid "Last Updated by"
+msgstr "Senast uppdaterad av"
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,write_date:0
+msgid "Last Updated on"
+msgstr "Senast uppdaterad"
+
+#. module: product_variant_cost_price
+#: model:ir.model,name:product_variant_cost_price.model_product_product
+#: field:product.price.history.product,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: product_variant_cost_price
+#: model:ir.model,name:product_variant_cost_price.model_product_template
+#: field:product.price.history.product,product_template_id:0
+msgid "Product Template"
+msgstr ""
+
+#. module: product_variant_cost_price
+#: field:product.price.history.product,company_id:0
+msgid "unknown"
+msgstr ""
