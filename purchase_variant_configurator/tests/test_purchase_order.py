@@ -160,7 +160,7 @@ class TestPurchaseOrder(SavepointCase):
         line._onchange_product_attribute_ids_configurator()
         self.assertTrue(line.can_create_product)
         line.create_product_variant = True
-        line.onchange_create_product_variant()
+        line._onchange_create_product_variant()
         self.assertTrue(line.product_id)
         self.assertFalse(line.create_product_variant)
 
