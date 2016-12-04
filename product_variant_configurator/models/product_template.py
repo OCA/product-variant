@@ -62,7 +62,7 @@ class ProductTemplate(models.Model):
             if ((tmpl.no_create_variants == 'empty' and
                     not tmpl.categ_id.no_create_variants) or
                     tmpl.no_create_variants == 'no' or
-                    not self.attribute_line_ids):
+                    not tmpl.attribute_line_ids):
                 super(ProductTemplate, tmpl).create_variant_ids()
         return True
 
