@@ -6,22 +6,16 @@
 {
     "name": "Sale - Product variants",
     "summary": "Product variants in sale management",
-    "version": "8.0.2.1.0",
+    "version": "9.0.1.0.0",
     "license": "AGPL-3",
     "depends": [
-        "product",
         "sale",
-        "product_variants_no_automatic_creation",
+        "product_variant_configurator",
     ],
-    "author": "OdooMRP team, "
-              "AvanzOSC, "
-              "Tecnativa",
-    "contributors": [
-        "Mikel Arregi <mikelarregi@avanzosc.es>",
-        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
-        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <ajuaristio@gmail.com>",
-    ],
+    "author": "OdooMRP team,"
+              "AvanzOSC,"
+              "Tecnativa,"
+              "Odoo Community Association (OCA)",
     "category": "Sales Management",
     "website": "http://www.odoomrp.com",
     "data": [
