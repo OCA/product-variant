@@ -38,6 +38,7 @@ class PurchaseOrderLine(models.Model):
             'lang': self.partner_id.lang,
             'partner_id': self.partner_id.id,
         })
+        self.name = product_lang.name
         if product_lang.description_purchase:
             self.name += '\n' + self.product_tmpl_id.description_purchase
 
