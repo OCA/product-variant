@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Paolo Valier <paolo.valier@hotmail.it>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-08 10:01+0000\n"
-"PO-Revision-Date: 2017-01-08 10:01+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-01-14 05:31+0000\n"
+"PO-Revision-Date: 2017-01-14 05:31+0000\n"
+"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,13 +23,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_price_attribute_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Attributo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_can_create_product
 msgid "Can create product"
-msgstr ""
+msgstr "Può creare prodotti"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:23
@@ -48,7 +49,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_create_product_variant
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_create_product_variant
 msgid "Create product now!"
-msgstr ""
+msgstr "Cre prodotti ora!"
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
@@ -58,23 +59,23 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_taxes_id
 msgid "Customer Taxes"
-msgstr ""
+msgstr "Imposte Cliente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_display_name
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome da visualizzare"
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
@@ -95,7 +96,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_property_account_income_id
@@ -106,22 +107,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator___last_update
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_owner_id
@@ -161,7 +162,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
 msgid "Pricelist"
-msgstr ""
+msgstr "Listino"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_product
@@ -173,7 +174,7 @@ msgstr "Prodotto "
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Categoria Prodotto"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_template
@@ -187,13 +188,13 @@ msgstr "Template prodotto"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_product_attribute_ids
 msgid "Product attributes"
-msgstr ""
+msgstr "Attributi prodotto"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_configurator.py:190
 #, python-format
 msgid "Product not created!"
-msgstr ""
+msgstr "Prodotto non creato!"
 
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
@@ -235,7 +236,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "This product already exists."
-msgstr ""
+msgstr "Questo prodotto esiste già."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product_no_create_variants
@@ -258,7 +259,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_value_id
 msgid "Value"
-msgstr ""
+msgstr "Valore"
 
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_template_no_variant_form_view
@@ -291,24 +292,24 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_line
 msgid "product.attribute.line"
-msgstr ""
+msgstr "product.attribute.line"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_price
 msgid "product.attribute.price"
-msgstr ""
+msgstr "product.attribute.price"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_value
 msgid "product.attribute.value"
-msgstr ""
+msgstr "product.attribute.value"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_configurator
 msgid "product.configurator"
-msgstr ""
+msgstr "product.configurator"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_configurator_attribute
 msgid "product.configurator.attribute"
-msgstr ""
+msgstr "product.configurator.attribute"
