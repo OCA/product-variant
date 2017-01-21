@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Paolo Valier <paolo.valier@hotmail.it>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-08 10:01+0000\n"
-"PO-Revision-Date: 2017-01-08 10:01+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-01-14 05:31+0000\n"
+"PO-Revision-Date: 2017-01-14 05:31+0000\n"
+"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,17 +22,17 @@ msgstr ""
 #. module: account_invoice_variant_configurator
 #: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_invoice_line_can_create_product
 msgid "Can create product"
-msgstr ""
+msgstr "Può creare prodotti"
 
 #. module: account_invoice_variant_configurator
 #: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_invoice_line_create_product_variant
 msgid "Create product now!"
-msgstr ""
+msgstr "Cre prodotti ora!"
 
 #. module: account_invoice_variant_configurator
 #: model:ir.model,name:account_invoice_variant_configurator.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Riga Fattura"
 
 #. module: account_invoice_variant_configurator
 #: model:ir.model.fields,help:account_invoice_variant_configurator.field_account_invoice_line_price_extra
@@ -53,4 +54,4 @@ msgstr "Template prodotto"
 #. module: account_invoice_variant_configurator
 #: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_invoice_line_product_attribute_ids
 msgid "Product attributes"
-msgstr ""
+msgstr "Attributi prodotto"
