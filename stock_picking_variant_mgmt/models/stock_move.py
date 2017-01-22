@@ -11,4 +11,5 @@ class StockMove(models.Model):
     product_attribute_value_ids = fields.Many2many(
         comodel_name='product.attribute.value',
         related="product_id.attribute_value_ids",
+        readonly=True,
     )
