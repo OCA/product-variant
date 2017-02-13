@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from openerp import api, models, fields
+from odoo import api, models, fields
 
 
 class ProductProduct(models.Model):
@@ -21,8 +21,8 @@ class ProductProduct(models.Model):
               "default supplier. It is used by the scheduler to order "
               "requests based on reordering delays."))
     seller_qty = fields.Float(
-        related='seller_ids.qty',
-        string='Supplier Quantity',
+        related='seller_ids.min_qty',
+        string='Supplier Min Quantity',
         help="This is minimum quantity to purchase from Main Supplier.")
     seller_id = fields.Many2one(
         related='seller_ids.name',

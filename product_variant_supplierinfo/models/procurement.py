@@ -3,7 +3,7 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, models
+from odoo import api, models
 
 
 class ProcurementOrder(models.Model):
@@ -22,7 +22,7 @@ class ProcurementOrder(models.Model):
             ('product_id', '=', False),
             ('product_id', '=', product.id),
             ('company_id', '=', procurement.company_id.id),
-            ], limit=1)
+        ], limit=1)
         if company_supplier:
             return company_supplier.name
         return procurement.product_id.seller_id
