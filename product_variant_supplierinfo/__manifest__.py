@@ -5,7 +5,7 @@
 {
     'name': 'Product supplier info per variant',
     'summary': 'Supplier info to product variant scope',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': 'Tecnativa, Akretion,'
               'Odoo Community Association (OCA)',
     'category': 'Product Management',
@@ -20,5 +20,5 @@
         'demo/product_demo.xml',
         'demo/procurement_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
