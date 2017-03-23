@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pack_operation_product_ids']" position="before">
+                <div class="oe_button_box" name="button_box_transfer_variant_mgmt">
+                    <button name="%(action_stock_transfer_manage_variant)d"
+                            type="action"
+                            string="Manage Variants Transfer"
+                    />
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='move_lines']" position="before">
+                <div class="oe_button_box" name="button_box_variant_mgmt">
+                    <button name="%(action_stock_manage_variant)d"
+                            type="action"
+                            string="Add or Modify Variants"
+                            states="draft,confirmed,assigned"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_picking_tree" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="product_tmpl_id" invisible="1"/>
+                <field name="product_attribute_value_ids" invisible="1"/>
+                <!-- Not working until https://github.com/odoo/odoo/pull/13558 -->
+                <!-- Also https://github.com/odoo/odoo/pull/13635 is needed for correct template selection -->
+                <button name="%(action_stock_manage_variant)d"
+                        type="action"
+                        string="Modify Variants"
+                        icon="fa-th"
+                        class="oe_edit_only"
+                        context="{'default_product_tmpl_id': product_tmpl_id}"
+                        attrs="{'invisible': ['|', ('state', 'not in', ('draft', 'confirmed', 'assigned')), ('product_attribute_value_ids', '=', [])]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>
