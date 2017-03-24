@@ -18,5 +18,6 @@ addon | version | summary
 [product_variant_supplierinfo](product_variant_supplierinfo/) | 9.0.1.0.0 | Supplier info to product variant scope
 [purchase_variant_configurator](purchase_variant_configurator/) | 9.0.1.0.0 | Product variants in purchase management
 [purchase_variant_configurator_on_confirm](purchase_variant_configurator_on_confirm/) | 9.0.1.0.0 | Create product variants when confirming the purchase order
+[stock_picking_variant_mgmt](stock_picking_variant_mgmt/) | 9.0.1.0.0 | Handle the addition/removal of multiple variants and the quantities transferred in the Pickings.
 
 [//]: # (end addons)
