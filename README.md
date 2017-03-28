@@ -9,6 +9,7 @@ Allows to create and manage product variants in OpenERP v6 and 7. A part of this
 
 
 [//]: # (addons)
+
 Unported addons
 ---------------
 addon | version | summary
