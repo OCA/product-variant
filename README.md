@@ -22,6 +22,7 @@ addon | version | summary
 [product_variant_supplierinfo](product_variant_supplierinfo/) | 8.0.1.0.0 | Supplier info to product variant scope
 [product_variant_weight](product_variant_weight/) | 8.0.1.0.0 | Weight data in product level
 
+
 Unported addons
 ---------------
 addon | version | summary
