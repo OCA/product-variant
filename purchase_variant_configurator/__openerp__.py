@@ -11,10 +11,8 @@
         "purchase",
         "product_variant_configurator",
     ],
-    "author": "OdooMRP team, "
-              "AvanzOSC, "
+    "author": "AvanzOSC, "
               "Tecnativa, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
               "ACSONE SA/NV,"
               "Odoo Community Association (OCA)",
     "category": "Purchase Management",

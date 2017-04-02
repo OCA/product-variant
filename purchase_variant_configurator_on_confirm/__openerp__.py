@@ -8,10 +8,8 @@
         Create product variants when confirming the purchase order""",
     'version': '9.0.1.0.0',
     'license': 'AGPL-3',
-    "author": "OdooMRP team, "
-              "AvanzOSC, "
+    "author": "AvanzOSC, "
               "Tecnativa, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
               "ACSONE SA/NV,"
               "Odoo Community Association (OCA)",
     'website': 'https://odoo-community.org/',
