@@ -10,10 +10,10 @@ Allows to create and manage product variants in OpenERP v6 and 7. A part of this
 
 [//]: # (addons)
 
-Unported addons
----------------
+Available addons
+----------------
 addon | version | summary
 --- | --- | ---
-[product_variant_supplierinfo](product_variant_supplierinfo/) | 9.0.1.0.0 (unported) | Supplier info to product variant scope
+[product_variant_supplierinfo](product_variant_supplierinfo/) | 10.0.1.0.0 | Supplier info to product variant scope
 
 [//]: # (end addons)
