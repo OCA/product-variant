@@ -13,7 +13,8 @@ class ProductProduct(models.Model):
     @api.model
     def _get_selection_cost_method(self):
         return self.env['product.template'].fields_get(
-            allfields=['cost_method'])['cost_method']['selection']
+            allfields=['property_cost_method']
+            )['property_cost_method']['selection']
 
     @api.model
     def _set_standard_price(self, product, value):
