@@ -60,8 +60,7 @@ class TestProductVariantPrice(TransactionCase):
             'value_id': self.att_color_red.id,
             'price_extra': 200.00,
         })
-
-        set_sale_price_on_variant(self.cr, None, self.product_template.id)
+        set_sale_price_on_variant(self.cr, None)
         self.product_template.product_variant_ids.invalidate_cache()
         self.assertEqual(
             self.product_template.list_price + 100.00,
