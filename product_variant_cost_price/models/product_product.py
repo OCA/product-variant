@@ -63,7 +63,7 @@ class ProductProduct(models.Model):
                 'standard_price': template.standard_price,
             })
         product = super(ProductProduct, self).create(values)
-        self._set_standard_price(product, values.get('standard_price', 0.0))
+        product._set_standard_price(values.get('standard_price', 0.0))
         return product
 
     @api.multi
