@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="purchase_order_extended_form_view">
+            <field name="name">purchase.order.extended.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                       position="before">
+                    <field name="product_tmpl_id" />
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']"
+                       position="after">
+                    <field name="order_state" invisible="1"/>
+                    <button name="action_duplicate"
+                            state="draft"
+                            string="Duplicate"
+                            type="object"
+                            icon="STOCK_COPY"
+                            attrs="{'invisible': [('order_state', 'not in', ['draft', 'sent'])]}"
+                            help="Duplicate line"/>
+                </xpath>
+                <field name="order_line" position="attributes">
+                    <attribute name="options">{'reload_on_button': true}</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
