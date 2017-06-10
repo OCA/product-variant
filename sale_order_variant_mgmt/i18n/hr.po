@@ -3,16 +3,15 @@
 # * sale_order_variant_mgmt
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2016
-# OCA Transbot <transbot@odoo-community.org>, 2016
-# Ana-Maria Olujić <ana-maria.olujic@slobodni-programi.hr>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 23:46+0000\n"
-"PO-Revision-Date: 2016-11-22 23:46+0000\n"
-"Last-Translator: Ana-Maria Olujić <ana-maria.olujic@slobodni-programi.hr>, 2016\n"
+"POT-Creation-Date: 2018-02-23 02:10+0000\n"
+"PO-Revision-Date: 2018-02-23 02:10+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +27,7 @@ msgstr ""
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_attribute_value_ids
 msgid "Attributes"
-msgstr ""
+msgstr "Atributi"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
@@ -50,7 +49,7 @@ msgstr "Datum kreiranja"
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Onemogućeno"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_display_name
@@ -110,7 +109,7 @@ msgstr "Količina"
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Stavka ponude"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_product_tmpl_id
