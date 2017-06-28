@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="sale_order_extended_form_view">
+            <field name="name">sale.order.extended.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                    <field name="product_tmpl_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
