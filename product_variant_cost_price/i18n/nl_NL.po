@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 05:12+0000\n"
-"PO-Revision-Date: 2017-02-18 05:12+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-06-27 03:02+0000\n"
+"PO-Revision-Date: 2017-06-27 03:02+0000\n"
+"Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +32,7 @@ msgstr ""
 #. module: product_variant_cost_price
 #: field:product.price.history.product,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Weergavenaam"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,datetime:0
@@ -46,12 +47,12 @@ msgstr ""
 #. module: product_variant_cost_price
 #: field:product.price.history.product,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Laatst gewijzigd op"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_uid:0
