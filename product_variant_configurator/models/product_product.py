@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# © 2015 Oihane Crucelaegui - AvanzOSC
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
-# © 2016 ACSONE SA/NV
+# Copyright 2015 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from openerp import api, exceptions, fields, models, _
+from odoo import _, api, exceptions, fields, models
 
 
 class ProductProduct(models.Model):
@@ -68,7 +68,8 @@ class ProductProduct(models.Model):
             domain = [('product_tmpl_id', '=', product.product_tmpl_id.id)]
             for value in product.attribute_value_ids:
                 domain.append(('attribute_value_ids', '=', value.id))
-            other_products = self.search(domain)
+            other_products = self.with_context(
+                active_test=False).search(domain)
             # Filter the product with the exact number of attributes values
             cont = len(product.attribute_value_ids)
             for other_product in other_products:
@@ -86,6 +87,10 @@ class ProductProduct(models.Model):
 
         :raises: exceptions.ValidationError: If the check is not valid.
         """
+        # Creating from template variants attributes are not created at once so
+        # we avoid to check the constrain here.
+        if self.env.context.get('creating_variants'):
+            return
         for product in self:
             if bool(product.product_tmpl_id.attribute_line_ids.mapped(
                     'attribute_id') -
