@@ -6,34 +6,57 @@
 Product Variant Configurator
 ============================
 
-Provides an abstract model for product variant configuration.
+Provides an abstract model for product variant configuration. It provides the
+basic functionality for presenting a table with the attributes of a template
+and the possibility to select one of the valid values. You can try this
+functionality creating a product variant directly selecting a product
+template that has attributes.
 
-Installation
-============
-
-To install this module, you need to:
-
-#. Add this module to your addons path.
-#. Restart your odoo server.
-#. As Admin user, update the module list by going to: ``Settings > Update Modules List``.
-#. Search for your module and click install.
+This module also prevents in a configurable way the creation of the product
+variants when defining the attributes and attribute values of the product
+template.
 
 Configuration
 =============
 
+(after installing `sales` application)
+
 To configure the creation of the variants behaviour, you need to:
 
-#. Go to ``Warehouse > Products``, and select a product.
-#. on the Variants tab edit the value of the field ``Variant Creation``.
-#. If you want to stop the automatic creation of the variant, and have the same behaviour for all the products in the same category, go to ``Warehouse > Products > Product Categories``, select the category and check the checkbox ``Don't create variants automatically``.
+#. Go to ``Sales > Settings > Configuration``, and select "Products can have
+   several attributes, defining variants (Example: size, color,...)" on
+   "Product Variants" section.
+#. Go to ``Sales > Products``, and select a product.
+#. On the Variants tab edit the value of the field ``Variant Creation``.
+#. If you want to stop the automatic creation of the variant, and have the same
+   behaviour for all the products in the same category, go to ``Sales >
+   Products > Product Categories``, select the category and check the checkbox
+   ``Don't create variants automatically``.
 
 Usage
 =====
 
-For developer to use product configurator in your model, you need to:
+(after installing `sales` application)
 
-#. The product.configurator is an abstract model, hence, to be used it must be inherited in your model:
-#. If the model you're inheriting has ``name`` attribute, and it uses the related parameter you must override it.
+#. Go to ``Sales > Sales > Product Variants``.
+#. Click on "Create" button for creating a new one.
+#. On the field "Product Template", select a product template that has several
+   attributes.
+#. A table with the attributes of the template will appear below.
+#. Select all the attribute values and click on "Save" button.
+#. A new product variant will be created for that attributes.
+#. An error will raise if there's another variant with the same attribute
+   values or if you haven't filled all the values.
+
+Developers
+----------
+
+To use product configurator in your model, you need to:
+
+#. The product.configurator is an abstract model, hence, to be used it must be
+   inherited in your model:
+#. If the model you're inheriting has ``name`` attribute, and it uses the
+   related parameter you must override it.
 
 ::
 
@@ -44,7 +67,7 @@ For developer to use product configurator in your model, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/137/8.0
+   :target: https://runbot.odoo-community.org/runbot/137/10.0
 
 Bug Tracker
 ===========
@@ -72,6 +95,7 @@ Contributors
 * Zakaria Makrelouf (acsone) <z.makrelouf@gmail.com>
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Laurent Mignon <laurent.mignon@acsone.eu>
+* David Vidal <david.vidal@tecnativa.com>
 
 Maintainer
 ----------

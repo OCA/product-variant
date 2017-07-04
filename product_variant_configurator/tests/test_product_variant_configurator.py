@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2016 Oihane Crucelaegui - AvanzOSC
-# © 2016 2016 ACSONE SA/NV
+# Copyright 2016 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016 ACSONE SA/NV
+# Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from openerp.tests.common import SavepointCase
-from openerp.exceptions import ValidationError
+from odoo.tests.common import SavepointCase
+from odoo.exceptions import ValidationError
 
 
 class TestProductVariantConfigurator(SavepointCase):
@@ -210,14 +211,12 @@ class TestProductVariantConfigurator(SavepointCase):
         self.assertEquals(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
-
         self.current_user = self.env.user
         # Add current user to group: group_supplier_inv_check_total
         group_id = (
             'product_variant_configurator.'
             'group_product_variant_extended_description')
         self.env.ref(group_id).write({'users': [(4, self.current_user.id)]})
-
         self.assertEquals(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
@@ -235,10 +234,8 @@ class TestProductVariantConfigurator(SavepointCase):
             'name': 'Test product',
             'product_tmpl_id': self.product_template_yes.id,
         })
-
         product.product_tmpl_id = self.product_template_empty_yes
         res = product._onchange_product_tmpl_id_configurator()
-
         self.assertEquals(
             res, {'domain': {'product_id': [
                 ('product_tmpl_id', '=',
@@ -256,7 +253,6 @@ class TestProductVariantConfigurator(SavepointCase):
         self.fail()
 
     def test_check_configuration_validity(self):
-
         tmpl = self.product_template.create({
             'name': 'Product template Check',
             'no_create_variants': 'yes',
@@ -269,7 +265,6 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value4.id])]})
             ],
         })
-
         with self.cr.savepoint(), self.assertRaises(ValidationError):
             self.product_product.create({
                 'name': 'Test product Check',
@@ -335,7 +330,6 @@ class TestProductVariantConfigurator(SavepointCase):
                 'value_id': self.value1.id,
             })]
         })
-
         product2 = self.product_product.create({
             'name': 'Product 1',
             'product_tmpl_id': self.product_template_yes.id,
@@ -345,7 +339,6 @@ class TestProductVariantConfigurator(SavepointCase):
                 'value_id': self.value2.id,
             })]
         })
-
         product1.product_id = product2
         product1._onchange_product_id_configurator()
         self.assertEquals(product1.product_id.id, product2.id)
@@ -383,7 +376,6 @@ class TestProductVariantConfigurator(SavepointCase):
             self.value1.name
         )
         self.assertEqual(result, expected_result)
-
         product = self.product_product.create({
             'name': 'Test product Check',
             'product_tmpl_id': self.product_template_yes.id,
@@ -397,14 +389,12 @@ class TestProductVariantConfigurator(SavepointCase):
             'name': 'Test product Check',
             'product_tmpl_id': self.product_template_yes.id,
         })
-
         product_attribute = self.env['product.configurator.attribute'] \
             .create({'attribute_id': self.attribute1.id,
                      'value_id': self.value1.id,
                      'product_tmpl_id': self.product_template_yes.id,
                      'owner_id': product.id,
                      'owner_model': 'product.product'})
-
         product.product_attribute_ids = [(4, product_attribute.id)]
         self.assertTrue(product.unlink())
 
@@ -416,7 +406,6 @@ class TestProductVariantConfigurator(SavepointCase):
             'owner_model': 'product_product',
             'owner_id': 1
         })
-
         product = self.product_product.create({
             'name': 'Product 1',
             'product_tmpl_id': self.product_template_yes.id,
@@ -429,6 +418,19 @@ class TestProductVariantConfigurator(SavepointCase):
         res = self.product_product._product_find(
             self.product_template_yes, [conf_attr])
         self.assertEqual(res, product)
-
         res = self.product_product._product_find(False, [conf_attr])
         self.assertEqual(res, False)
+
+    def test_product_template_write(self):
+        self.product_template_no.with_context(
+            check_variant_creation=True).write({'no_create_variants': 'yes'})
+
+    def test_product_template_create(self):
+        product = self.product_template.with_context(
+            product_name='Context product name').create({'name': 'Test'})
+        self.assertEqual(product.name, 'Context product name')
+
+    def test_category_variant_alert(self):
+        self.category1.no_create_variants = False
+        self.assertTrue(
+            self.category1.onchange_no_create_variants()['warning'])
