@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
+
         <record id="variant_purchase_action" model="ir.actions.act_window">
             <field name="name">Product Variants</field>
             <field name="type">ir.actions.act_window</field>
@@ -13,5 +13,5 @@
         <menuitem action="variant_purchase_action" id="variant_purchase_menu"
                 parent="purchase.menu_procurement_management"
                 sequence="30"/>
-    </data>
-</openerp>
+
+</odoo>
