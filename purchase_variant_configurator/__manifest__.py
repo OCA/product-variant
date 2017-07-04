@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+# Copyright 2016 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 ACSONE SA/NV
+# Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
 {
     "name": "Purchase - Product variants",
     "summary": "Product variants in purchase management",
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     "license": "AGPL-3",
     "depends": [
-        "product",
         "purchase",
         "product_variant_configurator",
     ],
