@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <record model="ir.ui.view" id="product_template_no_variant_form_view">

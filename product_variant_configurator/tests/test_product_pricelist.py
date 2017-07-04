@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 ACSONE SA/NV
+# Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase
 
 
 class TestProductPriceList(SavepointCase):
@@ -89,8 +90,8 @@ class TestProductPriceList(SavepointCase):
                     'min_quantity': 1,
                     'base': 'list_price',
                     'applied_on': '0_product_variant',
-                    'percent_price': 20,
                     'compute_price': 'formula',
+                    'price_discount': 20,
                 }),
                 (0, False, {
                     'name': 'Rule 10% on ipad template ',
@@ -99,7 +100,7 @@ class TestProductPriceList(SavepointCase):
                     'min_quantity': 1,
                     'base': 'list_price',
                     'compute_price': 'formula',
-                    'percent_price': 10
+                    'price_discount': 10
                 }),
                 (0, False, {
                     'name': 'Rule Min qty 4 10% discount iphone template',
@@ -107,23 +108,21 @@ class TestProductPriceList(SavepointCase):
                     'applied_on': '1_product',
                     'base': 'list_price',
                     'min_quantity': 4,
-                    'compute_price': 'formula',
+                    'compute_price': 'percentage',
                     'percent_price': 10
                 })
             ]
         })
 
-    def test_price_rule_get_multi(self):
-
+    def test_01_price_rule_get_multi(self):
         # Price for ipad product
         # Must be 600
-
         price = self.pricelist.with_context(
             uom=self.ipad_product.uom_po_id.id, date='2016-01-01'
         ).price_get(self.ipad_product.id, 1)[self.pricelist.id]
-
         self.assertEqual(price, 750 * 0.8)
 
+    def test_02_price_rule_get_multi_template(self):
         # Price for iphone template with correct partner
         # Price must be 450
         price = self.pricelist.with_context(
@@ -131,13 +130,12 @@ class TestProductPriceList(SavepointCase):
         ).template_price_get(
             self.iphone_template.id, 4, self.env.ref('base.res_partner_1').id
         )[self.pricelist.id]
-
         self.assertEqual(price, 500 * 0.9)
 
+    def test_03_price_rule_get_multi_template(self):
         # Price for ipad template
         # must be 500
         price = self.pricelist.with_context(
             uom=self.iphone_template.uom_po_id.id, date='2016-01-01'
         ).template_price_get(self.iphone_template.id, 1)[self.pricelist.id]
-
         self.assertEqual(price, 500)
