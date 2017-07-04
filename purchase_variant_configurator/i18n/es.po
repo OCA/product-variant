@@ -21,12 +21,12 @@ msgstr ""
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line_can_create_product
 msgid "Can create product"
-msgstr ""
+msgstr "Puede crear producto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line_create_product_variant
 msgid "Create product now!"
-msgstr ""
+msgstr "¡Crear producto ahora!"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,help:purchase_variant_configurator.field_purchase_order_line_price_extra
@@ -52,7 +52,7 @@ msgstr "Plantilla de producto"
 #: model:ir.actions.act_window,name:purchase_variant_configurator.variant_purchase_action
 #: model:ir.ui.menu,name:purchase_variant_configurator.variant_purchase_menu
 msgid "Product Variants"
-msgstr ""
+msgstr "Variantes de producto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line_product_attribute_ids
