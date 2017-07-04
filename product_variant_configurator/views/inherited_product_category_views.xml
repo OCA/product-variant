@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2016 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
-<openerp>
-    <data>
+<odoo>
 
         <record model="ir.ui.view" id="product_category_no_variant_form_view">
             <field name="name">product.category.no.variant.form</field>
@@ -16,5 +14,4 @@
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

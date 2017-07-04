@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2015 Oihane Crucelaegui - AvanzOSC
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
-# © 2016 ACSONE SA/NV
+# Copyright 2015 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from openerp import api, fields, models
-from openerp.addons import decimal_precision as dp
+from odoo import api, fields, models
+from odoo.addons import decimal_precision as dp
 
 
 class ProductConfiguratorAttribute(models.Model):
