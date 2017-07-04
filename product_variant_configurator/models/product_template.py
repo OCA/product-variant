@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2015 Oihane Crucelaegui - AvanzOSC
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
-# © 2016 ACSONE SA/NV
+# Copyright 2015 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from openerp import models, fields, api, _
-from openerp.tools import config
+from odoo import _, api, fields, models
+from odoo.tools import config
 
 
 class ProductTemplate(models.Model):
@@ -55,10 +55,11 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def create_variant_ids(self):
+        obj = self.with_context(creating_variants=True)
         if (config['test_enable'] and
                 not self.env.context.get('check_variant_creation')):
-            return super(ProductTemplate, self).create_variant_ids()
-        for tmpl in self:
+            return super(ProductTemplate, obj).create_variant_ids()
+        for tmpl in obj:
             if ((tmpl.no_create_variants == 'empty' and
                     not tmpl.categ_id.no_create_variants) or
                     tmpl.no_create_variants == 'no' or

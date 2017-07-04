@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from . import pricelist
 from . import product_attribute_line
 from . import product_attribute_price
