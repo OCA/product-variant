@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2017 Alex Comba - Agile Business Group
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+     
+<odoo>
+
+    <record id="product_variant_easy_edit_view" model="ir.ui.view">
+        <field name="name">product.product.view.form.easy</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='pricing']/parent::group" position="after">
+                <group name="sale_condition" string="Sale Conditions">
+                    <field name='sale_ok' invisible="1"/>
+                    <label for="sale_delay"/>
+                    <div>
+                        <field name="sale_delay" attrs="{'readonly':[('sale_ok','=',False)]}" class="oe_inline" style="vertical-align:baseline"/> days
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
