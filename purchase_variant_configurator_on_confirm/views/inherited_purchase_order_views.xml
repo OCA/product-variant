@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record model="ir.ui.view" id="purchase_order_extended_form_view">
             <field name="name">purchase.order.extended.form</field>
@@ -14,5 +13,4 @@
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>
