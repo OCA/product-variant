@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# © 2016 Oihane Crucelaegui - AvanzOSC
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
-# © 2016 ACSONE SA/NV
+# Copyright 2016 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from openerp import api, models
+from odoo import api, models
 
 
 class PurchaseOrder(models.Model):
@@ -16,9 +16,7 @@ class PurchaseOrder(models.Model):
         product_obj = self.env['product.product']
         lines_without_product = self.order_line.filtered(
             lambda x: not x.product_id and x.product_tmpl_id)
-
         for line in lines_without_product:
-
             product = product_obj._product_find(
                 line.product_tmpl_id, line.product_attribute_ids)
             if not product:
