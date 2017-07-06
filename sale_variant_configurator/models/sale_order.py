@@ -3,7 +3,7 @@
 # © 2015-2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 from lxml import etree
 
 
@@ -63,6 +63,8 @@ class SaleOrderLine(models.Model):
     _inherit = ["sale.order.line", "product.configurator"]
     _name = "sale.order.line"
 
+    product_tmpl_id = fields.Many2one(store=True, readonly=False,
+                                      related=False)
     product_id = fields.Many2one(required=False)
 
     @api.onchange('product_tmpl_id')
@@ -108,16 +110,43 @@ class SaleOrderLine(models.Model):
             )
         return res
 
+    def _update_price_configurator(self):
+        """If there are enough data (template, pricelist & partner), check new
+        price and update line if different.
+        """
+        self.ensure_one()
+        if (not self.product_tmpl_id or not self.order_id.pricelist_id or
+                not self.order_id.partner_id):
+            return
+        product_tmpl = self.product_tmpl_id.with_context(
+            lang=self.order_id.partner_id.lang,
+            partner=self.order_id.partner_id.id,
+            quantity=self.product_uom_qty,
+            date_order=self.order_id.date_order,
+            pricelist=self.order_id.pricelist_id.id,
+            uom=self.product_uom.id,
+            fiscal_position=self.env.context.get('fiscal_position')
+        )
+        price = self.env['account.tax']._fix_tax_included_price(
+            self.price_extra + self._get_display_price(product_tmpl),
+            product_tmpl.taxes_id,
+            self.tax_id)
+        if self.price_unit != price:
+            self.price_unit = price
+
+    @api.onchange('product_attribute_ids')
+    def _onchange_product_attribute_ids_configurator(self):
+        """Update price for having into account possible extra prices"""
+        res = super(
+            SaleOrderLine, self,
+        )._onchange_product_attribute_ids_configurator()
+        self._update_price_configurator()
+        return res
+
     @api.onchange('product_uom', 'product_uom_qty')
     def product_uom_change(self):
-        # TODO: Handle this when there's no product_id filled
-        super(SaleOrderLine, self).product_uom_change()
-
-    def _auto_init(self, cr, context=None):
-        # Avoid the removal of the DB column due to sale_stock defining
-        # this field as a related non stored one
-        if self._fields.get('product_tmpl_id'):
-            self._fields['product_tmpl_id'].store = True
-            self._fields['product_tmpl_id'].readonly = False
-            self._fields['product_tmpl_id'].related = False
-        super(SaleOrderLine, self)._auto_init(cr, context=context)
+        """Update price for having into account changes due to qty"""
+        res = super(SaleOrderLine, self).product_uom_change()
+        if not self.product_id:
+            self._update_price_configurator()
+        return res
