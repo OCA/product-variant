@@ -3,13 +3,14 @@
 # * product_variant_supplierinfo
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 # abdullah alsabi <alsabi.abdullah@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-10 07:55+0000\n"
-"PO-Revision-Date: 2017-06-10 07:55+0000\n"
+"POT-Creation-Date: 2017-07-01 06:24+0000\n"
+"PO-Revision-Date: 2017-07-01 06:24+0000\n"
 "Last-Translator: abdullah alsabi <alsabi.abdullah@gmail.com>, 2017\n"
 "Language-Team: Arabic (https://www.transifex.com/oca/teams/23907/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +32,7 @@ msgstr "المورد الرئيسي"
 #. module: product_variant_supplierinfo
 #: model:ir.model.fields,help:product_variant_supplierinfo.field_product_product_seller_id
 msgid "Main Supplier who has highest priority in Supplier List."
-msgstr ""
+msgstr "المورد الرئيسي صاحب الأولوية في قائمة الموردين"
 
 #. module: product_variant_supplierinfo
 #: model:ir.model,name:product_variant_supplierinfo.model_procurement_order
