@@ -1,22 +1,12 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see http://www.gnu.org/licenses/.
-#
-##############################################################################
-from openerp import models, fields, api, _
-from openerp.exceptions import except_orm
+# -*- coding: utf-8 -*-
+# Copyright 2014 AvancOsc - Alfredo de la Fuente
+# Copyright 2014 Tecnativa - Pedro Baeza
+# Copyright 2014 Shine IT - Tony Gu
+# Copyright 2017 Tecnativa - David Vidal
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 import re
 from string import Template
 from collections import defaultdict
@@ -45,8 +35,8 @@ def sanitize_reference_mask(product, mask):
     for line in product.attribute_line_ids:
         attribute_names.add(line.attribute_id.name)
     if not tokens.issubset(attribute_names):
-        raise except_orm(_('Error'), _('Found unrecognized attribute name in '
-                                       '"Variant Reference Mask"'))
+        raise UserError(_('Found unrecognized attribute name in "Variant '
+                          'Reference Mask"'))
 
 
 def get_rendered_default_code(product, mask):
@@ -109,7 +99,6 @@ class ProductTemplate(models.Model):
             sanitize_reference_mask(product, vals['reference_mask'])
         return super(ProductTemplate, self).create(vals)
 
-    @api.one
     def write(self, vals):
         product_obj = self.env['product.product']
         if 'reference_mask' in vals and not vals['reference_mask']:
@@ -138,13 +127,12 @@ class ProductProduct(models.Model):
     manual_code = fields.Boolean(string='Manual code')
 
     @api.model
-    def create(self, values):
-        product = super(ProductProduct, self).create(values)
+    def create(self, vals):
+        product = super(ProductProduct, self).create(vals)
         if product.reference_mask:
             render_default_code(product, product.reference_mask)
         return product
 
-    @api.one
     @api.onchange('default_code')
     def onchange_default_code(self):
         self.manual_code = bool(self.default_code)
@@ -160,35 +148,28 @@ class ProductAttribute(models.Model):
 class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
-    @api.one
     @api.onchange('name')
     def onchange_name(self):
         if self.name:
             self.attribute_code = self.name[0:2]
 
     attribute_code = fields.Char(
-        string='Attribute Code', default=onchange_name)
+        string='Attribute Code',
+        default=onchange_name,
+    )
 
     @api.model
-    def create(self, values):
-        if 'attribute_code' not in values:
-            values['attribute_code'] = values.get('name', '')[0:2]
-        value = super(ProductAttributeValue, self).create(values)
-        return value
+    def create(self, vals):
+        if 'attribute_code' not in vals:
+            vals['attribute_code'] = vals.get('name', '')[0:2]
+        return super(ProductAttributeValue, self).create(vals)
 
-    @api.one
     def write(self, vals):
-        attribute_line_obj = self.env['product.attribute.line']
-        product_obj = self.env['product.product']
-        result = super(ProductAttributeValue, self).write(vals)
-        if 'attribute_code' in vals:
-            cond = [('attribute_id', '=', self.attribute_id.id)]
-            attribute_lines = attribute_line_obj.search(cond)
-            for line in attribute_lines:
-                cond = [('product_tmpl_id', '=', line.product_tmpl_id.id),
-                        ('manual_code', '=', False)]
-                products = product_obj.search(cond)
-                for product in products:
-                    if product.reference_mask:
-                        render_default_code(product, product.reference_mask)
-        return result
+        if 'attribute_code' not in vals:
+            return super(ProductAttributeValue, self).write(vals)
+        # Rewrite reference on all product variants affected
+        for product in self.attribute_id.attribute_line_ids.\
+                mapped('product_tmpl_id').mapped('product_variant_ids').\
+                filtered(lambda x: x.reference_mask and not x.manual_code):
+            render_default_code(product, product.reference_mask)
+        return super(ProductAttributeValue, self).write(vals)
