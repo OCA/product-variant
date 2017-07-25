@@ -1,37 +1,112 @@
-Product Variant Default Code(product_variant_default_code)
------------------------------------------------------------
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl
+   :alt: License: AGPL-3
 
-In 'product.template' object new field 'Variant reference mask' is added
+============================
+Product Variant Default Code
+============================
 
-In 'product.attribute.value' object new field 'Attribute Code' is added.
+This module allows to define a reference mask on the product templates so the
+variants references are automatically set. For example:
 
-When creating a new product template without specifying the 'Variant reference
-mask', a default value for 'Variant reference mask' will be automatically
-generated according to the attribute line settings on the product template.
-The mask will then be used as an instruction to generate default code of each
-product variant of the product template with the corresponding Attribute Code
-(of the attribute value) inserted. Besides the default value, 'Variant
-reference mask' can be configure to your liking, make sure puting Attribut Name
-inside '[]' mark. 
+- Product template: Jacket
+- Attributes:
+  - Color: White, Black
+  - Size: M, L
+- Reference mask: `JKT01-[Color]-[Size]`
+
+- Reference on variants:
+
+  - `JKT01-Wh-M` Jacket White M
+  - `JKT01-Bl-M` Jacket Black M
+  - `JKT01-Wh-L` Jacket White L
+  - `JKT01-Bl-L` Jacket Black L
+
+Configuration
+=============
+
+To set the reference mask up on any product template 'Variant reference mask'
+new field.
+
+When creating a new product template without specifying the *Variant reference
+mask*, a default value for *Variant reference mask* will be automatically
+generated according to the attribute line settings on the product template (if
+any). The mask will then be used as an instruction to generate default code of
+each product variant of the product template with the corresponding *Attribute
+Code* (of the attribute value) inserted. Besides the default value, *Variant
+reference mask* can be configured to your liking, make sure putting the
+*Attribute Name* inside `[]` marks (it is case sensitive).
 
 Example:
 
-Creating a product named 'A' with two attributes, 'Size' and 'Color'::
+Creating a product named *Jacket* with two attributes, *Size* and *Color*::
 
-   Product: A
-   Color: Red(r), Yellow(y), Black(b) #Red, Yellow, Black are the attribute
-          value, 'r', 'y', 'b' are the corresponding code
-   Size: L (l), XL(x)
+   Product: Jacket
+   Color: Black(Bl), White(Wh) # Black and White are the attribute values;
+                                 'Bl' and 'Wh' are the corresponding codes
+   Size: L (L), XL(XL)
    
 The automatically generated default value for the Variant reference mask will
-be `[Color]-[Size]` and then the 'default code' on the variants will be
-something like `r-l` `b-l` `r-x` ...
+be `[Color]-[Size]` and so the 'default code' on the variants will be `Bl-L`,
+`Wh-L`, `Bl-XL` and `Wh-XL`.
 
-If you like, you can change the mask value whatever you like. You can even have
-the attribute name appear more than once in the mask such as ,
-`fancyA/[Size]~[Color]~[Size]`, when saved the default code on variants will be
-something like `fancyA/l~r~l` (for variant with Color "Red" and Size "L")
-`fancyA/x~y~x` (for variant with Color "Yellow" and Size "XL").
+The mask value can be fully custumizedwhatever you like. You can even have
+the attribute name appear more than once in the mask such as,
+`Jacket/[Size]~[Color]~[Size]`, and the generated code on variants will be
+something like `Jacket/L~Bl~L` (for variant with Color "Black" and Size "L").
 
-when the code attribute is changed, it automatically regenerates the 'default
-code'.
+When the code attribute is changed, it automatically regenerates the 'default
+code' on all variants affected.
+
+Avoiding mask in variants
+-------------------------
+
+You can avoid this behavior or force a manual default_code on variant. To do
+so, go to *Product Variants > [any variant you want to set up]* and set
+manually its reference code. The field `manual code` will be set to on and the
+variant internal reference will no longer be changed by this module.
+
+Unset `manual code` and the reference code will be unlocked again.
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/137/10.0
+
+Bug Tracker
+===========
+
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/product_variant/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smash it by providing detailed and welcomed feedback.
+
+Credits
+=======
+
+Images
+------
+
+* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
+
+Contributors
+------------
+
+* Alfredo de la Fuente <alfredodelafuente@avanzosc.com>
+* Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* Tony Gu <tony@openerp.cn>
+* David Vidal <david.vidal@tecnativa.com>
+
+Maintainer
+----------
+
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
+
+This module is maintained by the OCA.
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
+To contribute to this module, please visit https://odoo-community.org.
