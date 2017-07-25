@@ -22,24 +22,24 @@ variants references are automatically set. For example:
   - `JKT01-Wh-L` Jacket White L
   - `JKT01-Bl-L` Jacket Black L
 
-Usage
-=====
+Configuration
+=============
 
 To set the reference mask up on any product template 'Variant reference mask'
 new field.
 
-When creating a new product template without specifying the 'Variant reference
-mask', a default value for 'Variant reference mask' will be automatically
+When creating a new product template without specifying the *Variant reference
+mask*, a default value for *Variant reference mask* will be automatically
 generated according to the attribute line settings on the product template (if
 any). The mask will then be used as an instruction to generate default code of
-each product variant of the product template with the corresponding 'Attribute
-Code' (of the attribute value) inserted. Besides the default value, 'Variant
-reference mask' can be configured to your liking, make sure putting the
-'Attribute Name' inside `[]` marks (it is case sensitive).
+each product variant of the product template with the corresponding *Attribute
+Code* (of the attribute value) inserted. Besides the default value, *Variant
+reference mask* can be configured to your liking, make sure putting the
+*Attribute Name* inside `[]` marks (it is case sensitive).
 
 Example:
 
-Creating a product named 'Jacket' with two attributes, 'Size' and 'Color'::
+Creating a product named *Jacket* with two attributes, *Size* and *Color*::
 
    Product: Jacket
    Color: Black(Bl), White(Wh) # Black and White are the attribute values;
@@ -62,7 +62,7 @@ Avoiding mask in variants
 -------------------------
 
 You can avoid this behavior or force a manual default_code on variant. To do
-so, go to _Product Variants > [any variant you want to set up]_ and set
+so, go to *Product Variants > [any variant you want to set up]* and set
 manually its reference code. The field `manual code` will be set to on and the
 variant internal reference will no longer be changed by this module.
 
