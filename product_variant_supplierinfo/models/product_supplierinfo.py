@@ -14,6 +14,12 @@ class ProductSupplierInfo(models.Model):
         help=("When this field is filled in, the vendor data will only"
               "apply to the variant."))
 
+    related_sequence = fields.Integer(
+        String='Sequence',
+        related="sequence",
+        help=("Allows to modify the sequence manually because "
+              "the sequence field is difficult to modify because 'handle'."))
+
     def _check_product_template(self, vals):
         # Make a copy in case original dictionary is preferred to be kept
         vals = vals.copy()
@@ -23,11 +29,38 @@ class ProductSupplierInfo(models.Model):
         return vals
 
     @api.model
+    def _get_sequence_related(self, vals):
+        """
+            In sale order line, we want to use as a priority
+            the product pricelist item associated with the product variant.
+            But in Odoo, it's the product pricelist item which has the
+            smallest sequence that is used.
+            That's why, we put a smaller sequence to the product pricelist item
+            of the product variant and a larger sequence to
+            the product pricelist item of the product template.
+        """
+        product_id = vals.get('product_id', self.product_id)
+        product_tmpl_id = vals.get('product_tmpl_id', self.product_tmpl_id)
+        related_sequence = 15
+        if product_id:
+            related_sequence = 5
+        elif product_tmpl_id:
+            related_sequence = 10
+        return related_sequence
+
+    @api.model
     def create(self, vals):
         vals = self._check_product_template(vals)
+        vals.update({
+            'related_sequence': self._get_sequence_related(vals),
+        })
         return super(ProductSupplierInfo, self).create(vals)
 
     @api.multi
     def write(self, vals):
         vals = self._check_product_template(vals)
+        for item in self:
+            if 'product_id' in vals:
+                vals['related_sequence'] = item._get_sequence_related(
+                    vals)
         return super(ProductSupplierInfo, self).write(vals)
