@@ -167,9 +167,10 @@ class ProductAttributeValue(models.Model):
     def write(self, vals):
         if 'attribute_code' not in vals:
             return super(ProductAttributeValue, self).write(vals)
+        result = super(ProductAttributeValue, self).write(vals)
         # Rewrite reference on all product variants affected
-        for product in self.attribute_id.attribute_line_ids.\
-                mapped('product_tmpl_id').mapped('product_variant_ids').\
-                filtered(lambda x: x.reference_mask and not x.manual_code):
+        for product in self.mapped('product_ids').filtered(
+                lambda x: x.product_tmpl_id.reference_mask and not
+                x.manual_code):
             render_default_code(product, product.reference_mask)
-        return super(ProductAttributeValue, self).write(vals)
+        return result
