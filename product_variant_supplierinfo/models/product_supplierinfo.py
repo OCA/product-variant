@@ -31,13 +31,12 @@ class ProductSupplierInfo(models.Model):
     @api.model
     def _get_sequence_related(self, vals):
         """
-            In sale order line, we want to use as a priority
-            the product pricelist item associated with the product variant.
-            But in Odoo, it's the product pricelist item which has the
+            In purchase orders, we want to get the product_supplierinfo
+            associated with the product variant.
+            But in Odoo, it's the product_supplierinfo which has the
             smallest sequence that is used.
-            That's why, we put a smaller sequence to the product pricelist item
-            of the product variant and a larger sequence to
-            the product pricelist item of the product template.
+            That's why, we put a low sequence to the product_supplierinfo
+            of the product variant than the product template.
         """
         product_id = vals.get('product_id', self.product_id)
         product_tmpl_id = vals.get('product_tmpl_id', self.product_tmpl_id)
