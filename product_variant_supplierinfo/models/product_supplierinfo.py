@@ -14,12 +14,6 @@ class ProductSupplierInfo(models.Model):
         help=("When this field is filled in, the vendor data will only"
               "apply to the variant."))
 
-    related_sequence = fields.Integer(
-        String='Sequence',
-        related="sequence",
-        help=("Allows to modify the sequence manually because "
-              "the sequence field is difficult to modify because 'handle'."))
-
     def _check_product_template(self, vals):
         # Make a copy in case original dictionary is preferred to be kept
         vals = vals.copy()
@@ -29,37 +23,21 @@ class ProductSupplierInfo(models.Model):
         return vals
 
     @api.model
-    def _get_sequence_related(self, vals):
-        """
-            In purchase orders, we want to get the product_supplierinfo
-            associated with the product variant.
-            But in Odoo, it's the product_supplierinfo which has the
-            smallest sequence that is used.
-            That's why, we put a low sequence to the product_supplierinfo
-            of the product variant than the product template.
-        """
-        product_id = vals.get('product_id', self.product_id)
-        product_tmpl_id = vals.get('product_tmpl_id', self.product_tmpl_id)
-        related_sequence = 15
-        if product_id:
-            related_sequence = 5
-        elif product_tmpl_id:
-            related_sequence = 10
-        return related_sequence
-
-    @api.model
     def create(self, vals):
         vals = self._check_product_template(vals)
-        vals.update({
-            'related_sequence': self._get_sequence_related(vals),
-        })
+        # templates only should have greater sequence number
+        # in order to select variants in purchases.
+        if not vals.get('product_id'):
+            vals['sequence'] = vals.get('sequence', 10) * 10
         return super(ProductSupplierInfo, self).create(vals)
 
     @api.multi
     def write(self, vals):
         vals = self._check_product_template(vals)
-        for item in self:
-            if 'product_id' in vals:
-                vals['related_sequence'] = item._get_sequence_related(
-                    vals)
-        return super(ProductSupplierInfo, self).write(vals)
+        if vals.get('sequence', None) is None:
+            return super(ProductSupplierInfo, self).write(vals)
+        for suppinfo in self:
+            if not vals.get('product_id', suppinfo.product_id):
+                vals['sequence'] *= 10
+            super(ProductSupplierInfo, suppinfo).write(vals)
+        return True
