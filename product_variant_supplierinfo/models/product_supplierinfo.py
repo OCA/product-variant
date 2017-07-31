@@ -25,9 +25,19 @@ class ProductSupplierInfo(models.Model):
     @api.model
     def create(self, vals):
         vals = self._check_product_template(vals)
+        # templates only should have greater sequence number
+        # in order to select variants in purchases.
+        if not vals.get('product_id'):
+            vals['sequence'] = vals.get('sequence', 10) * 10
         return super(ProductSupplierInfo, self).create(vals)
 
     @api.multi
     def write(self, vals):
         vals = self._check_product_template(vals)
-        return super(ProductSupplierInfo, self).write(vals)
+        if vals.get('sequence', None) is None:
+            return super(ProductSupplierInfo, self).write(vals)
+        for suppinfo in self:
+            if not vals.get('product_id', suppinfo.product_id):
+                vals['sequence'] *= 10
+            super(ProductSupplierInfo, suppinfo).write(vals)
+        return True

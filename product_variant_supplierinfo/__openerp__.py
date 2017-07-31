@@ -6,6 +6,7 @@
     'name': 'Product supplier info per variant',
     'summary': 'Supplier info to product variant scope',
     'version': '8.0.1.0.0',
+    'license': 'AGPL-3',
     'author': 'Tecnativa, Akretion,'
               'Odoo Community Association (OCA)',
     'category': 'Product Management',
