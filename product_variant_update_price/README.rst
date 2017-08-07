@@ -6,7 +6,7 @@
 Product Variants Update Prices
 ==============================
 
-This module make it easy to increase / decrease price of variants in a massive way.
+This module makes it easy to increase / decrease price of variants in a massive way.
 
 
 Usage
@@ -15,7 +15,7 @@ Usage
 A wizard allows to apply a percentage to selected products
 
 
-.. figure:: static/dascription/upd_price.png
+.. figure:: static/description/upd_price.png
    :alt: wizard to update price
    :width: 700 px
 
@@ -32,7 +32,7 @@ A wizard allows to apply a percentage to selected products
 Known issues / Roadmap
 ======================
 
-* Don't use in combination on product_variant_sale_price: modules are not compatibles
+* Don't use in combination with product_variant_sale_price: modules are not compatibles
 
 Bug Tracker
 ===========

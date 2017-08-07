@@ -8,7 +8,7 @@ from openerp.tests.common import TransactionCase
 
 class TestUpdatePrice(TransactionCase):
 
-    def test_ipod_increase_10_percent(self):
+    def test_ipad_increase_10_percent(self):
         ipad = self.env.ref(
             'product.product_product_4_product_template')
         ipad16wh = self.env.ref('product.product_product_4')

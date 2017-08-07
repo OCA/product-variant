@@ -12,7 +12,7 @@ class ProductUpdatePrice(models.TransientModel):
 
     percentage = fields.Float(
         required=True,
-        help="Percentage value to increase sale price")
+        help="Sale price percentage increase")
 
     @api.multi
     def update_price(self):
