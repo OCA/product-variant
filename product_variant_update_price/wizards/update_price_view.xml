@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+<data>
+
+    <record id="view_model_form" model="ir.ui.view">
+        <field name="model">product.update.price</field>
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <form string="Update Product Price">
+                <sheet>
+                    <div>
+                        <h2>Set a value to increase/decrease sale price</h2>
+                        <div>
+                            Impacted values:
+                            <ul>
+                                <li>Sale price on product</li>
+                                <li>Price on each attribute</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <group>
+                        <field name="percentage"/>
+                    </group>
+                </sheet>
+            <footer>
+                <button name="update_price" string="Apply"
+                        type="object" class="oe_highlight"/>
+                <button special="cancel" string="Cancel" class="oe_link"/>
+            </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_update_price_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Update product price</field>
+        <field name="res_model">product.update.price</field>
+        <field name="src_model">product.template</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="product_update_price_values" model="ir.values">
+        <field eval="'client_action_multi'" name="key2"/>
+        <field eval="'product.template'" name="model"/>
+        <field name="name">Update product price</field>
+        <field eval="'ir.actions.act_window,'+str(product_update_price_act_window)" name="value"/>
+    </record>
+
+</data>
+</openerp>
