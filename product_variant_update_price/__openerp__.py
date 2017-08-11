@@ -9,7 +9,7 @@
     "version": "8.0.1.0.0",
     "category": "Sales",
     "website": "https://github.com/OCA/product-variant",
-    "author": " Akretion",
+    "author": "Akretion",
     "license": "AGPL-3",
     "installable": True,
     "depends": [
