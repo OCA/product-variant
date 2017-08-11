@@ -23,6 +23,7 @@ addon | version | summary
 [product_variant_storage_location](product_variant_storage_location/) | 8.0.1.0.0 | Use different storage location for different variants
 [product_variant_supplierinfo](product_variant_supplierinfo/) | 8.0.1.0.0 | Supplier info to product variant scope
 [product_variant_uos](product_variant_uos/) | 8.0.1.0.0 | Use different UoS for different variants
+[product_variant_update_price](product_variant_update_price/) | 8.0.1.0.0 | Update price based on product template and attributes
 [product_variant_weight](product_variant_weight/) | 8.0.1.0.0 | Weight data in product level
 
 
