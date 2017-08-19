@@ -4,50 +4,49 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
-# Quentin THEURET <odoo@kerpeo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-11 08:56+0000\n"
 "PO-Revision-Date: 2017-08-11 08:56+0000\n"
-"Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2017\n"
-"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Estonian (https://www.transifex.com/oca/teams/23907/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: product_variant_update_price
 #: model:ir.model,name:product_variant_update_price.model_product_update_price
 msgid "Allow to update sale price"
-msgstr "Permet de mettre à jour le prix de vente"
+msgstr ""
 
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Apply"
-msgstr "Appliquer"
+msgstr "Kinnita"
 
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Loobu"
 
 #. module: product_variant_update_price
 #: field:product.update.price,create_uid:0
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Loonud"
 
 #. module: product_variant_update_price
 #: field:product.update.price,create_date:0
 msgid "Created on"
-msgstr "Créé le"
+msgstr "Loodud"
 
 #. module: product_variant_update_price
 #: field:product.update.price,display_name:0
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "Näidatav nimi"
 
 #. module: product_variant_update_price
 #: field:product.update.price,id:0
@@ -57,54 +56,54 @@ msgstr "ID"
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Impacted values:"
-msgstr "Valeurs impactées:"
+msgstr ""
 
 #. module: product_variant_update_price
 #: field:product.update.price,__last_update:0
 msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr "Viimati muudetud"
 
 #. module: product_variant_update_price
 #: field:product.update.price,write_uid:0
 msgid "Last Updated by"
-msgstr "Dernière modification par"
+msgstr "Viimati uuendatud"
 
 #. module: product_variant_update_price
 #: field:product.update.price,write_date:0
 msgid "Last Updated on"
-msgstr "Dernière modification le"
+msgstr "Viimati uuendatud"
 
 #. module: product_variant_update_price
 #: field:product.update.price,percentage:0
 msgid "Percentage"
-msgstr "Pourcentage"
+msgstr ""
 
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Price on each attribute"
-msgstr "Prix sur chaque attribut"
+msgstr ""
 
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Sale price on product"
-msgstr "Prix de vente sur le produit"
+msgstr ""
 
 #. module: product_variant_update_price
 #: help:product.update.price,percentage:0
 msgid "Sale price percentage increase"
-msgstr "Augmentation en pourcentage du prix de vente"
+msgstr ""
 
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Set a value to increase/decrease sale price"
-msgstr "Définir une valeur pour accroitre/décroitre le prix"
+msgstr ""
 
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Update Product Price"
-msgstr "Mettre à jour le prix du produit"
+msgstr ""
 
 #. module: product_variant_update_price
 #: model:ir.actions.act_window,name:product_variant_update_price.product_update_price_act_window
 msgid "Update product price"
-msgstr "Mettre à jour le prix du produit"
+msgstr ""
