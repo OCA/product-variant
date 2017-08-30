@@ -15,6 +15,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_variant_supplierinfo](product_variant_supplierinfo/) | 10.0.1.0.0 | Supplier info to product variant scope
+[product_variant_template_data](product_variant_template_data/) | 10.0.1.0.0 | Data template in product level
 [sale_order_variant_mgmt](sale_order_variant_mgmt/) | 10.0.1.0.0 | Handle the addition/removal of multiple variants from product template into the sales order
 
 [//]: # (end addons)
