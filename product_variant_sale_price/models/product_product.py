@@ -23,7 +23,8 @@ class ProductTemplate(models.Model):
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
         for template in self:
-            template._update_fix_price(vals)
+            if not self.env.context.get('skip_update_fix_price', False):
+                template._update_fix_price(vals)
         return res
 
 
@@ -68,7 +69,8 @@ class ProductProduct(models.Model):
                 fix_prices = product.product_tmpl_id.mapped(
                     'product_variant_ids.fix_price')
                 # for consistency with price shown in the shop
-                product.product_tmpl_id.list_price = min(fix_prices)
+                product.product_tmpl_id.with_context(
+                    skip_update_fix_price=True).list_price = min(fix_prices)
             product.write(vals)
 
     lst_price = fields.Float(
