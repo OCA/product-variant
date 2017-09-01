@@ -89,6 +89,11 @@ class TestProductVariantPrice(TransactionCase):
             self.product_blue.product_tmpl_id.list_price)
         self.assertEqual(
             self.product_blue.lst_price, self.product_blue.fix_price)
+        # to check skip_update_fix_price
+        self.assertNotEqual(
+            self.product_blue.lst_price,
+            self.product_red.lst_price)
+        self.assertEqual(self.product_red.lst_price, 1500.00)
 
     def test_update_template_variant(self):
         self.product_blue.product_tmpl_id.list_price = 200
