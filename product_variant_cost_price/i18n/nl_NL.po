@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-27 03:02+0000\n"
-"PO-Revision-Date: 2017-06-27 03:02+0000\n"
+"POT-Creation-Date: 2017-08-19 06:41+0000\n"
+"PO-Revision-Date: 2017-08-19 06:41+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +22,12 @@ msgstr ""
 #. module: product_variant_cost_price
 #: field:product.price.history.product,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,display_name:0
@@ -57,12 +57,12 @@ msgstr "Laatst gewijzigd op"
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: product_variant_cost_price
 #: field:product.price.history.product,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: product_variant_cost_price
 #: model:ir.model,name:product_variant_cost_price.model_product_product

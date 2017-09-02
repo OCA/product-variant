@@ -3,13 +3,14 @@
 # * product_variant_update_price
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 # Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 08:56+0000\n"
-"PO-Revision-Date: 2017-08-11 08:56+0000\n"
+"POT-Creation-Date: 2017-08-19 06:41+0000\n"
+"PO-Revision-Date: 2017-08-19 06:41+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -31,17 +32,17 @@ msgstr ""
 #. module: product_variant_update_price
 #: view:product.update.price:product_variant_update_price.view_model_form
 msgid "Cancel"
-msgstr ""
+msgstr "Verwijderen"
 
 #. module: product_variant_update_price
 #: field:product.update.price,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: product_variant_update_price
 #: field:product.update.price,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: product_variant_update_price
 #: field:product.update.price,display_name:0
@@ -66,12 +67,12 @@ msgstr "Laatst gewijzigd op"
 #. module: product_variant_update_price
 #: field:product.update.price,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: product_variant_update_price
 #: field:product.update.price,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: product_variant_update_price
 #: field:product.update.price,percentage:0
