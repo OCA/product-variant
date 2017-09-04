@@ -8,7 +8,7 @@
     "summary": "Update price based on product template and attributes",
     "version": "8.0.1.0.0",
     "category": "Sales",
-    "website": "www.akretion.com",
+    "website": "https://github.com/OCA/product-variant",
     "author": " Akretion",
     "license": "AGPL-3",
     "installable": True,
