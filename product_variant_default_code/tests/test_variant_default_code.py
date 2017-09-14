@@ -99,7 +99,7 @@ class TestVariantDefaultCode(common.SavepointCase):
                          'CANT-TOUCH-THIS')
 
     def test_06_attribute_value_code_change_propagation(self):
-        self.attr1_1.attribute_code = 'OO'
+        self.attr1_1.code = 'OO'
         # Check that the change spreads to every product
         for product in self.attr1_1.mapped('product_ids'):
             self.assertTrue('OO' in product.default_code)
@@ -107,7 +107,7 @@ class TestVariantDefaultCode(common.SavepointCase):
     def test_07_attribute_value_name_change(self):
         self.attr1_1.name = 'Odoo'
         self.attr1_1.onchange_name()
-        self.assertEqual(self.attr1_1.attribute_code, 'Od')
+        self.assertEqual(self.attr1_1.code, 'Od')
         # Check that the change spreads to every product
         for product in self.attr1_1.mapped('product_ids'):
             self.assertTrue('Od' in product.default_code)
@@ -123,3 +123,10 @@ class TestVariantDefaultCode(common.SavepointCase):
                 ],
                 'reference_mask': 'FAIL:[TSize][TWrongAttr]',
             })
+
+    def test_09_code_change_propagation(self):
+        self.attr1.code = 'AC'
+        # Check that the change spreads to every product
+        for product in self.attr1.mapped('attribute_line_ids').mapped(
+                'product_tmpl_id').mapped('product_variant_ids'):
+            self.assertTrue('AC' in product.default_code)

@@ -43,8 +43,10 @@ def get_rendered_default_code(product, mask):
     product_attrs = defaultdict(str)
     reference_mask = ReferenceMask(mask)
     for value in product.attribute_value_ids:
-        if value.attribute_code:
-            product_attrs[value.attribute_id.name] += value.attribute_code
+        if value.attribute_id.code:
+            product_attrs[value.attribute_id.name] += value.attribute_id.code
+        if value.code:
+            product_attrs[value.attribute_id.name] += value.code
     all_attrs = extract_token(mask)
     missing_attrs = all_attrs - set(product_attrs.keys())
     missing = dict.fromkeys(missing_attrs, PLACE_HOLDER_4_MISSING_VALUE)
@@ -141,8 +143,24 @@ class ProductProduct(models.Model):
 class ProductAttribute(models.Model):
     _inherit = 'product.attribute'
 
+    code = fields.Char(
+        string='Attribute Code',
+    )
+
     _sql_constraints = [
         ('number_uniq', 'unique(name)', _('Attribute Name must be unique!'))]
+
+    def write(self, vals):
+        if 'code' not in vals:
+            return super(ProductAttribute, self).write(vals)
+        result = super(ProductAttribute, self).write(vals)
+        # Rewrite reference on all product variants affected
+        for product in self.mapped('attribute_line_ids').mapped(
+            'product_tmpl_id').mapped('product_variant_ids').filtered(
+                lambda x: x.product_tmpl_id.reference_mask and not
+                x.manual_code):
+            render_default_code(product, product.reference_mask)
+        return result
 
 
 class ProductAttributeValue(models.Model):
@@ -151,21 +169,22 @@ class ProductAttributeValue(models.Model):
     @api.onchange('name')
     def onchange_name(self):
         if self.name:
-            self.attribute_code = self.name[0:2]
+            self.code = self.name[0:2]
 
-    attribute_code = fields.Char(
-        string='Attribute Code',
+    code = fields.Char(
+        string='Attribute Value Code',
         default=onchange_name,
+        oldname='attribute_code',
     )
 
     @api.model
     def create(self, vals):
-        if 'attribute_code' not in vals:
-            vals['attribute_code'] = vals.get('name', '')[0:2]
+        if 'code' not in vals:
+            vals['code'] = vals.get('name', '')[0:2]
         return super(ProductAttributeValue, self).create(vals)
 
     def write(self, vals):
-        if 'attribute_code' not in vals:
+        if 'code' not in vals:
             return super(ProductAttributeValue, self).write(vals)
         result = super(ProductAttributeValue, self).write(vals)
         # Rewrite reference on all product variants affected
