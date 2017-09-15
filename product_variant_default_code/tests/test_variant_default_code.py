@@ -130,3 +130,12 @@ class TestVariantDefaultCode(common.SavepointCase):
         for product in self.attr1.mapped('attribute_line_ids').mapped(
                 'product_tmpl_id').mapped('product_variant_ids'):
             self.assertTrue('AC' in product.default_code)
+
+    def test_10_code_change_propagation_archived_variant(self):
+        self.template1.product_variant_ids[0].active = False
+        self.attr1.code = 'o_o'
+        self.assertTrue(
+            'o_o' in self.template1.product_variant_ids[0].default_code)
+        self.attr1_1.code = '^_^'
+        self.assertTrue(
+            '^_^' in self.template1.product_variant_ids[0].default_code)

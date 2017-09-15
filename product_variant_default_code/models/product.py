@@ -190,6 +190,7 @@ class ProductAttributeValue(models.Model):
         # Rewrite reference on all product variants affected
         for product in self.mapped('product_ids').filtered(
                 lambda x: x.product_tmpl_id.reference_mask and not
-                x.manual_code):
+                x.manual_code
+                ).mapped('product_tmpl_id').mapped('product_variant_ids'):
             render_default_code(product, product.reference_mask)
         return result
