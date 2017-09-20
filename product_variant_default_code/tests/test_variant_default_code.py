@@ -11,6 +11,7 @@ class TestVariantDefaultCode(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestVariantDefaultCode, cls).setUpClass()
+        cls.sale_setting = cls.env['sale.config.settings'].create({})
         cls.attr1 = cls.env['product.attribute'].create({'name': 'TSize'})
         cls.attr2 = cls.env['product.attribute'].create({'name': 'TColor'})
         cls.attr1_1 = cls.env['product.attribute.value'].create({
@@ -55,15 +56,21 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.assertEqual(self.template1.reference_mask, '[TSize]-[TColor]')
         # Check that variants code are generated according to rules
         for product in self.template1.mapped('product_variant_ids'):
-            expected_code = (product.attribute_value_ids[0].name[0:2] +
-                             '-' + product.attribute_value_ids[1].name[0:2])
+            expected_code = (
+                product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr1).name[0:2] + '-' +
+                product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr2).name[0:2])
             self.assertEqual(product.default_code, expected_code)
 
     def test_02_check_default_codes_preexistent_mask(self):
+        self.sale_setting.group_product_default_code = 1
         for product in self.template2.mapped('product_variant_ids'):
-            expected_code = ('P01/' +
-                             product.attribute_value_ids[0].name[0:2] +
-                             product.attribute_value_ids[1].name[0:2])
+            expected_code = (
+                'P01/' + product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr1).name[0:2] +
+                product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr2).name[0:2])
             self.assertEqual(product.default_code, expected_code)
 
     def test_03_reset_reference_mask_to_default(self):
@@ -73,14 +80,18 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.assertEqual(self.template1.reference_mask, '[TSize]-[TColor]')
 
     def test_04_custom_reference_mask(self):
+        self.sale_setting.group_product_default_code = 1
         self.template1.reference_mask = u'JKTÜ/[TColor]#[TSize]'
         for product in self.template1.mapped('product_variant_ids'):
-            expected_code = (u'JKTÜ/' +
-                             product.attribute_value_ids[1].name[0:2] + '#' +
-                             product.attribute_value_ids[0].name[0:2])
+            expected_code = (
+                u'JKTÜ/' + product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr2).name[0:2] + '#' +
+                product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr1).name[0:2])
             self.assertEqual(product.default_code, expected_code)
 
     def test_05_manual_code(self):
+        self.sale_setting.group_product_default_code = 1
         self.assertEqual(self.template1.product_variant_ids[0].manual_code,
                          False)
         self.template1.product_variant_ids[0].default_code = 'CANT-TOUCH-THIS'
@@ -90,9 +101,11 @@ class TestVariantDefaultCode(common.SavepointCase):
         # Set a reference mask and check the other variants are changed
         self.template1.reference_mask = 'J[TColor][TSize]'
         for product in self.template1.mapped('product_variant_ids')[1:]:
-            expected_code = ('J' +
-                             product.attribute_value_ids[1].name[0:2] +
-                             product.attribute_value_ids[0].name[0:2])
+            expected_code = (
+                'J' + product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr2).name[0:2] +
+                product.attribute_value_ids.filtered(
+                    lambda x: x.attribute_id == self.attr1).name[0:2])
             self.assertEqual(product.default_code, expected_code)
         # But this one isn't:
         self.assertEqual(self.template1.product_variant_ids[0].default_code,
@@ -113,6 +126,7 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertTrue('Od' in product.default_code)
 
     def test_08_sanitize_exception(self):
+        self.sale_setting.group_product_default_code = 1
         with self.assertRaises(UserError):
             self.env['product.template'].create({
                 'name': 'Shirt',
