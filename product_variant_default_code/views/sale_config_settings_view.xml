@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sales_config_default_code" model="ir.ui.view">
+        <field name="name">sale settings default code</field>
+        <field name="model">sale.config.settings</field>
+        <field name="inherit_id" ref="sale.view_sales_config"/>
+        <field name="arch" type="xml">
+            <group name="customers" position="inside">
+                <field name="group_product_default_code" widget="radio"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>
