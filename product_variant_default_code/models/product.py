@@ -11,9 +11,6 @@ import re
 from string import Template
 from collections import defaultdict
 
-DEFAULT_REFERENCE_SEPARATOR = '-'
-PLACE_HOLDER_4_MISSING_VALUE = '/'
-
 
 class ReferenceMask(Template):
     pattern = r'''\[(?:
@@ -49,7 +46,10 @@ def get_rendered_default_code(product, mask):
             product_attrs[value.attribute_id.name] += value.code
     all_attrs = extract_token(mask)
     missing_attrs = all_attrs - set(product_attrs.keys())
-    missing = dict.fromkeys(missing_attrs, PLACE_HOLDER_4_MISSING_VALUE)
+    missing = dict.fromkeys(
+        missing_attrs,
+        product.env['ir.config_parameter'].get_param(
+            'default_reference_missing_placeholder'))
     product_attrs.update(missing)
     default_code = reference_mask.safe_substitute(product_attrs)
     return default_code
@@ -62,6 +62,10 @@ def render_default_code(product, mask):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+    prefix_code = fields.Char(
+        string='Prefix code',
+        help='Add prefix to product variant default code',
+    )
     reference_mask = fields.Char(
         string='Variant reference mask',
         help='Reference mask for building internal references of a '
@@ -88,30 +92,36 @@ class ProductTemplate(models.Model):
              'Note: make sure characters "[,]" do not appear in your '
              'attribute name')
 
+    def _get_default_mask(self):
+        attribute_names = []
+        default_reference_separator = self.env[
+            'ir.config_parameter'].get_param('default_reference_separator')
+        for line in self.attribute_line_ids:
+            attribute_names.append("[{}]".format(line.attribute_id.name))
+        default_mask = (self.prefix_code or '' +
+                        default_reference_separator.join(attribute_names))
+        return default_mask
+
     @api.model
     def create(self, vals):
         product = self.new(vals)
-        if not vals.get('reference_mask') and product.attribute_line_ids:
-            attribute_names = []
-            for line in product.attribute_line_ids:
-                attribute_names.append("[{}]".format(line.attribute_id.name))
-            default_mask = DEFAULT_REFERENCE_SEPARATOR.join(attribute_names)
-            vals['reference_mask'] = default_mask
+        if (not vals.get('reference_mask') and product.attribute_line_ids or
+                not self.user_has_groups(
+                    'product_variant_default_code.group_product_default_code'
+                )):
+            vals['reference_mask'] = product._get_default_mask()
         elif vals.get('reference_mask'):
             sanitize_reference_mask(product, vals['reference_mask'])
         return super(ProductTemplate, self).create(vals)
 
     def write(self, vals):
         product_obj = self.env['product.product']
-        if 'reference_mask' in vals and not vals['reference_mask']:
+        if ('reference_mask' in vals and not vals['reference_mask'] or not
+                self.user_has_groups(
+                    'product_variant_default_code.group_product_default_code'
+                )):
             if self.attribute_line_ids:
-                attribute_names = []
-                for line in self.attribute_line_ids:
-                    attribute_names.append("[{}]".format(
-                        line.attribute_id.name))
-                default_mask = DEFAULT_REFERENCE_SEPARATOR.join(
-                    attribute_names)
-                vals['reference_mask'] = default_mask
+                vals['reference_mask'] = self._get_default_mask()
         result = super(ProductTemplate, self).write(vals)
         if vals.get('reference_mask'):
             cond = [('product_tmpl_id', '=', self.id),
