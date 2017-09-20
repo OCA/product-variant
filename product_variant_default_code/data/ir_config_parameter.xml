@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo noupdate="1">
+
+    <record id="default_reference_separator"
+            model="ir.config_parameter">
+        <field name="key">default_reference_separator</field>
+        <field name="value">-</field>
+    </record>
+
+    <record id="default_reference_missing_placeholder"
+            model="ir.config_parameter">
+        <field name="key">default_reference_missing_placeholder</field>
+        <field name="value">/</field>
+    </record>
+
+</odoo>
