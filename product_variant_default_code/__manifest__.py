@@ -15,7 +15,7 @@
     'license': 'AGPL-3',
     'category': 'Product',
     'depends': [
-        'product',
+        'sale',
     ],
     'data': [
         'views/product_attribute_value_view.xml',
@@ -24,6 +24,9 @@
         'views/sale_config_settings_view.xml',
         'data/ir_config_parameter.xml',
         'security/product_security.xml',
+    ],
+    'demo': [
+        'demo/attribute_demo.xml',
     ],
     'installable': True
 }

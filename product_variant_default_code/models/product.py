@@ -62,9 +62,9 @@ def render_default_code(product, mask):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    prefix_code = fields.Char(
-        string='Prefix code',
-        help='Add prefix to product variant default code',
+    code_prefix = fields.Char(
+        string='Reference Prefix',
+        help='Add prefix to product variant reference (default code)',
     )
     reference_mask = fields.Char(
         string='Variant reference mask',
@@ -84,12 +84,14 @@ class ProductTemplate(models.Model):
              '`b-l` `r-x` ...\n'
 
              'If you like, You can even have the attribute name appear more'
-             ' than once in the mask. Such as , `fancyA/[Size]~[Color]~[Size]`'
-             ' When saved, the default code on variants will be something like'
+             ' than once in the mask. Such as,'
+             '`fancyA/[Size]~[Color]~[Size]`\n'
+             ' When saved, the default code on variants will be '
+             'something like \n'
              ' `fancyA/l~r~l` (for variant with Color "Red" and Size "L") '
-             '`fancyA/x~y~x` (for variant with Color "Yellow" and Size "XL")\n'
+             ' `fancyA/x~y~x` (for variant with Color "Yellow" and Size "XL")'
 
-             'Note: make sure characters "[,]" do not appear in your '
+             '\nNote: make sure characters "[,]" do not appear in your '
              'attribute name')
 
     def _get_default_mask(self):
@@ -97,8 +99,8 @@ class ProductTemplate(models.Model):
         default_reference_separator = self.env[
             'ir.config_parameter'].get_param('default_reference_separator')
         for line in self.attribute_line_ids:
-            attribute_names.append("[{}]".format(line.attribute_id.name))
-        default_mask = (self.prefix_code or '' +
+            attribute_names.append(u"[{}]".format(line.attribute_id.name))
+        default_mask = (self.code_prefix or '' +
                         default_reference_separator.join(attribute_names))
         return default_mask
 
