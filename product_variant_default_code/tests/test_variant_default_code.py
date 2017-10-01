@@ -11,7 +11,7 @@ class TestVariantDefaultCode(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestVariantDefaultCode, cls).setUpClass()
-        cls.sale_setting = cls.env['sale.config.settings'].create({})
+        cls.base_setting = cls.env['base.config.settings'].create({})
         cls.attr1 = cls.env['product.attribute'].create({'name': 'TSize'})
         cls.attr2 = cls.env['product.attribute'].create({'name': 'TColor'})
         cls.attr1_1 = cls.env['product.attribute.value'].create({
@@ -64,7 +64,7 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_02_check_default_codes_preexistent_mask(self):
-        self.sale_setting.group_product_default_code = 1
+        self.base_setting.group_product_default_code = 1
         for product in self.template2.mapped('product_variant_ids'):
             expected_code = (
                 'P01/' + product.attribute_value_ids.filtered(
@@ -80,7 +80,7 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.assertEqual(self.template1.reference_mask, '[TSize]-[TColor]')
 
     def test_04_custom_reference_mask(self):
-        self.sale_setting.group_product_default_code = 1
+        self.base_setting.group_product_default_code = 1
         self.template1.reference_mask = u'JKTÜ/[TColor]#[TSize]'
         for product in self.template1.mapped('product_variant_ids'):
             expected_code = (
@@ -91,7 +91,7 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_05_manual_code(self):
-        self.sale_setting.group_product_default_code = 1
+        self.base_setting.group_product_default_code = 1
         self.assertEqual(self.template1.product_variant_ids[0].manual_code,
                          False)
         self.template1.product_variant_ids[0].default_code = 'CANT-TOUCH-THIS'
@@ -126,7 +126,7 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertTrue('Od' in product.default_code)
 
     def test_08_sanitize_exception(self):
-        self.sale_setting.group_product_default_code = 1
+        self.base_setting.group_product_default_code = 1
         with self.assertRaises(UserError):
             self.env['product.template'].create({
                 'name': 'Shirt',

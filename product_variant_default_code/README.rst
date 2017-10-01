@@ -53,7 +53,7 @@ The automatically generated default value for the Variant reference mask will
 be `[Color]-[Size]` and so the 'default code' on the variants will be `Bl-L`,
 `Wh-L`, `Bl-XL` and `Wh-XL`.
 
-The mask value can be fully customizedwhatever you like. You can even have
+The mask value can be fully customized whatever you like. You can even have
 the attribute name appear more than once in the mask such as,
 `Jacket/[Size]~[Color]~[Size]`, and the generated code on variants will be
 something like `Jacket/L~Bl~L` (for variant with Color "Black" and Size "L").

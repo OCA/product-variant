@@ -15,13 +15,13 @@
     'license': 'AGPL-3',
     'category': 'Product',
     'depends': [
-        'sale',
+        'product',
     ],
     'data': [
         'views/product_attribute_value_view.xml',
         'views/product_attribute_view.xml',
         'views/product_view.xml',
-        'views/sale_config_settings_view.xml',
+        'views/config_settings_view.xml',
         'data/ir_config_parameter.xml',
         'security/product_security.xml',
     ],

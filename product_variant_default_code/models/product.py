@@ -63,7 +63,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     code_prefix = fields.Char(
-        string='Reference Prefix',
+        string='Reference Prefix', oldname='prefix_code',
         help='Add prefix to product variant reference (default code)',
     )
     reference_mask = fields.Char(
@@ -138,7 +138,7 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    manual_code = fields.Boolean(string='Manual code')
+    manual_code = fields.Boolean(string='Manual Reference')
 
     @api.model
     def create(self, vals):
