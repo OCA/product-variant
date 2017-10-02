@@ -12,6 +12,8 @@ class TestVariantDefaultCode(common.SavepointCase):
     def setUpClass(cls):
         super(TestVariantDefaultCode, cls).setUpClass()
         cls.base_setting = cls.env['base.config.settings'].create({})
+        cls.group_default_code = cls.env.ref(
+            'product_variant_default_code.group_product_default_code')
         cls.attr1 = cls.env['product.attribute'].create({'name': 'TSize'})
         cls.attr2 = cls.env['product.attribute'].create({'name': 'TColor'})
         cls.attr1_1 = cls.env['product.attribute.value'].create({
@@ -65,6 +67,7 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_02_check_default_codes_preexistent_mask(self):
         self.base_setting.group_product_default_code = 1
+        self.env.user.groups_id |= self.group_default_code
         for product in self.template2.mapped('product_variant_ids'):
             expected_code = (
                 'P01/' + product.attribute_value_ids.filtered(
@@ -81,6 +84,7 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_04_custom_reference_mask(self):
         self.base_setting.group_product_default_code = 1
+        self.env.user.groups_id |= self.group_default_code
         self.template1.reference_mask = u'JKTÜ/[TColor]#[TSize]'
         for product in self.template1.mapped('product_variant_ids'):
             expected_code = (
@@ -92,6 +96,7 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_05_manual_code(self):
         self.base_setting.group_product_default_code = 1
+        self.env.user.groups_id |= self.group_default_code
         self.assertEqual(self.template1.product_variant_ids[0].manual_code,
                          False)
         self.template1.product_variant_ids[0].default_code = 'CANT-TOUCH-THIS'
@@ -127,6 +132,7 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_08_sanitize_exception(self):
         self.base_setting.group_product_default_code = 1
+        self.env.user.groups_id |= self.group_default_code
         with self.assertRaises(UserError):
             self.env['product.template'].create({
                 'name': 'Shirt',
