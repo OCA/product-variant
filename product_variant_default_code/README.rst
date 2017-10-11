@@ -6,7 +6,10 @@
 Product Variant Default Code
 ============================
 
-This module allows to define a reference mask on the product templates so the
+This module automatically generate Product Reference (default_code)
+according to attributes data with a configurable behavior.
+
+It defines a reference mask on the product templates so the
 variants references are automatically set. For example:
 
 - Product template: Jacket
@@ -50,7 +53,7 @@ The automatically generated default value for the Variant reference mask will
 be `[Color]-[Size]` and so the 'default code' on the variants will be `Bl-L`,
 `Wh-L`, `Bl-XL` and `Wh-XL`.
 
-The mask value can be fully custumizedwhatever you like. You can even have
+The mask value can be fully customized whatever you like. You can even have
 the attribute name appear more than once in the mask such as,
 `Jacket/[Size]~[Color]~[Size]`, and the generated code on variants will be
 something like `Jacket/L~Bl~L` (for variant with Color "Black" and Size "L").
@@ -77,6 +80,13 @@ Unset `manual code` and the reference code will be unlocked again.
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/137/10.0
 
+
+Known issues / Roadmap
+======================
+
+In case of attribute name update, related mask are not updated.
+
+  
 Bug Tracker
 ===========
 
@@ -100,6 +110,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Tony Gu <tony@openerp.cn>
 * David Vidal <david.vidal@tecnativa.com>
+* David Beal <david.beal@akretion.com>
 
 Maintainer
 ----------
