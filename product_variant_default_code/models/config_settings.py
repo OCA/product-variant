@@ -5,14 +5,15 @@
 from odoo import fields, models
 
 
-class SaleConfiguration(models.TransientModel):
-    _inherit = 'sale.config.settings'
+class BaseConfiguration(models.TransientModel):
+    _inherit = 'base.config.settings'
 
     group_product_default_code = fields.Selection([
         (0, 'Automask'),
         (1, 'Manual Mask')],
         string='Product Default Code behaviour',
-        help='Set behaviour of codes',
+        help='Set behaviour of codes (depends on variant use: '
+             'see Sales/Purchases configuration)',
         implied_group='product_variant_default_code'
                       '.group_product_default_code',
     )

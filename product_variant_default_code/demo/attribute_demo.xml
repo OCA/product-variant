@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo noupdate="1">
+
+    <record id="product.product_attribute_1" model="product.attribute">
+        <!-- Memory -->
+        <field name="code">M</field>
+    </record>
+
+    <record id="product.product_attribute_2" model="product.attribute">
+        <!-- Color -->
+        <field name="code">C</field>
+    </record>
+
+    <record id="product.product_attribute_3" model="product.attribute">
+        <!-- Wifi -->
+        <field name="code">W</field>
+    </record>
+
+</odoo>
