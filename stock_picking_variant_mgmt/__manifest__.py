@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Handle easily multiple variants on Stock Pickings',
     'summary': 'Handle the addition/removal of multiple variants and the '
                'quantities transferred in the Pickings.',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': 'Tecnativa,'
               'Odoo Community Association (OCA)',
     'category': 'Inventory, Logistics, Warehousing',
@@ -16,7 +16,6 @@
         'stock',
         'web_widget_x2many_2d_matrix',
     ],
-    'demo': [],
     'data': [
         'wizard/stock_manage_variant_view.xml',
         'wizard/stock_transfer_manage_variant_view.xml',

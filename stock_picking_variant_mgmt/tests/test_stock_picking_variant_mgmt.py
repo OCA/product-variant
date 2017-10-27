@@ -2,7 +2,7 @@
 # Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 @common.at_install(False)
@@ -44,31 +44,25 @@ class TestStockPickingVariantMgmt(common.SavepointCase):
         })
         cls.Move = cls.env['stock.move']
         cls.product1 = cls.product_tmpl.product_variant_ids[0]
-        move_vals = cls.Move.onchange_product_id(
-            prod_id=cls.product1.id,
-            loc_id=cls.picking.location_id.id,
-            loc_dest_id=cls.picking.location_dest_id.id,
-            partner_id=cls.picking.partner_id.id,
-        ).get('value', {})
-        move_vals.update({
+        cls.move1 = cls.Move.create({
             'product_id': cls.product1.id,
+            'location_id': cls.picking.location_id.id,
+            'location_dest_id': cls.picking.location_dest_id.id,
             'picking_id': cls.picking.id,
+            'name': cls.product1.partner_ref,
+            'product_uom': cls.product1.uom_id.id,
             'product_uom_qty': 1,
         })
-        cls.move1 = cls.Move.create(move_vals)
         cls.product2 = cls.product_tmpl.product_variant_ids[1]
-        move_vals = cls.Move.onchange_product_id(
-            prod_id=cls.product2.id,
-            loc_id=cls.picking.location_id.id,
-            loc_dest_id=cls.picking.location_dest_id.id,
-            partner_id=cls.picking.partner_id.id,
-        ).get('value', {})
-        move_vals.update({
+        cls.move2 = cls.Move.create({
             'product_id': cls.product2.id,
+            'location_id': cls.picking.location_id.id,
+            'location_dest_id': cls.picking.location_dest_id.id,
             'picking_id': cls.picking.id,
+            'name': cls.product2.partner_ref,
+            'product_uom': cls.product2.uom_id.id,
             'product_uom_qty': 2,
         })
-        cls.move2 = cls.Move.create(move_vals)
         cls.Wizard = cls.env['stock.manage.variant'].with_context(
             active_ids=cls.picking.ids, active_id=cls.picking.id,
             active_model=cls.picking._name,
@@ -76,18 +70,15 @@ class TestStockPickingVariantMgmt(common.SavepointCase):
         cls.product_single = cls.env['product.product'].create({
             'name': 'Product without variants',
         })
-        move_vals = cls.Move.onchange_product_id(
-            prod_id=cls.product_single.id,
-            loc_id=cls.picking.location_id.id,
-            loc_dest_id=cls.picking.location_dest_id.id,
-            partner_id=cls.picking.partner_id.id,
-        ).get('value', {})
-        move_vals.update({
+        cls.move3 = cls.Move.create({
             'product_id': cls.product_single.id,
+            'location_id': cls.picking.location_id.id,
+            'location_dest_id': cls.picking.location_dest_id.id,
             'picking_id': cls.picking.id,
+            'name': cls.product_single.partner_ref,
+            'product_uom': cls.product_single.uom_id.id,
             'product_uom_qty': 2,
         })
-        cls.move3 = cls.Move.create(move_vals)
 
     def test_add_variants(self):
         self.move1.unlink()

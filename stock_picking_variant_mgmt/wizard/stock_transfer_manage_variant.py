@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import openerp.addons.decimal_precision as dp
-from openerp import _, api, models, fields
+from odoo import _, api, models, fields
 
 
 class StockTransferManageVariant(models.TransientModel):
@@ -85,5 +85,5 @@ class StockTransferManageVariantLine(models.TransientModel):
     value_y_label = fields.Char()
     qty_done = fields.Float(
         string="Quantity",
-        digits_compute=dp.get_precision('Product Unit of Measure'),
+        digits=dp.get_precision('Product Unit of Measure'),
     )

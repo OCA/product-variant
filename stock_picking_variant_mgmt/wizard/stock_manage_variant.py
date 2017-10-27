@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import openerp.addons.decimal_precision as dp
-from openerp import api, models, fields
+from odoo import api, models, fields
 
 
 class StockManageVariant(models.TransientModel):
@@ -90,20 +90,15 @@ class StockManageVariant(models.TransientModel):
                     move.do_unreserve()
                     move.action_assign()
             elif line.product_uom_qty:
-                move_vals = {
+                move = Move.new({
                     'product_id': line.product_id.id,
                     'picking_id': picking.id,
-                }
-                move_vals.update(
-                    Move.onchange_product_id(
-                        prod_id=line.product_id.id,
-                        loc_id=picking.location_id.id,
-                        loc_dest_id=picking.location_dest_id.id,
-                        partner_id=picking.partner_id.id,
-                    ).get('value', {})
-                )
-                move_vals['product_uom_qty'] = line.product_uom_qty
-                Move.create(move_vals)
+                    'location_id': picking.location_id.id,
+                    'location_dest_id': picking.location_dest_id.id,
+                })
+                move.onchange_product_id()
+                move.product_uom_qty = line.product_uom_qty
+                Move.create(move._convert_to_write(move._cache))
         # With this we assure integrity
         if picking.state != 'draft':  # pragma: no cover
             picking.do_prepare_partial()
@@ -121,5 +116,5 @@ class StockManageVariantLine(models.TransientModel):
     value_y = fields.Many2one(comodel_name='product.attribute.value')
     product_uom_qty = fields.Float(
         string="Quantity",
-        digits_compute=dp.get_precision('Product Unit of Measure'),
+        digits=dp.get_precision('Product Unit of Measure'),
     )
