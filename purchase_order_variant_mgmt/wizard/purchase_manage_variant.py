@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import openerp.addons.decimal_precision as dp
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class PurchaseManageVariant(models.TransientModel):
@@ -104,4 +104,5 @@ class PurchaseManageVariantLine(models.TransientModel):
     value_x = fields.Many2one(comodel_name='product.attribute.value')
     value_y = fields.Many2one(comodel_name='product.attribute.value')
     product_uom_qty = fields.Float(
-        string="Quantity", digits_compute=dp.get_precision('Product UoS'))
+        string="Quantity", digits=dp.get_precision('Product UoS'),
+    )
