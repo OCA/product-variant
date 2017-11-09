@@ -70,26 +70,27 @@ class SaleManageVariant(models.TransientModel):
             sale_order = record
         OrderLine = self.env['sale.order.line']
         lines2unlink = OrderLine
-        for line in self.variant_line_ids:
-            order_line = sale_order.order_line.filtered(
-                lambda x: x.product_id == line.product_id)
-            if order_line:
-                if not line.product_uom_qty:
-                    # Done this way because there's a side effect removing here
-                    lines2unlink |= order_line
-                else:
-                    order_line.product_uom_qty = line.product_uom_qty
-            elif line.product_uom_qty:
-                order_line = OrderLine.new({
-                    'product_id': line.product_id.id,
-                    'product_uom': line.product_id.uom_id,
-                    'product_uom_qty': line.product_uom_qty,
-                    'order_id': sale_order.id,
-                })
-                order_line.product_id_change()
-                order_line_vals = order_line._convert_to_write(
-                    order_line._cache)
-                sale_order.order_line.create(order_line_vals)
+        for value_y in self.variant_line_ids.mapped('value_y'):
+            for line in self.variant_line_ids.filtered(lambda v: v.value_y == value_y):
+                order_line = sale_order.order_line.filtered(
+                    lambda x: x.product_id == line.product_id)
+                if order_line:
+                    if not line.product_uom_qty:
+                        # Done this way because there's a side effect removing here
+                        lines2unlink |= order_line
+                    else:
+                        order_line.product_uom_qty = line.product_uom_qty
+                elif line.product_uom_qty:
+                    order_line = OrderLine.new({
+                        'product_id': line.product_id.id,
+                        'product_uom': line.product_id.uom_id,
+                        'product_uom_qty': line.product_uom_qty,
+                        'order_id': sale_order.id,
+                    })
+                    order_line.product_id_change()
+                    order_line_vals = order_line._convert_to_write(
+                        order_line._cache)
+                    sale_order.order_line.create(order_line_vals)
         lines2unlink.unlink()
 
 
