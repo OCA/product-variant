@@ -20,5 +20,6 @@ addon | version | summary
 [purchase_order_variant_mgmt](purchase_order_variant_mgmt/) | 10.0.1.0.0 | Handle the addition/removal of multiple variants from product template into the purchase order
 [sale_order_line_variant_description](sale_order_line_variant_description/) | 10.0.1.0.0 | Sale order line variant description
 [sale_order_variant_mgmt](sale_order_variant_mgmt/) | 10.0.1.0.0 | Handle the addition/removal of multiple variants from product template into the sales order
+[stock_picking_variant_mgmt](stock_picking_variant_mgmt/) | 10.0.1.0.0 | Handle the addition/removal of multiple variants and the quantities transferred in the Pickings.
 
 [//]: # (end addons)
