@@ -6,10 +6,10 @@
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-08 10:01+0000\n"
-"PO-Revision-Date: 2017-01-08 10:01+0000\n"
+"POT-Creation-Date: 2017-11-30 03:46+0000\n"
+"PO-Revision-Date: 2017-11-30 03:46+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Romanian (https://www.transifex.com/oca/teams/23907/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -58,23 +58,18 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_date
 msgid "Created on"
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_taxes_id
-msgid "Customer Taxes"
-msgstr ""
+msgstr "Creat la"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_display_name
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nume Afişat"
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
@@ -87,36 +82,26 @@ msgid "Don't create variants automatically"
 msgstr ""
 
 #. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_property_account_expense_id
-msgid "Expense Account"
-msgstr ""
-
-#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_id
 msgid "ID"
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_property_account_income_id
-msgid "Income Account"
-msgstr ""
+msgstr "ID"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator___last_update
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima actualizare în"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizare făcută de"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualizare la"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_name
@@ -187,7 +172,7 @@ msgstr "Produs șablon"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_product_attribute_ids
 msgid "Product attributes"
-msgstr "Atribute produs"
+msgstr ""
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_configurator.py:190
@@ -206,23 +191,9 @@ msgid "The attribute already exists for this product"
 msgstr ""
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_product.py:78
+#: code:addons/product_variant_configurator/models/product_product.py:79
 #, python-format
 msgid "There's another product with the same attributes."
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product_property_account_expense_id
-msgid ""
-"This account will be used for invoices instead of the default one to value "
-"expenses for the current product."
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product_property_account_income_id
-msgid ""
-"This account will be used for invoices instead of the default one to value "
-"sales for the current product."
 msgstr ""
 
 #. module: product_variant_configurator
@@ -269,7 +240,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:product_variant_configurator.attribute_price_action
 #: model:ir.ui.view,arch_db:product_variant_configurator.attribute_price_tree_view
 msgid "Variant Values"
-msgstr "Valori variantă"
+msgstr ""
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_no_create_variants
@@ -278,12 +249,7 @@ msgid "Variant creation"
 msgstr ""
 
 #. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_supplier_taxes_id
-msgid "Vendor Taxes"
-msgstr ""
-
-#. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_product.py:94
+#: code:addons/product_variant_configurator/models/product_product.py:99
 #, python-format
 msgid "You have to fill all the attributes values."
 msgstr ""
