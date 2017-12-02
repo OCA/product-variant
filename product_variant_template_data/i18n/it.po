@@ -1,21 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* product_variant_template_data
-#
+# * product_variant_template_data
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 11:57+0000\n"
-"PO-Revision-Date: 2017-07-07 13:58+0200\n"
-"Last-Translator: Alex Comba <alex.comba@agilebg.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2017-11-30 03:46+0000\n"
+"PO-Revision-Date: 2017-11-30 03:46+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: \n"
 "Language: it\n"
-"X-Generator: Poedit 2.0.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: product_variant_template_data
 #: model:ir.model,name:product_variant_template_data.model_product_product
@@ -25,14 +26,14 @@ msgstr "Prodotto"
 #. module: product_variant_template_data
 #: model:ir.model,name:product_variant_template_data.model_product_template
 msgid "Product Template"
-msgstr "Template prodotto"
+msgstr "Template Prodotto"
 
 #. module: product_variant_template_data
 #: model:ir.ui.view,arch_db:product_variant_template_data.product_variant_easy_edit_view
 msgid "Sale Conditions"
-msgstr "Condizioni di vendita"
+msgstr ""
 
 #. module: product_variant_template_data
 #: model:ir.ui.view,arch_db:product_variant_template_data.product_variant_easy_edit_view
 msgid "days"
-msgstr "giorni"
+msgstr ""
