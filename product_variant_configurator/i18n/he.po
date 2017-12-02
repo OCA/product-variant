@@ -11,12 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-11-30 03:46+0000\n"
 "PO-Revision-Date: 2017-11-30 03:46+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Language-Team: Hebrew (https://www.transifex.com/oca/teams/23907/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_price_attribute_id
@@ -58,18 +58,18 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_uid
 msgid "Created by"
-msgstr "Criado por"
+msgstr "נוצר על ידי"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_date
 msgid "Created on"
-msgstr "Criado em"
+msgstr "נוצר ב-"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_display_name
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_display_name
 msgid "Display Name"
-msgstr "Nome para Mostrar"
+msgstr "השם המוצג"
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
@@ -85,23 +85,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_id
 msgid "ID"
-msgstr "Identificação"
+msgstr "מזהה"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator___last_update
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute___last_update
 msgid "Last Modified on"
-msgstr "Última atualização em"
+msgstr "תאריך שינוי אחרון"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_write_uid
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr "עודכן לאחרונה על ידי"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_write_date
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr "עודכן לאחרונה על"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_name
@@ -153,7 +153,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_product_id
 msgid "Product"
-msgstr "Produto"
+msgstr ""
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_category
@@ -166,7 +166,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_tmpl_id
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "Product Template"
-msgstr "Modelo Produto"
+msgstr ""
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_attribute_ids
