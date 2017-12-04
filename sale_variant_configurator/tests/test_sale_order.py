@@ -138,7 +138,6 @@ class TestSaleOrder(common.SavepointCase):
             'product_tmpl_id': self.product_template_yes.id,
             'price_unit': 100,
             'name': 'Line 1',
-            'product_qty': 1,
             'product_uom': self.product_template_yes.uom_id.id,
         })
         self.assertFalse(line.can_create_product)
