@@ -7,7 +7,7 @@
 {
     "name": "Purchase - Product variants",
     "summary": "Product variants in purchase management",
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.1.0',
     "license": "AGPL-3",
     "depends": [
         "purchase",
@@ -21,7 +21,6 @@
     "website": "http://www.odoomrp.com",
     "data": [
         "views/inherited_purchase_order_views.xml",
-        "views/inherited_product_product_views.xml"
     ],
     "installable": True,
     "post_init_hook": "assign_product_template",
