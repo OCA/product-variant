@@ -13,10 +13,13 @@
                 </xpath>
                 <xpath expr="//field[@name='order_line']/form/sheet/group" position="before">
                     <group>
-                        <field name="product_tmpl_id"/>
+                        <field name="state" invisible="1"/>
+                        <!-- HACK: readonly condition is set with an `in` clause instead of a `not in` for allowing on new created lines to be writeable, as
+                             state field is a related one that is not filled until saved -->
+                        <field name="product_tmpl_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"/>
                         <field name="product_attribute_ids" widget="one2many"
                                context="{'default_owner_model': 'purchase.order.line'}"
-                               attrs="{'invisible': [('product_attribute_ids','=',[])]}"
+                               attrs="{'invisible': [('product_attribute_ids','=',[])], 'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
                                nolabel="1" colspan="2">
                             <tree create="0" delete="0" editable="1">
                                 <field name="owner_model" invisible="1"/>
@@ -25,8 +28,6 @@
                                 <field name="possible_value_ids" widget="many2many_tags" invisible="1"/>
                                 <field name="product_tmpl_id" invisible="1"/>
                                 <field name="value_id"/>
-                                <!-- TODO price_extra is for sale only for now -->
-                                <!--field name="price_extra"/-->
                             </tree>
                         </field>
                         <field name="can_create_product" invisible="1"/>
@@ -35,8 +36,10 @@
                             [('can_create_product', '=', False)]}"/>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}</attribute>
+                </xpath>
             </field>
         </record>
-
 
 </odoo>
