@@ -8,17 +8,7 @@ from odoo import models
 
 
 class ProductTemplate(models.Model):
-
     _inherit = 'product.template'
-
-    def _select_seller(self, partner_id=False, quantity=0.0, date=None,
-                       uom_id=False):
-        """ Make use of ProductProduct _select_seller method """
-        self.ensure_one()
-        product = self._product_from_tmpl()
-        return product._select_seller(
-            partner_id=partner_id, quantity=quantity, date=date, uom_id=uom_id,
-        )
 
     def _product_from_tmpl(self):
         """ Creates a product in memory from template to use its methods """
