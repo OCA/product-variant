@@ -20,6 +20,9 @@
                     <field name="no_create_variants" nolabel="0"/>
                 </group>
             </field>
+            <xpath expr="//field[@name='attribute_line_ids']//field[@name='attribute_id']" position="after">
+                <field name="required" />
+            </xpath>
         </field>
     </record>
 
