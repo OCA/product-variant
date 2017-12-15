@@ -38,15 +38,14 @@ msgstr "Puede crear producto"
 #: code:addons/product_variant_configurator/models/product_template.py:32
 #, python-format
 msgid "Change warning!"
-msgstr "¡Aviso de cambio!"
+msgstr "Aviso de cambio"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:24
 #: code:addons/product_variant_configurator/models/product_template.py:33
 #, python-format
 msgid "Changing this parameter may cause automatic variants creation"
-msgstr ""
-"Cambiar este parámetro puede provocar la creación automática de variantes"
+msgstr "Cambiando este parámetro puede causar la creación automática de variantes"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_create_product_variant
@@ -127,7 +126,7 @@ msgstr "Modelo propietario"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_possible_value_ids
 msgid "Possible value ids"
-msgstr "Valor posible ids"
+msgstr "Posibles valores"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator_price_extra
@@ -196,14 +195,17 @@ msgstr "Atributos de producto"
 #: code:addons/product_variant_configurator/models/product_configurator.py:190
 #, python-format
 msgid "Product not created!"
-msgstr "¡Producto no creado!"
+msgstr "Producto no creado"
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_line_required
+msgid "Required"
+msgstr "Requerido"
 
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "Select a template for a variant. Keep empty for a new full product."
-msgstr ""
-"Seleccionar una plantilla para una variante. Dejar vacío para un nuevo "
-"producto completo."
+msgstr "Seleccione una plantilla para crear una variante. Déjela en blanco para crear un producto totalmente nuevo."
 
 #. module: product_variant_configurator
 #: sql_constraint:product.attribute.line:0
@@ -221,9 +223,7 @@ msgstr "Hay otro producto con los mismos atributos."
 msgid ""
 "This check disables the automatic creation of product variants for all the "
 "products of this category."
-msgstr ""
-"Esta opción deshabilita la creación automática de variantes de producto para"
-" todos los productos de esta categoría."
+msgstr "Esta casilla deshabilita la creación automática de variantes de producto para todos los productos de esta categoría"
 
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
@@ -236,9 +236,7 @@ msgstr "Este producto ya existe."
 msgid ""
 "This selection defines if variants for all attribute combinations are going "
 "to be created automatically at saving time."
-msgstr ""
-"Esta selección define si las variantes para todas las combinaciones de "
-"atributos se van a crear automáticamente en el momento de grabar."
+msgstr "Esta selección define si las variantes para todas las combinaciones de atributos van a ser creadas automáticamente en el momento de guardar."
 
 #. module: product_variant_configurator
 #: model:res.groups,name:product_variant_configurator.group_product_variant_extended_description
@@ -258,7 +256,7 @@ msgstr "Valor"
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_template_no_variant_form_view
 msgid "Variant Sale Prices"
-msgstr "Precios de venta de variante"
+msgstr "Precios de venta de variantes"
 
 #. module: product_variant_configurator
 #: model:ir.actions.act_window,name:product_variant_configurator.attribute_price_action
@@ -275,8 +273,8 @@ msgstr "Creación de variante"
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_product.py:99
 #, python-format
-msgid "You have to fill all the attributes values."
-msgstr "Debe rellenar todos los valores de atributos."
+msgid "You have to fill the following attributes:\n%s"
+msgstr "Tiene que rellenar los siguientes atributos:\n%s"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_line
