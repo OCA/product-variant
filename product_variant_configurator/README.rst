@@ -46,7 +46,7 @@ Usage
 #. Select all the attribute values and click on "Save" button.
 #. A new product variant will be created for that attributes.
 #. An error will raise if there's another variant with the same attribute
-   values or if you haven't filled all the values.
+   values or if you haven't filled all the required values.
 
 Developers
 ----------
