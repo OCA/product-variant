@@ -83,7 +83,9 @@ class ProductProduct(models.Model):
         """The method checks that the current selection values are correct.
 
         As default, the validity means that all the attributes
-        values are set. This can be overridden to set another rules.
+        with the required flag are set.
+
+        This can be overridden to set another rules.
 
         :raises: exceptions.ValidationError: If the check is not valid.
         """
@@ -92,11 +94,17 @@ class ProductProduct(models.Model):
         if self.env.context.get('creating_variants'):
             return
         for product in self:
-            if bool(product.product_tmpl_id.attribute_line_ids.mapped(
-                    'attribute_id') -
-                    product.attribute_value_ids.mapped('attribute_id')):
+            req_attrs = product.product_tmpl_id.attribute_line_ids.filtered(
+                lambda a: a.required
+            ).mapped('attribute_id')
+            errors = (
+                req_attrs - product.attribute_value_ids.mapped('attribute_id')
+            )
+            if errors:
                 raise exceptions.ValidationError(
-                    _("You have to fill all the attributes values."))
+                    _("You have to fill the following attributes:\n%s") %
+                    "\n".join(errors.mapped('name'))
+                )
 
     @api.model
     def create(self, vals):
