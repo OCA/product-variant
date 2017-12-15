@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # Copyright 2015 Oihane Crucelaegui (AvanzOSC)
-# Copyright 2015-2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
+# Copyright 2015-2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Product Variant Configurator',
     'summary': """
         Provides an abstract model for product variant configuration.""",
-    'version': '10.0.1.0.1',
+    'version': '10.0.2.0.0',
     'category': 'Product Variant',
     'license': 'AGPL-3',
     'author': 'AvanzOSC,'

@@ -262,17 +262,29 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]}),
                 (0, 0, {'attribute_id': self.attribute2.id,
                         'value_ids': [(6, 0, [self.value3.id,
-                                              self.value4.id])]})
+                                              self.value4.id])],
+                        'required': False, }),
             ],
         })
+        # This one shouldn't fail
+        self.product_product.create({
+            'name': 'Test product Check',
+            'product_tmpl_id': tmpl.id,
+            'product_attribute_ids': [(0, 0, {
+                'product_tmpl_id': tmpl.id,
+                'attribute_id': self.attribute1.id,
+                'value_id': self.value1.id,
+            })]
+        })
+        # And this one should
         with self.cr.savepoint(), self.assertRaises(ValidationError):
             self.product_product.create({
                 'name': 'Test product Check',
                 'product_tmpl_id': tmpl.id,
                 'product_attribute_ids': [(0, 0, {
                     'product_tmpl_id': tmpl.id,
-                    'attribute_id': self.attribute1.id,
-                    'value_id': None
+                    'attribute_id': self.attribute2.id,
+                    'value_id': self.value3.id,
                 })]
             })
 
