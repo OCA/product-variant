@@ -25,7 +25,7 @@ class TestSaleOrder(common.SavepointCase):
             'name': 'No create variants category',
         })
         cls.attribute1 = cls.product_attribute.create({
-            'name': 'Color',
+            'name': 'Color (sale_variante_configurator)',
         })
         cls.value1 = cls.product_attribute_value.create({
             'name': 'Red',
