@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 02:12+0000\n"
-"PO-Revision-Date: 2017-12-16 02:12+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2018-02-23 02:10+0000\n"
+"PO-Revision-Date: 2018-02-23 02:10+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_price_attribute_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Atribut"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_can_create_product
@@ -30,14 +31,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_can_create_product
 msgid "Can create product"
-msgstr ""
+msgstr "Može napraviti proizvod"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:23
 #: code:addons/product_variant_configurator/models/product_template.py:32
 #, python-format
 msgid "Change warning!"
-msgstr ""
+msgstr "Upozorenje Izmjena!"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:24
@@ -52,12 +53,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_create_product_variant
 #: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_create_product_variant
 msgid "Create product now!"
-msgstr ""
+msgstr "Kreiraj proizvod sada!"
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
 msgid "Create them automatically"
-msgstr ""
+msgstr "Kreiraj ih automatski"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_create_uid
@@ -78,12 +79,12 @@ msgstr "Naziv za prikaz"
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
 msgid "Don't create them automatically"
-msgstr ""
+msgstr "Nemoj ih kreirati automatski"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_category_no_create_variants
 msgid "Don't create variants automatically"
-msgstr ""
+msgstr "Ne kreiraj varijante automatski"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_id
@@ -110,22 +111,22 @@ msgstr "Vrijeme promjene"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_name
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_owner_id
 msgid "Owner"
-msgstr ""
+msgstr "Vlasnik"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_owner_model
 msgid "Owner model"
-msgstr ""
+msgstr "Model vlasnika"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_possible_value_ids
 msgid "Possible value ids"
-msgstr ""
+msgstr "ID mogućih vrijednosti"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator_price_extra
@@ -149,24 +150,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_price_extra
 #: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_price_extra
 msgid "Price extra"
-msgstr ""
+msgstr "Extra cijena"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
 msgid "Pricelist"
-msgstr ""
+msgstr "Cjenik"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_product_id
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Kategorija proizvoda"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_template
@@ -183,13 +184,18 @@ msgstr "Predložak proizvoda"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_product_attribute_ids
 msgid "Product attributes"
-msgstr ""
+msgstr "Atributi proizvoda"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_configurator.py:190
 #, python-format
 msgid "Product not created!"
-msgstr ""
+msgstr "Proizvod nije kreiran!"
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_line_required
+msgid "Required"
+msgstr "Obavezno"
 
 #. module: product_variant_configurator
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
@@ -260,9 +266,11 @@ msgid "Variant creation"
 msgstr ""
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_product.py:99
+#: code:addons/product_variant_configurator/models/product_product.py:105
 #, python-format
-msgid "You have to fill all the attributes values."
+msgid ""
+"You have to fill the following attributes:\n"
+"%s"
 msgstr ""
 
 #. module: product_variant_configurator
