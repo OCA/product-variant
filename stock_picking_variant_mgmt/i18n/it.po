@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Paolo Valier <paolo.valier@hotmail.it>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 03:46+0000\n"
-"PO-Revision-Date: 2017-11-30 03:46+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-30 08:37+0000\n"
+"PO-Revision-Date: 2017-12-30 08:37+0000\n"
+"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.view_picking_form
 msgid "Add or Modify Variants"
-msgstr ""
+msgstr "Aggiungi o Modifica Varianti"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_move_product_attribute_value_ids
@@ -54,7 +55,7 @@ msgstr "Creato il"
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_disabled
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Disabilitato"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_display_name
@@ -99,12 +100,12 @@ msgstr "Ultimo aggiornamento il"
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_variant_line_ids
 msgid "Lines"
-msgstr ""
+msgstr "Right"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_manage_variant_form
 msgid "Manage Product Variants"
-msgstr ""
+msgstr "Gestisci le Varianti Prodotto"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.actions.act_window,name:stock_picking_variant_mgmt.action_stock_transfer_manage_variant
@@ -116,12 +117,12 @@ msgstr ""
 #. module: stock_picking_variant_mgmt
 #: model:ir.actions.act_window,name:stock_picking_variant_mgmt.action_stock_manage_variant
 msgid "Manage variants"
-msgstr ""
+msgstr "Gestisci varianti"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.view_move_picking_tree
 msgid "Modify Variants"
-msgstr ""
+msgstr "Modifica Varianti"
 
 #. module: stock_picking_variant_mgmt
 #: code:addons/stock_picking_variant_mgmt/wizard/stock_transfer_manage_variant.py:50
@@ -149,13 +150,13 @@ msgstr "Modello"
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_manage_variant_form
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_transfer_manage_variant_form
 msgid "Transfer to picking"
-msgstr ""
+msgstr "Trasferisci a picking"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_value_x
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_x
 msgid "Value x"
-msgstr ""
+msgstr "Valore x"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_x_label
@@ -166,7 +167,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_value_y
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_y
 msgid "Value y"
-msgstr ""
+msgstr "Valore y"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_y_label
@@ -187,19 +188,19 @@ msgstr "Righe della Variante"
 #. module: stock_picking_variant_mgmt
 #: model:ir.model,name:stock_picking_variant_mgmt.model_stock_manage_variant
 msgid "stock.manage.variant"
-msgstr ""
+msgstr "stock.manage.variant"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model,name:stock_picking_variant_mgmt.model_stock_manage_variant_line
 msgid "stock.manage.variant.line"
-msgstr ""
+msgstr "stock.manage.variant.line"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model,name:stock_picking_variant_mgmt.model_stock_transfer_manage_variant
 msgid "stock.transfer.manage.variant"
-msgstr ""
+msgstr "stock.transfer.manage.variant"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model,name:stock_picking_variant_mgmt.model_stock_transfer_manage_variant_line
 msgid "stock.transfer.manage.variant.line"
-msgstr ""
+msgstr "stock.transfer.manage.variant.line"
