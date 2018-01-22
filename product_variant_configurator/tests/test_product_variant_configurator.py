@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 Tecnativa - David Vidal
@@ -94,13 +93,13 @@ class TestProductVariantConfigurator(SavepointCase):
                         'value_ids': [(6, 0, [self.value1.id,
                                               self.value2.id])]})],
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'no_create_variants': 'yes',
         })
         # default behavior: one variant should be created
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_no_create_variants_category(self):
         self.assertTrue(self.category1.no_create_variants)
@@ -113,14 +112,14 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category1.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         # default behavior: one variant should be created
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_create_variants(self):
         tmpl = self.product_template.create({
@@ -131,12 +130,12 @@ class TestProductVariantConfigurator(SavepointCase):
                         'value_ids': [(6, 0, [self.value1.id,
                                               self.value2.id])]})],
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'no_create_variants': 'no',
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_update_product_tempalte(self):
         tmpl = self.product_template.create({
@@ -171,13 +170,13 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category2.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_category_change(self):
         self.assertTrue(self.category1.no_create_variants)
@@ -190,25 +189,25 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         self.category1.no_create_variants = False
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
 
     def test_open_attribute_prices(self):
         result = self.product_template_yes.action_open_attribute_prices()
-        self.assertEqual(result['type'], u'ir.actions.act_window')
+        self.assertEqual(result['type'], 'ir.actions.act_window')
 
     def test_get_product_attributes_dict(self):
         attrs_dict = self.product_template_yes._get_product_attributes_dict()
-        self.assertEquals(len(attrs_dict), 1)
-        self.assertEquals(len(attrs_dict[0]), 1)
+        self.assertEqual(len(attrs_dict), 1)
+        self.assertEqual(len(attrs_dict[0]), 1)
 
     def test_get_product_description(self):
         product = self.product_product.create({
             'name': 'Test product',
             'product_tmpl_id': self.product_template_yes.id
         })
-        self.assertEquals(product._get_product_description(
+        self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
         self.current_user = self.env.user
@@ -217,7 +216,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'product_variant_configurator.'
             'group_product_variant_extended_description')
         self.env.ref(group_id).write({'users': [(4, self.current_user.id)]})
-        self.assertEquals(product._get_product_description(
+        self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
 
@@ -236,7 +235,7 @@ class TestProductVariantConfigurator(SavepointCase):
         })
         product.product_tmpl_id = self.product_template_empty_yes
         res = product._onchange_product_tmpl_id_configurator()
-        self.assertEquals(
+        self.assertEqual(
             res, {'domain': {'product_id': [
                 ('product_tmpl_id', '=',
                  self.product_template_empty_yes.id)]}})
@@ -353,7 +352,7 @@ class TestProductVariantConfigurator(SavepointCase):
         })
         product1.product_id = product2
         product1._onchange_product_id_configurator()
-        self.assertEquals(product1.product_id.id, product2.id)
+        self.assertEqual(product1.product_id.id, product2.id)
 
     def test_get_product_attributes_values_dict(self):
         product = self.product_product.create({

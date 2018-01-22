@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
 ============================
@@ -19,26 +19,26 @@ template.
 Configuration
 =============
 
-(after installing `sales` application)
+(after installing `sale_management` application)
 
 To configure the creation of the variants behaviour, you need to:
 
-#. Go to ``Sales > Settings > Configuration``, and select "Products can have
-   several attributes, defining variants (Example: size, color,...)" on
-   "Product Variants" section.
-#. Go to ``Sales > Products``, and select a product.
+#. Go to ``Sales > Configuration > Settings``, and select "Attributes and
+   Variants (Set product attributes (e.g. color, size) to sell variants)" on
+   "Product Catalog" section.
+#. Go to ``Sales > Catalog > Products``, and select a product.
 #. On the Variants tab edit the value of the field ``Variant Creation``.
 #. If you want to stop the automatic creation of the variant, and have the same
-   behaviour for all the products in the same category, go to ``Sales >
-   Products > Product Categories``, select the category and check the checkbox
+   behaviour for all the products in the same category, go to ``Inventory >
+   Configuration > Product Categories``, select the category and check the checkbox
    ``Don't create variants automatically``.
 
 Usage
 =====
 
-(after installing `sales` application)
+(after installing `sale_management` application)
 
-#. Go to ``Sales > Sales > Product Variants``.
+#. Go to ``Sales > Catalog > Product Variants``.
 #. Click on "Create" button for creating a new one.
 #. On the field "Product Template", select a product template that has several
    attributes.
@@ -67,7 +67,7 @@ To use product configurator in your model, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/137/10.0
+   :target: https://runbot.odoo-community.org/runbot/137/11.0
 
 Bug Tracker
 ===========
@@ -83,7 +83,7 @@ Credits
 Images
 ------
 
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
+* Odoo Community Association: `Icon <https://odoo-community.org/logo.png>`_.
 
 Contributors
 ------------
@@ -96,6 +96,7 @@ Contributors
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * David Vidal <david.vidal@tecnativa.com>
+* Simone Versienti <s.versienti@apuliasoftware.it>
 
 Maintainer
 ----------

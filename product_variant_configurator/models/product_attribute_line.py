@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Oihane Crucelaegui - AvanzOSC
 # Copyright 2015-2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class ProductAttributeLine(models.Model):
@@ -15,3 +14,7 @@ class ProductAttributeLine(models.Model):
         ('product_attribute_uniq', 'unique(product_tmpl_id, attribute_id)',
          'The attribute already exists for this product')
     ]
+
+    @api.onchange('attribute_id')
+    def _onchange_attribute_id_clean_value(self):
+        self.value_ids = False

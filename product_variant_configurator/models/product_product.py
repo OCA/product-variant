@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2016 ACSONE SA/NV
@@ -108,7 +107,7 @@ class ProductProduct(models.Model):
 
     @api.model
     def create(self, vals):
-        if (not vals.get('attribute_value_ids') and
+        if (not vals.get('attribute_value_ids')[0][2] and
                 vals.get('product_attribute_ids')):
             vals['attribute_value_ids'] = (
                 (4, x[2]['value_id'])

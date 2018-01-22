@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Oihane Crucelaegui (AvanzOSC)
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
@@ -9,7 +8,7 @@
     'name': 'Product Variant Configurator',
     'summary': """
         Provides an abstract model for product variant configuration.""",
-    'version': '10.0.2.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Product Variant',
     'license': 'AGPL-3',
     'author': 'AvanzOSC,'
