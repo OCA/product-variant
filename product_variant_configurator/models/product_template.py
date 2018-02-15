@@ -64,6 +64,20 @@ class ProductTemplate(models.Model):
                     tmpl.no_create_variants == 'no' or
                     not tmpl.attribute_line_ids):
                 super(ProductTemplate, tmpl).create_variant_ids()
+                continue
+            if tmpl.attribute_line_ids and (
+                tmpl.no_create_variants == 'yes' or
+                (tmpl.no_create_variants == 'empty' and
+                 tmpl.categ_id.no_create_variants)):
+                variants_without_attribute = tmpl.product_variant_ids.filtered(
+                    lambda p: not p.attribute_value_ids)
+                if not variants_without_attribute:
+                    continue
+                # We can't unlink bc in the standard, if the we delete a
+                # variant and that variant is the only one exists
+                # (or it is the last one), the product template will be
+                # deleted as well.
+                variants_without_attribute.write({'active': False})
         return True
 
     @api.multi
