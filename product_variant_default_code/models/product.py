@@ -104,7 +104,7 @@ class ProductTemplate(models.Model):
             'ir.config_parameter'].get_param('default_reference_separator')
         for line in self.attribute_line_ids:
             attribute_names.append(u"[{}]".format(line.attribute_id.name))
-        default_mask = (self.code_prefix or '' +
+        default_mask = ((self.code_prefix or '') +
                         default_reference_separator.join(attribute_names))
         return default_mask
 
