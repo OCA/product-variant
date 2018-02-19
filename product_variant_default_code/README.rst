@@ -110,6 +110,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Tony Gu <tony@openerp.cn>
 * David Vidal <david.vidal@tecnativa.com>
+* David Beal <david.beal@akretion.com>
 
 Maintainer
 ----------

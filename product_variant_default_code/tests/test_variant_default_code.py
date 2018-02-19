@@ -11,7 +11,6 @@ class TestVariantDefaultCode(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestVariantDefaultCode, cls).setUpClass()
-        cls.base_setting = cls.env['base.config.settings'].create({})
         cls.group_default_code = cls.env.ref(
             'product_variant_default_code.group_product_default_code')
         cls.attr1 = cls.env['product.attribute'].create({'name': 'TSize'})
@@ -66,8 +65,8 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_02_check_default_codes_preexistent_mask(self):
-        self.base_setting.group_product_default_code = 1
         self.env.user.groups_id |= self.group_default_code
+        self.template2.reference_mask = 'P01/[TSize][TColor]'
         for product in self.template2.mapped('product_variant_ids'):
             expected_code = (
                 'P01/' + product.attribute_value_ids.filtered(
@@ -83,7 +82,6 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.assertEqual(self.template1.reference_mask, '[TSize]-[TColor]')
 
     def test_04_custom_reference_mask(self):
-        self.base_setting.group_product_default_code = 1
         self.env.user.groups_id |= self.group_default_code
         self.template1.reference_mask = u'JKTÜ/[TColor]#[TSize]'
         for product in self.template1.mapped('product_variant_ids'):
@@ -95,7 +93,6 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_05_manual_code(self):
-        self.base_setting.group_product_default_code = 1
         self.env.user.groups_id |= self.group_default_code
         self.assertEqual(self.template1.product_variant_ids[0].manual_code,
                          False)
@@ -131,7 +128,6 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertTrue('Od' in product.default_code)
 
     def test_08_sanitize_exception(self):
-        self.base_setting.group_product_default_code = 1
         self.env.user.groups_id |= self.group_default_code
         with self.assertRaises(UserError):
             self.env['product.template'].create({

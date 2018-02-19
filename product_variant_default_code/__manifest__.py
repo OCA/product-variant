@@ -3,6 +3,7 @@
 # Copyright 2014 Tecnativa - Pedro M. Baeza
 # Copyright 2014 Shine IT - Tony Gu
 # Copyright 2017 Tecnativa - David Vidal
+# Copyright 2017 Akretion - David Beal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': 'Product Variant Default Code',
