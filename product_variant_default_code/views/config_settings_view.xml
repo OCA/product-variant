@@ -2,14 +2,13 @@
 <odoo>
 
     <record id="view_general_configuration" model="ir.ui.view">
-        <field name="model">base.config.settings</field>
-        <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <group name="company_share_resources" position="after">
-                <group string="Product" name="product">
-                    <field name="group_product_default_code" widget="radio"/>
-                </group>
-            </group>
+            <xpath expr="//div[@id='company_share_partner']" position="after">
+                <field name="group_product_default_code" widget="radio"/>
+                <label string="Product Default Code behaviour" class="o_light_label" for="group_product_default_code"/>
+            </xpath>
         </field>
     </record>
 
