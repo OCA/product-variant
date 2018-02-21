@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class BaseConfiguration(models.TransientModel):
-    _inherit = 'base.config.settings'
+    _inherit = 'res.config.settings'
 
     group_product_default_code = fields.Selection([
         (0, 'Automask'),
