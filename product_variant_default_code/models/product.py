@@ -3,6 +3,7 @@
 # Copyright 2014 Tecnativa - Pedro M. Baeza
 # Copyright 2014 Shine IT - Tony Gu
 # Copyright 2017 Tecnativa - David Vidal
+# Copyright 2018 Avanzosc S.L. - Daniel Campos
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -104,7 +105,7 @@ class ProductTemplate(models.Model):
             'ir.config_parameter'].get_param('default_reference_separator')
         for line in self.attribute_line_ids:
             attribute_names.append(u"[{}]".format(line.attribute_id.name))
-        default_mask = (self.code_prefix or '' +
+        default_mask = ((self.code_prefix or '') +
                         default_reference_separator.join(attribute_names))
         return default_mask
 
@@ -184,10 +185,10 @@ class ProductAttribute(models.Model):
             return super(ProductAttribute, self).write(vals)
         result = super(ProductAttribute, self).write(vals)
         # Rewrite reference on all product variants affected
-        for product in self.mapped('attribute_line_ids').mapped(
-            'product_tmpl_id').mapped('product_variant_ids').filtered(
-                lambda x: x.product_tmpl_id.reference_mask and not
-                x.manual_code):
+        for product in self.mapped(
+                'attribute_line_ids.product_tmpl_id.product_variant_ids').\
+                filtered(lambda x: x.product_tmpl_id.reference_mask and not
+                         x.manual_code):
             render_default_code(product, product.reference_mask)
         return result
 
@@ -220,6 +221,6 @@ class ProductAttributeValue(models.Model):
         for product in self.mapped('product_ids').filtered(
                 lambda x: x.product_tmpl_id.reference_mask and not
                 x.manual_code
-                ).mapped('product_tmpl_id').mapped('product_variant_ids'):
+                ).mapped('product_tmpl_id.product_variant_ids'):
             render_default_code(product, product.reference_mask)
         return result
