@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 03:46+0000\n"
-"PO-Revision-Date: 2017-11-30 03:46+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2018-02-23 02:10+0000\n"
+"PO-Revision-Date: 2018-02-23 02:10+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 #. module: product_variant_template_data
 #: model:ir.model,name:product_variant_template_data.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: product_variant_template_data
 #: model:ir.model,name:product_variant_template_data.model_product_template
@@ -31,9 +32,9 @@ msgstr "Predložak proizvoda"
 #. module: product_variant_template_data
 #: model:ir.ui.view,arch_db:product_variant_template_data.product_variant_easy_edit_view
 msgid "Sale Conditions"
-msgstr ""
+msgstr "Uvijeti prodaje"
 
 #. module: product_variant_template_data
 #: model:ir.ui.view,arch_db:product_variant_template_data.product_variant_easy_edit_view
 msgid "days"
-msgstr ""
+msgstr "dana"

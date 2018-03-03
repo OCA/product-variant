@@ -1,9 +1,8 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_variant_configurator
+# * sale_stock_variant_configurator
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 # Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
@@ -19,22 +18,7 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#. module: sale_variant_configurator
-#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line_product_tmpl_id
-msgid "Product Template"
-msgstr "Predložak proizvoda"
-
-#. module: sale_variant_configurator
-#: model:ir.model,name:sale_variant_configurator.model_sale_order
-msgid "Sales Order"
-msgstr "Ponuda "
-
-#. module: sale_variant_configurator
-#: model:ir.model,name:sale_variant_configurator.model_sale_order_line
+#. module: sale_stock_variant_configurator
+#: model:ir.model,name:sale_stock_variant_configurator.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Stavka ponude"
-
-#. module: sale_variant_configurator
-#: model:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
-msgid "Template"
-msgstr "Predložak"
