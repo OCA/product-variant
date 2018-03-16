@@ -98,11 +98,17 @@ class ProductTemplate(models.Model):
              '\nNote: make sure characters "[,]" do not appear in your '
              'attribute name')
 
+    def _get_attr_val_k(self, attr_value_id):
+        return attr_value_id.attribute_id.sequence
+
     def _get_default_mask(self):
         attribute_names = []
         default_reference_separator = self.env[
             'ir.config_parameter'].get_param('default_reference_separator')
-        for line in self.attribute_line_ids:
+        # impossible to have an empty ir_config_parameter
+        if default_reference_separator == 'None':
+            default_reference_separator = ''
+        for line in sorted(self.attribute_line_ids, key=self._get_attr_val_k):
             attribute_names.append(u"[{}]".format(line.attribute_id.name))
         default_mask = ((self.code_prefix or '') +
                         default_reference_separator.join(attribute_names))

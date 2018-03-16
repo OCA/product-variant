@@ -80,6 +80,11 @@ Unset `manual code` and the reference code will be unlocked again.
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/137/10.0
 
+Change the reference separator
+------------------------------
+
+You can change the separator using the system parameter named "default_reference_separator".
+If you do not want to have a separator (an empty one), you can the the parameter to "None".
 
 Known issues / Roadmap
 ======================
