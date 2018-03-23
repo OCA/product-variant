@@ -5,10 +5,10 @@
 from openerp.tests.common import TransactionCase
 
 
-class ProductVariantAvailableInPos(TransactionCase):
+class ProductVariantSaleDelay(TransactionCase):
 
     def setUp(self, *args, **kwargs):
-        result = super(ProductVariantAvailableInPos, self).setUp(
+        result = super(ProductVariantSaleDelay, self).setUp(
             *args, **kwargs)
         # template
         self.template_model = self.env['product.template']
