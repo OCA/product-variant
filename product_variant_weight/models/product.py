@@ -28,8 +28,7 @@ class ProductTemplate(models.Model):
     @api.model
     def create(self, vals):
         product_tmpl = super(ProductTemplate, self).create(vals)
-        for product in product_tmpl:
-            product._update_weight_values(vals)
+        product_tmpl._update_weight_values(vals)
         return product_tmpl
 
 
