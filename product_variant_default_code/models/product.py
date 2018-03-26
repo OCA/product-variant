@@ -98,6 +98,14 @@ class ProductTemplate(models.Model):
              '\nNote: make sure characters "[,]" do not appear in your '
              'attribute name')
 
+    @api.depends('product_variant_ids', 'product_variant_ids.default_code')
+    def _compute_default_code(self):
+        super(ProductTemplate, self)._compute_default_code()
+        unique_variants = self.filtered(
+            lambda template: len(template.product_variant_ids) == 1)
+        for template in (self - unique_variants):
+            template.default_code = template.code_prefix
+
     def _get_attr_val_k(self, attr_value_id):
         return attr_value_id.attribute_id.sequence
 
