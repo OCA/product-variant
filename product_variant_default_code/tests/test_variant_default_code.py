@@ -76,8 +76,9 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_03_reset_reference_mask_to_default(self):
+        self.env.user.groups_id |= self.group_default_code
         # Erase the previous mask: 'P01/[TSize][TColor]'
-        self.template2.reference_mask = ''
+        self.template2.write({'reference_mask': ''})
         # Mask is set to default now:
         self.assertEqual(self.template2.reference_mask, '[TSize]-[TColor]')
 
@@ -157,10 +158,9 @@ class TestVariantDefaultCode(common.SavepointCase):
             '^_^' in self.template1.product_variant_ids[0].default_code)
 
     def test_11_check_none_separator(self):
-        self.env['ir.config_parameter'].write({
-            'key': 'default_reference_separator',
-            'value': 'None'
-        })
+        self.env.user.groups_id |= self.group_default_code
+        self.env['ir.config_parameter'].set_param(
+            'default_reference_separator', 'None')
         # re-initialize reference mask
-        self.template2.reference_mask = ''
+        self.template2.write({'reference_mask': ''})
         self.assertEqual(self.template2.reference_mask, '[TSize][TColor]')
