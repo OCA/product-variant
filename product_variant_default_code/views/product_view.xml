@@ -21,7 +21,8 @@
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <field name="default_code" position="before">
-                <field name="manual_code" />
+                <field name="manual_code" attrs="{'invisible':
+                          [('product_variant_count', '=', 1)]}"/>
             </field>
         </field>
     </record>
@@ -31,7 +32,8 @@
         <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
         <field name="arch" type="xml">
             <field name="default_code" position="before">
-                <field name="manual_code" />
+                <field name="manual_code" attrs="{'invisible':
+                          [('product_variant_count', '=', 1)]}"/>
             </field>
         </field>
     </record>

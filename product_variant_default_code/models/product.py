@@ -188,7 +188,11 @@ class ProductProduct(models.Model):
 
     @api.onchange('default_code')
     def onchange_default_code(self):
-        self.manual_code = bool(self.default_code)
+        for product in self:
+            # it shouldn't be possible to be in 'manual_code' mode
+            # when there is only 1 variant
+            if product.product_variant_count > 1:
+                self.manual_code = bool(self.default_code)
 
 
 class ProductAttribute(models.Model):
