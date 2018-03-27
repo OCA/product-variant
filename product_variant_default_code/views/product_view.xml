@@ -6,11 +6,9 @@
         <field name="inherit_id"
                ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
-            <field name="default_code" position="after">
-                <field name="code_prefix"
-                       attrs="{'invisible':
-                          [('attribute_line_ids', '=', [])]}"/>
-                <field name="reference_mask" placeholder="[attribute3]-[attribute1]"
+            <field name="default_code" position="replace">
+                <field name="code_prefix"/>
+                <field name="reference_mask" placeholder="reference[attribute3]-[attribute1]"
                        attrs="{'invisible':
                           [('attribute_line_ids', '=', [])]}"
                        groups="product_variant_default_code.group_product_default_code"/>

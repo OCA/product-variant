@@ -98,7 +98,11 @@ class ProductTemplate(models.Model):
              '\nNote: make sure characters "[,]" do not appear in your '
              'attribute name')
 
-    @api.depends('product_variant_ids', 'product_variant_ids.default_code')
+    @api.depends(
+        'product_variant_ids',
+        'product_variant_ids.default_code',
+        'code_prefix',
+        )
     def _compute_default_code(self):
         super(ProductTemplate, self)._compute_default_code()
         unique_variants = self.filtered(
