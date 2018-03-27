@@ -51,6 +51,15 @@ class TestVariantDefaultCode(common.SavepointCase):
             ],
             'reference_mask': 'P01/[TSize][TColor]',
         })
+        # Only one attribute
+        cls.template3 = cls.env['product.template'].create({
+            'name': 'Socks',
+            'attribute_line_ids': [
+                (0, 0, {'attribute_id': cls.attr1.id,
+                        'value_ids': [(6, 0, [cls.attr1_1.id, cls.attr1_2.id])]
+                        })
+            ]
+        })
 
     def test_01_check_default_codes(self):
         # As no mask was set, a default one should be:
@@ -175,3 +184,15 @@ class TestVariantDefaultCode(common.SavepointCase):
         templates.write({'list_price': 4})
         for template in templates:
             self.assertEqual(template.list_price, 4)
+
+    def test_14_check_attribute_lines_modification(self):
+        self.assertEqual(self.template3.reference_mask, '[TSize]')
+        self.template3.write({
+            'attribute_line_ids': [
+                (0, 0, {'attribute_id': self.attr2.id,
+                        'value_ids': [
+                            (6, 0, [self.attr2_1.id, self.attr2_2.id])]
+                        }),
+            ]
+        })
+        self.assertEqual(self.template3.reference_mask, '[TSize]-[TColor]')
