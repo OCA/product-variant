@@ -164,3 +164,14 @@ class TestVariantDefaultCode(common.SavepointCase):
         # re-initialize reference mask
         self.template2.write({'reference_mask': ''})
         self.assertEqual(self.template2.reference_mask, '[TSize][TColor]')
+
+    def test_12_check_code_prefix_modification(self):
+        # Automatic mode
+        self.template1.write({'code_prefix': 'AA'})
+        self.assertEqual(self.template1.reference_mask, 'AA[TSize]-[TColor]')
+
+    def test_13_write_on_multiple_record(self):
+        templates = self.template1 | self.template2
+        templates.write({'list_price': 4})
+        for template in templates:
+            self.assertEqual(template.list_price, 4)
