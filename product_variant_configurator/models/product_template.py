@@ -28,11 +28,13 @@ class ProductTemplate(models.Model):
             # avoid the warning when opening a new form in create
             # mode (ie when the onchange triggers when Odoo sets
             # the default value)
+            msg = _("Changing this parameter may cause automatic variants "
+                    "creation (in case variants are created automatically),"
+                    "or automatic variants deactivation (in case variants "
+                    "are created manually).")
             return {'warning':
                     {'title': _('Change warning!'),
-                     'message': _('Changing this parameter may cause'
-                                  ' automatic variants creation')}
-                    }
+                     'message': msg}}
 
     @api.model
     def create(self, vals):
