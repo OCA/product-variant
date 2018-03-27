@@ -98,44 +98,54 @@ class ProductTemplate(models.Model):
              '\nNote: make sure characters "[,]" do not appear in your '
              'attribute name')
 
+    def _get_attr_val_k(self, attr_value_id):
+        return attr_value_id.attribute_id.sequence
+
     def _get_default_mask(self):
+        if not self.attribute_line_ids:
+            return False
         attribute_names = []
         default_reference_separator = self.env[
             'ir.config_parameter'].get_param('default_reference_separator')
-        for line in self.attribute_line_ids:
+        # impossible to have an empty ir_config_parameter
+        if default_reference_separator == 'None':
+            default_reference_separator = ''
+        for line in sorted(self.attribute_line_ids, key=self._get_attr_val_k):
             attribute_names.append(u"[{}]".format(line.attribute_id.name))
         default_mask = ((self.code_prefix or '') +
                         default_reference_separator.join(attribute_names))
         return default_mask
 
+    def _is_automatic_mask(self):
+        return not self.user_has_groups(
+            'product_variant_default_code'
+            '.group_product_default_code')
+
     @api.model
     def create(self, vals):
         product = self.new(vals)
-        if (not vals.get('reference_mask') and product.attribute_line_ids or
-                not self.user_has_groups(
-                    'product_variant_default_code.group_product_default_code'
-                )):
+        if self._is_automatic_mask() or not vals.get('reference_mask'):
             vals['reference_mask'] = product._get_default_mask()
-        elif vals.get('reference_mask'):
+        else:
             sanitize_reference_mask(product, vals['reference_mask'])
         return super(ProductTemplate, self).create(vals)
 
+    def _mask_needs_update(self, vals):
+        return 'code_prefix' in vals or 'attribute_line_ids' in vals
+
     def write(self, vals):
-        product_obj = self.env['product.product']
-        if ('reference_mask' in vals and not vals['reference_mask'] or not
-                self.user_has_groups(
-                    'product_variant_default_code.group_product_default_code'
-                )):
-            if self.attribute_line_ids:
-                vals['reference_mask'] = self._get_default_mask()
         result = super(ProductTemplate, self).write(vals)
+        if (self._is_automatic_mask() and self._mask_needs_update(vals)) \
+                or ('reference_mask' in vals and not vals['reference_mask']):
+            for record in self:
+                # we write the new mask and the additional write
+                # will recompute the variant code
+                record.reference_mask = record._get_default_mask()
         if vals.get('reference_mask'):
-            cond = [('product_tmpl_id', '=', self.id),
+            cond = [('product_tmpl_id', 'in', self.ids),
                     ('manual_code', '=', False)]
-            products = product_obj.search(cond)
-            for product in products:
-                if product.reference_mask:
-                    render_default_code(product, product.reference_mask)
+            for product in self.env['product.product'].search(cond):
+                render_default_code(product, product.reference_mask)
         return result
 
     @api.model
@@ -180,9 +190,9 @@ class ProductAttribute(models.Model):
         ('number_uniq', 'unique(name)', _('Attribute Name must be unique!'))]
 
     def write(self, vals):
-        if 'code' not in vals:
-            return super(ProductAttribute, self).write(vals)
         result = super(ProductAttribute, self).write(vals)
+        if 'code' not in vals:
+            return result
         # Rewrite reference on all product variants affected
         for product in self.mapped('attribute_line_ids').mapped(
             'product_tmpl_id').mapped('product_variant_ids').filtered(
@@ -213,9 +223,9 @@ class ProductAttributeValue(models.Model):
         return super(ProductAttributeValue, self).create(vals)
 
     def write(self, vals):
-        if 'code' not in vals:
-            return super(ProductAttributeValue, self).write(vals)
         result = super(ProductAttributeValue, self).write(vals)
+        if 'code' not in vals:
+            return result
         # Rewrite reference on all product variants affected
         for product in self.mapped('product_ids').filtered(
                 lambda x: x.product_tmpl_id.reference_mask and not

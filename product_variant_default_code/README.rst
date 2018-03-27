@@ -76,10 +76,15 @@ variant internal reference will no longer be changed by this module.
 
 Unset `manual code` and the reference code will be unlocked again.
 
+Change the reference separator
+------------------------------
+
+You can change the separator using the system parameter named "default_reference_separator".
+If you do not want to have a separator (an empty one), you can set the parameter to "None".
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/137/10.0
-
 
 Known issues / Roadmap
 ======================
