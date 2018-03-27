@@ -103,7 +103,7 @@ class ProductTemplate(models.Model):
 
     def _get_default_mask(self):
         if not self.attribute_line_ids:
-            return None
+            return False
         attribute_names = []
         default_reference_separator = self.env[
             'ir.config_parameter'].get_param('default_reference_separator')
@@ -191,7 +191,6 @@ class ProductAttribute(models.Model):
 
     def write(self, vals):
         result = super(ProductAttribute, self).write(vals)
-
         if 'code' not in vals:
             return result
         # Rewrite reference on all product variants affected
