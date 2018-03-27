@@ -6,7 +6,7 @@
         <field name="inherit_id"
                ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
-            <field name="default_code" position="replace">
+            <field name="default_code" attrs="{'invisible': True}" position="after">
                 <field name="code_prefix"/>
                 <field name="reference_mask" placeholder="reference[attribute3]-[attribute1]"
                        attrs="{'invisible':
