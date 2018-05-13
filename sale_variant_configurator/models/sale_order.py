@@ -127,10 +127,10 @@ class SaleOrderLine(models.Model):
             uom=self.product_uom.id,
             fiscal_position=self.env.context.get('fiscal_position')
         )
-        price = self.env['account.tax']._fix_tax_included_price(
+        price = self.env['account.tax']._fix_tax_included_price_company(
             self.price_extra + self._get_display_price(product_tmpl),
             product_tmpl.taxes_id,
-            self.tax_id)
+            self.tax_id, self.company_id)
         if self.price_unit != price:
             self.price_unit = price
 
@@ -148,5 +148,6 @@ class SaleOrderLine(models.Model):
         """Update price for having into account changes due to qty"""
         res = super(SaleOrderLine, self).product_uom_change()
         if not self.product_id:
+            self._onchange_product_attribute_ids_configurator()
             self._update_price_configurator()
         return res

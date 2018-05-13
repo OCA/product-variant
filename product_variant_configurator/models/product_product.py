@@ -41,6 +41,11 @@ class ProductProduct(models.Model):
         if product_template:
             domain.append(('product_tmpl_id', '=', product_template.id))
             for attr_line in product_attributes:
+                # We need this hack to trigger the compute function,
+                # otherwise attr_line.price_extra always returns 0.0
+                # here (possible Odoo bug, it seems Odoo does not behave
+                # well with a computed variable on NewID 'child' of another NewID)
+                attr_line.value_id = attr_line.value_id
                 if isinstance(attr_line, dict):
                     value_id = attr_line.get('value_id')
                 else:
