@@ -25,4 +25,17 @@
         </field>
     </record>
 
+    <record id="view_product_attribute_form" model="ir.ui.view">
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='values_ids']/field[@name='value_ids']/tree/field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//group[@name='values_ids']/field[@name='value_ids']/form/field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
