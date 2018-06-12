@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo9-addon-account_invoice_variant_configurator',
         'odoo9-addon-product_variant_configurator',
+        'odoo9-addon-product_variant_standard_price_update',
         'odoo9-addon-product_variant_supplierinfo',
         'odoo9-addon-purchase_variant_configurator',
         'odoo9-addon-purchase_variant_configurator_on_confirm',
