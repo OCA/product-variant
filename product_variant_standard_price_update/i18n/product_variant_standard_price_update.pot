@@ -1,0 +1,30 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_variant_standard_price_update
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_variant_standard_price_update
+#: model:ir.ui.view,arch_db:product_variant_standard_price_update.product_template_form_view_update_standard_price
+msgid "<span>Different cost price by variants. You must change it in each variant</span>"
+msgstr ""
+
+#. module: product_variant_standard_price_update
+#: model:ir.model.fields,field_description:product_variant_standard_price_update.field_product_template_same_cost_variants
+msgid "All variants have the same cost"
+msgstr ""
+
+#. module: product_variant_standard_price_update
+#: model:ir.model,name:product_variant_standard_price_update.model_product_template
+msgid "Product Template"
+msgstr ""
+
