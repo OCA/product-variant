@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * product_variant_configurator
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,11 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2017-01-08 10:01+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_price_attribute_id
@@ -66,11 +67,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_taxes_id
-msgid "Customer Taxes"
-msgstr ""
-
-#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_display_name
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_display_name
 msgid "Display Name"
@@ -87,19 +83,9 @@ msgid "Don't create variants automatically"
 msgstr "Variant ne ustvarjaj samodejno"
 
 #. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_property_account_expense_id
-msgid "Expense Account"
-msgstr ""
-
-#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_id
 msgid "ID"
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_property_account_income_id
-msgid "Income Account"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -212,20 +198,6 @@ msgid "There's another product with the same attributes."
 msgstr ""
 
 #. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product_property_account_expense_id
-msgid ""
-"This account will be used for invoices instead of the default one to value "
-"expenses for the current product."
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product_property_account_income_id
-msgid ""
-"This account will be used for invoices instead of the default one to value "
-"sales for the current product."
-msgstr ""
-
-#. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_category_no_create_variants
 msgid ""
 "This check disables the automatic creation of product variants for all the "
@@ -280,11 +252,6 @@ msgstr "Vrednosti variant"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_template_no_create_variants
 msgid "Variant creation"
 msgstr "Ustvarjanje variant"
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_supplier_taxes_id
-msgid "Vendor Taxes"
-msgstr ""
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_product.py:94
