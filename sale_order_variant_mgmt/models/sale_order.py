@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016-2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields
@@ -8,9 +7,8 @@ from odoo import models, fields
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # This field is for avoiding conflicts with sale_stock module, that
-    # adds product_tmpl_id, and its possible modifications. This field name
-    # for sure won't conflict
+    # This field is for avoiding conflicts with other modules adding the same
+    # field. This field name for sure won't conflict
     product_tmpl_id_sale_order_variant_mgmt = fields.Many2one(
         comodel_name="product.template", related="product_id.product_tmpl_id",
         readonly=True)
