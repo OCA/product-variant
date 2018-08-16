@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -65,8 +64,15 @@ class TestSaleOrderVariantMgmt(common.SavepointCase):
         self.assertEqual(self.order.order_line[1].product_uom_qty, 2)
         self.assertEqual(self.order.order_line[2].product_uom_qty, 3)
         self.assertEqual(self.order.order_line[3].product_uom_qty, 4)
+        # Test template without variants
+        tmpl = self.env['product.template'].create({'name': 'empty'})
+        wizard.product_tmpl_id = tmpl.id
+        wizard._onchange_product_tmpl_id()
+        self.assertFalse(wizard.variant_line_ids)
 
     def test_modify_variants(self):
+        # Disable one of the variants for covering that code part
+        self.product_tmpl.product_variant_ids[-1].active = False
         product1 = self.product_tmpl.product_variant_ids[0]
         order_line1 = self.SaleOrderLine.new({
             'order_id': self.order.id,
@@ -96,10 +102,8 @@ class TestSaleOrderVariantMgmt(common.SavepointCase):
             len(wizard.variant_line_ids.filtered('product_uom_qty')), 2,
             "There should be two fields with any quantity in the wizard."
         )
-        wizard.variant_line_ids.filtered(
-            lambda x: x.product_id == product1).product_uom_qty = 0
-        wizard.variant_line_ids.filtered(
-            lambda x: x.product_id == product2).product_uom_qty = 10
+        wizard.variant_line_ids[0].product_uom_qty = 0
+        wizard.variant_line_ids[1].product_uom_qty = 10
         wizard.button_transfer_to_order()
         self.assertFalse(order_line1.exists(), "Order line not removed.")
         self.assertEqual(
