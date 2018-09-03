@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -38,11 +38,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_create_date
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_create_date
 msgid "Created on"
-msgstr ""
-
-#. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_disabled
-msgid "Disabled"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
@@ -117,17 +112,12 @@ msgstr ""
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_x
-msgid "Value x"
+msgid "Value X"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_y
-msgid "Value y"
-msgstr ""
-
-#. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_id
-msgid "Variant"
+msgid "Value Y"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
