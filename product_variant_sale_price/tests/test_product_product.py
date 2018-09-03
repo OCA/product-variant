@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestProductVariantPrice(TransactionCase):
@@ -27,6 +26,9 @@ class TestProductVariantPrice(TransactionCase):
             'attribute_id': self.att_color.id,
         })
 
+        self.uom_unit = self.env.ref('product.product_uom_unit')
+        self.uom_dozen = self.ref('product.product_uom_dozen')
+
         self.product_template = self.template.create({
             'name': 'Product Template',
             'list_price': 1500.00,
@@ -37,6 +39,7 @@ class TestProductVariantPrice(TransactionCase):
                         (6, 0, (self.att_color_blue + self.att_color_red).ids)
                     ],
                 })],
+            'uom_id': self.uom_unit.id
         })
 
         self.product_blue = self.product_template.product_variant_ids.filtered(
@@ -75,10 +78,28 @@ class TestProductVariantPrice(TransactionCase):
             self.product_template.list_price,
             self.product_template.product_variant_ids[:1].lst_price)
 
+    def test_create_product_template_different_uom(self):
+        new_template = self.product_template \
+            .with_context(uom=self.uom_dozen) \
+            .copy({'uom_id': self.uom_dozen})
+        self.assertEqual(
+            new_template.list_price,
+            new_template.product_variant_ids[:1].lst_price)
+
     def test_create_variant(self):
         new_variant = self.product_product.create({
             'product_tmpl_id': self.product_template.id
         })
+        self.assertEqual(
+            self.product_template.list_price, new_variant.lst_price)
+
+    def test_create_variant_different_uom(self):
+        new_variant = self.product_product \
+            .with_context(uom=self.uom_dozen) \
+            .create({
+                'product_tmpl_id': self.product_template.id,
+                'uom_id': self.uom_dozen
+            })
         self.assertEqual(
             self.product_template.list_price, new_variant.lst_price)
 
@@ -94,6 +115,20 @@ class TestProductVariantPrice(TransactionCase):
             self.product_blue.lst_price,
             self.product_red.lst_price)
         self.assertEqual(self.product_red.lst_price, 1500.00)
+
+    def test_update_variant_different_uom(self):
+        self.product_blue.write({
+            'uom_id': self.uom_dozen
+        })
+        self.product_blue.with_context(uom=self.uom_dozen).lst_price = 2000.00
+        self.assertEqual(
+            self.product_blue.lst_price, self.product_blue.fix_price)
+
+    def test_update_variant_no_multiple(self):
+        self.product_red.unlink()
+        self.product_blue.lst_price = 2000.00
+        self.assertEqual(
+            self.product_blue.lst_price, self.product_blue.fix_price)
 
     def test_update_template_variant(self):
         self.product_blue.product_tmpl_id.list_price = 200
