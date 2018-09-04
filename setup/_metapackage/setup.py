@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-product_variant_default_code',
+        'odoo11-addon-sale_order_variant_mgmt',
     ],
     classifiers=[
         'Programming Language :: Python',
