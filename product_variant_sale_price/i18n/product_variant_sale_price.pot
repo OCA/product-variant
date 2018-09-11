@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_variant_sale_price
-#: field:product.product,fix_price:0
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product_fix_price
 msgid "Fix Price"
 msgstr ""
 
@@ -26,12 +26,5 @@ msgstr ""
 #. module: product_variant_sale_price
 #: model:ir.model,name:product_variant_sale_price.model_product_template
 msgid "Product Template"
-msgstr ""
-
-#. module: product_variant_sale_price
-#: view:product.template:product_variant_sale_price.product_template_form_view
-msgid "{'invisible': [\n"
-"                                            ('product_variant_count', '>', 1)\n"
-"                                        ]}"
 msgstr ""
 
