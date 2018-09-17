@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2015-2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
@@ -7,7 +6,7 @@
 {
     "name": "Sale - Product variants",
     "summary": "Product variants in sale management",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "license": "AGPL-3",
     "depends": [
         "sale",
@@ -18,7 +17,7 @@
               "Tecnativa,"
               "Odoo Community Association (OCA)",
     "category": "Sales Management",
-    "website": "http://www.odoomrp.com",
+    "website": "https://github.com/OCA/product-variant",
     "data": [
         "views/sale_view.xml",
     ],
