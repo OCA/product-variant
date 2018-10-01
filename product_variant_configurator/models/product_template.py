@@ -22,8 +22,7 @@ class ProductTemplate(models.Model):
 
     @api.onchange('no_create_variants')
     def onchange_no_create_variants(self):
-        if self.no_create_variants in ['no', 'empty'] and \
-                self._origin.no_create_variants:
+        if self._origin.no_create_variants:
             # the test on self._origin.no_create_variants is to
             # avoid the warning when opening a new form in create
             # mode (ie when the onchange triggers when Odoo sets
