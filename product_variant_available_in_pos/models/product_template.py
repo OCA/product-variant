@@ -8,22 +8,14 @@ class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
 
+    @api.multi
     def _update_available_in_pos(self, vals):
-        values = {'available_in_pos': vals['available_in_pos']}
-        self.product_variant_ids.write(values)
+        if 'available_in_pos' in vals:
+            self.mapped('product_variant_ids').write({
+                'available_in_pos': vals['available_in_pos']})
 
     @api.multi
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
-        if 'available_in_pos' in vals:
-            for product in self:
-                product._update_available_in_pos(vals)
+        self._update_available_in_pos(vals)
         return res
-
-    @api.model
-    def create(self, vals):
-        product_tmpl = super(ProductTemplate, self).create(vals)
-        if 'available_in_pos' in vals:
-            for product in product_tmpl:
-                product._update_available_in_pos(vals)
-        return product_tmpl
