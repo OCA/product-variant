@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2016 ACSONE SA/NV
@@ -7,7 +6,7 @@
 {
     "name": "Purchase - Product variants",
     "summary": "Product variants in purchase management",
-    'version': '10.0.1.1.0',
+    'version': '11.0.1.0.0',
     "license": "AGPL-3",
     "depends": [
         "purchase",
@@ -15,10 +14,10 @@
     ],
     "author": "AvanzOSC, "
               "Tecnativa, "
-              "ACSONE SA/NV,"
+              "ACSONE SA/NV, "
               "Odoo Community Association (OCA)",
     "category": "Purchase Management",
-    "website": "http://www.odoomrp.com",
+    "website": "https://github.com/OCA/product-variant",
     "data": [
         "views/inherited_purchase_order_views.xml",
     ],
