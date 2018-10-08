@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2016 ACSONE SA/NV
@@ -8,13 +7,13 @@
     'name': 'Purchase Variant Configurator On Confirm',
     'summary': """
         Create product variants when confirming the purchase order""",
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'license': 'AGPL-3',
     "author": "AvanzOSC, "
               "Tecnativa, "
-              "ACSONE SA/NV,"
+              "ACSONE SA/NV, "
               "Odoo Community Association (OCA)",
-    'website': 'https://odoo-community.org/',
+    'website': 'https://github.com/OCA/product-variant',
     'depends': [
         'purchase_variant_configurator',
     ],
