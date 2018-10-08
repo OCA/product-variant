@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 Tecnativa - David Vidal
