@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -8,8 +7,8 @@ from odoo import fields, models
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    # These field names are for avoiding conflicts with any other field with
-    # the same name declared by other modules and that can be a no related one
+    # This field is for avoiding conflicts with other modules adding the same
+    # field. This field name for sure won't conflict
     product_tmpl_id_purchase_order_variant_mgmt = fields.Many2one(
         comodel_name="product.template", related="product_id.product_tmpl_id",
         readonly=True

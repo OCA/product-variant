@@ -1,4 +1,3 @@
-
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: https://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
@@ -57,9 +56,15 @@ Credits
 =======
 
 Contributors
-------------
+~~~~~~~~~~~~
 
-* Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Pedro M. Baeza
+
+* `Comunitea <https://www.comunitea.com>`_:
+
+  * Javier Colmenero <javier@comunitea.com>
 
 Maintainer
 ----------
