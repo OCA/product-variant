@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -38,7 +37,10 @@ class TestPurchaseOrderVariantMgmt(common.SavepointCase):
             ],
         })
         assert len(cls.product_tmpl.product_variant_ids) == 4
-        order = cls.env['purchase.order'].new({'partner_id': cls.partner.id})
+        order = cls.env['purchase.order'].new({
+            'partner_id': cls.partner.id,
+            'company_id': 1
+        })
         order.onchange_partner_id()
         cls.order = order.create(order._convert_to_write(order._cache))
         cls.Wizard = cls.env['purchase.manage.variant'].with_context(
@@ -59,8 +61,15 @@ class TestPurchaseOrderVariantMgmt(common.SavepointCase):
         wizard.button_transfer_to_order()
         self.assertEqual(len(self.order.order_line), 4,
                          "There should be 4 lines in the sale order")
+        # Test template without variants
+        tmpl = self.env['product.template'].create({'name': 'empty'})
+        wizard.product_tmpl_id = tmpl.id
+        wizard._onchange_product_tmpl_id()
+        self.assertFalse(wizard.variant_line_ids)
 
     def test_modify_variants(self):
+        # Disable one of the variants for covering that code part
+        self.product_tmpl.product_variant_ids[-1].active = False
         product1 = self.product_tmpl.product_variant_ids[0]
         order_line1 = self.PurchaseOrderLine.new({
             'order_id': self.order.id,
@@ -92,10 +101,9 @@ class TestPurchaseOrderVariantMgmt(common.SavepointCase):
             len(wizard.variant_line_ids.filtered('product_uom_qty')), 2,
             "There should be two fields with any quantity in the wizard."
         )
-        wizard.variant_line_ids.filtered(
-            lambda x: x.product_id == product1).product_uom_qty = 0
-        wizard.variant_line_ids.filtered(
-            lambda x: x.product_id == product2).product_uom_qty = 10
+
+        wizard.variant_line_ids[0].product_uom_qty = 0
+        wizard.variant_line_ids[1].product_uom_qty = 10
         wizard.button_transfer_to_order()
         self.assertFalse(order_line1.exists(), "Order line not removed.")
         self.assertEqual(
