@@ -57,9 +57,15 @@ Credits
 =======
 
 Contributors
-------------
+~~~~~~~~~~~~
 
-* Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Pedro M. Baeza
+
+* `Comunitea <https://www.COMUNITEA.com>`_:
+
+  * Javier Colmenero <javier@comunitea.com>
 
 Maintainer
 ----------

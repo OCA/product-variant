@@ -18,10 +18,15 @@
                        field_x_axis="value_x"
                        field_y_axis="value_y"
                        field_value = "product_uom_qty"
-                       field_att_disabled="disabled"
                        x_axis_clickable="0"
                        y_axis_clickable="0"
-                />
+                >
+                    <tree>
+                        <field name="value_x"/>
+                        <field name="value_y"/>
+                        <field name="product_uom_qty"/>
+                    </tree>
+                </field>
                 <footer>
                     <button name="button_transfer_to_order"
                             type="object"
