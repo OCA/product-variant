@@ -38,7 +38,10 @@ class TestPurchaseOrderVariantMgmt(common.SavepointCase):
             ],
         })
         assert len(cls.product_tmpl.product_variant_ids) == 4
-        order = cls.env['purchase.order'].new({'partner_id': cls.partner.id})
+        order = cls.env['purchase.order'].new({
+            'partner_id': cls.partner.id,
+            'company_id': 1
+        })
         order.onchange_partner_id()
         cls.order = order.create(order._convert_to_write(order._cache))
         cls.Wizard = cls.env['purchase.manage.variant'].with_context(
