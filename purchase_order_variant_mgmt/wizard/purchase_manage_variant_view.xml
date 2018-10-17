@@ -17,7 +17,7 @@
                        widget="x2many_2d_matrix"
                        field_x_axis="value_x"
                        field_y_axis="value_y"
-                       field_value = "product_uom_qty"
+                       field_value="product_uom_qty"
                        x_axis_clickable="0"
                        y_axis_clickable="0"
                 >

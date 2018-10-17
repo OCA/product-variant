@@ -90,7 +90,7 @@ class PurchaseManageVariant(models.TransientModel):
                 order_line._onchange_quantity()
                 order_line_vals = order_line._convert_to_write(
                     order_line._cache)
-                purchase_order.order_line.browse().create(order_line_vals)
+                self.env['purchase.order.line'].create(order_line_vals)
         lines2unlink.unlink()
 
 

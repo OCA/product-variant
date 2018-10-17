@@ -103,8 +103,10 @@ class TestPurchaseOrderVariantMgmt(common.SavepointCase):
             "There should be two fields with any quantity in the wizard."
         )
 
-        wizard.variant_line_ids[0].product_uom_qty = 0
-        wizard.variant_line_ids[1].product_uom_qty = 10
+        wizard.variant_line_ids.filtered(
+            lambda x: x.product_id == product1).product_uom_qty = 0
+        wizard.variant_line_ids.filtered(
+            lambda x: x.product_id == product2).product_uom_qty = 10
         wizard.button_transfer_to_order()
         self.assertFalse(order_line1.exists(), "Order line not removed.")
         self.assertEqual(

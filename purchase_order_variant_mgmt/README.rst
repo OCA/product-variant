@@ -63,7 +63,7 @@ Contributors
 
   * Pedro M. Baeza
 
-* `Comunitea <https://www.COMUNITEA.com>`_:
+* `Comunitea <https://www.comunitea.com>`_:
 
   * Javier Colmenero <javier@comunitea.com>
 
