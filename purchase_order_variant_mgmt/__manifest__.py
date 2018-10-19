@@ -15,7 +15,6 @@
         'purchase',
         'web_widget_x2many_2d_matrix',
     ],
-    'demo': [],
     'data': [
         'wizard/purchase_manage_variant_view.xml',
         'views/purchase_order_view.xml',

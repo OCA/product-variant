@@ -1,7 +1,7 @@
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import openerp.addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 from odoo import api, fields, models
 
 
@@ -9,10 +9,12 @@ class PurchaseManageVariant(models.TransientModel):
     _name = 'purchase.manage.variant'
 
     product_tmpl_id = fields.Many2one(
-        comodel_name='product.template', string="Template", required=True)
+        comodel_name='product.template',
+        string="Template", required=True)
     # This is a many2many because Odoo fails to fill one2many in onchanges
     variant_line_ids = fields.Many2many(
-        comodel_name='purchase.manage.variant.line', string="Variant Lines")
+        comodel_name='purchase.manage.variant.line', 
+        string="Variant Lines")
 
     def _get_product_variant(self, value_x, value_y):
         """Filter the corresponding product for provided values."""
@@ -66,6 +68,7 @@ class PurchaseManageVariant(models.TransientModel):
             purchase_order = record
         OrderLine = self.env['purchase.order.line']
         lines2unlink = OrderLine
+        lines2create = []
         for line in self.variant_line_ids:
             product = self._get_product_variant(line.value_x, line.value_y)
             order_line = purchase_order.order_line.filtered(
@@ -90,7 +93,10 @@ class PurchaseManageVariant(models.TransientModel):
                 order_line._onchange_quantity()
                 order_line_vals = order_line._convert_to_write(
                     order_line._cache)
-                self.env['purchase.order.line'].create(order_line_vals)
+                lines2create.append((0, 0, order_line_vals))
+        if lines2create:
+            purchase_order.write({'order_line': lines2create})
+
         lines2unlink.unlink()
 
 
