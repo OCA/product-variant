@@ -13,7 +13,7 @@ class PurchaseManageVariant(models.TransientModel):
         string="Template", required=True)
     # This is a many2many because Odoo fails to fill one2many in onchanges
     variant_line_ids = fields.Many2many(
-        comodel_name='purchase.manage.variant.line', 
+        comodel_name='purchase.manage.variant.line',
         string="Variant Lines")
 
     def _get_product_variant(self, value_x, value_y):
