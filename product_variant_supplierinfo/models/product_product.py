@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-# © 2015 Pedro M. Baeza <pedro.baeza@tecnativa.com>
-# © 2016 Akretion Sébastien BEAU <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2015 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 Akretion Sébastien BEAU <sebastien.beau@akretion.com>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
 from odoo import api, models, fields
