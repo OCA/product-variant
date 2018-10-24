@@ -5,7 +5,7 @@
             <field name="name">product.attribute.price.tree</field>
             <field name="model">product.attribute.price</field>
             <field name="arch" type="xml">
-                <tree string="Variant Values" editable="bottom" nodelete="1" nocreate="1">
+                <tree string="Variant Values" editable="bottom" delete="0" create="0">
                     <field name="attribute_id" readonly="1" />
                     <field name="value_id" readonly="1" />
                     <field name="price_extra" />

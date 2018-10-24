@@ -4,7 +4,7 @@
         <record model="ir.ui.view" id="view_product_configurator_tree">
             <field name="model">product.configurator.attribute</field>
             <field name="arch" type="xml">
-                <tree create="0" delete="0" editable="1">
+                <tree create="0" delete="0" editable="bottom">
                     <field name="owner_id" invisible="1"/>
                     <field name="owner_model" invisible="1"/>
                     <field name="attribute_id" />

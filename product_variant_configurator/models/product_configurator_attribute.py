@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2016 ACSONE SA/NV
@@ -27,7 +26,7 @@ class ProductConfiguratorAttribute(models.Model):
     value_id = fields.Many2one(
         comodel_name='product.attribute.value',
         domain="[('attribute_id', '=', attribute_id), "
-               " ('id', 'in', possible_value_ids[0][2])]",
+               " ('id', 'in', possible_value_ids)]",
         string='Value')
     possible_value_ids = fields.Many2many(
         comodel_name='product.attribute.value',

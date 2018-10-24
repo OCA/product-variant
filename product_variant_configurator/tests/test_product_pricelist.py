@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -12,7 +11,8 @@ class TestProductPriceList(SavepointCase):
         super(TestProductPriceList, cls).setUpClass()
 
         # ENVIRONMENTS
-        cls.product_template = cls.env['product.template']
+        cls.product_template = cls.env['product.template'].with_context(
+            check_variant_creation=True)
         cls.product_pricelist = cls.env['product.pricelist']
         cls.supplier_info = cls.env['product.supplierinfo']
         cls.uom_unit = cls.env.ref('product.product_uom_unit')
@@ -86,7 +86,6 @@ class TestProductPriceList(SavepointCase):
                     'name': 'Rule 20% on ipad product',
                     'product_id': cls.ipad_product.id,
                     'categ_id': cls.physical.id,
-                    'sequence': 1,
                     'min_quantity': 1,
                     'base': 'list_price',
                     'applied_on': '0_product_variant',

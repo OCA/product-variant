@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2016 Oihane Crucelaegui - AvanzOSC
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
@@ -40,12 +39,12 @@ class TestProductVariant(TransactionCase):
                         'value_ids': [(6, 0, [self.value1.id,
                                               self.value2.id])]})],
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.tmpl_model.create({
             'name': 'No variants template',
             'no_create_variants': 'yes',
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
 
     def test_no_create_variants_category(self):
         self.assertTrue(self.categ1.no_create_variants)
@@ -58,13 +57,13 @@ class TestProductVariant(TransactionCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.tmpl_model.create({
             'name': 'No variants template',
             'categ_id': self.categ1.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
 
     def test_create_variants(self):
         tmpl = self.tmpl_model.create({
@@ -75,12 +74,12 @@ class TestProductVariant(TransactionCase):
                         'value_ids': [(6, 0, [self.value1.id,
                                               self.value2.id])]})],
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.tmpl_model.create({
             'name': 'No variants template',
             'no_create_variants': 'no',
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_create_variants_category(self):
         self.assertFalse(self.categ2.no_create_variants)
@@ -93,13 +92,13 @@ class TestProductVariant(TransactionCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.tmpl_model.create({
             'name': 'No variants template',
             'categ_id': self.categ2.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_category_change(self):
         self.assertTrue(self.categ1.no_create_variants)
@@ -112,6 +111,6 @@ class TestProductVariant(TransactionCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         self.categ1.no_create_variants = False
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
