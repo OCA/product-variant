@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2016 ACSONE SA/NV
@@ -54,8 +53,8 @@ class ProductConfigurator(models.AbstractModel):
             rec.can_create_product = not bool(
                 len(rec.product_tmpl_id.attribute_line_ids.mapped(
                     'attribute_id')) -
-                len(filter(None,
-                           rec.product_attribute_ids.mapped('value_id'))))
+                len(list(filter(None,
+                    rec.product_attribute_ids.mapped('value_id')))))
 
     @api.multi
     @api.depends('product_attribute_ids', 'product_attribute_ids.value_id')
