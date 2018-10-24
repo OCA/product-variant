@@ -20,7 +20,7 @@
                     Select a template for a variant. Keep empty for a new full product.
                 </p>
             </xpath>
-            <xpath expr="//div[@class='oe_title']" position="after">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <group>
                     <field name="product_attribute_ids"
                            nolabel="1" colspan="2"
