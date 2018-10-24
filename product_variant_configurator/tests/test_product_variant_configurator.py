@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 Tecnativa - David Vidal
@@ -63,6 +62,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'no_create_variants': 'yes',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': cls.attribute1.id,
+                        'required': False,
                         'value_ids': [(6, 0, [cls.value1.id,
                                               cls.value2.id])]})],
         })
@@ -94,13 +94,13 @@ class TestProductVariantConfigurator(SavepointCase):
                         'value_ids': [(6, 0, [self.value1.id,
                                               self.value2.id])]})],
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'no_create_variants': 'yes',
         })
         # default behavior: one variant should be created
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_no_create_variants_category(self):
         self.assertTrue(self.category1.no_create_variants)
@@ -113,14 +113,14 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category1.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         # default behavior: one variant should be created
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_create_variants(self):
         tmpl = self.product_template.create({
@@ -131,12 +131,12 @@ class TestProductVariantConfigurator(SavepointCase):
                         'value_ids': [(6, 0, [self.value1.id,
                                               self.value2.id])]})],
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'no_create_variants': 'no',
         })
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_update_product_tempalte(self):
         tmpl = self.product_template.create({
@@ -171,13 +171,13 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category2.id,
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 1)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_category_change(self):
         self.assertTrue(self.category1.no_create_variants)
@@ -190,25 +190,25 @@ class TestProductVariantConfigurator(SavepointCase):
                                               self.value2.id])]})],
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEquals(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
         self.category1.no_create_variants = False
-        self.assertEquals(len(tmpl.product_variant_ids), 2)
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
 
     def test_open_attribute_prices(self):
         result = self.product_template_yes.action_open_attribute_prices()
-        self.assertEqual(result['type'], u'ir.actions.act_window')
+        self.assertEqual(result['type'], 'ir.actions.act_window')
 
     def test_get_product_attributes_dict(self):
         attrs_dict = self.product_template_yes._get_product_attributes_dict()
-        self.assertEquals(len(attrs_dict), 1)
-        self.assertEquals(len(attrs_dict[0]), 1)
+        self.assertEqual(len(attrs_dict), 1)
+        self.assertEqual(len(attrs_dict[0]), 1)
 
     def test_get_product_description(self):
         product = self.product_product.create({
             'name': 'Test product',
             'product_tmpl_id': self.product_template_yes.id
         })
-        self.assertEquals(product._get_product_description(
+        self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
         self.current_user = self.env.user
@@ -217,7 +217,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'product_variant_configurator.'
             'group_product_variant_extended_description')
         self.env.ref(group_id).write({'users': [(4, self.current_user.id)]})
-        self.assertEquals(product._get_product_description(
+        self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
             'Test product')
 
@@ -227,7 +227,9 @@ class TestProductVariantConfigurator(SavepointCase):
             'product_tmpl_id': self.product_template_yes.id
         })
         with self.cr.savepoint(), self.assertRaises(ValidationError):
-            product.product_tmpl_id = self.product_template_no
+            product.with_context(
+                test_check_duplicity=True,
+            ).product_tmpl_id = self.product_template_no
 
     def test_onchange_product_tmpl_id(self):
         product = self.product_product.new({
@@ -236,7 +238,7 @@ class TestProductVariantConfigurator(SavepointCase):
         })
         product.product_tmpl_id = self.product_template_empty_yes
         res = product._onchange_product_tmpl_id_configurator()
-        self.assertEquals(
+        self.assertEqual(
             res, {'domain': {'product_id': [
                 ('product_tmpl_id', '=',
                  self.product_template_empty_yes.id)]}})
@@ -259,11 +261,11 @@ class TestProductVariantConfigurator(SavepointCase):
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
-                                              self.value2.id])]}),
+                                              self.value2.id])],
+                        'required': True, }),
                 (0, 0, {'attribute_id': self.attribute2.id,
                         'value_ids': [(6, 0, [self.value3.id,
-                                              self.value4.id])],
-                        'required': False, }),
+                                              self.value4.id])]}),
             ],
         })
         # This one shouldn't fail
@@ -274,6 +276,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': tmpl.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_model': 'product.product',
             })]
         })
         # And this one should
@@ -285,6 +288,7 @@ class TestProductVariantConfigurator(SavepointCase):
                     'product_tmpl_id': tmpl.id,
                     'attribute_id': self.attribute2.id,
                     'value_id': self.value3.id,
+                    'owner_model': 'product.product',
                 })]
             })
 
@@ -297,7 +301,7 @@ class TestProductVariantConfigurator(SavepointCase):
             'product_tmpl_id': self.product_template_yes.id,
             'attribute_id': self.attribute1.id,
             'value_id': self.value2.id,
-            'owner_model': 'res.partner',
+            'owner_model': 'product.product',
             'owner_id': int(product.id)
         }
         with self.cr.savepoint():
@@ -316,6 +320,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_model': 'product.product',
             })]
         })
         product_attribute_vals = {
@@ -340,6 +345,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_model': 'product.product',
             })]
         })
         product2 = self.product_product.create({
@@ -349,11 +355,12 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute2.id,
                 'value_id': self.value2.id,
+                'owner_model': 'product.product',
             })]
         })
         product1.product_id = product2
         product1._onchange_product_id_configurator()
-        self.assertEquals(product1.product_id.id, product2.id)
+        self.assertEqual(product1.product_id.id, product2.id)
 
     def test_get_product_attributes_values_dict(self):
         product = self.product_product.create({
@@ -363,6 +370,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_model': 'product.product',
             })]
         })
         result = product._get_product_attributes_values_dict()
@@ -379,6 +387,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_model': 'product.product',
             })]
         })
         result = product._get_product_attributes_values_text()
@@ -425,6 +434,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 'product_tmpl_id': self.product_template_yes.id,
                 'attribute_id': self.attribute1.id,
                 'value_id': self.value1.id,
+                'owner_model': 'product.product',
             })]
         })
         res = self.product_product._product_find(
@@ -436,6 +446,7 @@ class TestProductVariantConfigurator(SavepointCase):
     def test_product_template_write(self):
         self.product_template_no.with_context(
             check_variant_creation=True).write({'no_create_variants': 'yes'})
+        self.assertTrue(self.product_template_no.product_variant_ids)
 
     def test_product_template_create(self):
         product = self.product_template.with_context(
