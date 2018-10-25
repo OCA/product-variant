@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo11-addon-product_variant_configurator',
         'odoo11-addon-product_variant_default_code',
         'odoo11-addon-product_variant_sale_price',
+        'odoo11-addon-purchase_variant_configurator',
         'odoo11-addon-sale_order_variant_mgmt',
         'odoo11-addon-sale_variant_configurator',
     ],
