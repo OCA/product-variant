@@ -68,7 +68,7 @@ class TestSaleOrder(common.SavepointCase):
             'product_tmpl_id': self.product_template_yes.id,
             'price_unit': 100,
             'product_uom': self.product_template_yes.uom_id.id,
-            'product_qty': 1,
+            'product_uom_qty': 1,
         })
         result = line1._onchange_product_tmpl_id_configurator()
         self.assertEqual(len(line1.product_attribute_ids), 1)
@@ -80,7 +80,7 @@ class TestSaleOrder(common.SavepointCase):
             'order_id': sale.id,
             'product_tmpl_id': self.product_template_no.id,
             'product_uom': self.product_template_no.uom_id.id,
-            'product_qty': 1,
+            'product_uom_qty': 1,
             'price_unit': 200,
             'name': 'Line 2',
         })
@@ -102,7 +102,7 @@ class TestSaleOrder(common.SavepointCase):
             'product_tmpl_id': self.product_template_yes.id,
             'price_unit': 0,
             'name': 'Line 1',
-            'product_qty': 1,
+            'product_uom_qty': 1,
             'product_uom': self.product_template_yes.uom_id.id,
         })
         line._onchange_product_tmpl_id_configurator()
@@ -170,7 +170,7 @@ class TestSaleOrder(common.SavepointCase):
                 'product_id': product.id,
                 'price_unit': 100,
                 'name': 'Line 1',
-                'product_qty': 1,
+                'product_uom_qty': 1,
                 'product_uom': product.uom_id.id,
             })]
         })
@@ -188,7 +188,7 @@ class TestSaleOrder(common.SavepointCase):
             'product_tmpl_id': self.product_template_yes.id,
             'price_unit': 100,
             'name': 'Line 1',
-            'product_qty': 1,
+            'product_uom_qty': 1,
             'product_uom': self.product_template_yes.uom_id.id,
             'product_attribute_ids': [(0, 0, {
                 'product_tmpl_id': self.product_template_yes.id,
@@ -202,7 +202,7 @@ class TestSaleOrder(common.SavepointCase):
             'order_id': order.id,
             'product_tmpl_id': self.product_template_no.id,
             'product_uom': self.product_template_no.uom_id.id,
-            'product_qty': 1,
+            'product_uom_qty': 1,
             'price_unit': 200,
             'name': 'Line 2',
             'create_product_variant': True,
