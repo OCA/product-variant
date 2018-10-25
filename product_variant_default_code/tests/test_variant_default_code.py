@@ -88,6 +88,7 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.env.user.groups_id |= self.group_default_code
         # Erase the previous mask: 'P01/[TSize][TColor]'
         self.template2.write({'reference_mask': ''})
+        self.template2.onchange_reference_mask()
         # Mask is set to default now:
         self.assertEqual(self.template2.reference_mask, '[TSize]-[TColor]')
 
@@ -172,6 +173,7 @@ class TestVariantDefaultCode(common.SavepointCase):
             'default_reference_separator', 'None')
         # re-initialize reference mask
         self.template2.write({'reference_mask': ''})
+        self.template2.onchange_reference_mask()
         self.assertEqual(self.template2.reference_mask, '[TSize][TColor]')
 
     def test_12_check_code_prefix_modification(self):
@@ -196,3 +198,25 @@ class TestVariantDefaultCode(common.SavepointCase):
             ]
         })
         self.assertEqual(self.template3.reference_mask, '[TSize]-[TColor]')
+
+    def test_15_check_create_edit_variant(self):
+        variant = self.env['product.product'].create({
+            'name': 'create_variant',
+            'default_code': '123456'
+        })
+        self.assertEqual(variant.product_tmpl_id.code_prefix, '123456')
+        variant.write({
+            'default_code': '99999'
+        })
+        self.assertEqual(variant.product_tmpl_id.code_prefix, '99999')
+
+    def test_16_check_create_edit_template(self):
+        template = self.env['product.template'].create({
+            'name': 'create_template',
+            'code_prefix': '654321'
+        })
+        self.assertEqual(template.product_variant_ids.default_code, '654321')
+        template.write({
+            'code_prefix': '111111'
+        })
+        self.assertEqual(template.product_variant_ids.default_code, '111111')

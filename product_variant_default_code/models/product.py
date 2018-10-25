@@ -38,31 +38,6 @@ def sanitize_reference_mask(product, mask):
                           'Reference Mask"'))
 
 
-def get_rendered_default_code(product, mask):
-    product_attrs = defaultdict(str)
-    reference_mask = ReferenceMask(mask)
-    main_lang = product.product_tmpl_id._guess_main_lang()
-    for value in product.attribute_value_ids:
-        attr_name = value.attribute_id.with_context(lang=main_lang).name
-        if value.attribute_id.code:
-            product_attrs[attr_name] += value.attribute_id.code
-        if value.code:
-            product_attrs[attr_name] += value.code
-    all_attrs = extract_token(mask)
-    missing_attrs = all_attrs - set(product_attrs.keys())
-    missing = dict.fromkeys(
-        missing_attrs,
-        product.env['ir.config_parameter'].get_param(
-            'default_reference_missing_placeholder'))
-    product_attrs.update(missing)
-    default_code = reference_mask.safe_substitute(product_attrs)
-    return default_code
-
-
-def render_default_code(product, mask):
-    product.default_code = get_rendered_default_code(product, mask)
-
-
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
@@ -98,6 +73,18 @@ class ProductTemplate(models.Model):
              '\nNote: make sure characters "[,]" do not appear in your '
              'attribute name')
 
+    @api.depends(
+        'product_variant_ids',
+        'product_variant_ids.default_code',
+        'code_prefix',
+        )
+    def _compute_default_code(self):
+        super(ProductTemplate, self)._compute_default_code()
+        multi_variants = self.filtered(
+            lambda template: len(template.product_variant_ids) > 1)
+        for template in multi_variants:
+            template.default_code = template.code_prefix
+
     def _get_attr_val_k(self, attr_value_id):
         return attr_value_id.attribute_id.sequence
 
@@ -121,8 +108,16 @@ class ProductTemplate(models.Model):
             'product_variant_default_code'
             '.group_product_default_code')
 
+    def _synchronyze_default_code(self, vals):
+        if 'code_prefix' in vals and \
+                not self._context.get('write_product_product') and \
+                not self._context.get('create_product_product'):
+            vals['default_code'] = vals['code_prefix']
+        return vals
+
     @api.model
     def create(self, vals):
+        self._synchronyze_default_code(vals)
         product = self.new(vals)
         if self._is_automatic_mask() or not vals.get('reference_mask'):
             vals['reference_mask'] = product._get_default_mask()
@@ -133,10 +128,17 @@ class ProductTemplate(models.Model):
     def _mask_needs_update(self, vals):
         return 'code_prefix' in vals or 'attribute_line_ids' in vals
 
+    @api.onchange('reference_mask')
+    def onchange_reference_mask(self):
+        for record in self:
+            if not record.reference_mask:
+                record.reference_mask = record._get_default_mask()
+
     def write(self, vals):
-        result = super(ProductTemplate, self).write(vals)
-        if (self._is_automatic_mask() and self._mask_needs_update(vals)) \
-                or ('reference_mask' in vals and not vals['reference_mask']):
+        self._synchronyze_default_code(vals)
+        result = super(ProductTemplate, self.with_context(
+            write_from_tmpl=True)).write(vals)
+        if (self._is_automatic_mask() and self._mask_needs_update(vals)):
             for record in self:
                 # we write the new mask and the additional write
                 # will recompute the variant code
@@ -145,7 +147,9 @@ class ProductTemplate(models.Model):
             cond = [('product_tmpl_id', 'in', self.ids),
                     ('manual_code', '=', False)]
             for product in self.env['product.product'].search(cond):
-                render_default_code(product, product.reference_mask)
+                product.with_context(
+                    write_from_tmpl=True
+                ).render_default_code()
         return result
 
     @api.model
@@ -167,16 +171,60 @@ class ProductProduct(models.Model):
 
     manual_code = fields.Boolean(string='Manual Reference')
 
+    def _get_rendered_default_code(self):
+        product_attrs = defaultdict(str)
+        reference_mask = ReferenceMask(self.reference_mask)
+        main_lang = self.product_tmpl_id._guess_main_lang()
+        for value in self.attribute_value_ids:
+            attr_name = value.attribute_id.with_context(lang=main_lang).name
+            if value.attribute_id.code:
+                product_attrs[attr_name] += value.attribute_id.code
+            if value.code:
+                product_attrs[attr_name] += value.code
+        all_attrs = extract_token(self.reference_mask)
+        missing_attrs = all_attrs - set(product_attrs.keys())
+        missing = dict.fromkeys(
+            missing_attrs,
+            self.env['ir.config_parameter'].get_param(
+                'default_reference_missing_placeholder'))
+        product_attrs.update(missing)
+        default_code = reference_mask.safe_substitute(product_attrs)
+        return default_code
+
+    def render_default_code(self):
+        for record in self:
+            record.default_code = record._get_rendered_default_code()
+
     @api.model
     def create(self, vals):
+        if not vals.get('product_tmpl_id') and vals.get('default_code'):
+            vals['code_prefix'] = vals['default_code']
         product = super(ProductProduct, self).create(vals)
         if product.reference_mask:
-            render_default_code(product, product.reference_mask)
+            product.render_default_code()
         return product
+
+    def write(self, vals):
+        if 'default_code' in vals and \
+                not self._context.get('create_from_tmpl') and \
+                not self._context.get('write_from_tmpl'):
+            for record in self:
+                local_vals = vals.copy()
+                if not record.attribute_line_ids:
+                    local_vals['code_prefix'] = local_vals['default_code']
+                super(ProductProduct, record.with_context(
+                    write_product_product=True)).write(local_vals)
+            return True
+        else:
+            return super(ProductProduct, self).write(vals)
 
     @api.onchange('default_code')
     def onchange_default_code(self):
-        self.manual_code = bool(self.default_code)
+        for product in self:
+            # it shouldn't be possible to be in 'manual_code' mode
+            # when there is only 1 variant
+            if product.attribute_line_ids:
+                self.manual_code = bool(self.default_code)
 
 
 class ProductAttribute(models.Model):
@@ -198,7 +246,7 @@ class ProductAttribute(models.Model):
             'product_tmpl_id').mapped('product_variant_ids').filtered(
                 lambda x: x.product_tmpl_id.reference_mask and not
                 x.manual_code):
-            render_default_code(product, product.reference_mask)
+            product.render_default_code()
         return result
 
 
@@ -231,5 +279,5 @@ class ProductAttributeValue(models.Model):
                 lambda x: x.product_tmpl_id.reference_mask and not
                 x.manual_code
                 ).mapped('product_tmpl_id').mapped('product_variant_ids'):
-            render_default_code(product, product.reference_mask)
+            product.render_default_code()
         return result
