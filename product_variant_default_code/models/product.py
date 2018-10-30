@@ -219,7 +219,7 @@ class ProductAttributeValue(models.Model):
             return super(ProductAttributeValue, self).write(vals)
         result = super(ProductAttributeValue, self).write(vals)
         # Rewrite reference on all product variants affected
-        for product in self.mapped('product_ids').filtered(
+        for product in self.sudo().mapped('product_ids').filtered(
                 lambda x: x.product_tmpl_id.reference_mask and not
                 x.manual_code
                 ).mapped('product_tmpl_id.product_variant_ids'):
