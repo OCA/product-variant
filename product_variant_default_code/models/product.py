@@ -275,7 +275,7 @@ class ProductAttributeValue(models.Model):
         if 'code' not in vals:
             return result
         # Rewrite reference on all product variants affected
-        for product in self.mapped('product_ids').filtered(
+        for product in self.sudo().mapped('product_ids').filtered(
                 lambda x: x.product_tmpl_id.reference_mask and not
                 x.manual_code
                 ).mapped('product_tmpl_id').mapped('product_variant_ids'):
