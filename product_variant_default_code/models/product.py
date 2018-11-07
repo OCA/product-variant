@@ -53,7 +53,7 @@ def get_rendered_default_code(product, mask):
     missing_attrs = all_attrs - set(product_attrs.keys())
     missing = dict.fromkeys(
         missing_attrs,
-        product.env['ir.config_parameter'].get_param(
+        product.env['ir.config_parameter'].sudo().get_param(
             'default_reference_missing_placeholder'))
     product_attrs.update(missing)
     default_code = reference_mask.safe_substitute(product_attrs)
@@ -102,7 +102,8 @@ class ProductTemplate(models.Model):
     def _get_default_mask(self):
         attribute_names = []
         default_reference_separator = self.env[
-            'ir.config_parameter'].get_param('default_reference_separator')
+            'ir.config_parameter'
+        ].sudo().get_param('default_reference_separator')
         for line in self.attribute_line_ids:
             attribute_names.append(u"[{}]".format(line.attribute_id.name))
         default_mask = ((self.code_prefix or '') +
