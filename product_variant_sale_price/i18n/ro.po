@@ -20,7 +20,7 @@ msgstr ""
 "2:1));\n"
 
 #. module: product_variant_sale_price
-#: field:product.product,fix_price:0
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product_fix_price
 msgid "Fix Price"
 msgstr ""
 
@@ -33,12 +33,3 @@ msgstr "Produs"
 #: model:ir.model,name:product_variant_sale_price.model_product_template
 msgid "Product Template"
 msgstr "Produs șablon"
-
-#. module: product_variant_sale_price
-#: view:product.template:product_variant_sale_price.product_template_form_view
-msgid ""
-"{'invisible': [\n"
-"                                            ('product_variant_count', '>', "
-"1)\n"
-"                                        ]}"
-msgstr ""
