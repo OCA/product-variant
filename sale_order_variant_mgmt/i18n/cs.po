@@ -46,11 +46,6 @@ msgid "Created on"
 msgstr "Vytvořeno"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_disabled
-msgid "Disabled"
-msgstr ""
-
-#. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_display_name
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_display_name
 msgid "Display Name"
@@ -122,17 +117,12 @@ msgstr ""
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_x
-msgid "Value x"
+msgid "Value X"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_y
-msgid "Value y"
-msgstr ""
-
-#. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_id
-msgid "Variant"
+msgid "Value Y"
 msgstr ""
 
 #. module: sale_order_variant_mgmt

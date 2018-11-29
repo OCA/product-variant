@@ -47,11 +47,6 @@ msgid "Created on"
 msgstr "Erstellt am:"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_disabled
-msgid "Disabled"
-msgstr "Ausgeschaltet"
-
-#. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_display_name
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_display_name
 msgid "Display Name"
@@ -123,18 +118,15 @@ msgstr "Zu Auftrag umwandeln"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_x
-msgid "Value x"
+#, fuzzy
+msgid "Value X"
 msgstr "Wert x"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_y
-msgid "Value y"
-msgstr "Wert y"
-
-#. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_id
-msgid "Variant"
-msgstr "Variante"
+#, fuzzy
+msgid "Value Y"
+msgstr "Wert x"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_variant_line_ids
@@ -150,3 +142,12 @@ msgstr "sale.manage.variant"
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
 msgid "sale.manage.variant.line"
 msgstr "sale.manage.variant.line"
+
+#~ msgid "Disabled"
+#~ msgstr "Ausgeschaltet"
+
+#~ msgid "Value y"
+#~ msgstr "Wert y"
+
+#~ msgid "Variant"
+#~ msgstr "Variante"
