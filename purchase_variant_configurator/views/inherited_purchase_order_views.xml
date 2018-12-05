@@ -27,7 +27,7 @@
                                 <field name="attribute_id" force_save="1"/>
                                 <field name="possible_value_ids" widget="many2many_tags" invisible="1"/>
                                 <field name="product_tmpl_id" invisible="1"/>
-                                <field name="value_id"/>
+                                <field name="value_id" context="{'show_attribute': False, 'default_attribute_id': attribute_id, 'template_for_attribute_value': product_tmpl_id}"/>
                             </tree>
                         </field>
                         <field name="can_create_product" invisible="1"/>
