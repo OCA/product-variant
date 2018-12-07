@@ -32,7 +32,7 @@ msgid "Attribute Code"
 msgstr "Código de atributo"
 
 #. module: product_variant_default_code
-#: code:addons/product_variant_default_code/models/product.py:190
+#: code:addons/product_variant_default_code/models/product.py:238
 #: sql_constraint:product.attribute:0
 #, python-format
 msgid "Attribute Name must be unique!"
@@ -134,11 +134,6 @@ msgid "Variant reference mask"
 msgstr "Máscara de referencia para la variante"
 
 #. module: product_variant_default_code
-#: model:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
-msgid "[attribute3]-[attribute1]"
-msgstr "[atributo3]-[atributo1]"
-
-#. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_base_config_settings
 msgid "base.config.settings"
 msgstr "base.config.settings"
@@ -147,3 +142,9 @@ msgstr "base.config.settings"
 #: model:ir.model,name:product_variant_default_code.model_product_attribute_value
 msgid "product.attribute.value"
 msgstr "product.attribute.value"
+
+#. module: product_variant_default_code
+#: model:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
+#, fuzzy
+msgid "reference[attribute3]-[attribute1]"
+msgstr "[atributo3]-[atributo1]"
