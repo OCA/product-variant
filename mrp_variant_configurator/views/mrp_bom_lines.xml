@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Views -->
+    <record id="mrp_bom_form_extende_view" model="ir.ui.view">
+        <field name="name">mrp.bom.form.extended</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_line_ids']/tree" position="attributes">
+                <!-- force using the form -->
+                <attribute name="editable"/>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="after">
+                <field name="name" string="Description"/>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']/tree"
+                   position="before">
+                <form string="BoM Lines">
+                    <sheet>
+                        <group>
+                            <field name="product_tmpl_id"/>
+                            <field name="product_attribute_ids" widget="one2many"
+                                   context="{'default_owner_model': 'mrp.bom.line'}"
+                                   attrs="{'invisible': [('product_attribute_ids','=',[])]}"
+                                   nolabel="1" colspan="2">
+                                <tree create="0" delete="0" editable="1">
+                                    <field name="owner_model" invisible="1"/>
+                                    <field name="owner_id" invisible="1"/>
+                                    <field name="attribute_id" force_save="1"/>
+                                    <field name="possible_value_ids" widget="many2many_tags" invisible="1"/>
+                                    <field name="product_tmpl_id" invisible="1"/>
+                                    <field name="value_id"/>
+                                </tree>
+                            </field>
+                            <field name="can_create_product" invisible="1"/>
+                            <field name="create_product_variant"
+                                   help="You must to check this field in order to create a new selectable product before to save the line."
+                                   attrs="{'invisible': [('can_create_product', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <label for="product_qty"/>
+                                <div>
+                                    <field name="product_qty" class="oe_inline"/>
+                                    <span class="oe_inline"/>
+                                    <field name="product_uom_id" groups="product.group_uom" class="oe_inline"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="has_attachments" invisible="1"/>
+                                <field name="attribute_value_ids" widget="many2many_tags" options="{'no_create': True}"
+                                       domain="[('product_ids.product_tmpl_id', '=', parent.product_tmpl_id)]"
+                                       groups="product.group_product_variant"/>
+                                <field name="operation_id" groups="mrp.group_mrp_routings"
+                                       domain="[('routing_id', '=', parent.routing_id)]"
+                                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Notes">
+                                <field name="name"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </xpath>
+        </field>
+    </record>
+</odoo>
