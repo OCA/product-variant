@@ -27,12 +27,12 @@
                                 <field name="attribute_id" />
                                 <field name="possible_value_ids" widget="many2many_tags" invisible="1"/>
                                 <field name="product_tmpl_id" invisible="1"/>
-                                <field name="value_id"/>
+                                <field name="value_id" context="{'show_attribute': False, 'default_attribute_id': attribute_id, 'template_for_attribute_value': product_tmpl_id}"/>
                             </tree>
                         </field>
                         <field name="can_create_product" invisible="1"/>
                         <field name="create_product_variant"
-                            attrs="{'invisible': 
+                            attrs="{'invisible':
                             [('can_create_product', '=', False)]}"/>
                     </group>
                 </xpath>
