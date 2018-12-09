@@ -33,16 +33,24 @@ msgstr "Può creare prodotti"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:23
-#: code:addons/product_variant_configurator/models/product_template.py:32
+#: code:addons/product_variant_configurator/models/product_template.py:35
 #, python-format
 msgid "Change warning!"
 msgstr ""
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:24
-#: code:addons/product_variant_configurator/models/product_template.py:33
 #, python-format
 msgid "Changing this parameter may cause automatic variants creation"
+msgstr ""
+
+#. module: product_variant_configurator
+#: code:addons/product_variant_configurator/models/product_template.py:30
+#, python-format
+msgid ""
+"Changing this parameter may cause automatic variants creation (in case "
+"variants are created automatically),or automatic variants deactivation (in "
+"case variants are created manually)."
 msgstr ""
 
 #. module: product_variant_configurator
