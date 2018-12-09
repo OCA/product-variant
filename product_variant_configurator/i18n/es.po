@@ -28,21 +28,20 @@ msgstr "Atributo"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_can_create_product
-#: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_can_create_product
-#: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_can_create_product
-msgid "Can create product"
+#, fuzzy
+msgid "Can Create Product"
 msgstr "Puede crear producto"
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_category.py:23
-#: code:addons/product_variant_configurator/models/product_template.py:32
+#: code:addons/product_variant_configurator/models/product_category.py:22
+#: code:addons/product_variant_configurator/models/product_template.py:31
 #, python-format
 msgid "Change warning!"
 msgstr "Aviso de cambio"
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_category.py:24
-#: code:addons/product_variant_configurator/models/product_template.py:33
+#: code:addons/product_variant_configurator/models/product_category.py:23
+#: code:addons/product_variant_configurator/models/product_template.py:32
 #, python-format
 msgid "Changing this parameter may cause automatic variants creation"
 msgstr ""
@@ -51,8 +50,6 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_create_product_variant
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_create_product_variant
-#: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_create_product_variant
-#: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_create_product_variant
 msgid "Create product now!"
 msgstr "¡Crear producto ahora!"
 
@@ -121,18 +118,25 @@ msgstr "Propietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_owner_model
-msgid "Owner model"
+#, fuzzy
+msgid "Owner Model"
 msgstr "Modelo propietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_possible_value_ids
-msgid "Possible value ids"
+#, fuzzy
+msgid "Possible Value"
 msgstr "Posibles valores"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_price_extra
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_price_extra
+#, fuzzy
+msgid "Price Extra"
+msgstr "Precio extra"
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator_price_extra
-#: model:ir.model.fields,help:product_variant_configurator.field_purchase_order_line_price_extra
-#: model:ir.model.fields,help:product_variant_configurator.field_sale_order_line_price_extra
 msgid ""
 "Price Extra: Extra price for the variant with the currently selected "
 "attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
@@ -149,14 +153,6 @@ msgid ""
 msgstr ""
 "Precio extra: Precio extra de la variante sobre el precio de venta con este "
 "valor de atributo. Ej. precio extra 200, 1000 + 200 = 1200."
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_price_extra
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_price_extra
-#: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_price_extra
-#: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_price_extra
-msgid "Price extra"
-msgstr "Precio extra"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
@@ -179,7 +175,6 @@ msgstr "Categoría de producto"
 #: model:ir.model,name:product_variant_configurator.model_product_template
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute_product_tmpl_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_tmpl_id
-#: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_product_tmpl_id
 #: model:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "Product Template"
 msgstr "Plantilla de producto"
@@ -187,13 +182,11 @@ msgstr "Plantilla de producto"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product_product_attribute_ids
-#: model:ir.model.fields,field_description:product_variant_configurator.field_purchase_order_line_product_attribute_ids
-#: model:ir.model.fields,field_description:product_variant_configurator.field_sale_order_line_product_attribute_ids
 msgid "Product attributes"
 msgstr "Atributos de producto"
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_configurator.py:190
+#: code:addons/product_variant_configurator/models/product_configurator.py:189
 #, python-format
 msgid "Product not created!"
 msgstr "Producto no creado"
@@ -216,7 +209,7 @@ msgid "The attribute already exists for this product"
 msgstr "El atributo ya existe para este producto"
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_product.py:79
+#: code:addons/product_variant_configurator/models/product_product.py:82
 #, python-format
 msgid "There's another product with the same attributes."
 msgstr "Hay otro producto con los mismos atributos."
@@ -278,7 +271,7 @@ msgid "Variant creation"
 msgstr "Creación de variante"
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_product.py:105
+#: code:addons/product_variant_configurator/models/product_product.py:108
 #, python-format
 msgid ""
 "You have to fill the following attributes:\n"
