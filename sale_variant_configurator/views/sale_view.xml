@@ -18,7 +18,7 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']"
                    position="before">
-                <field name="product_tmpl_id" />
+                <field name="product_tmpl_id" domain="[('sale_ok','=',True)]"/>
                 <field name="product_attribute_ids"
                        context="{'default_owner_model': 'sale.order.line', 'default_owner_id': id}"
                        attrs="{'invisible':[('product_attribute_ids','=',[])]}">
