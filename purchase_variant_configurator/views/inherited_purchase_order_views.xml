@@ -16,7 +16,7 @@
                         <field name="state" invisible="1"/>
                         <!-- HACK: readonly condition is set with an `in` clause instead of a `not in` for allowing on new created lines to be writeable, as
                              state field is a related one that is not filled until saved -->
-                        <field name="product_tmpl_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"/>
+                        <field name="product_tmpl_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" domain="[('purchase_ok','=',True)]"/>
                         <field name="product_attribute_ids" widget="one2many"
                                context="{'default_owner_model': 'purchase.order.line'}"
                                attrs="{'invisible': [('product_attribute_ids','=',[])], 'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
