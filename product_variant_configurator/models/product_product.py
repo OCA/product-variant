@@ -109,6 +109,20 @@ class ProductProduct(models.Model):
                     "\n".join(errors.mapped('name'))
                 )
 
+    def name_get(self):
+        """We need to add this for avoiding an odoo.exceptions.AccessError due
+        to some refactoring done upstream on read method + variant name_get
+        in Odoo. With this, we avoid to call super on the specific case of
+        virtual records, providing simply the name, which is acceptable.
+        """
+        res = []
+        for product in self:
+            if isinstance(product.id, models.NewId):
+                res.append((product.id, product.name))
+            else:
+                res.append(super(ProductProduct, product).name_get()[0])
+        return res
+
     @api.model
     def create(self, vals):
         if vals.get('product_attribute_ids'):
