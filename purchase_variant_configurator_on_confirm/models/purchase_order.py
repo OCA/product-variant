@@ -46,21 +46,23 @@ class PurchaseOrderLine(models.Model):
         """ Make use of PurchaseOrderLine onchange_product_id method with
         a virtual product created on the fly.
         """
-        self.product_id = self.product_tmpl_id._product_from_tmpl()
-        self.onchange_product_id()
-        self.product_id = False
-        # HACK: With NewId, making `with_context` loses temp values, so we
-        # need to recreate these operations
-        product_lang = self.product_tmpl_id.with_context({
-            'lang': self.partner_id.lang,
-            'partner_id': self.partner_id.id,
-        })
-        self.name = product_lang.display_name
-        if product_lang.description_purchase:
-            self.name += '\n' + product_lang.description_purchase
-        return super(
+        res = super(
             PurchaseOrderLine, self,
         )._onchange_product_tmpl_id_configurator()
+        if not self.product_id:
+            self.product_id = self.product_tmpl_id._product_from_tmpl()
+            self.onchange_product_id()
+            self.product_id = False
+            # HACK: With NewId, making `with_context` loses temp values, so we
+            # need to recreate these operations
+            product_lang = self.product_tmpl_id.with_context({
+                'lang': self.partner_id.lang,
+                'partner_id': self.partner_id.id,
+            })
+            self.name = product_lang.display_name
+            if product_lang.description_purchase:
+                self.name += '\n' + product_lang.description_purchase
+        return res
 
     @api.model
     def create(self, vals):
