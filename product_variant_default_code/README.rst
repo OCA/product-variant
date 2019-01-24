@@ -116,6 +116,7 @@ Contributors
 * Tony Gu <tony@openerp.cn>
 * David Vidal <david.vidal@tecnativa.com>
 * David Beal <david.beal@akretion.com>
+* Pierrick Brun <pierrick.brun@akretion.com>
 
 Maintainer
 ----------
