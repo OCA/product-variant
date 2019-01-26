@@ -9,24 +9,25 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-30 03:46+0000\n"
-"PO-Revision-Date: 2017-11-30 03:46+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2019-01-26 15:41+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.3\n"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.view_picking_form
 msgid "Add or Modify Variants"
-msgstr ""
+msgstr "Adicionar ou Modificar Variantes"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_move_product_attribute_value_ids
 msgid "Attributes"
-msgstr ""
+msgstr "Atributos"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_manage_variant_form
@@ -54,7 +55,7 @@ msgstr "Criado em"
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_disabled
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Desativada"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_display_name
@@ -99,29 +100,29 @@ msgstr "Atualizado pela última vez em"
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_variant_line_ids
 msgid "Lines"
-msgstr ""
+msgstr "Linhas"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_manage_variant_form
 msgid "Manage Product Variants"
-msgstr ""
+msgstr "Gerir Variantes de Produtos"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.actions.act_window,name:stock_picking_variant_mgmt.action_stock_transfer_manage_variant
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_transfer_manage_variant_form
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.view_picking_form
 msgid "Manage Variants Transfer"
-msgstr ""
+msgstr "Gerir Movimentação de Variantes"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.actions.act_window,name:stock_picking_variant_mgmt.action_stock_manage_variant
 msgid "Manage variants"
-msgstr ""
+msgstr "Gerir variantes"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.view_move_picking_tree
 msgid "Modify Variants"
-msgstr ""
+msgstr "Modificar Variantes"
 
 #. module: stock_picking_variant_mgmt
 #: code:addons/stock_picking_variant_mgmt/wizard/stock_transfer_manage_variant.py:50
@@ -138,7 +139,7 @@ msgstr "Quantidade"
 #. module: stock_picking_variant_mgmt
 #: model:ir.model,name:stock_picking_variant_mgmt.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento de Stock"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_product_tmpl_id
@@ -149,40 +150,40 @@ msgstr "Modelo"
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_manage_variant_form
 #: model:ir.ui.view,arch_db:stock_picking_variant_mgmt.stock_transfer_manage_variant_form
 msgid "Transfer to picking"
-msgstr ""
+msgstr "Transferir para Operação de Stock"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_value_x
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_x
 msgid "Value x"
-msgstr ""
+msgstr "Valor x"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_x_label
 msgid "Value x label"
-msgstr ""
+msgstr "Etiqueta do valor x"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_value_y
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_y
 msgid "Value y"
-msgstr ""
+msgstr "Valor y"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_value_y_label
 msgid "Value y label"
-msgstr ""
+msgstr "Etiqueta do valor y"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_line_product_id
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_transfer_manage_variant_line_product_id
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model.fields,field_description:stock_picking_variant_mgmt.field_stock_manage_variant_variant_line_ids
 msgid "Variant Lines"
-msgstr ""
+msgstr "Linha de Variantes"
 
 #. module: stock_picking_variant_mgmt
 #: model:ir.model,name:stock_picking_variant_mgmt.model_stock_manage_variant
