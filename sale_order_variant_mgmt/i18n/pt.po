@@ -10,24 +10,25 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-22 23:46+0000\n"
-"PO-Revision-Date: 2016-11-22 23:46+0000\n"
-"Last-Translator: Pedro Castro Silva <pedrocs@sossia.pt>, 2016\n"
+"PO-Revision-Date: 2019-01-26 15:41+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.3\n"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Add or Modify Variants"
-msgstr ""
+msgstr "Adicionar ou Modificar Variantes"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_attribute_value_ids
 msgid "Attributes"
-msgstr ""
+msgstr "Atributos"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
@@ -49,7 +50,7 @@ msgstr "Criado em"
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Desativada"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_display_name
@@ -84,22 +85,22 @@ msgstr "Atualizado pela última vez em"
 #. module: sale_order_variant_mgmt
 #: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Manage Product Variants"
-msgstr ""
+msgstr "Gerir Variantes de Produtos"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.actions.act_window,name:sale_order_variant_mgmt.action_sale_manage_variant
 msgid "Manage variants"
-msgstr ""
+msgstr "Gerir variantes"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Modify Variants"
-msgstr ""
+msgstr "Modificar Variantes"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_tmpl_id_sale_order_variant_mgmt
 msgid "Product Template"
-msgstr ""
+msgstr "Modelo de Produto"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_uom_qty
@@ -109,7 +110,7 @@ msgstr "Quantidade"
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Linha de Encomenda de Venda"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_product_tmpl_id
@@ -119,27 +120,27 @@ msgstr "Modelo"
 #. module: sale_order_variant_mgmt
 #: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Transfer to order"
-msgstr ""
+msgstr "Transferir para orçamento/encomenda"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_x
 msgid "Value x"
-msgstr ""
+msgstr "Valor x"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_y
 msgid "Value y"
-msgstr ""
+msgstr "Valor y"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_id
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_variant_line_ids
 msgid "Variant Lines"
-msgstr ""
+msgstr "Linha de Variantes"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
