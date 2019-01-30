@@ -42,8 +42,7 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id_configurator(self):
-        obj = super(SaleOrderLine, self)
-        res = obj._onchange_product_tmpl_id_configurator()
+        res = super()._onchange_product_tmpl_id_configurator()
         if self.product_tmpl_id.attribute_line_ids:
             domain = res.setdefault('domain', {})
             domain['product_uom'] = [
@@ -72,7 +71,7 @@ class SaleOrderLine(models.Model):
             pricelist=self.order_id.pricelist_id.id,
             uom=self.product_uom.id,
         )
-        # TODO: Check why this is reset
+        # product_configurator methods don't take into account this description
         if product_tmpl.description_sale:
             self.name = (
                 (self.name or '') + '\n' + product_tmpl.description_sale
@@ -90,6 +89,11 @@ class SaleOrderLine(models.Model):
         """
         res = super().product_id_change()
         self._onchange_product_id_configurator()
+        # product_configurator methods don't take into account this description
+        if self.product_id.description_sale:
+            self.name = (
+                (self.name or '') + '\n' + self.product_id.description_sale
+            )
         return res
 
     def _update_price_configurator(self):
