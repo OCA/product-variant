@@ -169,10 +169,6 @@ class ProductConfigurator(models.AbstractModel):
                 product.product_tmpl_id, product, product.attribute_value_ids)
             self.product_tmpl_id = product.product_tmpl_id.id
             self._set_product_attributes()
-        elif self.product_tmpl_id:
-            self._set_product_tmpl_attributes()
-        else:
-            self._empty_attributes()
 
     @api.onchange('create_product_variant')
     def _onchange_create_product_variant(self):
