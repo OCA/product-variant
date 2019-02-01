@@ -43,19 +43,12 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        product_obj = self.env['product.product']
-        lines = self.mapped('order_line').filtered(lambda x: not x.product_id)
-        for line in lines:
-            product = product_obj._product_find(
-                line.product_tmpl_id, line.product_attribute_ids,
-            )
-            if not product:
-                values = line.product_attribute_ids.mapped('value_id')
-                product = product_obj.create({
-                    'product_tmpl_id': line.product_tmpl_id.id,
-                    'attribute_value_ids': [(6, 0, values.ids)],
-                })
-            line.write({'product_id': product.id})
+        """Create possible product variants not yet created."""
+        lines_without_product = self.mapped('order_line').filtered(
+            lambda x: not x.product_id and x.product_tmpl_id
+        )
+        for line in lines_without_product:
+            line.create_variant_if_needed()
         super(SaleOrder, self).action_confirm()
 
 
@@ -72,6 +65,19 @@ class SaleOrderLine(models.Model):
         related='order_id.partner_id',
         readonly=True,
     )
+
+    @api.model
+    def create(self, vals):
+        """Create product if not exist when the sales order is already
+        confirmed and a line is added.
+        """
+        if vals.get('order_id') and not vals.get('product_id'):
+            order = self.env['sale.order'].browse(vals['order_id'])
+            if order.state == 'sale':
+                line = self.new(vals)
+                product = line.create_variant_if_needed()
+                vals['product_id'] = product.id
+        return super().create(vals)
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id_configurator(self):
