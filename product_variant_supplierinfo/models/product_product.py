@@ -12,7 +12,7 @@ class ProductProduct(models.Model):
 
     seller_ids = fields.Many2many(
         'product.supplierinfo',
-        compute='_compute_seller_ids',
+        compute='compute_seller_ids',
         store=True)
     seller_delay = fields.Integer(
         related='seller_ids.delay',
@@ -35,15 +35,13 @@ class ProductProduct(models.Model):
         'product_id')
     tmpl_seller_ids = fields.Many2many(
         'product.supplierinfo',
-        compute='_compute_seller_ids',
+        compute='compute_seller_ids',
         store=True,)
 
     @api.multi
     @api.depends('product_tmpl_id.seller_ids.product_id')
-    def _compute_seller_ids(self):
+    def compute_seller_ids(self):
         for product in self:
             sellers = product.product_tmpl_id.seller_ids
-            product.tmpl_seller_ids = sellers.filtered(
-                lambda x: not x.product_id)
-            product.seller_ids = sellers.filtered(
-                lambda x: not x.product_id or x.product_id == product)
+            product.tmpl_seller_ids = sellers
+            product.seller_ids = sellers.filtered(lambda x: x.product_id == product)
