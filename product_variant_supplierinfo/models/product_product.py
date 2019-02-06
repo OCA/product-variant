@@ -12,8 +12,7 @@ class ProductProduct(models.Model):
 
     seller_ids = fields.Many2many(
         'product.supplierinfo',
-        compute='_compute_seller_ids',
-        store=True)
+        compute='_compute_seller_ids')
     seller_delay = fields.Integer(
         related='seller_ids.delay',
         string='Supplier Lead Time',
@@ -35,11 +34,9 @@ class ProductProduct(models.Model):
         'product_id')
     tmpl_seller_ids = fields.Many2many(
         'product.supplierinfo',
-        compute='_compute_seller_ids',
-        store=True,)
+        compute='_compute_seller_ids')
 
     @api.multi
-    @api.depends('product_tmpl_id.seller_ids.product_id')
     def _compute_seller_ids(self):
         for product in self:
             sellers = product.product_tmpl_id.seller_ids
