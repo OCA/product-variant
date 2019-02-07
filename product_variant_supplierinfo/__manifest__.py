@@ -5,7 +5,7 @@
 {
     'name': 'Product supplier info per variant',
     'summary': 'Supplier info to product variant scope',
-    'version': '10.0.1.1.0',
+    'version': '10.0.1.2.0',
     'author': 'Tecnativa, Akretion,'
               'Odoo Community Association (OCA)',
     'category': 'Product Management',
