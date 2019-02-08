@@ -237,7 +237,7 @@ class ProductConfigurator(models.AbstractModel):
                 for att_val in product._get_product_attributes_values_dict():
                     att_val.update(gen_dict)
                     vals['product_attribute_ids'].append((0, 0, att_val))
-        return super().create(vals)
+        return super(ProductConfigurator, self).create(vals)
 
     @api.multi
     def unlink(self):
