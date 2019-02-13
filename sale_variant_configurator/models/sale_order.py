@@ -77,11 +77,11 @@ class SaleOrderLine(models.Model):
                 line = self.new(vals)
                 product = line.create_variant_if_needed()
                 vals['product_id'] = product.id
-        return super(SaleOrder, self).create(vals)
+        return super(SaleOrderLine, self).create(vals)
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id_configurator(self):
-        res = super(SaleOrder, self)._onchange_product_tmpl_id_configurator()
+        res = super(SaleOrderLine, self)._onchange_product_tmpl_id_configurator()
         if self.product_tmpl_id.attribute_line_ids:
             domain = res.setdefault('domain', {})
             domain['product_uom'] = [
@@ -126,7 +126,7 @@ class SaleOrderLine(models.Model):
         """Call again the configurator onchange after this main onchange
         for making sure the SO line description is correct.
         """
-        res = super(SaleOrder, self).product_id_change()
+        res = super(SaleOrderLine, self).product_id_change()
         self._onchange_product_id_configurator()
         # product_configurator methods don't take into account this description
         if self.product_id.description_sale:
