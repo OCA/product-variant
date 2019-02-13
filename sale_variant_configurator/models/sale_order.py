@@ -81,7 +81,9 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id_configurator(self):
-        res = super(SaleOrderLine, self)._onchange_product_tmpl_id_configurator()
+        res = super(
+            SaleOrderLine, self,
+        )._onchange_product_tmpl_id_configurator()
         if self.product_tmpl_id.attribute_line_ids:
             domain = res.setdefault('domain', {})
             domain['product_uom'] = [
