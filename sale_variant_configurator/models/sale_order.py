@@ -49,7 +49,7 @@ class SaleOrder(models.Model):
         )
         for line in lines_without_product:
             line.create_variant_if_needed()
-        super(SaleOrder, self).action_confirm()
+        return super(SaleOrder, self).action_confirm()
 
 
 class SaleOrderLine(models.Model):
