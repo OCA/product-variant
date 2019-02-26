@@ -35,6 +35,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Ana Juaristi <ajuaristio@gmail.com>
 * David Vidal <david.vidal@tecnativa.com>
+* Isaac Gallart <igallart@puntsistemes.es>
 
 Maintainer
 ----------
