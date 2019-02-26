@@ -24,7 +24,7 @@ addon | version | summary
 [sale_order_line_variant_description](sale_order_line_variant_description/) | 10.0.1.0.0 | Sale order line variant description
 [sale_order_variant_mgmt](sale_order_variant_mgmt/) | 10.0.1.0.0 | Handle the addition/removal of multiple variants from product template into the sales order
 [sale_stock_variant_configurator](sale_stock_variant_configurator/) | 10.0.1.0.0 | Product variants in sale management
-[sale_variant_configurator](sale_variant_configurator/) | 10.0.2.1.0 | Product variants in sale management
+[sale_variant_configurator](sale_variant_configurator/) | 10.0.2.1.1 | Product variants in sale management
 [stock_picking_variant_mgmt](stock_picking_variant_mgmt/) | 10.0.1.0.0 | Handle the addition/removal of multiple variants and the quantities transferred in the Pickings.
 
 [//]: # (end addons)
