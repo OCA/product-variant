@@ -20,14 +20,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_variant_configurator
+#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line_partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: sale_variant_configurator
 #: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line_product_tmpl_id
 msgid "Product Template"
 msgstr "Template Prodotto"
 
 #. module: sale_variant_configurator
 #: model:ir.model,name:sale_variant_configurator.model_sale_order
-msgid "Sales Order"
-msgstr "Ordine di Vendita"
+msgid "Quotation"
+msgstr ""
 
 #. module: sale_variant_configurator
 #: model:ir.model,name:sale_variant_configurator.model_sale_order_line
@@ -38,3 +43,6 @@ msgstr "Linea d'ordine di vendita"
 #: model:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
 msgid "Template"
 msgstr "Modello"
+
+#~ msgid "Sales Order"
+#~ msgstr "Ordine di Vendita"
