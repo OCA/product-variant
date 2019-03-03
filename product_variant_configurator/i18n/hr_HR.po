@@ -178,7 +178,7 @@ msgid "Product attributes"
 msgstr ""
 
 #. module: product_variant_configurator
-#: code:addons/product_variant_configurator/models/product_configurator.py:189
+#: code:addons/product_variant_configurator/models/product_configurator.py:185
 #, python-format
 msgid "Product not created!"
 msgstr ""
