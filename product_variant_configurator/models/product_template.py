@@ -97,6 +97,6 @@ class ProductTemplate(models.Model):
             if val[0] not in keys:
                 res.append(val)
                 keys.append(val[0])
-                if len(res) >= limit:
+                if limit and len(res) >= limit:
                     break
         return res
