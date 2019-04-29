@@ -83,15 +83,19 @@ class SaleManageVariant(models.TransientModel):
                 vals = OrderLine.default_get(OrderLine._fields.keys())
                 vals.update({
                     'product_id': product.id,
-                    'product_uom': product.uom_id,
+                    'product_uom': product.uom_id.id,
                     'product_uom_qty': line.product_uom_qty,
                     'order_id': sale_order.id,
                 })
-                order_line = OrderLine.new(vals)
-                order_line.product_id_change()
-                order_line_vals = order_line._convert_to_write(
-                    order_line._cache)
-                sale_order.order_line.browse().create(order_line_vals)
+                vals = OrderLine.play_onchanges(
+                    vals, [
+                        'order_id',
+                        'product_id',
+                        'product_uom',
+                        'product_uom_qty',
+                    ],
+                )
+                OrderLine.create(vals)
         lines2unlink.unlink()
 
 
