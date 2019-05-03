@@ -18,10 +18,9 @@
        <field name="model">product.product</field>
        <field name="inherit_id" ref="product.product_normal_form_view" />
        <field name="arch" type="xml">
-            <xpath expr="//field[@name='uom_id']" position="after">
-                <field name="fix_price"
-                       attrs="{'invisible': [('product_variant_count', '=', 1)]}"/>
-            </xpath>
+           <field name="lst_price" position="attributes">
+               <attribute name="attrs">{'readonly': [('product_variant_count', '=', 1)]}</attribute>
+           </field>
        </field>
     </record>
 
