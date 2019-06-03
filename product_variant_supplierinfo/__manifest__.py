@@ -21,4 +21,5 @@
         'demo/procurement_demo.xml',
     ],
     'installable': True,
+    'license': 'AGPL-3',
 }
