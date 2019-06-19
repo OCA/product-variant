@@ -44,13 +44,15 @@ class TestProductVariant(TransactionCase):
             'name': 'No variants template',
             'no_create_variants': 'yes',
         })
-        self.assertEqual(len(tmpl.product_variant_ids), 0)
+        # Odoo by default when there are not attributes will create a product
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_no_create_variants_category(self):
         self.assertTrue(self.categ1.no_create_variants)
         tmpl = self.tmpl_model.create({
             'name': 'Category option template',
             'categ_id': self.categ1.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -61,9 +63,10 @@ class TestProductVariant(TransactionCase):
         tmpl = self.tmpl_model.create({
             'name': 'No variants template',
             'categ_id': self.categ1.id,
+            'no_create_variants': 'empty',
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
-        self.assertEqual(len(tmpl.product_variant_ids), 0)
+        self.assertEqual(len(tmpl.product_variant_ids), 1)
 
     def test_create_variants(self):
         tmpl = self.tmpl_model.create({
@@ -86,6 +89,7 @@ class TestProductVariant(TransactionCase):
         tmpl = self.tmpl_model.create({
             'name': 'Category option template',
             'categ_id': self.categ2.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -96,6 +100,7 @@ class TestProductVariant(TransactionCase):
         tmpl = self.tmpl_model.create({
             'name': 'No variants template',
             'categ_id': self.categ2.id,
+            'no_create_variants': 'empty',
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         self.assertEqual(len(tmpl.product_variant_ids), 1)
@@ -105,6 +110,7 @@ class TestProductVariant(TransactionCase):
         tmpl = self.tmpl_model.create({
             'name': 'Category option template',
             'categ_id': self.categ1.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute.id,
                         'value_ids': [(6, 0, [self.value1.id,
