@@ -23,11 +23,14 @@ class SaleOrderLine(models.Model):
     _inherit = ["sale.order.line", "product.configurator"]
     _name = "sale.order.line"
 
-    product_tmpl_id = fields.Many2one(store=True, readonly=False,
-                                      related=False)
+    product_tmpl_id = fields.Many2one(
+        string="Line Product Template", store=True, readonly=False,
+        related=False
+    )
     product_id = fields.Many2one(required=False)
     # this is for getting the proper language for product description
     partner_id = fields.Many2one(
+        string="Line Customer",
         comodel_name='res.partner',
         related='order_id.partner_id',
         readonly=True,
@@ -40,11 +43,19 @@ class SaleOrderLine(models.Model):
         """
         if vals.get('order_id') and not vals.get('product_id'):
             order = self.env['sale.order'].browse(vals['order_id'])
-            if order.state == 'sale':
+            if order.state == 'draft':
                 line = self.new(vals)
                 product = line.create_variant_if_needed()
                 vals['product_id'] = product.id
         return super().create(vals)
+
+    @api.model
+    def _get_product_description(self, template, product, product_attributes):
+        res = super()._get_product_description(
+            template, product, product_attributes)
+        if template.description_sale:
+            return "%s\n%s" % (res, template.description_sale)
+        return res
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id_configurator(self):
@@ -56,11 +67,12 @@ class SaleOrderLine(models.Model):
                  self.product_tmpl_id.uom_id.category_id.id),
             ]
             self.product_uom = self.product_tmpl_id.uom_id
-            self.price_unit = self.order_id.pricelist_id.with_context(
-                {'uom': self.product_uom.id,
-                 'date': self.order_id.date_order}).template_price_get(
-                self.product_tmpl_id.id, self.product_uom_qty or 1.0,
-                self.order_id.partner_id.id)[self.order_id.pricelist_id.id]
+            if self.order_id.pricelist_id:
+                self.price_unit = self.order_id.pricelist_id.with_context(
+                    {'uom': self.product_uom.id,
+                     'date': self.order_id.date_order}).template_price_get(
+                    self.product_tmpl_id.id, self.product_uom_qty or 1.0,
+                    self.order_id.partner_id.id)[self.order_id.pricelist_id.id]
         # Update taxes
         fpos = (self.order_id.fiscal_position_id or
                 self.order_id.partner_id.property_account_position_id)
@@ -78,27 +90,9 @@ class SaleOrderLine(models.Model):
             uom=self.product_uom.id,
         )
         # product_configurator methods don't take into account this description
-        if product_tmpl.description_sale:
-            self.name = (
-                (self.name or '') + '\n' + product_tmpl.description_sale
-            )
         if self.order_id.pricelist_id and self.order_id.partner_id:
             self.price_unit = self.env['account.tax']._fix_tax_included_price(
                 product_tmpl.price, product_tmpl.taxes_id, self.tax_id,
-            )
-        return res
-
-    @api.onchange('product_id')
-    def product_id_change(self):
-        """Call again the configurator onchange after this main onchange
-        for making sure the SO line description is correct.
-        """
-        res = super().product_id_change()
-        self._onchange_product_id_configurator()
-        # product_configurator methods don't take into account this description
-        if self.product_id.description_sale:
-            self.name = (
-                (self.name or '') + '\n' + self.product_id.description_sale
             )
         return res
 

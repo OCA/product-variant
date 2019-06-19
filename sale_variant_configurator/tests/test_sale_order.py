@@ -12,6 +12,8 @@ class TestSaleOrder(common.SavepointCase):
         # Environments
         cls.product_attribute = cls.env['product.attribute']
         cls.product_attribute_value = cls.env['product.attribute.value']
+        cls.product_template_attribute_value = cls.env[
+            'product.template.attribute.value']
         cls.product_template = cls.env['product.template'].with_context(
             check_variant_creation=True)
         cls.sale_order = cls.env['sale.order']
@@ -41,8 +43,8 @@ class TestSaleOrder(common.SavepointCase):
             'categ_id': cls.category1.id,
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': cls.attribute1.id,
-                        'value_ids': [(6, 0, [cls.value1.id,
-                                              cls.value2.id])]})],
+                        'value_ids': [
+                            (6, 0, [cls.value1.id, cls.value2.id])]})],
         })
         cls.product_template_no = cls.product_template.create({
             'name': 'Product template 2',
@@ -51,10 +53,9 @@ class TestSaleOrder(common.SavepointCase):
             'no_create_variants': 'no',
             'description_sale': 'Template description'
         })
-        cls.attribute_price1 = cls.env['product.attribute.price'].create({
+        cls.template_value1 = cls.product_template_attribute_value.create({
+            'product_attribute_value_id': cls.value1.id,
             'product_tmpl_id': cls.product_template_yes.id,
-            'attribute_id': cls.attribute1.id,
-            'value_id': cls.value1.id,
             'price_extra': 10,
         })
         cls.customer = cls.res_partner.create({

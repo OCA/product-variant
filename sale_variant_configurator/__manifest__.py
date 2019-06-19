@@ -6,7 +6,7 @@
 {
     "name": "Sale - Product variants",
     "summary": "Product variants in sale management",
-    "version": "11.0.1.2.0",
+    "version": "12.0.1.0.0",
     "license": "AGPL-3",
     "depends": [
         "sale",
@@ -19,7 +19,7 @@
     "category": "Sales Management",
     "website": "https://github.com/OCA/product-variant",
     "data": [
-        "views/sale_view.xml",
+        "views/sale_views.xml",
     ],
     "installable": True,
     "post_init_hook": "assign_product_template",
