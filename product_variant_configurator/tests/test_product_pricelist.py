@@ -15,7 +15,7 @@ class TestProductPriceList(SavepointCase):
             check_variant_creation=True)
         cls.product_pricelist = cls.env['product.pricelist']
         cls.supplier_info = cls.env['product.supplierinfo']
-        cls.uom_unit = cls.env.ref('product.product_uom_unit')
+        cls.uom_unit = cls.env.ref('uom.product_uom_unit')
 
         # Instances: Product attribute
         cls.physical = cls.env.ref('product.product_category_5')
