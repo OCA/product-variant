@@ -40,7 +40,7 @@
                         </tree>
                     </field>
                     <field name="product_id" invisible="1"/>
-                    <label string="This product already exists."
+                    <label for="product_id" string="This product already exists."
                            style="color: red;"
                            attrs="{'invisible': [('product_id', '=', False)]}"
                     />

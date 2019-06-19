@@ -107,6 +107,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'Category option template',
             'categ_id': self.category1.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -117,6 +118,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category1.id,
+            'no_create_variants': 'empty',
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         # default behavior: one variant should be created
@@ -125,7 +127,6 @@ class TestProductVariantConfigurator(SavepointCase):
     def test_create_variants(self):
         tmpl = self.product_template.create({
             'name': 'Create variants template',
-            'no_create_variants': 'no',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -141,7 +142,6 @@ class TestProductVariantConfigurator(SavepointCase):
     def test_update_product_tempalte(self):
         tmpl = self.product_template.create({
             'name': 'Create variants template',
-            'no_create_variants': 'no',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -165,6 +165,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'Category option template',
             'categ_id': self.category2.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -175,6 +176,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category2.id,
+            'no_create_variants': 'empty',
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         self.assertEqual(len(tmpl.product_variant_ids), 1)
@@ -184,6 +186,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'Category option template',
             'categ_id': self.category1.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -194,10 +197,6 @@ class TestProductVariantConfigurator(SavepointCase):
         self.category1.no_create_variants = False
         self.assertEqual(len(tmpl.product_variant_ids), 2)
 
-    def test_open_attribute_prices(self):
-        result = self.product_template_yes.action_open_attribute_prices()
-        self.assertEqual(result['type'], 'ir.actions.act_window')
-
     def test_get_product_attributes_dict(self):
         attrs_dict = self.product_template_yes._get_product_attributes_dict()
         self.assertEqual(len(attrs_dict), 1)
@@ -205,12 +204,11 @@ class TestProductVariantConfigurator(SavepointCase):
 
     def test_get_product_description(self):
         product = self.product_product.create({
-            'name': 'Test product',
             'product_tmpl_id': self.product_template_yes.id
         })
         self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
-            'Test product')
+            'Product template 1')
         self.current_user = self.env.user
         # Add current user to group: group_supplier_inv_check_total
         group_id = (
@@ -219,7 +217,7 @@ class TestProductVariantConfigurator(SavepointCase):
         self.env.ref(group_id).write({'users': [(4, self.current_user.id)]})
         self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
-            'Test product')
+            'Product template 1')
 
     def test_product_check_configuration_validity(self):
         product = self.product_product.create({
