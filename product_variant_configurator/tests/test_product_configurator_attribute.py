@@ -13,9 +13,10 @@ class TestProductConfiguratorAttribute(SavepointCase):
         # ENVIRONMENTS
         cls.product_attribute = cls.env['product.attribute']
         cls.product_attribute_value = cls.env['product.attribute.value']
+        cls.product_template_attribute_value = cls.env[
+            'product.template.attribute.value']
         cls.product_configuration_attribute = \
             cls.env['product.configurator.attribute']
-        cls.product_attribute_price = cls.env['product.attribute.price']
         cls.product_template = cls.env['product.template'].with_context(
             check_variant_creation=True)
         # Instances: product attribute
@@ -42,11 +43,12 @@ class TestProductConfiguratorAttribute(SavepointCase):
         })
 
     def test_product_configurator_attribute(self):
-        # Set Extra price for value1
-        self.product_attribute_price.create({
-            'product_tmpl_id': self.product_template1.id,
-            'value_id': self.value1.id,
-            'price_extra': 100.00,
+        template_value_1 = self.product_template_attribute_value.search([
+            ('product_tmpl_id', '=', self.product_template1.id),
+            ('product_attribute_value_id', '=', self.value1.id)
+        ], limit=1)
+        template_value_1.write({
+            'price_extra': 100.00
         })
         # create new product configuration attribute record.
         conf_attr = self.product_configuration_attribute.create({
@@ -54,7 +56,7 @@ class TestProductConfiguratorAttribute(SavepointCase):
             'attribute_id': self.attribute1.id,
             'value_id': self.value1.id,
             'owner_model': 'product.product',
-            'owner_id': 1
+            'owner_id': 1,
         })
         # Price Extra for conf_attr should be equal to 100.
         self.assertEqual(conf_attr.price_extra, 100.00)
