@@ -9,6 +9,7 @@ from odoo.addons import decimal_precision as dp
 
 class ProductConfiguratorAttribute(models.Model):
     _name = 'product.configurator.attribute'
+    _description = 'Product Configurator Attribute'
 
     owner_id = fields.Integer(
         string="Owner",
@@ -35,6 +36,7 @@ class ProductConfiguratorAttribute(models.Model):
 
     price_extra = fields.Float(
         compute='_compute_price_extra',
+        string='Attribute Price Extra',
         digits=dp.get_precision('Product Price'),
         help="Price Extra: Extra price for the variant with this attribute "
              "value on sale price. eg. 200 price extra, 1000 + 200 = 1200.")
@@ -50,8 +52,8 @@ class ProductConfiguratorAttribute(models.Model):
     @api.depends('value_id')
     def _compute_price_extra(self):
         for record in self:
-            record.price_extra = sum(
-                record.value_id.price_ids.filtered(
-                    lambda x: (
-                        x.product_tmpl_id == record.product_tmpl_id)
-                ).mapped('price_extra'))
+            record.price_extra = sum(self.env[
+                'product.template.attribute.value'].search([
+                    ('product_tmpl_id', '=', record.product_tmpl_id.id),
+                    ('product_attribute_value_id', '=', record.value_id.id)
+                ]).mapped('price_extra'))
