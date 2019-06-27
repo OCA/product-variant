@@ -120,7 +120,8 @@ class SaleOrderLine(models.Model):
             fiscal_position=self.env.context.get('fiscal_position')
         )
         price = self.env['account.tax']._fix_tax_included_price(
-            self.price_extra + self._get_display_price(product_tmpl),
+            self.price_extra + self.with_context(
+                product_id=product_tmpl)._get_display_price(product_tmpl),
             product_tmpl.taxes_id,
             self.tax_id)
         if self.price_unit != price:

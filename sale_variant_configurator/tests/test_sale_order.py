@@ -63,6 +63,7 @@ class TestSaleOrder(common.SavepointCase):
 
     def test_onchange_product_tmpl_id(self):
         sale = self.sale_order.create({'partner_id': self.customer.id})
+        sale.pricelist_id.discount_policy = 'without_discount'
         line1 = self.sale_order_line.new({
             'order_id': sale.id,
             'product_tmpl_id': self.product_template_yes.id,
