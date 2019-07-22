@@ -6,7 +6,7 @@
 
 from itertools import chain
 
-from openerp import models, fields, api, exceptions
+from openerp import models, fields, api, exceptions, tools
 
 
 class ProductPricelist(models.Model):
@@ -128,7 +128,8 @@ class ProductPricelist(models.Model):
                         continue
 
                 if rule.base == 'pricelist' and rule.base_pricelist_id:
-                    price_tmp = rule.base_pricelist_id._price_get_multi(
+                    price_tmp = self.env['product.pricelist']._price_get_multi(
+                        rule.base_pricelist_id,
                         [(product, qty, partner)])[product.id]
                     price = rule.base_pricelist_id.currency_id.compute(
                         price_tmp, self.currency_id, round=False)
@@ -152,7 +153,10 @@ class ProductPricelist(models.Model):
                     else:
                         price_limit = price
                         price = (price - (
-                            price * (rule.percent_price / 100))) or 0.0
+                            price * (rule.price_discount / 100))) or 0.0
+                        if rule.price_round:
+                            price = tools.float_round(
+                                price, precision_rounding=rule.price_round)
                         if rule.price_surcharge:
                             price_surcharge = convert_to_price_uom(
                                 rule.price_surcharge)

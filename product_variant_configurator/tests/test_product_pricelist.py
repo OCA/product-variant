@@ -89,7 +89,7 @@ class TestProductPriceList(SavepointCase):
                     'min_quantity': 1,
                     'base': 'list_price',
                     'applied_on': '0_product_variant',
-                    'percent_price': 20,
+                    'price_discount': 20,
                     'compute_price': 'formula',
                 }),
                 (0, False, {
@@ -99,7 +99,7 @@ class TestProductPriceList(SavepointCase):
                     'min_quantity': 1,
                     'base': 'list_price',
                     'compute_price': 'formula',
-                    'percent_price': 10
+                    'price_discount': 10
                 }),
                 (0, False, {
                     'name': 'Rule Min qty 4 10% discount iphone template',
@@ -108,7 +108,7 @@ class TestProductPriceList(SavepointCase):
                     'base': 'list_price',
                     'min_quantity': 4,
                     'compute_price': 'formula',
-                    'percent_price': 10
+                    'price_discount': 10
                 })
             ]
         })
