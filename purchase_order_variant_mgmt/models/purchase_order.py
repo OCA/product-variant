@@ -15,7 +15,8 @@ class PurchaseOrderLine(models.Model):
     )
     state_purchase_order_variant_mgmt = fields.Selection(
         related="order_id.state",
-        readonly=True
+        readonly=True,
+        string="Order status"
     )
     product_attribute_value_ids = fields.Many2many(
         comodel_name='product.attribute.value',
