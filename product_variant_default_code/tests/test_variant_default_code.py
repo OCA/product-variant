@@ -116,15 +116,19 @@ class TestVariantDefaultCode(common.SavepointCase):
     def test_06_attribute_value_code_change_propagation(self):
         self.attr1_1.code = 'OO'
         # Check that the change spreads to every product
-        for product in self.attr1_1.mapped('product_ids'):
+        products = self.env['product.product'].search([
+            ('attribute_value_ids', '=', self.attr1_1.id)])
+        for product in products:
             self.assertTrue('OO' in product.default_code)
 
     def test_07_attribute_value_name_change(self):
         self.attr1_1.name = 'Odoo'
         self.attr1_1.onchange_name()
         self.assertEqual(self.attr1_1.code, 'Od')
+        products = self.env['product.product'].search([
+            ('attribute_value_ids', '=', self.attr1_1.id)])
         # Check that the change spreads to every product
-        for product in self.attr1_1.mapped('product_ids'):
+        for product in products:
             self.assertTrue('Od' in product.default_code)
 
     def test_08_sanitize_exception(self):
