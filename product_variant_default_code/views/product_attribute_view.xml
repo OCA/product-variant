@@ -32,9 +32,6 @@
             <xpath expr="//group[@name='values_ids']/field[@name='value_ids']/tree/field[@name='name']" position="after">
                 <field name="code" />
             </xpath>
-            <xpath expr="//group[@name='values_ids']/field[@name='value_ids']/form/field[@name='name']" position="after">
-                <field name="code" />
-            </xpath>
         </field>
     </record>
 

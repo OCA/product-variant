@@ -20,13 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,help:product_variant_default_code.field_product_product_code_prefix
-#: model:ir.model.fields,help:product_variant_default_code.field_product_template_code_prefix
+#: model:ir.model.fields,help:product_variant_default_code.field_product_product__code_prefix
+#: model:ir.model.fields,help:product_variant_default_code.field_product_template__code_prefix
 msgid "Add prefix to product variant reference (default code)"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute__code
 msgid "Attribute Code"
 msgstr ""
 
@@ -38,7 +38,12 @@ msgid "Attribute Name must be unique!"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value_code
+#: model:ir.model,name:product_variant_default_code.model_product_attribute_value
+msgid "Attribute Value"
+msgstr ""
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value__code
 msgid "Attribute Value Code"
 msgstr ""
 
@@ -48,7 +53,12 @@ msgid "Automask"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+#: model:ir.model,name:product_variant_default_code.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: product_variant_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
 msgid "Defines how you want to manage the Variant default code"
 msgstr ""
 
@@ -64,7 +74,7 @@ msgid "Manual Mask"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_manual_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__manual_code
 msgid "Manual Reference"
 msgstr ""
 
@@ -84,8 +94,8 @@ msgid "Product Default Code Behavior"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings_group_product_default_code
-#: model:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__group_product_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
 msgid "Product Default Code behaviour"
 msgstr ""
 
@@ -95,20 +105,20 @@ msgid "Product Template"
 msgstr "Template de produit"
 
 #. module: product_variant_default_code
-#: model:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
 #, fuzzy
 msgid "Product Variants"
 msgstr "Template de produit"
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_code_prefix
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template_code_prefix
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__code_prefix
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__code_prefix
 msgid "Reference Prefix"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,help:product_variant_default_code.field_product_product_reference_mask
-#: model:ir.model.fields,help:product_variant_default_code.field_product_template_reference_mask
+#: model:ir.model.fields,help:product_variant_default_code.field_product_product__reference_mask
+#: model:ir.model.fields,help:product_variant_default_code.field_product_template__reference_mask
 msgid ""
 "Reference mask for building internal references of a variant generated from "
 "this template.\n"
@@ -129,29 +139,19 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings_group_product_default_code
+#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code
 msgid ""
 "Set behaviour of codes (depends on variant use: see Sales/Purchases "
 "configuration)"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_reference_mask
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template_reference_mask
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__reference_mask
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__reference_mask
 msgid "Variant reference mask"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
 msgid "[attribute3]-[attribute1]"
-msgstr ""
-
-#. module: product_variant_default_code
-#: model:ir.model,name:product_variant_default_code.model_product_attribute_value
-msgid "product.attribute.value"
-msgstr ""
-
-#. module: product_variant_default_code
-#: model:ir.model,name:product_variant_default_code.model_res_config_settings
-msgid "res.config.settings"
 msgstr ""
