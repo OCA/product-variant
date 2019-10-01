@@ -16,7 +16,6 @@
         "product_variant_configurator",
     ],
     "data": [
-        "views/product_product.xml",
         "views/product_template.xml",
         "views/res_partner.xml",
     ],

@@ -5,9 +5,12 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="type" position="before">
-                <field name="discogs_id" />
+            <field name="barcode" position="after">
+                <field name="discogs_id" groups="base.group_no_one" />
             </field>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="open_discogs_url" icon="fa-compact-disc" string="View on Discogs" attrs="{'invisible': [('discogs_id', '=', 0)]}"/>
+            </xpath>
         </field>
     </record>
 </odoo>
