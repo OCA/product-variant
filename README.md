@@ -6,6 +6,3 @@ Product Variants
 ================
 
 Allows to create and manage product variants in OpenERP v6 and 7. A part of this work has been integrated in the core of Odoo v8 but it's likely we still use this repo for advanced variants even in v8.
-
-
-
