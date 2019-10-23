@@ -1,4 +1,4 @@
-#. Go to Sales > Sales > Quotations
+#. Go to Sales > Orders > Quotations
 #. Create a new quotation or edit an existing one.
 #. Press "Add variants" button located in the upper right corner of the
    "Order Lines" tab.

@@ -7,6 +7,7 @@ from odoo import api, models, fields
 
 class SaleManageVariant(models.TransientModel):
     _name = 'sale.manage.variant'
+    _description = 'Add or modify variants on sale order lines'
 
     product_tmpl_id = fields.Many2one(
         comodel_name='product.template', string="Template", required=True)
@@ -97,6 +98,7 @@ class SaleManageVariant(models.TransientModel):
 
 class SaleManageVariantLine(models.TransientModel):
     _name = 'sale.manage.variant.line'
+    _description = 'Define variants quantities on sale order lines'
 
     value_x = fields.Many2one(comodel_name='product.attribute.value')
     value_y = fields.Many2one(comodel_name='product.attribute.value')
