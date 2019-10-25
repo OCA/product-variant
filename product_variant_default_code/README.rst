@@ -7,10 +7,11 @@ Product Variant Default Code
 ============================
 
 This module automatically generate Product Reference (default_code)
-according to attributes data with a configurable behavior.
+according to attributes, with a configurable behavior.
 
-It defines a reference mask on the product templates so the
-variants references are automatically set. For example:
+It defines a reference mask on the product templates, based on Attributes 
+Value Code you set before. Then variants references are automatically set. 
+For example:
 
 - Product template: Jacket
 - Attributes:
@@ -28,8 +29,15 @@ variants references are automatically set. For example:
 Configuration
 =============
 
-To set the reference mask up on any product template 'Variant reference mask'
-new field.
+
+Of course, activate Attributes and Variants in Products settings in Sale or 
+Inventory.
+
+Add Attributes Value Code to each attribute's value.
+
+To manualy define the reference mask, switch Product Default Code behaviour to 
+Manual Mask in general Settings. Then fill the 'Variant reference mask' new 
+field on any product template.
 
 When creating a new product template without specifying the *Variant reference
 mask*, a default value for *Variant reference mask* will be automatically
