@@ -13,7 +13,7 @@ class BaseConfiguration(models.TransientModel):
         (1, 'Manual Mask')],
         string='Product Default Code behaviour',
         help='Set behaviour of codes (depends on variant use: '
-             'see Sales/Purchases configuration)',
+             'see Sales/Inventory configuration)',
         implied_group='product_variant_default_code'
                       '.group_product_default_code',
     )
