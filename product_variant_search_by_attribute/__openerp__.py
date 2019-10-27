@@ -9,7 +9,7 @@
                   all attributes at once with multiple keywords""",
     'version': '8.0.1.0.0',
     'category': 'Product',
-    'author': ['Akretion', 'Odoo Community Association (OCA)'],
+    'author': 'Akretion, Odoo Community Association (OCA)',
     'depends': [
         'product',
     ],
