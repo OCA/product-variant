@@ -13,7 +13,7 @@ It defines a reference mask on the product templates, based on some
 attributes code you set before. Then variants internal references are 
 automatically set. For example:
 
-Creating a product named "Jacket" with two attributes, 'Size' and 'Color'::
+Creating a product named "Jacket" with two attributes, *Size* and *Color*::
 
    Product: Jacket
    Color:   Black(Bl), White(Wh) # Black and White are the attribute values
