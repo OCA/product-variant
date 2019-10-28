@@ -18,13 +18,13 @@ Creating a product named "Jacket" with two attributes, *Size* and *Color*::
    Product: Jacket
    Color: Black(Bl), White(Wh) # Black and White are the attribute values
                                  'Bl' and 'Wh' are the corresponding codes
-   Size: L (L), XL(XL)
+   Size: M (M), L (L)
    
 The automatically generated default value for the variant reference mask 
 will be `[Color]-[Size]` and so the *Internal Reference* on the variants 
 will contain::
 
-   `Bl-L`, `Wh-L`, `Bl-XL` and `Wh-XL`.
+   `Bl-M`, `Wh-M`, `Bl-L` and `Wh-L`.
 
 Configuration
 =============
@@ -38,31 +38,31 @@ Usage
 =====
 
 When creating a new product template, once you have added attributes and values, 
-fill the new 'Reference Prefix' field that appear under 'Internal Reference'. 
+fill the new 'Reference Prefix' field that appear under 'Internal Reference'.
+
 A default value for *Variant reference mask* will be automatically generated 
 according to the attribute line settings on the product template. This mask will 
-then be used as an instruction to generate internal reference of each product 
+then be used as an instruction to generate *Internal Reference* of each product 
 variant with the corresponding *Attribute Value Code* inserted. For example:
 
 - Product template: Jacket
 - Reference prefix: JKT
 - Attributes:
 
-  - Color: White, Black
+  - Color: Black, White,
   - Size: M, L
 - Reference mask: `JKT01-[Color]-[Size]`
 - Variants Internal Reference:
 
-  - `JKT01-Wh-M` Jacket White M
-  - `JKT01-Bl-M` Jacket Black M
-  - `JKT01-Wh-L` Jacket White L
-  - `JKT01-Bl-L` Jacket Black L
+  - `JKT01-Bl-M`
+  - `JKT01-Wh-M`
+  - `JKT01-Bl-L`
+  - `JKT01-Wh-L`
 
 Additionally, an Attribute Code can be set. It will be appended to the
-variant `default_code`. In the first example, setting a `Color` code to `CO`
-would give `default_code` like this: `COBl-L`, `COWh-L`, `COBl-XL` and
-`COWh-XL`.
-
+variant Internal Reference. In the first example, setting a `Color` code 
+to `CO` would give `default_code` like this::
+  `JKT01-COBl-M`, `JKT01-COWh-M`, `JKT01-COBl-L` and `JKT01-COWh-L`.
 
 When the code attribute is changed, it automatically regenerates the 'default
 code' on all variants affected.
