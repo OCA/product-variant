@@ -65,7 +65,7 @@ to "CO" would give *Internal Reference* (`default_code`) like this::
 When an attribute or value code is changed, the reference on all variants 
 affected is regenerated.
 
-Advanced TODO
+Advanced
 ========
 
 To manualy define the reference mask on each product, switch *Product Default 
@@ -75,18 +75,23 @@ Code* behaviour to "Manual Mask" in **General Settings**. Then, fill the
 The mask value can be fully customized whatever you like. You can even have
 the attribute name appear more than once in the mask such as,
 `Jacket/[Size]~[Color]~[Size]`, and the generated code on variants will be
-something like 'Jacket/L~Wh~L' (for variant with Color "White" and Size "L"). 
-Make sure putting the *Attribute Name* inside `[]` marks (it is case sensitive).
+something like 'Jacket/L~Wh~L' (for variant with Color "White" and Size "L").
+
+**Note:** In mask value, make sure putting the *Attribute Name* inside `[ ]` 
+marks (it is case sensitive) and of course, make sure characters "[,]" 
+do not appear in your attribute's name.
 
 Avoiding mask in variants
 -------------------------
 
-You can avoid this behavior or force a manual default_code on variant. To do
-so, go to *Product Variants > [any variant you want to set up]* and set
-manually its reference code. The field `manual code` will be set to on and the
-variant internal reference will no longer be changed by this module.
+You can avoid this behavior or force a manual reference on variant. To do
+so, go to **Product Variants > [any variant you want to set up]** and set
+manually its reference code. The field *Manual Reference* (`manual_code`) 
+will be set to on and the variant internal reference will no longer be 
+changed by this module.
 
-Unset `manual code` and the reference code will be unlocked again.
+Unset *Manual Reference* on a variant and the reference code will be 
+unlocked again.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
