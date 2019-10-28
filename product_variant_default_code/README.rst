@@ -20,9 +20,8 @@ Creating a product named "Jacket" with two attributes, *Size* and *Color*::
                                  # 'Bl' and 'Wh' are the corresponding codes
    Size:    M (M), L (L)
    
-The automatically generated default value for the variant reference mask 
-will be `[Color]-[Size]` and so the *Internal Reference* on the variants 
-will contain::
+The automatically generated variant reference mask will be `[Color]-[Size]` 
+and so the *Internal Reference* on the variants will contain::
 
    'Bl-M', 'Wh-M', 'Bl-L' and 'Wh-L'.
 
