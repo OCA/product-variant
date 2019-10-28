@@ -6,49 +6,12 @@
 Product Variant Default Code
 ============================
 
-This module automatically generate Product Reference (default_code)
+This module automatically generate *Internal Reference* (`default_code`)
 according to attributes, with a configurable behavior.
 
 It defines a reference mask on the product templates, based on Attributes 
-Value Code you set before. Then variants references are automatically set. 
+Values Codes you set before. Then variants internal references are automatically set. 
 For example:
-
-- Product template: Jacket
-- Attributes:
-  - Color: White, Black
-  - Size: M, L
-- Reference mask: `JKT01-[Color]-[Size]`
-
-- Reference on variants:
-
-  - `JKT01-Wh-M` Jacket White M
-  - `JKT01-Bl-M` Jacket Black M
-  - `JKT01-Wh-L` Jacket White L
-  - `JKT01-Bl-L` Jacket Black L
-
-Configuration
-=============
-
-
-Of course, activate Attributes and Variants in Products settings in Sale or 
-Inventory.
-
-Add Attributes Value Code to each attribute's value.
-
-To manualy define the reference mask, switch Product Default Code behaviour to 
-Manual Mask in general Settings. Then fill the 'Variant reference mask' new 
-field on any product template.
-
-When creating a new product template without specifying the *Variant reference
-mask*, a default value for *Variant reference mask* will be automatically
-generated according to the attribute line settings on the product template (if
-any). The mask will then be used as an instruction to generate default code of
-each product variant of the product template with the corresponding *Attribute
-Code* (of the attribute value) inserted. Besides the default value, *Variant
-reference mask* can be configured to your liking, make sure putting the
-*Attribute Name* inside `[]` marks (it is case sensitive).
-
-Example:
 
 Creating a product named *Jacket* with two attributes, *Size* and *Color*::
 
@@ -57,22 +20,65 @@ Creating a product named *Jacket* with two attributes, *Size* and *Color*::
                                  'Bl' and 'Wh' are the corresponding codes
    Size: L (L), XL(XL)
    
-The automatically generated default value for the Variant reference mask will
+The automatically generated default value for the variant reference mask will
 be `[Color]-[Size]` and so the 'default code' on the variants will be `Bl-L`,
 `Wh-L`, `Bl-XL` and `Wh-XL`.
+
+Configuration
+=============
+
+Of course, activate 'Attributes and Variants' under *Product Catalogue* settings 
+in *Sale* or *Inventory* configuration.
+
+Add Attributes Value Code to each attribute's value.
+
+To manualy define the reference mask, switch 'Product Default Code' behaviour to 
+'Manual Mask' in *General Settings*. Then fill the 'Variant Reference Mask' new 
+field on any product template.
+
+Usage
+=====
+
+When creating a new product template, once you have added attributes and values, 
+fill the new 'Reference Prefix' field that appear under 'Internal Reference'. 
+A default value for *Variant reference mask* will be automatically generated 
+according to the attribute line settings on the product template. The mask will 
+then be used as an instruction to generate default code of each product variant 
+with the corresponding *Attribute Value Code* inserted. For example:
+
+- Product template: Jacket
+- Reference prefix : JKT
+- Attributes:
+
+  - Color: White, Black
+  - Size: M, L
+- Reference mask: `JKT01-[Color]-[Size]`
+- Variants Internal Reference :
+
+  - `JKT01-Wh-M` Jacket White M
+  - `JKT01-Bl-M` Jacket Black M
+  - `JKT01-Wh-L` Jacket White L
+  - `JKT01-Bl-L` Jacket Black L
+
+Additionally, an Attribute Code can be set. It will be appended to the
+variant `default_code`. In the first example, setting a `Color` code to `CO`
+would give `default_code` like this: `COBl-L`, `COWh-L`, `COBl-XL` and
+`COWh-XL`.
+
+
+When the code attribute is changed, it automatically regenerates the 'default
+code' on all variants affected.
+
 
 The mask value can be fully customized whatever you like. You can even have
 the attribute name appear more than once in the mask such as,
 `Jacket/[Size]~[Color]~[Size]`, and the generated code on variants will be
 something like `Jacket/L~Bl~L` (for variant with Color "Black" and Size "L").
 
-When the code attribute is changed, it automatically regenerates the 'default
-code' on all variants affected.
 
-Aditionally, a product attribute can be set and so it will be appended to the
-product `default_code`. In the first example, setting a `Color` code to `CO`
-would give `default_code` like this: `COBl-L`, `COWh-L`, `COBl-XL` and
-`COWh-XL`.
+
+Besides the default value, *Variant reference mask* can be configured to your 
+liking, make sure putting the *Attribute Name* inside `[]` marks (it is case sensitive).
 
 Avoiding mask in variants
 -------------------------
