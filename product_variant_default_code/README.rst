@@ -9,32 +9,30 @@ Product Variant Default Code
 This module automatically generate *Internal Reference* (`default_code`)
 according to attributes, with a configurable behavior.
 
-It defines a reference mask on the product templates, based on Attributes 
-Values Codes you set before. Then variants internal references are automatically set. 
-For example:
+It defines a reference mask on the product templates, based on some 
+attributes code you set before. Then variants internal references are 
+automatically set. For example:
 
-Creating a product named *Jacket* with two attributes, *Size* and *Color*::
+Creating a product named "Jacket" with two attributes, *Size* and *Color*::
 
    Product: Jacket
-   Color: Black(Bl), White(Wh) # Black and White are the attribute values;
+   Color: Black(Bl), White(Wh) # Black and White are the attribute values
                                  'Bl' and 'Wh' are the corresponding codes
    Size: L (L), XL(XL)
    
-The automatically generated default value for the variant reference mask will
-be `[Color]-[Size]` and so the 'default code' on the variants will be `Bl-L`,
-`Wh-L`, `Bl-XL` and `Wh-XL`.
+The automatically generated default value for the variant reference mask 
+will be `[Color]-[Size]` and so the *Internal Reference* on the variants 
+will contain::
+
+   `Bl-L`, `Wh-L`, `Bl-XL` and `Wh-XL`.
 
 Configuration
 =============
 
-Of course, activate 'Attributes and Variants' under *Product Catalogue* settings 
-in *Sale* or *Inventory* configuration.
+Of course, activate 'Attributes and Variants' under *Product Catalogue* 
+settings in *Sale* or *Inventory* main configuration page.
 
-Add Attributes Value Code to each attribute's value.
-
-To manualy define the reference mask, switch 'Product Default Code' behaviour to 
-'Manual Mask' in *General Settings*. Then fill the 'Variant Reference Mask' new 
-field on any product template.
+Fill 'Attributes Value Code' to each attribute's value.
 
 Usage
 =====
@@ -42,18 +40,18 @@ Usage
 When creating a new product template, once you have added attributes and values, 
 fill the new 'Reference Prefix' field that appear under 'Internal Reference'. 
 A default value for *Variant reference mask* will be automatically generated 
-according to the attribute line settings on the product template. The mask will 
-then be used as an instruction to generate default code of each product variant 
-with the corresponding *Attribute Value Code* inserted. For example:
+according to the attribute line settings on the product template. This mask will 
+then be used as an instruction to generate internal reference of each product 
+variant with the corresponding *Attribute Value Code* inserted. For example:
 
 - Product template: Jacket
-- Reference prefix : JKT
+- Reference prefix: JKT
 - Attributes:
 
   - Color: White, Black
   - Size: M, L
 - Reference mask: `JKT01-[Color]-[Size]`
-- Variants Internal Reference :
+- Variants Internal Reference:
 
   - `JKT01-Wh-M` Jacket White M
   - `JKT01-Bl-M` Jacket Black M
@@ -68,6 +66,13 @@ would give `default_code` like this: `COBl-L`, `COWh-L`, `COBl-XL` and
 
 When the code attribute is changed, it automatically regenerates the 'default
 code' on all variants affected.
+
+Advanced
+========
+
+To manualy define the reference mask, switch 'Product Default Code' behaviour 
+to 'Manual Mask' in *General Settings*. Then fill the 'Variant Reference Mask' 
+new field on any product template.
 
 
 The mask value can be fully customized whatever you like. You can even have
