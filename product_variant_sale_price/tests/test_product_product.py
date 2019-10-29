@@ -14,7 +14,7 @@ class TestProductVariantPrice(TransactionCase):
         self.attribute_value = self.env['product.attribute.value']
 
         self.att_color = self.attribute.create({
-            'name': 'color_test'
+            'name': 'color_test',
         })
 
         self.att_color_blue = self.attribute_value.create({
@@ -26,8 +26,8 @@ class TestProductVariantPrice(TransactionCase):
             'attribute_id': self.att_color.id,
         })
 
-        self.uom_unit = self.env.ref('product.product_uom_unit')
-        self.uom_dozen = self.ref('product.product_uom_dozen')
+        self.uom_unit = self.env.ref('uom.product_uom_unit')
+        self.uom_dozen = self.ref('uom.product_uom_dozen')
 
         self.product_template = self.template.create({
             'name': 'Product Template',
@@ -53,14 +53,14 @@ class TestProductVariantPrice(TransactionCase):
             'fix_price': 0.0,
         })
         # Take account price extra
-        self.env['product.attribute.price'].create({
+        self.env['product.template.attribute.value'].create({
             'product_tmpl_id': self.product_template.id,
-            'value_id': self.att_color_blue.id,
+            'product_attribute_value_id': self.att_color_blue.id,
             'price_extra': 100.00,
         })
-        self.env['product.attribute.price'].create({
+        self.env['product.template.attribute.value'].create({
             'product_tmpl_id': self.product_template.id,
-            'value_id': self.att_color_red.id,
+            'product_attribute_value_id': self.att_color_red.id,
             'price_extra': 200.00,
         })
 

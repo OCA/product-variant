@@ -21,9 +21,10 @@ class ProductTemplate(models.Model):
     @api.multi
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
+        if self.env.context.get('skip_update_fix_price', False):
+            return res
         for template in self:
-            if not self.env.context.get('skip_update_fix_price', False):
-                template._update_fix_price(vals)
+            template._update_fix_price(vals)
         return res
 
 
@@ -33,7 +34,7 @@ class ProductProduct(models.Model):
     @api.multi
     @api.depends('fix_price')
     def _compute_lst_price(self):
-        uom_model = self.env['product.uom']
+        uom_model = self.env['uom.uom']
         for product in self:
             price = product.fix_price or product.list_price
             if 'uom' in self.env.context:
@@ -43,7 +44,7 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _compute_list_price(self):
-        uom_model = self.env['product.uom']
+        uom_model = self.env['uom.uom']
         for product in self:
             price = product.fix_price or product.product_tmpl_id.list_price
             if 'uom' in self.env.context:
@@ -53,7 +54,7 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _inverse_product_lst_price(self):
-        uom_model = self.env['product.uom']
+        uom_model = self.env['uom.uom']
         for product in self:
             vals = {}
             if 'uom' in self.env.context:
