@@ -8,21 +8,32 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='list_price']" position="attributes">
                 <attribute name="attrs">{'invisible': [
-                                            ('product_variant_count', '>', 1)
-                                        ]}</attribute>
+                    ('product_variant_count', '>', 1)
+                    ]}</attribute>
             </xpath>
         </field>
     </record>
 
     <record id="product_normal_form_view_default_check" model="ir.ui.view">
-       <field name="model">product.product</field>
-       <field name="inherit_id" ref="product.product_normal_form_view" />
-       <field name="arch" type="xml">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
             <xpath expr="//field[@name='uom_id']" position="after">
                 <field name="fix_price"
                        attrs="{'invisible': [('product_variant_count', '=', 1)]}"/>
             </xpath>
-       </field>
+        </field>
     </record>
+    <record id="product_variant_easy_edit_price_view" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lst_price']" position="after">
+                <field name="fix_price"
+                       attrs="{'invisible': [('product_variant_count', '=', 1)]}"/>
+            </xpath>
+        </field>
+    </record>
+
 
 </odoo>
