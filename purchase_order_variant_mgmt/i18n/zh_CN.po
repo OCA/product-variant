@@ -20,69 +20,74 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_order_form
 msgid "Add or Modify Variants"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_order_line_product_attribute_value_ids
-msgid "Attributes"
+#: model:ir.model,name:purchase_order_variant_mgmt.model_purchase_manage_variant
+msgid "Add or modify variants on purchase order lines"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_manage_variant_form
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_order_line__product_attribute_value_ids
+msgid "Attribute Values"
+msgstr ""
+
+#. module: purchase_order_variant_mgmt
+#: model_terms:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_manage_variant_form
 msgid "Cancel"
 msgstr "取消"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_create_uid
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_create_uid
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__create_uid
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__create_uid
 msgid "Created by"
 msgstr "创建者"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_create_date
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_create_date
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__create_date
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__create_date
 msgid "Created on"
 msgstr "创建时间"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_disabled
-msgid "Disabled"
+#: model:ir.model,name:purchase_order_variant_mgmt.model_purchase_manage_variant_line
+msgid "Define variants quantities on purchase order lines"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_display_name
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_display_name
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__display_name
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_id
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_id
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__id
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__id
 msgid "ID"
 msgstr "ID"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant___last_update
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line___last_update
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant____last_update
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line____last_update
 msgid "Last Modified on"
 msgstr "最后修改时间"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_write_uid
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_write_uid
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__write_uid
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__write_uid
 msgid "Last Updated by"
 msgstr "最后更新者"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_write_date
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_write_date
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__write_date
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_manage_variant_form
 msgid "Manage Product Variants"
 msgstr ""
 
@@ -92,12 +97,17 @@ msgid "Manage variants"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_order_form
 msgid "Modify Variants"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_order_line_product_tmpl_id_purchase_order_variant_mgmt
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_order_line__state_purchase_order_variant_mgmt
+msgid "Order status"
+msgstr ""
+
+#. module: purchase_order_variant_mgmt
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_order_line__product_tmpl_id_purchase_order_variant_mgmt
 msgid "Product Template"
 msgstr "产品模板"
 
@@ -107,51 +117,31 @@ msgid "Purchase Order Line"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_product_uom_qty
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__product_uom_qty
 msgid "Quantity"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_order_line_state_purchase_order_variant_mgmt
-msgid "Status"
-msgstr ""
-
-#. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_product_tmpl_id
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__product_tmpl_id
 msgid "Template"
 msgstr "模板"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:purchase_order_variant_mgmt.purchase_manage_variant_form
 msgid "Transfer to order"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_value_x
-msgid "Value x"
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__value_x
+msgid "Value X"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_value_y
-msgid "Value y"
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__value_y
+msgid "Value Y"
 msgstr ""
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_product_id
-msgid "Variant"
-msgstr ""
-
-#. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_variant_line_ids
+#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant__variant_line_ids
 msgid "Variant Lines"
-msgstr ""
-
-#. module: purchase_order_variant_mgmt
-#: model:ir.model,name:purchase_order_variant_mgmt.model_purchase_manage_variant
-msgid "purchase.manage.variant"
-msgstr ""
-
-#. module: purchase_order_variant_mgmt
-#: model:ir.model,name:purchase_order_variant_mgmt.model_purchase_manage_variant_line
-msgid "purchase.manage.variant.line"
 msgstr ""
