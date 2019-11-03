@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-product-variant Odoo addons",
     version=version,
     install_requires=[
+        'odoo12-addon-product_variant_sale_price',
         'odoo12-addon-purchase_order_variant_mgmt',
     ],
     classifiers=[
