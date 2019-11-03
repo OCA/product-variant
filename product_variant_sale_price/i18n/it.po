@@ -20,8 +20,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: product_variant_sale_price
-#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product_fix_price
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__fix_price
 msgid "Fix Price"
+msgstr "Prezzo fisso"
+
+#. module: product_variant_sale_price
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__list_price
+#, fuzzy
+#| msgid "Fix Price"
+msgid "List Price"
 msgstr "Prezzo fisso"
 
 #. module: product_variant_sale_price
@@ -33,6 +40,20 @@ msgstr "Prodotto"
 #: model:ir.model,name:product_variant_sale_price.model_product_template
 msgid "Product Template"
 msgstr "Template Prodotto"
+
+#. module: product_variant_sale_price
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__lst_price
+#, fuzzy
+#| msgid "Fix Price"
+msgid "Sale Price"
+msgstr "Prezzo fisso"
+
+#. module: product_variant_sale_price
+#: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
+msgid ""
+"The sale price is managed from the product template. Click on the 'Configure "
+"Variants' button to set the extra attribute prices."
+msgstr ""
 
 #~ msgid ""
 #~ "{'invisible': [\n"
