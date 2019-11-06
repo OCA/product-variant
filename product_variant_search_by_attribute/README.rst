@@ -33,18 +33,16 @@ To use this module, you need to:
 .. figure:: product_variant_search_by_attribute/static/description/1.png
    :alt: Search with multiple keywords
    :width: 600 px
+
 **Search with multiple keywords at once**
 
 Each keywords are split with configured separator, here space.
 
-|
-
 .. figure:: product_variant_search_by_attribute/static/description/2.png
    :alt: Result contains the only entry with attributes with `blac` and `16`
    :width: 600 px
+
 **Result contains the only entry with attributes with 'blac' and '16'**
-
-
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
