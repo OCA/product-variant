@@ -19,64 +19,74 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Add or Modify Variants"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_attribute_value_ids
-msgid "Attributes"
+#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
+msgid "Add or modify variants on sale order lines"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_attribute_value_ids
+msgid "Attribute Values"
+msgstr ""
+
+#. module: sale_order_variant_mgmt
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Cancel"
 msgstr "Zrušit"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_create_uid
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_create_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__create_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__create_uid
 msgid "Created by"
 msgstr "Vytvořil(a)"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_create_date
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_create_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__create_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__create_date
 msgid "Created on"
 msgstr "Vytvořeno"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_display_name
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_display_name
+#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
+msgid "Define variants quantities on sale order lines"
+msgstr ""
+
+#. module: sale_order_variant_mgmt
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__display_name
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__display_name
 msgid "Display Name"
 msgstr "Zobrazovaný název"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_id
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_id
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__id
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__id
 msgid "ID"
 msgstr "ID"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant___last_update
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line___last_update
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant____last_update
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line____last_update
 msgid "Last Modified on"
 msgstr "Naposled upraveno"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_write_uid
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_write_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__write_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__write_uid
 msgid "Last Updated by"
 msgstr "Naposled upraveno"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_write_date
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_write_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__write_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__write_date
 msgid "Last Updated on"
 msgstr "Naposled upraveno"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Manage Product Variants"
 msgstr ""
 
@@ -86,17 +96,17 @@ msgid "Manage variants"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Modify Variants"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_tmpl_id_sale_order_variant_mgmt
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_tmpl_id_sale_order_variant_mgmt
 msgid "Product Template"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_uom_qty
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__product_uom_qty
 msgid "Quantity"
 msgstr ""
 
@@ -106,36 +116,26 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_product_tmpl_id
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__product_tmpl_id
 msgid "Template"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Transfer to order"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_x
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_x
 msgid "Value X"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_y
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_y
 msgid "Value Y"
 msgstr ""
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_variant_line_ids
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__variant_line_ids
 msgid "Variant Lines"
-msgstr ""
-
-#. module: sale_order_variant_mgmt
-#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
-msgid "sale.manage.variant"
-msgstr ""
-
-#. module: sale_order_variant_mgmt
-#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
-msgid "sale.manage.variant.line"
 msgstr ""

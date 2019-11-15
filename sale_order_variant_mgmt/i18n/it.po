@@ -20,64 +20,78 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Add or Modify Variants"
 msgstr "Aggiungi o Modifica Varianti"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_attribute_value_ids
-msgid "Attributes"
+#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
+#, fuzzy
+#| msgid "Add or Modify Variants"
+msgid "Add or modify variants on sale order lines"
+msgstr "Aggiungi o Modifica Varianti"
+
+#. module: sale_order_variant_mgmt
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_attribute_value_ids
+#, fuzzy
+#| msgid "Attributes"
+msgid "Attribute Values"
 msgstr "Attributi"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Cancel"
 msgstr "Cancella"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_create_uid
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_create_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__create_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__create_uid
 msgid "Created by"
 msgstr "Created by"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_create_date
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_create_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__create_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__create_date
 msgid "Created on"
 msgstr "Created on"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_display_name
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_display_name
+#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
+msgid "Define variants quantities on sale order lines"
+msgstr ""
+
+#. module: sale_order_variant_mgmt
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__display_name
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__display_name
 msgid "Display Name"
 msgstr "Nome da visualizzare"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_id
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_id
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__id
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__id
 msgid "ID"
 msgstr "ID"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant___last_update
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line___last_update
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant____last_update
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_write_uid
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_write_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__write_uid
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_write_date
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_write_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__write_date
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__write_date
 msgid "Last Updated on"
 msgstr "Last Updated on"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Manage Product Variants"
 msgstr "Gestisci le Varianti Prodotto"
 
@@ -87,17 +101,17 @@ msgid "Manage variants"
 msgstr "Gestisci varianti"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Modify Variants"
 msgstr "Modifica Varianti"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line_product_tmpl_id_sale_order_variant_mgmt
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_tmpl_id_sale_order_variant_mgmt
 msgid "Product Template"
 msgstr "Template Prodotto"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_product_uom_qty
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__product_uom_qty
 msgid "Quantity"
 msgstr "Quantià"
 
@@ -107,41 +121,37 @@ msgid "Sales Order Line"
 msgstr "Linea d'ordine di vendita"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_product_tmpl_id
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__product_tmpl_id
 msgid "Template"
 msgstr "Modello"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
+#: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Transfer to order"
 msgstr "Trasferisci a ordine"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_x
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_x
 #, fuzzy
 msgid "Value X"
 msgstr "Valore x"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line_value_y
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_y
 #, fuzzy
 msgid "Value Y"
 msgstr "Valore x"
 
 #. module: sale_order_variant_mgmt
-#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_variant_line_ids
+#: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__variant_line_ids
 msgid "Variant Lines"
 msgstr "Righe della Variante"
 
-#. module: sale_order_variant_mgmt
-#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
-msgid "sale.manage.variant"
-msgstr "sale.manage.variant"
+#~ msgid "sale.manage.variant"
+#~ msgstr "sale.manage.variant"
 
-#. module: sale_order_variant_mgmt
-#: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
-msgid "sale.manage.variant.line"
-msgstr "sale.manage.variant.line"
+#~ msgid "sale.manage.variant.line"
+#~ msgstr "sale.manage.variant.line"
 
 #~ msgid "Disabled"
 #~ msgstr "Disabilitato"
