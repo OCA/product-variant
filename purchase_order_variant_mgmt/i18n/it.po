@@ -47,11 +47,6 @@ msgid "Created on"
 msgstr "Created on"
 
 #. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_disabled
-msgid "Disabled"
-msgstr "Disabilitato"
-
-#. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_display_name
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_display_name
 msgid "Display Name"
@@ -128,18 +123,17 @@ msgstr "Trasferisci a ordine"
 
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_value_x
-msgid "Value x"
+#, fuzzy
+#| msgid "Value x"
+msgid "Value X"
 msgstr "Valore x"
 
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_value_y
-msgid "Value y"
-msgstr "Valore y"
-
-#. module: purchase_order_variant_mgmt
-#: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_product_id
-msgid "Variant"
-msgstr "Variante"
+#, fuzzy
+#| msgid "Value x"
+msgid "Value Y"
+msgstr "Valore x"
 
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_variant_line_ids
@@ -155,3 +149,12 @@ msgstr "purchase.manage.variant"
 #: model:ir.model,name:purchase_order_variant_mgmt.model_purchase_manage_variant_line
 msgid "purchase.manage.variant.line"
 msgstr "purchase.manage.variant.line"
+
+#~ msgid "Disabled"
+#~ msgstr "Disabilitato"
+
+#~ msgid "Value y"
+#~ msgstr "Valore y"
+
+#~ msgid "Variant"
+#~ msgstr "Variante"
