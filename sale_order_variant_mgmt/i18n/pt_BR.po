@@ -12,30 +12,31 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-22 23:46+0000\n"
-"PO-Revision-Date: 2016-11-22 23:46+0000\n"
-"Last-Translator: Felipe Lopes <ti@trojahntoppel.com.br>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2019-11-24 19:58+0000\n"
+"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.8\n"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Add or Modify Variants"
-msgstr ""
+msgstr "Adicionar ou modificar variantes"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
 msgid "Add or modify variants on sale order lines"
-msgstr ""
+msgstr "Adicionar ou modificar variantes nas linhas da ordem do cliente"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_attribute_value_ids
 msgid "Attribute Values"
-msgstr ""
+msgstr "Valores Atribuídos"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
@@ -57,7 +58,7 @@ msgstr "Criado em"
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
 msgid "Define variants quantities on sale order lines"
-msgstr ""
+msgstr "Definir quantidades de variantes nas linhas da ordem do cliente"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__display_name
@@ -92,17 +93,17 @@ msgstr "Última atualização em"
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Manage Product Variants"
-msgstr ""
+msgstr "Gerenciar variantes de produto"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.actions.act_window,name:sale_order_variant_mgmt.action_sale_manage_variant
 msgid "Manage variants"
-msgstr ""
+msgstr "Gerenciar variantes"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Modify Variants"
-msgstr ""
+msgstr "Modificar variantes"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_tmpl_id_sale_order_variant_mgmt
@@ -127,19 +128,19 @@ msgstr "Modelo"
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Transfer to order"
-msgstr ""
+msgstr "Transferir para pedido"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_x
 msgid "Value X"
-msgstr ""
+msgstr "Valor X"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_y
 msgid "Value Y"
-msgstr ""
+msgstr "Valor Y"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__variant_line_ids
 msgid "Variant Lines"
-msgstr ""
+msgstr "Linhas variantes"
