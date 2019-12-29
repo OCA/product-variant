@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-01 21:08+0000\n"
-"PO-Revision-Date: 2017-05-01 21:08+0000\n"
-"Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
-"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/"
-"teams/23907/nl_NL/)\n"
+"PO-Revision-Date: 2019-12-29 12:13+0000\n"
+"Last-Translator: Thomas Pot <t.pot@open2bizz.nl>\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/"
+"23907/nl_NL/)\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
@@ -27,20 +28,18 @@ msgstr "Toevoegen of Verwijderen Varianten"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant
-#, fuzzy
-#| msgid "Add or Modify Variants"
 msgid "Add or modify variants on sale order lines"
-msgstr "Toevoegen of Verwijderen Varianten"
+msgstr "Toevoegen of wijzigen varianten"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_attribute_value_ids
 msgid "Attribute Values"
-msgstr ""
+msgstr "Kenmerk waarden"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__create_uid
@@ -57,7 +56,7 @@ msgstr "Aangemaakt op"
 #. module: sale_order_variant_mgmt
 #: model:ir.model,name:sale_order_variant_mgmt.model_sale_manage_variant_line
 msgid "Define variants quantities on sale order lines"
-msgstr ""
+msgstr "Definieer varianten aantallen op Verkooporderregels"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__display_name
@@ -75,34 +74,34 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant____last_update
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Laatst gewijzigd op"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__write_uid
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__write_date
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.sale_manage_variant_form
 msgid "Manage Product Variants"
-msgstr ""
+msgstr "Beheer Product Varianten"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.actions.act_window,name:sale_order_variant_mgmt.action_sale_manage_variant
 msgid "Manage variants"
-msgstr ""
+msgstr "Beheer Varianten"
 
 #. module: sale_order_variant_mgmt
 #: model_terms:ir.ui.view,arch_db:sale_order_variant_mgmt.view_order_form
 msgid "Modify Variants"
-msgstr ""
+msgstr "Wijzig Varianten"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_order_line__product_tmpl_id_sale_order_variant_mgmt
@@ -131,20 +130,18 @@ msgstr "Omzetten naar order"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_x
-#, fuzzy
 msgid "Value X"
-msgstr "Waarde x"
+msgstr "Waarde X"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant_line__value_y
-#, fuzzy
 msgid "Value Y"
-msgstr "Waarde x"
+msgstr "Waarde Y"
 
 #. module: sale_order_variant_mgmt
 #: model:ir.model.fields,field_description:sale_order_variant_mgmt.field_sale_manage_variant__variant_line_ids
 msgid "Variant Lines"
-msgstr ""
+msgstr "Variant regels"
 
 #~ msgid "sale.manage.variant"
 #~ msgstr "sale.manage.variant"
