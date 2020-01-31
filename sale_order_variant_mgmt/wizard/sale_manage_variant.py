@@ -36,7 +36,7 @@ class SaleManageVariant(models.TransientModel):
         else:
             sale_order = record
         attr_lines = template.attribute_line_ids.filtered(
-            lambda x: x.attribute_id.create_variant
+            lambda x: x.attribute_id.create_variant != 'no_variant'
         )
         num_attrs = len(attr_lines)
         if not template or not num_attrs or num_attrs > 2:

@@ -25,6 +25,14 @@ class TestSaleOrderVariantMgmt(common.SavepointCase):
                 (0, 0, {'name': 'Value Y'}),
             ],
         })
+        cls.attribute3 = cls.env['product.attribute'].create({
+            'name': 'Test Attribute 3',
+            'value_ids': [
+                (0, 0, {'name': 'Value A'}),
+                (0, 0, {'name': 'Value Z'}),
+            ],
+            'create_variant': 'no_variant',
+        })
         cls.product_tmpl = cls.env['product.template'].create({
             'name': 'Test template',
             'attribute_line_ids': [
@@ -35,6 +43,10 @@ class TestSaleOrderVariantMgmt(common.SavepointCase):
                 (0, 0, {
                     'attribute_id': cls.attribute2.id,
                     'value_ids': [(6, 0, cls.attribute2.value_ids.ids)],
+                }),
+                (0, 0, {
+                    'attribute_id': cls.attribute3.id,
+                    'value_ids': [(6, 0, cls.attribute3.value_ids.ids)],
                 }),
             ],
         })
