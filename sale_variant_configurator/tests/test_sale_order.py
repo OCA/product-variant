@@ -117,6 +117,9 @@ class TestSaleOrder(common.SavepointCase):
         self.assertDictEqual(result['domain'], {'product_id': expected_domain})
         # Check price brought to line with extra
         self.assertEqual(line.price_unit, 110)
+
+    def test_onchange_product_attribute_ids2(self):
+        sale = self.sale_order.create({'partner_id': self.customer.id})
         # Create product and onchange again to see if the product is selected
         product = self.product_product.create({
             'product_tmpl_id': self.product_template_yes.id,
@@ -127,6 +130,16 @@ class TestSaleOrder(common.SavepointCase):
                 'owner_model': 'sale.order.line',
             })]
         })
+        line = self.sale_order_line.new({
+            'order_id': sale.id,
+            'product_tmpl_id': self.product_template_yes.id,
+            'price_unit': 0,
+            'name': 'Line 1',
+            'product_uom_qty': 1,
+            'product_uom': self.product_template_yes.uom_id.id,
+        })
+        line._onchange_product_tmpl_id_configurator()
+        line.product_attribute_ids[0].value_id = self.value1.id
         line._onchange_product_attribute_ids_configurator()
         self.assertEqual(line.product_id, product)
 
