@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_variant_sale_order_route
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-08 14:33+0000\n"
+"PO-Revision-Date: 2020-01-08 14:33+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_variant_sale_order_route
+#: model:ir.model,name:product_variant_sale_order_route.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: product_variant_sale_order_route
+#: model:ir.model.fields,field_description:product_variant_sale_order_route.field_product_product_sale_order_line_route_id
+msgid "Route for Sale Order"
+msgstr ""
+
+#. module: product_variant_sale_order_route
+#: model:ir.model,name:product_variant_sale_order_route.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
