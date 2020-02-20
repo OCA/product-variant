@@ -29,7 +29,7 @@ msgid "Attribute Code"
 msgstr "Code de l'attribut"
 
 #. module: product_variant_default_code
-#: code:addons/product_variant_default_code/models/product.py:182
+#: code:addons/product_variant_default_code/models/product.py:186
 #: sql_constraint:product.attribute:0
 #, python-format
 msgid "Attribute Name must be unique!"
