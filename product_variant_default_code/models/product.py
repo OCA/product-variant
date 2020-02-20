@@ -123,14 +123,18 @@ class ProductTemplate(models.Model):
         return super(ProductTemplate, self).create(vals)
 
     def write(self, vals):
+        with_variants = self.env['product.template']
         product_obj = self.env['product.product']
         if ('reference_mask' in vals and not vals['reference_mask'] or not
                 self.user_has_groups(
                     'product_variant_default_code.group_product_default_code'
                 )):
-            if self.attribute_line_ids:
-                vals['reference_mask'] = self._get_default_mask()
-        result = super(ProductTemplate, self).write(vals)
+            with_variants = self.filtered("attribute_line_ids")
+            for template in with_variants:
+                new_dict = dict(vals)
+                new_dict['reference_mask'] = template._get_default_mask()
+                super(ProductTemplate, template).write(new_dict)
+        super(ProductTemplate, self - with_variants).write(vals)
         if vals.get('reference_mask'):
             cond = [('product_tmpl_id', '=', self.id),
                     ('manual_code', '=', False)]
@@ -138,7 +142,7 @@ class ProductTemplate(models.Model):
             for product in products:
                 if product.reference_mask:
                     render_default_code(product, product.reference_mask)
-        return result
+        return True
 
     @api.model
     def _guess_main_lang(self):
