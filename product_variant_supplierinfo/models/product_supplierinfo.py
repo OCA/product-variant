@@ -11,7 +11,7 @@ class ProductSupplierInfo(models.Model):
     product_id = fields.Many2one(
         comodel_name='product.product',
         string="Product variant",
-        help=("When this field is filled in, the vendor data will only"
+        help=("When this field is filled in, the vendor data will only "
               "apply to the variant."))
 
     def _check_product_template(self, vals):
