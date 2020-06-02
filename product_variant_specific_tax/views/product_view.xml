@@ -6,9 +6,15 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
+<<<<<<< HEAD
             <xpath expr="//field[@name='taxes_id']" position="after">
                 <field name="additional_tax_ids" widget="many2many_tags" />
             </xpath>
+=======
+            <field name="taxes_id" position="after">
+                <field name="additional_tax_ids" widget="many2many_tags" />
+            </field>
+>>>>>>> [ADD] product_variant_specific_tax
         </field>
     </record>
 
