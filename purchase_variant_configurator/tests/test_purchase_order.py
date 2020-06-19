@@ -66,7 +66,7 @@ class TestPurchaseOrder(SavepointCase):
         )
 
         cls.supplier = cls.res_partner.create(
-            {"name": "Supplier 1", "is_company": True, "supplier": True}
+            {"name": "Supplier 1", "is_company": True}
         )
 
     def test_onchange_product_tmpl_id(self):
@@ -158,7 +158,11 @@ class TestPurchaseOrder(SavepointCase):
         result = line._onchange_product_attribute_ids_configurator()
         expected_domain = [
             ("product_tmpl_id", "=", self.product_template_yes.id),
-            ("attribute_value_ids", "=", self.value1.id),
+            (
+                "product_template_attribute_value_ids",
+                "=",
+                product.product_template_attribute_value_ids[0].id,
+            ),
         ]
         self.assertEqual(result["domain"], {"product_id": expected_domain})
 
@@ -285,11 +289,14 @@ class TestPurchaseOrder(SavepointCase):
 
         order.write({"order_line": [(4, line_1.id), (4, line_2.id)]})
         order.button_confirm()
-
+        order.flush()
+        order.invalidate_cache()
         order_line_without_product = order.order_line.filtered(
             lambda x: not x.product_id
         )
 
         self.assertEqual(
-            len(order_line_without_product), 0, "All purchase lines must have a product"
+            len(order_line_without_product),
+            0,
+            "All purchase lines must have a product",
         )
