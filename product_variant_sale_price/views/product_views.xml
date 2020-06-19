@@ -19,6 +19,8 @@
             <xpath expr="//field[@name='uom_id']" position="after">
                 <field
                     name="fix_price"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
                     attrs="{'invisible': [('product_variant_count', '=', 1)]}"
                 />
             </xpath>
@@ -28,9 +30,16 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='lst_price']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('product_variant_count', '>', 1)]}</attribute>
+            </xpath>
             <xpath expr="//field[@name='lst_price']" position="after">
                 <field
                     name="fix_price"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
                     attrs="{'invisible': [('product_variant_count', '=', 1)]}"
                 />
             </xpath>

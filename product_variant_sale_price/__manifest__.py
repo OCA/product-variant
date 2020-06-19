@@ -5,7 +5,7 @@
 {
     "name": "Product Variant Sale Price",
     "summary": "Allows to write fixed prices in product variants",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "category": "Product Management",
     "website": "https://odoo-community.org/",
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
