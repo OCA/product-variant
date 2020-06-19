@@ -7,5 +7,5 @@ from odoo import models
 
 
 class PurchaseOrderLine(models.Model):
-    _inherit = ['purchase.order.line', 'product.configurator']
-    _name = 'purchase.order.line'
+    _inherit = ["purchase.order.line", "product.configurator"]
+    _name = "purchase.order.line"
