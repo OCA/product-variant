@@ -10,17 +10,14 @@
                 <!-- force using the form -->
                 <attribute name="editable" />
             </xpath>
-            <xpath
-                expr="//field[@name='order_line']/form/sheet/group"
-                position="before"
-            >
+            <xpath expr="//field[@name='order_line']/form/group[1]" position="before">
                 <group>
                     <field name="state" invisible="1" />
                     <!-- HACK: readonly condition is set with an `in` clause instead of a `not in` for allowing on new created lines to be writeable, as
                              state field is a related one that is not filled until saved -->
                     <field
                         name="product_tmpl_id"
-                        attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                        attrs="{'invisible': [('display_type', '!=', False)], 'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
                         domain="[('purchase_ok','=',True)]"
                     />
                     <field
