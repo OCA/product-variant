@@ -4,8 +4,10 @@
 
 def assign_product_template(cr, registry):
     """This post-init-hook will update all existing purchase.order.line"""
-    cr.execute("""
+    cr.execute(
+        """
         UPDATE purchase_order_line AS line
         SET product_tmpl_id = product_product.product_tmpl_id
         FROM product_product
-        WHERE line.product_id = product_product.id;""")
+        WHERE line.product_id = product_product.id;"""
+    )
