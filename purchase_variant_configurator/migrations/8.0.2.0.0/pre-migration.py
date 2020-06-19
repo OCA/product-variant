@@ -6,18 +6,20 @@ from openupgradelib import openupgrade
 
 
 def update_purchase_order_lines(cr):
-    cr.execute("""
+    cr.execute(
+        """
         ALTER TABLE purchase_order_line
         RENAME COLUMN product_template TO product_tmpl_id;
-        """)
-    if openupgrade.column_exists(
-            cr, 'purchase_order_line_attribute', 'attribute_id'):
-        attribute_column = 'attribute_id'
-        value_column = 'value_id'
+        """
+    )
+    if openupgrade.column_exists(cr, "purchase_order_line_attribute", "attribute_id"):
+        attribute_column = "attribute_id"
+        value_column = "value_id"
     else:
-        attribute_column = 'attribute'
-        value_column = 'value'
-    cr.execute("""
+        attribute_column = "attribute"
+        value_column = "value"
+    cr.execute(
+        """
         INSERT INTO product_configurator_attribute
             (owner_model, owner_id, attribute_id, value_id, product_tmpl_id)
         SELECT
@@ -32,7 +34,9 @@ def update_purchase_order_lines(cr):
         WHERE
             line.id = attr.purchase_line
             AND attr.purchase_line IS NOT NULL;
-        """ % (attribute_column, value_column))
+        """
+        % (attribute_column, value_column)
+    )
 
 
 def migrate(cr, version):
