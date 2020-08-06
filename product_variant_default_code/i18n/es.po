@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-23 03:56+0000\n"
-"PO-Revision-Date: 2020-05-17 17:19+0000\n"
-"Last-Translator: kikopeiro <francisco.peiro@factorlibre.com>\n"
+"PO-Revision-Date: 2020-08-06 15:59+0000\n"
+"Last-Translator: Nacho Morales <i.moralesc@outlook.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,8 @@ msgstr ""
 #: model:ir.model.fields,help:product_variant_default_code.field_product_template_code_prefix
 msgid "Add prefix to product variant reference (default code)"
 msgstr ""
+"Agregar prefijo a la referencia de variante del producto (código "
+"predeterminado)"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_code
@@ -46,30 +48,29 @@ msgstr "Código de valor de atributo"
 #. module: product_variant_default_code
 #: selection:res.config.settings,group_product_default_code:0
 msgid "Automask"
-msgstr ""
+msgstr "Máscara automática"
 
 #. module: product_variant_default_code
 #: model:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
 msgid "Defines how you want to manage the Variant default code"
 msgstr ""
+"Define cómo administrar las variantes de código, de manera predeterminada"
 
 #. module: product_variant_default_code
 #: code:addons/product_variant_default_code/models/product.py:38
 #, python-format
 msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
-msgstr ""
-"Encontrado un nombre de atribuco no reconocido en la \"Referencia máscara "
-"variante\""
+msgstr "Nombre de atributo no encontrado en la \"Referencia máscara variante\""
 
 #. module: product_variant_default_code
 #: selection:res.config.settings,group_product_default_code:0
 msgid "Manual Mask"
-msgstr ""
+msgstr "Máscara manual"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_manual_code
 msgid "Manual Reference"
-msgstr ""
+msgstr "Referencia manual"
 
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_product
@@ -84,13 +85,13 @@ msgstr "Atributo de producto"
 #. module: product_variant_default_code
 #: model:res.groups,name:product_variant_default_code.group_product_default_code
 msgid "Product Default Code Behavior"
-msgstr ""
+msgstr "Comportamiento predeterminado del producto"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings_group_product_default_code
 #: model:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
 msgid "Product Default Code behaviour"
-msgstr ""
+msgstr "Comportamiento predeterminado del producto"
 
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_template
@@ -106,7 +107,7 @@ msgstr "Variantes de producto"
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_code_prefix
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_template_code_prefix
 msgid "Reference Prefix"
-msgstr ""
+msgstr "Prefijo de referencia"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_product_product_reference_mask
@@ -129,6 +130,25 @@ msgid ""
 "x~y~x` (for variant with Color \"Yellow\" and Size \"XL\")\n"
 "Note: make sure characters \"[,]\" do not appear in your attribute name"
 msgstr ""
+"Máscara de referencia para construir referencias internas de una variante "
+"generada a partir de esta plantilla.\n"
+"Ejemplo:\n"
+"Producto: ABC\n"
+"Color: rojo (r), amarillo (y), negro (b) #Rojo, amarillo, negro son el valor "
+"del atributo, `r`,` y`, `b` son el código correspondiente\n"
+"Tamaño: L (l), XL (x)\n"
+"Al configurar la máscara de referencia de la variante en `[Color] - [Tamaño]`"
+", el código predeterminado en las variantes será algo así como `r-l`` b-l` "
+"`r-x` ...\n"
+"Si lo desea, incluso puede hacer que el nombre del atributo aparezca más de "
+"una vez en la máscara. Por ejemplo, `fancyA / [Size] ~ [Color] ~ [Size]`\n"
+" Cuando se guarde, el código predeterminado en las variantes será algo así "
+"como\n"
+" `fancyA / l ~ r ~ l` (para la variante con el color\" Rojo \"y el tamaño\" "
+"L \")` fancyA / x ~ y ~ x` (para la variante con el color \"Amarillo\" y el "
+"tamaño \"XL\")\n"
+"Nota: asegúrese de que los caracteres \"[,]\" no aparezcan en el nombre de "
+"su atributo"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings_group_product_default_code
@@ -136,6 +156,8 @@ msgid ""
 "Set behaviour of codes (depends on variant use: see Sales/Purchases "
 "configuration)"
 msgstr ""
+"Establecer el comportamiento de los códigos (depende del uso de la variante: "
+"consulte la configuración de Ventas / Compras)"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_reference_mask
@@ -146,14 +168,14 @@ msgstr "Máscara de referencia para la variante"
 #. module: product_variant_default_code
 #: model:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
 msgid "[attribute3]-[attribute1]"
-msgstr ""
+msgstr "[atributo3]-[atributo1]"
 
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_attribute_value
 msgid "product.attribute.value"
-msgstr "product.attribute.value"
+msgstr "producto.atributo.valor"
 
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_res_config_settings
 msgid "res.config.settings"
-msgstr ""
+msgstr "res.config.settings"
