@@ -11,18 +11,18 @@ class TestProductVariant(TransactionCase):
             check_variant_creation=True
         )
         self.categ_model = self.env["product.category"]
-        self.categ1 = self.categ_model.create({"name": "No create variants category",})
+        self.categ1 = self.categ_model.create({"name": "No create variants category"})
         self.categ2 = self.categ_model.create(
-            {"name": "Create variants category", "no_create_variants": False,}
+            {"name": "Create variants category", "no_create_variants": False}
         )
         self.attribute = self.env["product.attribute"].create(
-            {"name": "Test Attribute",}
+            {"name": "Test Attribute"}
         )
         self.value1 = self.env["product.attribute.value"].create(
-            {"name": "Value 1", "attribute_id": self.attribute.id,}
+            {"name": "Value 1", "attribute_id": self.attribute.id}
         )
         self.value2 = self.env["product.attribute.value"].create(
-            {"name": "Value 2", "attribute_id": self.attribute.id,}
+            {"name": "Value 2", "attribute_id": self.attribute.id}
         )
 
     def test_no_create_variants(self):
@@ -44,7 +44,7 @@ class TestProductVariant(TransactionCase):
         )
         self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.tmpl_model.create(
-            {"name": "No variants template", "no_create_variants": "yes",}
+            {"name": "No variants template", "no_create_variants": "yes"}
         )
         # Odoo by default when there are not attributes will create a product
         self.assertEqual(len(tmpl.product_variant_ids), 1)
@@ -99,7 +99,7 @@ class TestProductVariant(TransactionCase):
         )
         self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.tmpl_model.create(
-            {"name": "No variants template", "no_create_variants": "no",}
+            {"name": "No variants template", "no_create_variants": "no"}
         )
         self.assertEqual(len(tmpl.product_variant_ids), 1)
 
