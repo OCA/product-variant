@@ -20,13 +20,13 @@ class TestProductConfiguratorAttribute(SavepointCase):
             check_variant_creation=True
         )
         # Instances: product attribute
-        cls.attribute1 = cls.product_attribute.create({"name": "Test Attribute 1",})
+        cls.attribute1 = cls.product_attribute.create({"name": "Test Attribute 1"})
         # Instances: product attribute value
         cls.value1 = cls.product_attribute_value.create(
-            {"name": "Value 1", "attribute_id": cls.attribute1.id,}
+            {"name": "Value 1", "attribute_id": cls.attribute1.id}
         )
         cls.value2 = cls.product_attribute_value.create(
-            {"name": "Value 2", "attribute_id": cls.attribute1.id,}
+            {"name": "Value 2", "attribute_id": cls.attribute1.id}
         )
         # Instances: product template
         cls.product_template1 = cls.product_template.create(
