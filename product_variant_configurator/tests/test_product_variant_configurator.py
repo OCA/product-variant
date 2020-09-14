@@ -25,26 +25,26 @@ class TestProductVariantConfigurator(SavepointCase):
         # INSTANCES
         # Instances: product category
         cls.category1 = cls.product_category.create(
-            {"name": "No create variants category",}
+            {"name": "No create variants category"}
         )
         cls.category2 = cls.product_category.create(
-            {"name": "Create variants category", "no_create_variants": False,}
+            {"name": "Create variants category", "no_create_variants": False}
         )
         # Instances: product attribute
-        cls.attribute1 = cls.product_attribute.create({"name": "Test Attribute 1",})
-        cls.attribute2 = cls.product_attribute.create({"name": "Test Attribute 2",})
+        cls.attribute1 = cls.product_attribute.create({"name": "Test Attribute 1"})
+        cls.attribute2 = cls.product_attribute.create({"name": "Test Attribute 2"})
         # Instances: product attribute value
         cls.value1 = cls.product_attribute_value.create(
-            {"name": "Value 1", "attribute_id": cls.attribute1.id,}
+            {"name": "Value 1", "attribute_id": cls.attribute1.id}
         )
         cls.value2 = cls.product_attribute_value.create(
-            {"name": "Value 2", "attribute_id": cls.attribute1.id,}
+            {"name": "Value 2", "attribute_id": cls.attribute1.id}
         )
         cls.value3 = cls.product_attribute_value.create(
-            {"name": "Value 3", "attribute_id": cls.attribute2.id,}
+            {"name": "Value 3", "attribute_id": cls.attribute2.id}
         )
         cls.value4 = cls.product_attribute_value.create(
-            {"name": "Value 4", "attribute_id": cls.attribute2.id,}
+            {"name": "Value 4", "attribute_id": cls.attribute2.id}
         )
         # Instances: product template
         cls.product_template_yes = cls.product_template.create(
@@ -65,7 +65,7 @@ class TestProductVariantConfigurator(SavepointCase):
             }
         )
         cls.product_template_no = cls.product_template.create(
-            {"name": "Product template 2", "no_create_variants": "no",}
+            {"name": "Product template 2", "no_create_variants": "no"}
         )
         cls.product_template_empty_no = cls.product_template.create(
             {
@@ -111,7 +111,7 @@ class TestProductVariantConfigurator(SavepointCase):
         )
         self.assertEqual(len(tmpl.product_variant_ids), 0)
         tmpl = self.product_template.create(
-            {"name": "No variants template", "no_create_variants": "yes",}
+            {"name": "No variants template", "no_create_variants": "yes"}
         )
         # default behavior: one variant should be created
         self.assertEqual(len(tmpl.product_variant_ids), 1)
@@ -166,7 +166,7 @@ class TestProductVariantConfigurator(SavepointCase):
         )
         self.assertEqual(len(tmpl.product_variant_ids), 2)
         tmpl = self.product_template.create(
-            {"name": "No variants template", "no_create_variants": "no",}
+            {"name": "No variants template", "no_create_variants": "no"}
         )
         self.assertEqual(len(tmpl.product_variant_ids), 1)
 
@@ -264,7 +264,9 @@ class TestProductVariantConfigurator(SavepointCase):
         )
         self.assertEqual(
             product._get_product_description(
-                product.product_tmpl_id, product, product.attribute_value_ids
+                product.product_tmpl_id,
+                product,
+                product.product_template_attribute_value_ids,
             ),
             "Product template 1",
         )
@@ -276,23 +278,16 @@ class TestProductVariantConfigurator(SavepointCase):
         self.env.ref(group_id).write({"users": [(4, self.current_user.id)]})
         self.assertEqual(
             product._get_product_description(
-                product.product_tmpl_id, product, product.attribute_value_ids
+                product.product_tmpl_id,
+                product,
+                product.product_template_attribute_value_ids,
             ),
             "Product template 1",
         )
 
-    def test_product_check_configuration_validity(self):
-        product = self.product_product.create(
-            {"name": "Test product", "product_tmpl_id": self.product_template_yes.id}
-        )
-        with self.cr.savepoint(), self.assertRaises(ValidationError):
-            product.with_context(
-                test_check_duplicity=True,
-            ).product_tmpl_id = self.product_template_no
-
     def test_onchange_product_tmpl_id(self):
         product = self.product_product.new(
-            {"name": "Test product", "product_tmpl_id": self.product_template_yes.id,}
+            {"name": "Test product", "product_tmpl_id": self.product_template_yes.id}
         )
         product.product_tmpl_id = self.product_template_empty_yes
         res = product._onchange_product_tmpl_id_configurator()
