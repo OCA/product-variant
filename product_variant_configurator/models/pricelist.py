@@ -4,13 +4,12 @@
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import api, models
+from odoo import models
 
 
 class ProductPricelist(models.Model):
     _inherit = "product.pricelist"
 
-    @api.multi
     def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):
         """Overwrite for covering the case where templates are passed and a
         different uom is used."""
@@ -39,7 +38,6 @@ class ProductPricelist(models.Model):
             products_qty_partner, date=date, uom_id=False,
         )
 
-    @api.multi
     def template_price_get(self, prod_id, qty, partner=None):
         return {
             key: price[0]
@@ -48,7 +46,6 @@ class ProductPricelist(models.Model):
             ).items()
         }
 
-    @api.multi
     def template_price_rule_get(self, prod_id, qty, partner=None):
         product = self.env["product.template"].browse([prod_id])
         return self.price_rule_get_multi(

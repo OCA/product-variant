@@ -5,12 +5,12 @@
         <field name="model">product.attribute</field>
         <field name="inherit_id" ref="product.product_attribute_view_form" />
         <field name="arch" type="xml">
-            <group name="values_ids" position="after">
+            <field name="value_ids" position="after">
                 <p class="oe_grey">
                 <strong
                     >Info:</strong> You can now manage the variant creation from the Product Template level
                 </p>
-            </group>
+            </field>
         </field>
     </record>
 </odoo>
