@@ -7,29 +7,33 @@ from odoo import _, api, fields, models
 
 
 class ProductCategory(models.Model):
-    _inherit = 'product.category'
+    _inherit = "product.category"
 
     no_create_variants = fields.Boolean(
         string="Don't create variants automatically",
-        help='This check disables the automatic creation of product variants '
-             'for all the products of this category.',
-        default=True)
+        help="This check disables the automatic creation of product variants "
+        "for all the products of this category.",
+        default=True,
+    )
 
-    @api.onchange('no_create_variants')
+    @api.onchange("no_create_variants")
     def onchange_no_create_variants(self):
         if not self.no_create_variants:
-            return {'warning': {
-                'title': _('Change warning!'),
-                'message': _('Changing this parameter may cause'
-                             ' automatic variants creation')
-            }}
+            return {
+                "warning": {
+                    "title": _("Change warning!"),
+                    "message": _(
+                        "Changing this parameter may cause"
+                        " automatic variants creation"
+                    ),
+                }
+            }
 
     @api.multi
     def write(self, values):
         res = super(ProductCategory, self).write(values)
-        if ('no_create_variants' in values and
-                not values.get('no_create_variants')):
-            self.env['product.template'].search(
-                [('categ_id', '=', self.id),
-                 ('no_create_variants', '=', 'empty')]).create_variant_ids()
+        if "no_create_variants" in values and not values.get("no_create_variants"):
+            self.env["product.template"].search(
+                [("categ_id", "=", self.id), ("no_create_variants", "=", "empty")]
+            ).create_variant_ids()
         return res
