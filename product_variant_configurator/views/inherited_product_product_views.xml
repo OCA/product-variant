@@ -23,6 +23,16 @@
                     Select a template for a variant. Keep empty for a new full product.
                 </p>
             </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_variants_view_2">
+        <field name="name">product.product.variants.form</field>
+        <field name="model">product.product</field>
+        <field
+            name="inherit_id"
+            ref="product_variant_configurator.product_variants_view"
+        />
+        <field name="arch" type="xml">
             <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <group>
                     <field
@@ -30,7 +40,7 @@
                         nolabel="1"
                         colspan="2"
                         attrs="{'invisible': ['|', ('id','!=',False), '|', ('product_tmpl_id','=',False), ('product_attribute_ids', '=', [])]}"
-                        context="{'default_owner_model': 'product.product', 'show_price_extra': True, 'show_attribute': False}"
+                        context="{'default_product_template_id': product_tmpl_id, 'default_owner_model': 'product.product', 'show_price_extra': True, 'show_attribute': False}"
                     >
                         <tree create="0" delete="0" editable="1">
                             <field name="owner_model" invisible="1" />
