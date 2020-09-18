@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="product_attribute_group_view_tree" model="ir.ui.view">
+    <field name="model">product.attribute.group</field>
+    <field name="arch" type="xml">
+        <tree string="Attribute Group" editable="bottom">
+            <field name="code"/>
+            <field name="name"/>
+        </tree>
+    </field>
+</record>
+
+<record id="product_attribute_group_view_form" model="ir.ui.view">
+    <field name="model">product.attribute.group</field>
+    <field name="arch" type="xml">
+        <form string="Attribute Group">
+            <group>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="html_color"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="product_attribute_group_view_search" model="ir.ui.view">
+    <field name="model">product.attribute.group</field>
+    <field name="arch" type="xml">
+        <search string="Attribute Group">
+            <field name="name"/>
+            <field name="code"/>
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="product_attribute_group_action">
+    <field name="name">Attribute Group</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.attribute.group</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_attribute_group_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<menuitem id="product_attribute_group_menu"
+    parent="sale.prod_config_main"
+    sequence="20"
+    action="product_attribute_group_action"/>
+
+</odoo>
