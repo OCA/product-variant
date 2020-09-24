@@ -28,19 +28,24 @@ variants references are automatically set. For example:
 Configuration
 =============
 
-To set the reference mask up on any product template 'Variant reference mask'
-new field.
-
 When creating a new product template without specifying the *Variant reference
 mask*, a default value for *Variant reference mask* will be automatically
 generated according to the attribute line settings on the product template (if
 any). The mask will then be used as an instruction to generate default code of
 each product variant of the product template with the corresponding *Attribute
-Code* (of the attribute value) inserted. Besides the default value, *Variant
-reference mask* can be configured to your liking, make sure putting the
-*Attribute Name* inside `[]` marks (it is case sensitive).
+Code* (of the attribute value) inserted. 
+
+To set the mask separators, go to *Settings > Technical > System Parameters* 
+and look for `default_reference_missing_placeholder` and `default_reference_separator`.
+
+To set the reference mask up on any product template, go to *Settings > General 
+Settings* and in "Product Default Code Behaviour" choose the "Manual Mask" 
+option. Then the 'Variant reference mask' field will be visible on product 
+template, *after product creation*. In this field, put the *Attribute Name* 
+inside `[]` marks (it is case sensitive).
 
 Example:
+--------
 
 Creating a product named *Jacket* with two attributes, *Size* and *Color*::
 
