@@ -19,7 +19,7 @@ def set_sale_price_on_variant(cr, registry, template_id=None):
         WHERE pt.id = pp.product_tmpl_id
     """
     if template_id:
-        sql += 'AND pt.id = %s'
+        sql += "AND pt.id = %s"
         cr.execute(sql, (template_id,))
     else:
         cr.execute(sql)
