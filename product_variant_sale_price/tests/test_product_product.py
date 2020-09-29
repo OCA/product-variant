@@ -12,13 +12,13 @@ class TestProductVariantPrice(TransactionCase):
         self.attribute = self.env["product.attribute"]
         self.attribute_value = self.env["product.attribute.value"]
 
-        self.att_color = self.attribute.create({"name": "color_test",})
+        self.att_color = self.attribute.create({"name": "color_test"})
 
         self.att_color_blue = self.attribute_value.create(
-            {"name": "Blue", "attribute_id": self.att_color.id,}
+            {"name": "Blue", "attribute_id": self.att_color.id}
         )
         self.att_color_red = self.attribute_value.create(
-            {"name": "Red", "attribute_id": self.att_color.id,}
+            {"name": "Red", "attribute_id": self.att_color.id}
         )
 
         self.uom_unit = self.env.ref("uom.product_uom_unit")
@@ -45,33 +45,29 @@ class TestProductVariantPrice(TransactionCase):
         )
 
         self.product_blue = self.product_template.product_variant_ids.filtered(
-            lambda x: x.attribute_value_ids == self.att_color_blue
+            lambda x: x.product_template_attribute_value_ids.product_attribute_value_id
+            == self.att_color_blue
         )
         self.product_red = self.product_template.product_variant_ids.filtered(
-            lambda x: x.attribute_value_ids == self.att_color_red
+            lambda x: x.product_template_attribute_value_ids.product_attribute_value_id
+            == self.att_color_red
         )
 
     def test_post_init_hook(self):
         from ..hooks import set_sale_price_on_variant
 
-        self.product_template.product_variant_ids.write(
-            {"fix_price": 0.0,}
-        )
+        self.product_template.product_variant_ids.write({"fix_price": 0.0})
         # Take account price extra
-        self.env["product.template.attribute.value"].create(
-            {
-                "product_tmpl_id": self.product_template.id,
-                "product_attribute_value_id": self.att_color_blue.id,
-                "price_extra": 100.00,
-            }
+        self.product_blue.product_template_attribute_value_ids.write(
+            {"price_extra": 100.00}
         )
-        self.env["product.template.attribute.value"].create(
-            {
-                "product_tmpl_id": self.product_template.id,
-                "product_attribute_value_id": self.att_color_red.id,
-                "price_extra": 200.00,
-            }
+        self.product_red.product_template_attribute_value_ids.write(
+            {"price_extra": 200.00}
         )
+
+        # Flush the records to DB before direct SQL
+        self.product_blue.flush()
+        self.product_red.flush()
 
         set_sale_price_on_variant(self.cr, None, self.product_template.id)
         self.product_template.product_variant_ids.invalidate_cache()
