@@ -3,21 +3,30 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <data>
-        <record model="ir.ui.view" id="account_invoice_line_form_view">
-            <field
-                name="name"
-            >account.invoice.line.form (in invoice_product_variant_configurator)</field>
-            <field name="model">account.invoice.line</field>
-            <field name="inherit_id" ref="account.view_invoice_line_form" />
+        <record model="ir.ui.view" id="account_move_form_view">
+            <field name="name">account.move.form (in
+                invoice_product_variant_configurator)
+            </field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
             <field name="arch" type="xml">
-                <xpath expr="/form/group" position="before">
-                    <group>
+                <xpath
+                    expr="//field[@name='invoice_line_ids']/tree"
+                    position="attributes"
+                >
+                    <!-- force using the form -->
+                    <attribute name="editable" />
+                </xpath>
+                <xpath
+                    expr="//field[@name='invoice_line_ids']/form//field[@name='partner_id']/.."
+                    position="before"
+                >
+                    <group name="group_variant_configurator_head">
                         <field name="product_tmpl_id" />
                         <field
                             name="product_attribute_ids"
                             widget="one2many"
-                            context="{'default_owner_model': 'purchase.order.line'}"
-                            attrs="{'invisible': [('product_attribute_ids','=',[])]}"
+                            attrs="{'invisible': [('product_attribute_ids', '=', [])]}"
                             nolabel="1"
                             colspan="2"
                         >
@@ -32,8 +41,6 @@
                                 />
                                 <field name="product_tmpl_id" invisible="1" />
                                 <field name="value_id" />
-                                <!-- TODO price_extra is for sale only for now -->
-                                <!--field name="price_extra"/-->
                             </tree>
                         </field>
                         <field name="can_create_product" invisible="1" />
