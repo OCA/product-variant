@@ -254,10 +254,8 @@ class ProductConfigurator(models.AbstractModel):
 
     def create_variant_if_needed(self):
         """ Create the product variant if needed.
-
         It searches for an existing product with the selected attributes. If
         not found, create a new product.
-
         :returns: the product (found or newly created)
         """
         self.ensure_one()
@@ -268,11 +266,24 @@ class ProductConfigurator(models.AbstractModel):
             self.product_tmpl_id, self.product_attribute_ids,
         )
         if not product:
+            product_template_attribute_values = self.env[
+                "product.template.attribute.value"
+            ].browse()
+            for product_attribute_value in self.product_attribute_ids.mapped(
+                "value_id"
+            ):
+                product_attribute = product_attribute_value.attribute_id
+                existing_attribute_line = self.product_tmpl_id.attribute_line_ids.filtered(  # noqa
+                    lambda l: l.attribute_id == product_attribute
+                )
+                product_template_attribute_values |= existing_attribute_line.product_template_value_ids.filtered(  # noqa
+                    lambda v: v.product_attribute_value_id == product_attribute_value
+                )
             product = product_obj.create(
                 {
                     "product_tmpl_id": self.product_tmpl_id.id,
                     "product_template_attribute_value_ids": [
-                        (6, 0, self.product_attribute_ids.mapped("value_id").ids)
+                        (6, 0, product_template_attribute_values.ids)
                     ],
                 }
             )
