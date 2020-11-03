@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
   Copyright (C) 2015 Akretion (http://www.akretion.com). All Rights Reserved
+  Copyright (C) 2020 Tecnativa - João Marques
   @author Benoît GUILLOT <benoit.guillot@akretion.com>
 -->
 <odoo>
@@ -27,7 +28,7 @@
         <field name="inherit_id" ref="product.product_attribute_view_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//group[@name='values_ids']/field[@name='value_ids']/tree/field[@name='name']"
+                expr="//field[@name='value_ids']//field[@name='name']"
                 position="after"
             >
                 <field name="code" />

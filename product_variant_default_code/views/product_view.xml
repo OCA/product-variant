@@ -15,7 +15,7 @@
                     placeholder="[attribute3]-[attribute1]"
                     attrs="{'invisible':
                           [('attribute_line_ids', '=', [])]}"
-                    groups="product_variant_default_code.group_product_default_code"
+                    groups="product_variant_default_code.group_product_default_code_manual_mask"
                 />
             </field>
         </field>
