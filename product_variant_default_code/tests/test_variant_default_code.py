@@ -1,4 +1,5 @@
 # Copyright 2017 Tecnativa - David Vidal
+# Copyright 2020 Tecnativa - João Marques
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
@@ -10,7 +11,7 @@ class TestVariantDefaultCode(common.SavepointCase):
     def setUpClass(cls):
         super(TestVariantDefaultCode, cls).setUpClass()
         cls.group_default_code = cls.env.ref(
-            "product_variant_default_code.group_product_default_code"
+            "product_variant_default_code.group_product_default_code_manual_mask"
         )
         cls.attr1 = cls.env["product.attribute"].create({"name": "TSize"})
         cls.attr2 = cls.env["product.attribute"].create({"name": "TColor"})
@@ -81,12 +82,12 @@ class TestVariantDefaultCode(common.SavepointCase):
         # Check that variants code are generated according to rules
         for product in self.template1.mapped("product_variant_ids"):
             expected_code = (
-                product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr1
+                product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
                 ).name[0:2]
                 + "-"
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr2
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
@@ -97,11 +98,11 @@ class TestVariantDefaultCode(common.SavepointCase):
         for product in self.template2.mapped("product_variant_ids"):
             expected_code = (
                 "P01/"
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr1
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
                 ).name[0:2]
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr2
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
@@ -118,12 +119,12 @@ class TestVariantDefaultCode(common.SavepointCase):
         for product in self.template1.mapped("product_variant_ids"):
             expected_code = (
                 u"JKTÜ/"
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr2
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
                 + "#"
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr1
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
@@ -139,11 +140,11 @@ class TestVariantDefaultCode(common.SavepointCase):
         for product in self.template1.mapped("product_variant_ids")[1:]:
             expected_code = (
                 "J"
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr2
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
-                + product.attribute_value_ids.filtered(
-                    lambda x: x.attribute_id == self.attr1
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
@@ -156,7 +157,13 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.attr1_1.code = "OO"
         # Check that the change spreads to every product
         products = self.env["product.product"].search(
-            [("attribute_value_ids", "=", self.attr1_1.id)]
+            [
+                (
+                    "product_template_attribute_value_ids.product_attribute_value_id",
+                    "=",
+                    self.attr1_1.id,
+                )
+            ]
         )
         for product in products:
             self.assertTrue("OO" in product.default_code)
@@ -166,7 +173,13 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.attr1_1.onchange_name()
         self.assertEqual(self.attr1_1.code, "Od")
         products = self.env["product.product"].search(
-            [("attribute_value_ids", "=", self.attr1_1.id)]
+            [
+                (
+                    "product_template_attribute_value_ids.product_attribute_value_id",
+                    "=",
+                    self.attr1_1.id,
+                )
+            ]
         )
         # Check that the change spreads to every product
         for product in products:

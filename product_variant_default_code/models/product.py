@@ -3,6 +3,7 @@
 # Copyright 2014 Shine IT - Tony Gu
 # Copyright 2017 Tecnativa - David Vidal
 # Copyright 2018 Avanzosc S.L. - Daniel Campos
+# Copyright 2020 Tecnativa - João Marques
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import re
@@ -43,7 +44,8 @@ def get_rendered_default_code(product, mask):
     product_attrs = defaultdict(str)
     reference_mask = ReferenceMask(mask)
     main_lang = product.product_tmpl_id._guess_main_lang()
-    for value in product.attribute_value_ids:
+    for attr in product.product_template_attribute_value_ids:
+        value = attr.product_attribute_value_id
         attr_name = value.attribute_id.with_context(lang=main_lang).name
         if value.attribute_id.code:
             product_attrs[attr_name] += value.attribute_id.code
@@ -119,7 +121,7 @@ class ProductTemplate(models.Model):
             not vals.get("reference_mask")
             and product.attribute_line_ids
             or not self.user_has_groups(
-                "product_variant_default_code.group_product_default_code"
+                "product_variant_default_code.group_product_default_code_manual_mask"
             )
         ):
             vals["reference_mask"] = product._get_default_mask()
@@ -134,7 +136,7 @@ class ProductTemplate(models.Model):
             "reference_mask" in vals
             and not vals["reference_mask"]
             or not self.user_has_groups(
-                "product_variant_default_code.group_product_default_code"
+                "product_variant_default_code.group_product_default_code_manual_mask"
             )
         ):
             with_variants = self.filtered("attribute_line_ids")
@@ -226,7 +228,16 @@ class ProductAttributeValue(models.Model):
         # Rewrite reference on all product variants affected
         for product in (
             self.env["product.product"]
-            .search([("attribute_value_ids", "in", self.ids)])
+            .search(
+                [
+                    (
+                        "product_template_attribute_value_ids"
+                        ".product_attribute_value_id",
+                        "in",
+                        self.ids,
+                    )
+                ]
+            )
             .filtered(lambda x: x.product_tmpl_id.reference_mask and not x.manual_code)
             .mapped("product_tmpl_id.product_variant_ids")
         ):
