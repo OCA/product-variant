@@ -155,8 +155,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _guess_main_lang(self):
-        """ Used by get_rendered_default_code()
-        """
+        """Used by get_rendered_default_code()"""
         english = self.env.ref("base.lang_en")
         if english.active:
             return english.code
@@ -187,7 +186,9 @@ class ProductProduct(models.Model):
 class ProductAttribute(models.Model):
     _inherit = "product.attribute"
 
-    code = fields.Char(string="Attribute Code",)
+    code = fields.Char(
+        string="Attribute Code",
+    )
 
     _sql_constraints = [
         ("number_uniq", "unique(name)", _("Attribute Name must be unique!"))
@@ -213,7 +214,10 @@ class ProductAttributeValue(models.Model):
         if self.name:
             self.code = self.name[0:2]
 
-    code = fields.Char(string="Attribute Value Code", default=onchange_name,)
+    code = fields.Char(
+        string="Attribute Value Code",
+        default=onchange_name,
+    )
 
     @api.model
     def create(self, vals):
