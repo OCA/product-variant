@@ -31,8 +31,8 @@ msgid "Attribute Code"
 msgstr "Codice Attributo"
 
 #. module: product_variant_default_code
-#: code:addons/product_variant_default_code/models/product.py:186
-#: sql_constraint:product.attribute:0
+#: code:addons/product_variant_default_code/models/product.py:0
+#: model:ir.model.constraint,message:product_variant_default_code.constraint_product_attribute_number_uniq
 #, python-format
 msgid "Attribute Name must be unique!"
 msgstr ""
@@ -40,7 +40,6 @@ msgstr ""
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_attribute_value
 #, fuzzy
-#| msgid "Attribute Value Code"
 msgid "Attribute Value"
 msgstr "Codice Valore Attributo"
 
@@ -50,11 +49,6 @@ msgid "Attribute Value Code"
 msgstr "Codice Valore Attributo"
 
 #. module: product_variant_default_code
-#: selection:res.config.settings,group_product_default_code:0
-msgid "Automask"
-msgstr ""
-
-#. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_res_config_settings
 #, fuzzy
 msgid "Config Settings"
@@ -62,18 +56,16 @@ msgstr "base.config.settings"
 
 #. module: product_variant_default_code
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
-msgid "Defines how you want to manage the Variant default code"
+msgid ""
+"Defines how you want to manage the Variant default.\n"
+"                                Check this if you want to use Manual Mask.\n"
+"                                Default: Automask"
 msgstr ""
 
 #. module: product_variant_default_code
-#: code:addons/product_variant_default_code/models/product.py:38
+#: code:addons/product_variant_default_code/models/product.py:0
 #, python-format
 msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
-msgstr ""
-
-#. module: product_variant_default_code
-#: selection:res.config.settings,group_product_default_code:0
-msgid "Manual Mask"
 msgstr ""
 
 #. module: product_variant_default_code
@@ -92,14 +84,13 @@ msgid "Product Attribute"
 msgstr "Attributo Prodotto"
 
 #. module: product_variant_default_code
-#: model:res.groups,name:product_variant_default_code.group_product_default_code
+#: model:res.groups,name:product_variant_default_code.group_product_default_code_manual_mask
 msgid "Product Default Code Behavior"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__group_product_default_code
-#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
-msgid "Product Default Code behaviour"
+#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__group_product_default_code_manual_mask
+msgid "Product Default Code Manual Mask"
 msgstr ""
 
 #. module: product_variant_default_code
@@ -142,10 +133,10 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code
+#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code_manual_mask
 msgid ""
-"Set behaviour of codes (depends on variant use: see Sales/Purchases "
-"configuration)"
+"Set behaviour of codes. Default: Automask (depends on variant use: see Sales/"
+"Purchases configuration)"
 msgstr ""
 
 #. module: product_variant_default_code

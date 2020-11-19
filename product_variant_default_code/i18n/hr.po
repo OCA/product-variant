@@ -32,8 +32,8 @@ msgid "Attribute Code"
 msgstr "Šifra atributa"
 
 #. module: product_variant_default_code
-#: code:addons/product_variant_default_code/models/product.py:186
-#: sql_constraint:product.attribute:0
+#: code:addons/product_variant_default_code/models/product.py:0
+#: model:ir.model.constraint,message:product_variant_default_code.constraint_product_attribute_number_uniq
 #, python-format
 msgid "Attribute Name must be unique!"
 msgstr "Šifra atributa mora biti jedinstvena!"
@@ -49,30 +49,23 @@ msgid "Attribute Value Code"
 msgstr "Šifra vrijednosti atributa"
 
 #. module: product_variant_default_code
-#: selection:res.config.settings,group_product_default_code:0
-msgid "Automask"
-msgstr "Auto-maskiranje"
-
-#. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_res_config_settings
 msgid "Config Settings"
 msgstr "Postavke"
 
 #. module: product_variant_default_code
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
-msgid "Defines how you want to manage the Variant default code"
-msgstr "Definira kako želite upravljati zadanom šifrom varijante"
-
-#. module: product_variant_default_code
-#: code:addons/product_variant_default_code/models/product.py:38
-#, python-format
-msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
+msgid ""
+"Defines how you want to manage the Variant default.\n"
+"                                Check this if you want to use Manual Mask.\n"
+"                                Default: Automask"
 msgstr ""
 
 #. module: product_variant_default_code
-#: selection:res.config.settings,group_product_default_code:0
-msgid "Manual Mask"
-msgstr "Ručna maska"
+#: code:addons/product_variant_default_code/models/product.py:0
+#, python-format
+msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
+msgstr ""
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__manual_code
@@ -90,14 +83,13 @@ msgid "Product Attribute"
 msgstr "Atribut proizvoda"
 
 #. module: product_variant_default_code
-#: model:res.groups,name:product_variant_default_code.group_product_default_code
+#: model:res.groups,name:product_variant_default_code.group_product_default_code_manual_mask
 msgid "Product Default Code Behavior"
 msgstr "Zadano ponašanje šifre proizvoda"
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__group_product_default_code
-#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
-msgid "Product Default Code behaviour"
+#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__group_product_default_code_manual_mask
+msgid "Product Default Code Manual Mask"
 msgstr ""
 
 #. module: product_variant_default_code
@@ -140,10 +132,10 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code
+#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code_manual_mask
 msgid ""
-"Set behaviour of codes (depends on variant use: see Sales/Purchases "
-"configuration)"
+"Set behaviour of codes. Default: Automask (depends on variant use: see Sales/"
+"Purchases configuration)"
 msgstr ""
 
 #. module: product_variant_default_code
@@ -156,3 +148,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
 msgid "[attribute3]-[attribute1]"
 msgstr ""
+
+#~ msgid "Automask"
+#~ msgstr "Auto-maskiranje"
+
+#~ msgid "Defines how you want to manage the Variant default code"
+#~ msgstr "Definira kako želite upravljati zadanom šifrom varijante"
+
+#~ msgid "Manual Mask"
+#~ msgstr "Ručna maska"
