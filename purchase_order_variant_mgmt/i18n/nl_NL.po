@@ -135,14 +135,12 @@ msgstr "Omzetten naar order"
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__value_x
 #, fuzzy
-#| msgid "Value x"
 msgid "Value X"
 msgstr "Waarde x"
 
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line__value_y
 #, fuzzy
-#| msgid "Value x"
 msgid "Value Y"
 msgstr "Waarde x"
 
