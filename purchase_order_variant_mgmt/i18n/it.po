@@ -124,14 +124,12 @@ msgstr "Trasferisci a ordine"
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_value_x
 #, fuzzy
-#| msgid "Value x"
 msgid "Value X"
 msgstr "Valore x"
 
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_value_y
 #, fuzzy
-#| msgid "Value x"
 msgid "Value Y"
 msgstr "Valore x"
 
