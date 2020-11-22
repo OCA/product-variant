@@ -40,7 +40,6 @@ msgstr "El nombre del atributo debe ser único!."
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_attribute_value
 #, fuzzy
-#| msgid "Attribute Value Code"
 msgid "Attribute Value"
 msgstr "Código de valor de atributo"
 

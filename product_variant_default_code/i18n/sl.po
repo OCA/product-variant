@@ -40,7 +40,6 @@ msgstr "Naziv atributa mora biti unikaten!"
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_attribute_value
 #, fuzzy
-#| msgid "Attribute Code"
 msgid "Attribute Value"
 msgstr "Koda atributa"
 

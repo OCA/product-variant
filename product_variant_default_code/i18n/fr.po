@@ -38,7 +38,6 @@ msgstr "Le nom de l'attribut doit être unique !"
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_attribute_value
 #, fuzzy
-#| msgid "Attribute Value Code"
 msgid "Attribute Value"
 msgstr "Code valeur de l'attribut"
 
@@ -55,7 +54,6 @@ msgstr "Masque automatique"
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_res_config_settings
 #, fuzzy
-#| msgid "res.config.settings"
 msgid "Config Settings"
 msgstr "res.config.settings"
 
