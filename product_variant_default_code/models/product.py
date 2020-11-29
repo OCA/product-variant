@@ -203,7 +203,7 @@ class ProductAttributeValue(models.Model):
 
     @api.onchange('name')
     def onchange_name(self):
-        if self.name:
+        if self.name and not self.code:
             self.code = self.name[0:2]
 
     code = fields.Char(
