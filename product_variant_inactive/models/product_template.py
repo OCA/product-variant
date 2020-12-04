@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
@@ -21,4 +21,4 @@ class ProductTemplate(models.Model):
     def create_variant_ids(self):
         return super(
             ProductTemplate, self.with_context(no_reactivate=True)
-            ).create_variant_ids()
+        ).create_variant_ids()
