@@ -1,11 +1,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import json
 import logging
 
 from lxml import etree
 
 from odoo import api, models
-from odoo.osv import orm
 
 _logger = logging.getLogger(__name__)
 
@@ -13,12 +13,10 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    @api.multi
     def button_activate(self):
         for product in self:
             product.active = True
 
-    @api.multi
     def button_deactivate(self):
         for product in self:
             product.active = False
@@ -39,11 +37,12 @@ class ProductProduct(models.Model):
             for button in root.findall(".//button"):
                 if "search_disable_custom_filters" in self.env.context:
                     button.set("invisible", "0")
-                    orm.setup_modifiers(button, root)
+                    modifiers = json.loads(button.get("modifiers"))
+                    modifiers["invisible"] = True
+                    button.set("modifiers", json.dumps(modifiers))
             res["arch"] = etree.tostring(root, pretty_print=True)
         return res
 
-    @api.multi
     def write(self, vals):
         if self._context.get("no_reactivate") and vals == {"active": True}:
             _logger.info("Skip reactivating product %s" % self.ids)
