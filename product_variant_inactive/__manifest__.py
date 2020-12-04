@@ -3,7 +3,7 @@
 {
     "name": "Product Variant Inactive",
     "author": "Akretion,Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/product-attribute",
+    "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
     "version": "12.0.1.1.0",
