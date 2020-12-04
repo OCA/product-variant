@@ -12,7 +12,7 @@ class TestProductProduct(TransactionCase):
         product = product.with_context({"search_disable_custom_filters": True})
         root = etree.fromstring(product.fields_view_get()["arch"])
         for button in root.findall(".//button"):
-            self.assertEquals("0", button.get("invisible", "0"))
+            self.assertEqual("0", button.get("invisible", "0"))
 
     def test_fields_view_get_form(self):
         # button should appear if we have only 1 active product,
@@ -37,7 +37,7 @@ class TestProductProduct(TransactionCase):
         button_action_ref = self.env.ref("product.product_variant_action").id
         root = etree.fromstring(product_template.fields_view_get()["arch"])
         button = root.findall(".//button[@name='%d']" % button_action_ref)[0]
-        self.assertEquals("0", button.get("invisible", "0"))
+        self.assertEqual("0", button.get("invisible", "0"))
 
     def test_button_activate(self):
         self.help_button_active(False)
@@ -64,5 +64,15 @@ class TestProductProduct(TransactionCase):
         change the "active" state of the existing variant"""
         product = self.env.ref("product.product_product_4")
         product.active = False
-        product.product_tmpl_id.create_variant_ids()
-        self.assertEquals(product.active, False)
+        product.product_tmpl_id._create_variant_ids()
+        self.assertFalse(product.active)
+
+    def test_product_variant_count(self):
+        template = self.env.ref("product.product_product_4_product_template")
+        product = self.env.ref("product.product_product_4")
+        product.active = False
+        variant_count = template.product_variant_count
+        variant_count_all = template.product_variant_count_all
+        product.active = True
+        self.assertEqual(template.product_variant_count, variant_count + 1)
+        self.assertEqual(template.product_variant_count_all, variant_count_all)
