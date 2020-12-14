@@ -6,13 +6,13 @@ variants references are automatically set. For example:
 
 - Product template: Jacket
 - Attributes:
-  - Color: White, Black
-  - Size: M, L
+  - Color(C): White(Wh), Black(Bl)
+  - Size(S): M(M), L(L)
 - Reference mask: `JKT01-[Color]-[Size]`
 
 - Reference on variants:
 
-  - `JKT01-Wh-M` Jacket White M
-  - `JKT01-Bl-M` Jacket Black M
-  - `JKT01-Wh-L` Jacket White L
-  - `JKT01-Bl-L` Jacket Black L
+  - `JKT01-CWh-SM` Jacket White M
+  - `JKT01-CBl-SM` Jacket Black M
+  - `JKT01-CWh-SL` Jacket White L
+  - `JKT01-CBl-SL` Jacket Black L
