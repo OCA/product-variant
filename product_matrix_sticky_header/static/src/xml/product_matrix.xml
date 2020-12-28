@@ -1,0 +1,10 @@
+<template>
+    <div t-inherit="product_matrix.matrix" t-inherit-mode="extension">
+        <xpath expr="//table[hasclass('o_matrix_input_table')]" position="attributes">
+            <attribute name="class" remove="table-bordered" separator=" " />
+        </xpath>
+        <xpath expr="//table[hasclass('o_matrix_input_table')]" position="attributes">
+            <attribute name="class" add="table-sticky-header" separator=" " />
+        </xpath>
+    </div>
+</template>
