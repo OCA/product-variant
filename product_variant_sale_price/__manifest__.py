@@ -7,7 +7,7 @@
     "summary": "Allows to write fixed prices in product variants",
     "version": "13.0.1.0.0",
     "category": "Product Management",
-    "website": "https://odoo-community.org/",
+    "website": "https://github.com/OCA/product-variant",
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,

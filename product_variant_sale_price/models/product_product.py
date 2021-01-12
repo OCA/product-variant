@@ -73,7 +73,10 @@ class ProductProduct(models.Model):
             product.write(vals)
 
     lst_price = fields.Float(
-        compute="_compute_lst_price", inverse="_inverse_product_lst_price",
+        compute="_compute_lst_price",
+        inverse="_inverse_product_lst_price",
     )
-    list_price = fields.Float(compute="_compute_list_price",)
+    list_price = fields.Float(
+        compute="_compute_list_price",
+    )
     fix_price = fields.Float(string="Fix Price")
