@@ -28,10 +28,12 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='lst_price']" position="after">
+            <xpath expr="//field[@name='standard_price']" position="before">
                 <field
                     name="fix_price"
                     attrs="{'invisible': [('product_variant_count', '=', 1)]}"
+                    widget='monetary'
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
                 />
             </xpath>
         </field>
