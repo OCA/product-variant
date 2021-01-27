@@ -7,7 +7,7 @@ from odoo.tests import common
 class TestSaleOrder(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestSaleOrder, cls).setUpClass()
+        super().setUpClass()
         # Environments
         cls.product_attribute = cls.env["product.attribute"]
         cls.product_attribute_value = cls.env["product.attribute.value"]
@@ -59,14 +59,11 @@ class TestSaleOrder(common.SavepointCase):
                 "description_sale": "Template description",
             }
         )
-        cls.attribute_price1 = cls.env["product.attribute.price"].create(
-            {
-                "product_tmpl_id": cls.product_template_yes.id,
-                "attribute_id": cls.attribute1.id,
-                "value_id": cls.value1.id,
-                "price_extra": 10,
-            }
+        cls.attr_lines = cls.product_template_yes.attribute_line_ids
+        cls.ptav_1 = cls.attr_lines.product_template_value_ids.filtered(
+            lambda x: x.product_attribute_value_id == cls.value1[0]
         )
+        cls.ptav_1.price_extra = 10
         cls.customer = cls.res_partner.create({"name": "Customer 1"})
 
     def test_onchange_product_tmpl_id(self):
@@ -126,7 +123,7 @@ class TestSaleOrder(common.SavepointCase):
         # Check returned domain
         expected_domain = [
             ("product_tmpl_id", "=", self.product_template_yes.id),
-            ("attribute_value_ids", "=", self.value1.id),
+            ("product_template_attribute_value_ids", "=", self.ptav_1.id),
         ]
         self.assertDictEqual(result["domain"], {"product_id": expected_domain})
         # Check price brought to line with extra

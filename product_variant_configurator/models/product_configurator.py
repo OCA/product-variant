@@ -34,7 +34,6 @@ class ProductConfigurator(models.AbstractModel):
     product_id = fields.Many2one(
         string="Product Variant", comodel_name="product.product"
     )
-    name = fields.Char()
     can_create_product = fields.Boolean(compute="_compute_can_be_created", store=False)
     create_product_variant = fields.Boolean(string="Create product now!")
 
