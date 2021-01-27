@@ -3,16 +3,13 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import _, api, exceptions, fields, models
+from odoo import _, api, exceptions, models
 from odoo.tools import config
 
 
 class ProductProduct(models.Model):
     _inherit = ["product.product", "product.configurator"]
     _name = "product.product"
-
-    # This is needed as the AbstractModel removes the delegated related field
-    name = fields.Char(related="product_tmpl_id.name")
 
     def _get_product_attributes_values_dict(self):
         # Retrieve first the attributes from template to preserve order
