@@ -8,7 +8,6 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.multi
     def action_confirm(self):
         """Create possible product variants not yet created."""
         lines_without_product = self.mapped("order_line").filtered(
@@ -16,19 +15,38 @@ class SaleOrder(models.Model):
         )
         for line in lines_without_product:
             line.create_variant_if_needed()
-        return super(SaleOrder, self).action_confirm()
+        return super().action_confirm()
 
 
 class SaleOrderLine(models.Model):
     _inherit = ["sale.order.line", "product.configurator"]
     _name = "sale.order.line"
 
-    product_tmpl_id = fields.Many2one(store=True, readonly=False, related=False)
-    product_id = fields.Many2one(required=False)
-    # this is for getting the proper language for product description
-    partner_id = fields.Many2one(
-        comodel_name="res.partner", related="order_id.partner_id", readonly=True,
+    product_tmpl_id = fields.Many2one(
+        store=True,
+        readonly=False,
+        related=False,
+        string="Product Template (no related)",
     )
+    product_id = fields.Many2one(required=False)
+
+    _sql_constraints = [
+        (
+            "accountable_required_fields",
+            "CHECK(display_type IS NOT NULL OR "
+            "((product_id IS NOT NULL OR product_tmpl_id IS NOT NULL) AND "
+            "product_uom IS NOT NULL))",
+            "Missing required fields on accountable sale order line.",
+        ),
+        (
+            "non_accountable_null_fields",
+            "CHECK(display_type IS NULL OR "
+            "(product_id IS NULL AND product_tmpl_id IS NULL AND "
+            "price_unit = 0 AND product_uom_qty = 0 AND "
+            "product_uom IS NULL AND customer_lead = 0))",
+            "Forbidden values on non-accountable sale order line",
+        ),
+    ]
 
     @api.model
     def create(self, vals):
@@ -73,7 +91,7 @@ class SaleOrderLine(models.Model):
         self.tax_id = fpos.map_tax(taxes) if fpos else taxes
         product_tmpl = self.product_tmpl_id.with_context(
             lang=self.order_id.partner_id.lang,
-            partner=self.order_id.partner_id.id,
+            partner=self.order_id.partner_id,
             quantity=self.product_uom_qty,
             date=self.order_id.date_order,
             pricelist=self.order_id.pricelist_id.id,
@@ -113,7 +131,7 @@ class SaleOrderLine(models.Model):
             return
         product_tmpl = self.product_tmpl_id.with_context(
             lang=self.order_id.partner_id.lang,
-            partner=self.order_id.partner_id.id,
+            partner=self.order_id.partner_id,
             quantity=self.product_uom_qty,
             date_order=self.order_id.date_order,
             pricelist=self.order_id.pricelist_id.id,
@@ -131,14 +149,14 @@ class SaleOrderLine(models.Model):
     @api.onchange("product_attribute_ids")
     def _onchange_product_attribute_ids_configurator(self):
         """Update price for having into account possible extra prices"""
-        res = super(SaleOrderLine, self,)._onchange_product_attribute_ids_configurator()
+        res = super()._onchange_product_attribute_ids_configurator()
         self._update_price_configurator()
         return res
 
     @api.onchange("product_uom", "product_uom_qty")
     def product_uom_change(self):
         """Update price for having into account changes due to qty"""
-        res = super(SaleOrderLine, self).product_uom_change()
+        res = super().product_uom_change()
         if not self.product_id:
             self._update_price_configurator()
         return res
