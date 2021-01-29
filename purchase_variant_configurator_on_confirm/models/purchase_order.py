@@ -10,7 +10,6 @@ from odoo import api, fields, models
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    @api.multi
     def button_confirm(self):
         """Create possible product variants not yet created."""
         lines_without_product = self.order_line.filtered(
@@ -18,18 +17,17 @@ class PurchaseOrder(models.Model):
         )
         for line in lines_without_product:
             line.create_variant_if_needed()
-        return super(PurchaseOrder, self).button_confirm()
+        return super().button_confirm()
 
-    @api.multi
     def copy(self, default=None):
         """Change date_planned for lines without product after calling super"""
-        new_po = super(PurchaseOrder, self).copy(default=default)
+        new_po = super().copy(default=default)
         for line in new_po.order_line.filtered(lambda x: not x.product_id):
             product = line.product_tmpl_id._product_from_tmpl()
             seller = product._select_seller(
                 partner_id=line.partner_id,
                 quantity=line.product_qty,
-                date=(line.order_id.date_order or "")[:10] or None,
+                date=line.order_id.date_order and line.order_id.date_order.date(),
                 uom_id=line.product_uom,
             )
             line.date_planned = line._get_date_planned(seller)
@@ -42,15 +40,40 @@ class PurchaseOrderLine(models.Model):
 
     product_id = fields.Many2one(required=False)
 
+    _sql_constraints = [
+        (
+            "accountable_required_fields",
+            "CHECK(display_type IS NOT NULL OR (product_tmpl_id IS NOT NULL OR "
+            "product_id IS NOT NULL AND product_uom IS NOT NULL AND "
+            "date_planned IS NOT NULL))",
+            "Missing required fields on accountable purchase order line.",
+        ),
+        (
+            "non_accountable_null_fields",
+            "CHECK(display_type IS NULL OR (product_tmpl_id IS NULL AND "
+            "product_id IS NULL AND price_unit = 0 AND product_uom_qty = 0 AND "
+            "product_uom IS NULL AND date_planned is NULL))",
+            "Forbidden values on non-accountable purchase order line",
+        ),
+    ]
+
     @api.onchange("product_tmpl_id")
     def _onchange_product_tmpl_id_configurator(self):
         """ Make use of PurchaseOrderLine onchange_product_id method with
         a virtual product created on the fly.
         """
-        res = super(PurchaseOrderLine, self,)._onchange_product_tmpl_id_configurator()
+        res = super()._onchange_product_tmpl_id_configurator()
         if not self.product_id:
             self.product_id = self.product_tmpl_id._product_from_tmpl()
-            self.onchange_product_id()
+            # HACK: With NewId, the `search` method that looks for vendor pricelists
+            # related to the product is unable to find the linked template as the
+            # id returns something like `NewId origin: <ID>`. So we'll ensure the
+            # proper link overriding the supplier search by context. If Odoo fixes
+            # `_prepare_sellers` method to avoid this issue, this won't be necessary
+            # anymore
+            self.with_context(
+                pvc_product_tmpl=self.product_tmpl_id.id
+            ).onchange_product_id()
             self.product_id = False
             # HACK: With NewId, making `with_context` loses temp values, so we
             # need to recreate these operations
@@ -62,16 +85,15 @@ class PurchaseOrderLine(models.Model):
                 self.name += "\n" + product_lang.description_purchase
         return res
 
-    @api.model
     def create(self, vals):
         """Create variant before calling super when the purchase order is
         confirmed, as it creates associated stock moves.
         """
         if "order_id" not in vals or vals.get("product_id"):
-            return super(PurchaseOrderLine, self).create(vals)
+            return super().create(vals)
         order = self.env["purchase.order"].browse(vals["order_id"])
         if order.state == "purchase":
             line = self.new(vals)
             product = line.create_variant_if_needed()
             vals["product_id"] = product.id
-        return super(PurchaseOrderLine, self).create(vals)
+        return super().create(vals)
