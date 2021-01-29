@@ -1,13 +1,12 @@
-# Copyright 2017 David Vidal <david.vidal@tecnativa.com>
+# Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+from odoo.tests import Form, common
 
-from odoo.tests.common import SavepointCase
 
-
-class TestPurchaseOrder(SavepointCase):
+class TestPurchaseOrder(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestPurchaseOrder, cls).setUpClass()
+        super().setUpClass()
         cls.product_attribute_value = cls.env["product.attribute.value"]
         cls.product_template = cls.env["product.template"].with_context(
             check_variant_creation=True,
@@ -25,7 +24,7 @@ class TestPurchaseOrder(SavepointCase):
             {"name": "Value 2", "attribute_id": cls.attribute1.id}
         )
         cls.supplier = cls.env["res.partner"].create(
-            {"name": "Supplier 1", "is_company": True, "supplier": True}
+            {"name": "Supplier 1", "is_company": True}
         )
         cls.template_name = "Product template 1"
         cls.product_template_yes = cls.product_template.create(
@@ -44,9 +43,14 @@ class TestPurchaseOrder(SavepointCase):
                         },
                     ),
                 ],
-                "seller_ids": [
-                    (0, 0, {"name": cls.supplier.id, "min_qty": 10, "price": 90})
-                ],
+            }
+        )
+        cls.supplier_pricelist = cls.env["product.supplierinfo"].create(
+            {
+                "product_tmpl_id": cls.product_template_yes.id,
+                "name": cls.supplier.id,
+                "min_qty": 11,
+                "price": 90,
             }
         )
         cls.product_template_no = cls.product_template.create(
@@ -60,17 +64,13 @@ class TestPurchaseOrder(SavepointCase):
         cls.order = cls.env["purchase.order"].create({"partner_id": cls.supplier.id})
 
     def test_onchange_product_tmpl_id(self):
-        line = self.env["purchase.order.line"].new(
-            {
-                "order_id": self.order.id,
-                "product_tmpl_id": self.product_template_yes.id,
-            }
-        )
-        line._onchange_product_tmpl_id_configurator()
+        purchase = Form(self.order)
+        with purchase.order_line.new() as line:
+            line.product_tmpl_id = self.product_template_yes
         self.assertEqual(line.name, self.template_name)
         self.assertEqual(line.product_uom, self.product_template_yes.uom_id)
         self.assertEqual(line.price_unit, 90)
-        self.assertEqual(line.product_qty, 10)
+        self.assertEqual(line.product_qty, 11)
         self.assertTrue(line.date_planned)
 
     def test_button_confirm(self):
