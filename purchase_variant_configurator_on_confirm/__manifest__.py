@@ -4,21 +4,17 @@
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    'name': 'Purchase Variant Configurator On Confirm',
-    'summary': """
+    "name": "Purchase Variant Configurator On Confirm",
+    "summary": """
         Create product variants when confirming the purchase order""",
-    'version': '11.0.1.0.0',
-    'license': 'AGPL-3',
+    "version": "11.0.1.0.0",
+    "license": "AGPL-3",
     "author": "AvanzOSC, "
-              "Tecnativa, "
-              "ACSONE SA/NV, "
-              "Odoo Community Association (OCA)",
-    'website': 'https://github.com/OCA/product-variant',
-    'depends': [
-        'purchase_variant_configurator',
-    ],
-    'data': [
-        "views/inherited_purchase_order_views.xml",
-    ],
-    'installable': True,
+    "Tecnativa, "
+    "ACSONE SA/NV, "
+    "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/product-variant",
+    "depends": ["purchase_variant_configurator"],
+    "data": ["views/inherited_purchase_order_views.xml"],
+    "installable": True,
 }

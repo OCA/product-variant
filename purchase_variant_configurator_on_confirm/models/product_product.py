@@ -7,16 +7,14 @@ from odoo import models
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
-    def _select_seller(self, partner_id=False, quantity=0.0, date=None,
-                       uom_id=False):
+    def _select_seller(self, partner_id=False, quantity=0.0, date=None, uom_id=False):
         """Don't fail on empty products for allowing to copy purchase order
         lines.
         """
         if not self:
             return False
         return super(ProductProduct, self)._select_seller(
-            partner_id=partner_id, quantity=quantity, date=date,
-            uom_id=uom_id,
+            partner_id=partner_id, quantity=quantity, date=date, uom_id=uom_id,
         )
