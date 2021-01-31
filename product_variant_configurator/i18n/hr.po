@@ -118,12 +118,6 @@ msgid "Last Updated on"
 msgstr "Vrijeme promjene"
 
 #. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__name
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__name
-msgid "Name"
-msgstr "Naziv"
-
-#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__owner_id
 msgid "Owner"
 msgstr "Vlasnik"
@@ -306,6 +300,9 @@ msgid ""
 "You have to fill the following attributes:\n"
 "%s"
 msgstr ""
+
+#~ msgid "Name"
+#~ msgstr "Naziv"
 
 #~ msgid "Create them automatically"
 #~ msgstr "Kreiraj ih automatski"
