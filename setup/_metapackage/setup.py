@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo13-addon-product_variant_configurator',
         'odoo13-addon-product_variant_default_code',
+        'odoo13-addon-purchase_variant_configurator',
         'odoo13-addon-sale_variant_configurator',
     ],
     classifiers=[
