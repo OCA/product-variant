@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="purchase_order_extended_form_view">
+        <field name="name">purchase.order.extended.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                <!-- force using the form -->
+                <attribute name="editable" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/group[1]" position="before">
+                <group>
+                    <field name="state" invisible="1" />
+                    <!-- HACK: readonly condition is set with an `in` clause instead of a `not in` for allowing on new created lines to be writeable, as
+                             state field is a related one that is not filled until saved -->
+                    <field
+                        name="product_tmpl_id"
+                        attrs="{'invisible': [('display_type', '!=', False)], 'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                        domain="[('purchase_ok','=',True)]"
+                    />
+                    <field
+                        name="product_attribute_ids"
+                        widget="one2many"
+                        context="{'default_owner_model': 'purchase.order.line'}"
+                        attrs="{'invisible': [('product_attribute_ids','=',[])], 'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                        nolabel="1"
+                        colspan="2"
+                    >
+                        <tree create="0" delete="0" editable="1">
+                            <field name="owner_model" invisible="1" />
+                            <field name="owner_id" invisible="1" />
+                            <field name="attribute_id" force_save="1" />
+                            <field
+                                name="possible_value_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                            <field name="product_tmpl_id" invisible="1" />
+                            <field
+                                name="value_id"
+                                context="{'show_attribute': False, 'default_attribute_id': attribute_id, 'template_for_attribute_value': product_tmpl_id}"
+                            />
+                        </tree>
+                    </field>
+                    <field name="can_create_product" invisible="1" />
+                    <field
+                        name="create_product_variant"
+                        attrs="{'invisible':
+                            [('can_create_product', '=', False)]}"
+                    />
+                </group>
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/form//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
