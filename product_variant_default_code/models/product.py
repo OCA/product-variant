@@ -172,7 +172,13 @@ class ProductProduct(models.Model):
 
     @api.onchange('default_code')
     def onchange_default_code(self):
-        self.manual_code = bool(self.default_code)
+        if not self.attribute_value_ids:
+            self.manual_code = bool(self.default_code)
+
+    @api.onchange('attribute_value_ids')
+    def onchange_attribute_value_ids(self):
+        if self._origin.reference_mask and not self._origin.manual_code:
+            render_default_code(self, self._origin.reference_mask)
 
 
 class ProductAttribute(models.Model):
