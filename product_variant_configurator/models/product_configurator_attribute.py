@@ -10,9 +10,11 @@ class ProductConfiguratorAttribute(models.Model):
     _name = "product.configurator.attribute"
     _description = "Product Configurator Attribute"
 
-    owner_id = fields.Integer(
+    owner_id = fields.Many2oneReference(
         string="Owner",
         required=True,
+        index=True,
+        model_field="owner_model",
         # ondelete is required since the owner_id is declared as inverse
         # of the field product_attribute_ids of the abstract model
         # product.configurator
