@@ -107,8 +107,13 @@ class ProductTemplate(models.Model):
             .sudo()
             .get_param("default_reference_separator")
         )
+        # Get the attribute name in the main lang format, otherwise we could not
+        # match mask with the proper values
+        main_lang = self._guess_main_lang()
         for line in self.attribute_line_ids:
-            attribute_names.append(u"[{}]".format(line.attribute_id.name))
+            attribute_names.append(
+                u"[{}]".format(line.attribute_id.with_context(lang=main_lang).name)
+            )
         default_mask = (self.code_prefix or "") + default_reference_separator.join(
             attribute_names
         )
