@@ -169,9 +169,10 @@ class TestVariantDefaultCode(common.SavepointCase):
             self.assertTrue("OO" in product.default_code)
 
     def test_07_attribute_value_name_change(self):
-        self.attr1_1.name = "Odoo"
+        """Only set a default code if it wasn't set"""
+        self.attr1_1.name = "New Name"
         self.attr1_1.onchange_name()
-        self.assertEqual(self.attr1_1.code, "Od")
+        self.assertEqual(self.attr1_1.code, "L")
         products = self.env["product.product"].search(
             [
                 (
@@ -181,7 +182,14 @@ class TestVariantDefaultCode(common.SavepointCase):
                 )
             ]
         )
-        # Check that the change spreads to every product
+        # Check that the code persists
+        for product in products:
+            self.assertTrue("L" in product.default_code)
+        # Otherwise, if there's no code a default value is set
+        self.attr1_1.code = False
+        self.attr1_1.name = "Odoo"
+        self.attr1_1.onchange_name()
+        self.assertEqual(self.attr1_1.code, "Od")
         for product in products:
             self.assertTrue("Od" in product.default_code)
 
