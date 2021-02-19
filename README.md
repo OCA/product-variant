@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[product_variant_default_code](product_variant_default_code/) | 14.0.1.1.1 | Product Variant Default Code
+[product_variant_default_code](product_variant_default_code/) | 14.0.1.1.2 | Product Variant Default Code
 
 [//]: # (end addons)
 
