@@ -1,5 +1,5 @@
 # Copyright 2017 Tecnativa - David Vidal
-# Copyright 2020 Tecnativa - João Marques
+# Copyright 2020-2021 Tecnativa - João Marques
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
@@ -50,31 +50,6 @@ class TestVariantDefaultCode(common.SavepointCase):
                 ],
             }
         )
-        # This one with a preset reference mask
-        cls.template2 = cls.env["product.template"].create(
-            {
-                "name": "Pants",
-                "attribute_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "attribute_id": cls.attr1.id,
-                            "value_ids": [(6, 0, [cls.attr1_1.id, cls.attr1_2.id])],
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "attribute_id": cls.attr2.id,
-                            "value_ids": [(6, 0, [cls.attr2_1.id, cls.attr2_2.id])],
-                        },
-                    ),
-                ],
-                "reference_mask": "P01/[TSize][TColor]",
-            }
-        )
 
     def test_01_check_default_codes(self):
         # As no mask was set, a default one should be:
@@ -94,8 +69,15 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_02_check_default_codes_preexistent_mask(self):
         self.env.user.groups_id |= self.group_default_code
-        self.template2.reference_mask = "P01/[TSize][TColor]"
-        for product in self.template2.mapped("product_variant_ids"):
+        # Second template with custom reference mask must be created with correct
+        # user permissions
+        template2 = self.template1.copy(
+            {
+                "name": "Pants",
+                "reference_mask": "P01/[TSize][TColor]",
+            }
+        )
+        for product in template2.mapped("product_variant_ids"):
             expected_code = (
                 "P01/"
                 + product.product_template_attribute_value_ids.filtered(
@@ -109,7 +91,7 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_03_reset_reference_mask_to_default(self):
         # Erase the previous mask: 'P01/[TSize][TColor]'
-        self.template2.reference_mask = ""
+        self.template1.reference_mask = ""
         # Mask is set to default now:
         self.assertEqual(self.template1.reference_mask, "[TSize]-[TColor]")
 
