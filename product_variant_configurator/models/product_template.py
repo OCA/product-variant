@@ -98,3 +98,12 @@ class ProductTemplate(models.Model):
                 if limit and len(res) >= limit:
                     break
         return res
+
+    def _get_variant_for_combination(self, combination):
+        """
+        Overwrite method to allow attributes that no create variants be selectable
+        """
+        self.ensure_one()
+        return self.env["product.product"].browse(
+            self._get_variant_id_for_combination(combination)
+        )
