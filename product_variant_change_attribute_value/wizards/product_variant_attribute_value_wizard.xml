@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_variant_update_attribute_wizard" model="ir.ui.view">
+        <field name="name">Product Variant Update Attribute</field>
+        <field name="model">variant.attribute.value.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Variant Change Attribute">
+                <sheet>
+                    <div>Updating <field
+                            name="product_variant_count"
+                        /> variant(s) selected out of <field
+                            name="product_template_count"
+                        /> product template(s).</div>
+                    <notebook>
+                        <page string="Attribute value changes">
+                            <group>
+                                <field name="attributes_action_ids" nolabel="1">
+                                    <tree
+                                        editable="true"
+                                        create="false"
+                                        delete="0"
+                                        open="0"
+                                    >
+                                        <field
+                                            name="attribute_action"
+                                            string="action"
+                                        />
+                                        <field name="product_attribute_value_id" />
+                                        <field
+                                            name="selectable_attribute_value_ids"
+                                            invisible="1"
+                                        />
+                                        <field
+                                            name="replaced_by_id"
+                                            attrs="{'readonly':[['attribute_action', '!=', 'replace' ]]}"
+                                        />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Selected variants">
+                            <group>
+                                <field name="product_ids" nolabel="1">
+                                    <tree
+                                        edit="false"
+                                        create="false"
+                                        delete="false"
+                                        open="false"
+                                    >
+                                        <field name="default_code" />
+                                        <field name="name" />
+                                        <field
+                                            name="product_template_attribute_value_ids"
+                                            widget="many2many_tags"
+                                        />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button
+                            name="action_change_attributes"
+                            string="Save"
+                            type="object"
+                            class="btn-primary"
+                        />
+                        <button
+                            string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <act_window
+        id="action_variant_change_value"
+        name="Change attribute values assigned"
+        binding_model="product.product"
+        res_model="variant.attribute.value.wizard"
+        binding_views="list"
+        view_mode="form"
+        target="new"
+        context="{'default_res_ids': active_ids}"
+    />
+</odoo>
