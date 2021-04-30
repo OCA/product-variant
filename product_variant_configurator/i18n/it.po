@@ -10,14 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2017-12-30 08:37+0000\n"
-"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2018\n"
+"PO-Revision-Date: 2021-04-30 12:47+0000\n"
+"Last-Translator: Mario Riva <mario.riva@agilebg.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_attribute_view_form
@@ -44,16 +45,15 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
-#, fuzzy
 msgid "Can Create Product"
-msgstr "Crea prodotto ora!"
+msgstr "Puoi creare il prodotto"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:22
 #: code:addons/product_variant_configurator/models/product_template.py:31
 #, python-format
 msgid "Change warning!"
-msgstr ""
+msgstr "Avviso di modifica!"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:23
@@ -61,6 +61,7 @@ msgstr ""
 #, python-format
 msgid "Changing this parameter may cause automatic variants creation"
 msgstr ""
+"Il cambio di questo parametro può causare la creazione automatica di varianti"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__create_product_variant
@@ -87,7 +88,7 @@ msgstr "Nome da visualizzare"
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
 msgid "Don't create them automatically"
-msgstr ""
+msgstr "Non crearle automaticamente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__no_create_variants
@@ -129,20 +130,18 @@ msgstr "Proprietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__owner_model
-#, fuzzy
 msgid "Owner Model"
-msgstr "Proprietario"
+msgstr "Modello Proprietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__possible_value_ids
 msgid "Possible Value"
-msgstr ""
+msgstr "Possibile valore"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__price_extra
-#, fuzzy
 msgid "Price Extra"
-msgstr "Listino"
+msgstr "Prezzo Extra"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator__price_extra
@@ -150,6 +149,9 @@ msgid ""
 "Price Extra: Extra price for the variant with the currently selected "
 "attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
+"Prezzo Extra: Prezzo Extra per la variante con gli attributi attualmente "
+"selezionati sul prezzo di vendita: es. 200 di prezzo extra, 1000 + 200 = "
+"1200."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator_attribute__price_extra
@@ -157,6 +159,8 @@ msgid ""
 "Price Extra: Extra price for the variant with this attribute value on sale "
 "price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
+"Prezzo Extra: Prezzo Extra per la variante con questo attributo sul prezzo "
+"di vendita. es. 200 di prezzo extra, 1000 + 200 = 1200."
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
@@ -224,17 +228,19 @@ msgstr "Richiesto"
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "Select a template for a variant. Keep empty for a new full product."
 msgstr ""
+"Seleziona un modello per una variante. Lascia vuoto per un nuovo prodotto "
+"completo."
 
 #. module: product_variant_configurator
 #: sql_constraint:product.template.attribute.line:0
 msgid "The attribute already exists for this product"
-msgstr ""
+msgstr "L'attributo esiste già per questo prodotto"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_product.py:82
 #, python-format
 msgid "There's another product with the same attributes."
-msgstr ""
+msgstr "C'è un altro prodotto con gli stessi attributi."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_category__no_create_variants
@@ -242,6 +248,8 @@ msgid ""
 "This check disables the automatic creation of product variants for all the "
 "products of this category."
 msgstr ""
+"Questo controllo disabilita la creazione automatico di varianti per tutti i "
+"prodotti di questa catergoria."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__price_extra
@@ -260,6 +268,8 @@ msgid ""
 "This selection defines if variants for all attribute combinations are going "
 "to be created automatically at saving time."
 msgstr ""
+"Questa selezione definisce se le varianti per tutte le combinazioni di "
+"attributi saranno create automaticamente al salvataggio."
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
@@ -269,12 +279,12 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:res.groups,name:product_variant_configurator.group_product_variant_extended_description
 msgid "Use extended description when having product attributes"
-msgstr ""
+msgstr "Utilizza la descrizione estesa, quando si hanno attributi di prodotto"
 
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
 msgid "Use the category value"
-msgstr ""
+msgstr "Utilizza il valore della categoria"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__value_id
@@ -299,6 +309,8 @@ msgid ""
 "You have to fill the following attributes:\n"
 "%s"
 msgstr ""
+"Devi riempire i seguenti attributi:\n"
+"%s"
 
 #~ msgid "Create them automatically"
 #~ msgstr "Creali automaticamente"
