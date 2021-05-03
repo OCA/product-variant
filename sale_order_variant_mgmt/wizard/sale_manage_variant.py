@@ -89,7 +89,11 @@ class SaleManageVariant(models.TransientModel):
                     'order_id': sale_order.id,
                 })
                 order_line = OrderLine.new(vals)
-                order_line.product_id_change()
+                # Set partner in context to do it compatible with product name
+                # get to get product code and name from supplierinfo
+                order_line.with_context(
+                    partner_id=sale_order.partner_id.id
+                ).product_id_change()
                 order_line_vals = order_line._convert_to_write(
                     order_line._cache)
                 sale_order.order_line.browse().create(order_line_vals)

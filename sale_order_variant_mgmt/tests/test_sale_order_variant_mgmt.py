@@ -120,3 +120,21 @@ class TestSaleOrderVariantMgmt(common.SavepointCase):
         self.assertFalse(order_line1.exists(), "Order line not removed.")
         self.assertEqual(
             order_line2.product_uom_qty, 10, "Order line not change quantity.")
+
+    def test_partner_product_description(self):
+        # Check if partner product name does not lose when a order line is
+        # created
+        variant = self.product_tmpl.product_variant_ids[0]
+        self.env["product.supplierinfo"].create({
+            'name': self.partner.id,
+            'product_name': "Product name for partner",
+            'product_id': variant.id,
+            'product_tmpl_id': variant.product_tmpl_id.id
+        })
+        wizard = self.Wizard.new({'product_tmpl_id': self.product_tmpl.id})
+        wizard._onchange_product_tmpl_id()
+        wizard = wizard.create(wizard._convert_to_write(wizard._cache))
+        wizard.variant_line_ids[0].product_uom_qty = 1
+        wizard.button_transfer_to_order()
+        self.assertIn(
+            "Product name for partner", self.order.order_line[0].name)
