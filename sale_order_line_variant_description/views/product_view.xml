@@ -20,7 +20,7 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
         <field name="arch" type="xml">
-            <xpath expr="//sheet/group[4]" position="after">
+            <xpath expr="//sheet/group[2]" position="after">
                 <group string="Notes">
                     <field name="variant_description_sale" string="Sale Description" />
                 </group>
