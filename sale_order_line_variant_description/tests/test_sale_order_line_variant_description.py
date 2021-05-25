@@ -1,16 +1,16 @@
 # Copyright 2015-17 Alex Comba - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import openerp.tests.common as common
+from odoo.tests import TransactionCase
 
 
-class TestSaleOrderLineVariantDescription(common.TransactionCase):
+class TestSaleOrderLineVariantDescription(TransactionCase):
     def setUp(self):
         super(TestSaleOrderLineVariantDescription, self).setUp()
         self.fiscal_position_model = self.env["account.fiscal.position"]
         self.tax_model = self.env["account.tax"]
         self.pricelist_model = self.env["product.pricelist"]
-        self.product_uom_model = self.env["product.uom"]
+        self.uom_uom_model = self.env["uom.uom"]
         self.product_tmpl_model = self.env["product.template"]
         self.product_model = self.env["product.product"]
         self.so_model = self.env["sale.order"]
@@ -19,7 +19,7 @@ class TestSaleOrderLineVariantDescription(common.TransactionCase):
 
     def test_product_id_change(self):
         pricelist = self.pricelist_model.search([("name", "=", "Public Pricelist")])[0]
-        uom = self.product_uom_model.search([("name", "=", "Unit(s)")])[0]
+        uom = self.uom_uom_model.search([("name", "=", "Units")])[0]
         tax_include = self.tax_model.create(
             dict(name="Include tax", amount="0.21", price_include=True)
         )
