@@ -1,7 +1,7 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class VariantAttributeValueWizard(models.TransientModel):
@@ -9,20 +9,21 @@ class VariantAttributeValueWizard(models.TransientModel):
     _description = "Wizard to change attriubtes on product variants"
 
     product_ids = fields.Many2many(
-        "product.product", default=lambda self: self._default_product_id()
+        "product.product", default=lambda self: self._default_product_ids()
     )
-
+    product_variant_count = fields.Integer(compute="_compute_count")
+    product_template_count = fields.Integer(compute="_compute_count")
     attributes_action_ids = fields.Many2many(
         "variant.attribute.value.action",
-        relation="rrhha_rel",
+        relation="variant_attribute_wizard_attribute_action_rel",
         default=lambda self: self._default_attributes_action_ids(),
     )
 
-    def _default_product_id(self):
+    def _default_product_ids(self):
         return self.env["product.product"].browse(self._context.get("default_res_ids"))
 
     def _default_attributes_action_ids(self):
-        p = self.env["product.product"].browse(self._context.get("default_res_ids"))
+        p = self._default_product_ids()
         links = p.product_template_attribute_value_ids
         attribute_ids = links.product_attribute_value_id
         return [
@@ -38,12 +39,20 @@ class VariantAttributeValueWizard(models.TransientModel):
             for x in attribute_ids
         ]
 
+    @api.depends("product_ids")
+    def _compute_count(self):
+        for record in self:
+            record.product_variant_count = len(record.product_ids)
+            record.product_template_count = len(
+                record.product_ids.mapped("product_tmpl_id")
+            )
+
     def action_change_attributes(self):
         for product in self.product_ids:
             self.update_variant_value(product)
 
     def _is_attribute_value_being_used(self, variant_id, attribute_value):
-        """Check if attribute value is still in used on any variant of a template."""
+        """Check if attribute value is still used by a variant."""
         existing_variants = self.env["product.product"].search(
             [
                 ("id", "!=", variant_id.id),
@@ -70,7 +79,7 @@ class VariantAttributeValueWizard(models.TransientModel):
             pav = value_action.product_attribute_value_id
             if pav not in pav_ids:
                 continue
-            pav_replacement = value_action.replaced_by
+            pav_replacement = value_action.replaced_by_id
             if action == "replace" and not pav_replacement:
                 continue
             elif action == "delete":

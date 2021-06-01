@@ -39,12 +39,12 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
 
         cls.wizard = cls.env["variant.attribute.value.wizard"]
 
-    def change_action(self, value, action, replaced_by=False):
+    def _change_action(self, wiz, value, action, replaced_by_id=False):
         "Set an action to do by the wizard on an attribute value."
-        actions = self.wiz.attributes_action_ids
+        actions = wiz.attributes_action_ids
         action_id = actions.filtered(lambda r: r.product_attribute_value_id == value)
         action_id.attribute_action = action
-        action_id.replaced_by = replaced_by
+        action_id.replaced_by_id = replaced_by_id
 
     def is_value_on_variant(self, variant, attribute_value):
         values = variant.product_template_attribute_value_ids.mapped(
@@ -52,7 +52,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         )
         return attribute_value in values
 
-    def is_attribute_value_on_template(self, product, attribute_value):
+    def _is_attribute_value_on_template(self, product, attribute_value):
         """Check if an attribute value is assigned to a variant template."""
         template = product.product_tmpl_id
         attribute = attribute_value.attribute_id
@@ -65,7 +65,8 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             [
                 ("attribute_line_id", "=", attribute_line.id),
                 ("product_attribute_value_id", "=", attribute_value.id),
-            ]
+            ],
+            limit=1,
         )
         if not ptav:
             return False
@@ -75,28 +76,28 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         """Check removing an attribute value on ALL variants of a template."""
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.steel))
 
-        self.wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
-        self.change_action(self.steel, "delete")
-        self.wiz.action_change_attributes()
+        wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
+        self._change_action(wiz, self.steel, "delete")
+        wiz.action_change_attributes()
 
         self.assertFalse(self.is_value_on_variant(self.variant_1, self.steel))
         self.assertFalse(
-            self.is_attribute_value_on_template(self.variant_1, self.steel)
+            self._is_attribute_value_on_template(self.variant_1, self.steel)
         )
 
     def test_change_attribure_value(self):
         """Check changing an attribute value on ALL variant of a template."""
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.white))
 
-        self.wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
-        self.change_action(self.white, "replace", self.pink)
-        self.wiz.action_change_attributes()
+        wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
+        self._change_action(wiz, self.white, "replace", self.pink)
+        wiz.action_change_attributes()
 
         self.assertFalse(self.is_value_on_variant(self.variant_1, self.white))
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.pink))
         # White has been removed from the template
         self.assertFalse(
-            self.is_attribute_value_on_template(self.variant_1, self.white)
+            self._is_attribute_value_on_template(self.variant_1, self.white)
         )
 
     def test_change_attribure_value_2(self):
@@ -109,16 +110,18 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         # Variant 1 has the white attribute but is is not picked by the wizard
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.white))
 
-        self.wiz = self.wizard.with_context(
+        wiz = self.wizard.with_context(
             default_res_ids=[self.variant_3.id, self.variant_4.id]
         ).create({})
-        self.change_action(self.white, "replace", self.pink)
-        self.wiz.action_change_attributes()
+        self._change_action(wiz, self.white, "replace", self.pink)
+        wiz.action_change_attributes()
 
         self.assertFalse(self.is_value_on_variant(self.variant_3, self.white))
         self.assertFalse(self.is_value_on_variant(self.variant_4, self.white))
         self.assertTrue(self.is_value_on_variant(self.variant_3, self.pink))
         self.assertFalse(self.is_value_on_variant(self.variant_4, self.pink))
         # The value should not be remove from the template because of variant 1
-        self.assertTrue(self.is_attribute_value_on_template(self.variant_1, self.white))
+        self.assertTrue(
+            self._is_attribute_value_on_template(self.variant_1, self.white)
+        )
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.white))
