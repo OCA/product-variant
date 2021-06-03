@@ -7,10 +7,10 @@
             <form string="Product Variant Change Attribute">
                 <sheet>
                     <div>Updating <field
-                        name="product_variant_count"
-                    /> variant(s) selected out of <field
-                        name="product_template_count"
-                    /> product template(s).</div>
+                            name="product_variant_count"
+                        /> variant(s) selected out of <field
+                            name="product_template_count"
+                        /> product template(s).</div>
                     <notebook>
                         <page string="Attribute value changes">
                             <group>
