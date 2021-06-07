@@ -17,9 +17,7 @@ class ProductVariantAttributeValueAction(models.TransientModel):
 
     product_attribute_value_id = fields.Many2one("product.attribute.value",)
     attribute_action = fields.Selection(
-        selection="_get_attribute_action_list",
-        default="do_nothing",
-        required=True,
+        selection="_get_attribute_action_list", default="do_nothing", required=True,
     )
     attribute_id = fields.Many2one(
         "product.attribute",
