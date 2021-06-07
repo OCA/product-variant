@@ -8,7 +8,7 @@ class ProductVariantAttributeValueAction(models.TransientModel):
     _name = "variant.attribute.value.action"
     _description = "Wizard action to do on variant attribute value"
 
-    def _get_attibute_action_list(self):
+    def _get_attribute_action_list(self):
         return [
             ("delete", "Delete"),
             ("replace", "Replace"),
@@ -17,7 +17,7 @@ class ProductVariantAttributeValueAction(models.TransientModel):
 
     product_attribute_value_id = fields.Many2one("product.attribute.value",)
     attribute_action = fields.Selection(
-        selection=lambda self: self._get_attibute_action_list(),
+        selection="_get_attribute_action_list",
         default="do_nothing",
         required=True,
     )
