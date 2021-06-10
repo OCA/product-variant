@@ -20,6 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_variant_default_code](product_variant_default_code/) | 14.0.1.1.3 | Product Variant Default Code
+[product_variant_sale_price](product_variant_sale_price/) | 14.0.1.0.0 | Allows to write fixed prices in product variants
 
 [//]: # (end addons)
 
