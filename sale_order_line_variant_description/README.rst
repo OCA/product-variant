@@ -25,9 +25,8 @@ Sale order line variant description
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module add a field with description of the product variant that you want to
-communicate to your customers.
-Content of this field replaces the description on the line in Sale Order.
+This module allows to specify different sale description values for each product
+variant and use them on the sale order lines as their names.
 
 **Table of contents**
 
