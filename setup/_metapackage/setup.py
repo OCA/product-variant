@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-product_variant_default_code',
         'odoo14-addon-product_variant_sale_price',
+        'odoo14-addon-sale_order_line_variant_description',
     ],
     classifiers=[
         'Programming Language :: Python',
