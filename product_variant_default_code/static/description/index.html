@@ -375,14 +375,14 @@ variants references are automatically set. For example:</p>
 <ul class="simple">
 <li>Product template: Jacket</li>
 <li>Attributes:
-- Color: White, Black
-- Size: M, L</li>
+- Color(C): White(Wh), Black(Bl)
+- Size(S): M(M), L(L)</li>
 <li>Reference mask: <cite>JKT01-[Color]-[Size]</cite></li>
 <li>Reference on variants:<ul>
-<li><cite>JKT01-Wh-M</cite> Jacket White M</li>
-<li><cite>JKT01-Bl-M</cite> Jacket Black M</li>
-<li><cite>JKT01-Wh-L</cite> Jacket White L</li>
-<li><cite>JKT01-Bl-L</cite> Jacket Black L</li>
+<li><cite>JKT01-CWh-SM</cite> Jacket White M</li>
+<li><cite>JKT01-CBl-SM</cite> Jacket Black M</li>
+<li><cite>JKT01-CWh-SL</cite> Jacket White L</li>
+<li><cite>JKT01-CBl-SL</cite> Jacket Black L</li>
 </ul>
 </li>
 </ul>
@@ -432,7 +432,7 @@ the attribute name appear more than once in the mask such as,
 something like <cite>Jacket/L~Bl~L</cite> (for variant with Color “Black” and Size “L”).</p>
 <p>When the code attribute is changed, it automatically regenerates the ‘default
 code’ on all variants affected.</p>
-<p>Aditionally, a product attribute can be set and so it will be appended to the
+<p>Aditionally, a product attribute can be set and so it will be prepended to the
 product <cite>default_code</cite>. In the first example, setting a <cite>Color</cite> code to <cite>CO</cite>
 would give <cite>default_code</cite> like this: <cite>COBl-L</cite>, <cite>COWh-L</cite>, <cite>COBl-XL</cite> and
 <cite>COWh-XL</cite>.</p>
@@ -476,6 +476,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Tony Gu &lt;<a class="reference external" href="mailto:tony&#64;openerp.cn">tony&#64;openerp.cn</a>&gt;</li>
 <li>David Beal &lt;<a class="reference external" href="mailto:david.beal&#64;akretion.com">david.beal&#64;akretion.com</a>&gt;</li>
 <li>Daniel Campos &lt;<a class="reference external" href="mailto:danielcampos&#64;avanzosc.es">danielcampos&#64;avanzosc.es</a>&gt;</li>
+<li>Radovan Skolnik &lt;<a class="reference external" href="mailto:radovan&#64;skolnik.info">radovan&#64;skolnik.info</a>&gt;</li>
 <li>Tecnativa &lt;tecnativa.com&gt;:
 * David Vidal
 * Pedro M. Baeza
