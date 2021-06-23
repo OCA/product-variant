@@ -31,7 +31,7 @@ something like `Jacket/L~Bl~L` (for variant with Color "Black" and Size "L").
 When the code attribute is changed, it automatically regenerates the 'default
 code' on all variants affected.
 
-Aditionally, a product attribute can be set and so it will be appended to the
+Aditionally, a product attribute can be set and so it will be prepended to the
 product `default_code`. In the first example, setting a `Color` code to `CO`
 would give `default_code` like this: `COBl-L`, `COWh-L`, `COBl-XL` and
 `COWh-XL`.
