@@ -87,13 +87,6 @@ To use product configurator in your model, you need to:
         _inherit = ['module.model', 'product.configurator']
         name = fields.Char(related="delegated_field.related_field")
 
-Known issues / Roadmap
-======================
-
-* Product Variant Configurator is not compatible with `website_sale`,
-  current compute behavior for website_url collides with Product Variant Creation,
-  glue module required.
-
 Bug Tracker
 ===========
 
