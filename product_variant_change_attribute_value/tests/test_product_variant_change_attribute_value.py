@@ -157,7 +157,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
     def test_active_deactivate_attribute_value_1_step(self):
         """ Deactivate a pav and reactivate it in 1 steps.
 
-        Same than previous tests but both replacement are done in one 
+        Same than previous tests but both replacement are done in one
         execution of the wizard.
 
         """
