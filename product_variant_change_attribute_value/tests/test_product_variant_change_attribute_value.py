@@ -100,7 +100,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             self._is_attribute_value_on_template(self.variant_1, self.white)
         )
 
-    def test_change_attribure_value_2(self):
+    def test_change_attribute_value_2(self):
         """Check changing an attribute value on some variant of a template.
 
         Changing the value white to pink on variant 3 and 4.
@@ -125,3 +125,49 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             self._is_attribute_value_on_template(self.variant_1, self.white)
         )
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.white))
+
+    def test_active_deactivate_attribute_value_2_step(self):
+        """ Deactivate a pav and reactivate it in 2 steps.
+
+        Use the wizard to desactivate (not used anymore) the white attribute
+        And reactivate it by using it on another variant.
+
+        """
+        self.assertTrue(
+            self._is_attribute_value_on_template(self.variant_1, self.white)
+        )
+        self.assertTrue(
+            self._is_attribute_value_on_template(self.variant_1, self.black)
+        )
+        wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
+        self._change_action(wiz, self.white, "replace", self.pink)
+        wiz.action_change_attributes()
+        self.assertFalse(
+            self._is_attribute_value_on_template(self.variant_1, self.white)
+        )
+        self._change_action(wiz, self.black, "replace", self.white)
+        wiz.action_change_attributes()
+        self.assertTrue(
+            self._is_attribute_value_on_template(self.variant_1, self.white)
+        )
+        self.assertFalse(
+            self._is_attribute_value_on_template(self.variant_1, self.black)
+        )
+
+    def test_active_deactivate_attribute_value_1_step(self):
+        """ Deactivate a pav and reactivate it in 1 steps.
+
+        Same than previous tests but both replacement are done in one 
+        execution of the wizard.
+
+        """
+        wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
+        self._change_action(wiz, self.white, "replace", self.pink)
+        self._change_action(wiz, self.black, "replace", self.white)
+        wiz.action_change_attributes()
+        self.assertTrue(
+            self._is_attribute_value_on_template(self.variant_1, self.white)
+        )
+        self.assertFalse(
+            self._is_attribute_value_on_template(self.variant_1, self.black)
+        )
