@@ -70,7 +70,8 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         )
         if not ptav:
             return False
-        return True
+        # Check that it is also active
+        return ptav.ptav_active
 
     def test_remove_attribute_value(self):
         """Check removing an attribute value on ALL variants of a template."""
