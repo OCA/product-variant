@@ -60,8 +60,8 @@
                     </notebook>
                     <footer>
                         <button
-                            name="action_change_attributes"
-                            string="Save"
+                            name="action_apply"
+                            string="Apply"
                             type="object"
                             class="btn-primary"
                         />
