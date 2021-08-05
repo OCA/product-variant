@@ -83,6 +83,6 @@
         binding_views="list"
         view_mode="form"
         target="new"
-        context="{'default_res_ids': active_ids}"
+        context="{'default_product_ids': active_ids}"
     />
 </odoo>

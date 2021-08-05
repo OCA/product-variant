@@ -8,36 +8,33 @@ class VariantAttributeValueWizard(models.TransientModel):
     _name = "variant.attribute.value.wizard"
     _description = "Wizard to change attriubtes on product variants"
 
-    product_ids = fields.Many2many(
-        "product.product", default=lambda self: self._default_product_ids()
-    )
+    product_ids = fields.Many2many(comodel_name="product.product")
     product_variant_count = fields.Integer(compute="_compute_count")
     product_template_count = fields.Integer(compute="_compute_count")
     attributes_action_ids = fields.Many2many(
         comodel_name="variant.attribute.value.action",
         relation="variant_attribute_wizard_attribute_action_rel",
-        default=lambda self: self._default_attributes_action_ids(),
+        compute="_compute_attributes_action_ids",
+        readonly=False,
+        store=True,
     )
 
-    def _default_product_ids(self):
-        return self.env["product.product"].browse(self._context.get("default_res_ids"))
-
-    def _default_attributes_action_ids(self):
-        p = self._default_product_ids()
-        links = p.product_template_attribute_value_ids
-        attribute_ids = links.product_attribute_value_id
-        return [
-            (
-                0,
-                0,
-                {
-                    "product_attribute_value_id": x.id,
-                    "attribute_id": x.attribute_id,
-                    "attribute_action": "do_nothing",
-                },
-            )
-            for x in attribute_ids
-        ]
+    @api.depends("product_ids")
+    def _compute_attributes_action_ids(self):
+        for rec in self:
+            ptavs = rec.product_ids.product_template_attribute_value_ids
+            rec.attributes_action_ids = [
+                (
+                    0,
+                    0,
+                    {
+                        "product_attribute_value_id": x.id,
+                        "attribute_id": x.attribute_id,
+                        "attribute_action": "do_nothing",
+                    },
+                )
+                for x in ptavs.product_attribute_value_id
+            ]
 
     @api.depends("product_ids")
     def _compute_count(self):
@@ -79,13 +76,15 @@ class VariantAttributeValueWizard(models.TransientModel):
             ptav_ids = product.product_template_attribute_value_ids.filtered(
                 lambda r: r.product_attribute_value_id != pav
             )
-            pav_replacement = value_action.replaced_by_id
             if action == "delete":
+                # nothing to do because `_cleanup_attribute_value` will take care
                 pass
-            elif action == "replace" and not pav_replacement:
-                continue
-            elif action == "replace" and pav_replacement:
-                tpl_attr_value = self._handle_replace(product, pav_replacement)
+            elif action == "replace":
+                if not value_action.replaced_by_id:
+                    continue
+                tpl_attr_value = self._handle_replace(
+                    product, value_action.replaced_by_id
+                )
                 ptav_ids |= tpl_attr_value
 
             # Update the values set on the product variant
