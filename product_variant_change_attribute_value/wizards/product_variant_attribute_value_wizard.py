@@ -14,7 +14,7 @@ class VariantAttributeValueWizard(models.TransientModel):
     product_variant_count = fields.Integer(compute="_compute_count")
     product_template_count = fields.Integer(compute="_compute_count")
     attributes_action_ids = fields.Many2many(
-        "variant.attribute.value.action",
+        comodel_name="variant.attribute.value.action",
         relation="variant_attribute_wizard_attribute_action_rel",
         default=lambda self: self._default_attributes_action_ids(),
     )
@@ -47,9 +47,9 @@ class VariantAttributeValueWizard(models.TransientModel):
                 record.product_ids.mapped("product_tmpl_id")
             )
 
-    def action_change_attributes(self):
+    def action_apply(self):
         for product in self.product_ids:
-            self.update_variant_value(product)
+            self._action_apply(product)
 
     def _is_attribute_value_being_used(self, variant_id, attribute_value):
         """Check if attribute value is still used by a variant."""
@@ -64,12 +64,12 @@ class VariantAttributeValueWizard(models.TransientModel):
         )
         return attribute_value in existing_attributes
 
-    def update_variant_value(self, product_id):
+    def _action_apply(self, product):
         """Update a variant with all the actions set by the user in the wizard."""
         TplAttrLine = self.env["product.template.attribute.line"]
         TplAttrValue = self.env["product.template.attribute.value"]
-        template = product_id.product_tmpl_id
-        pav_ids = product_id.product_template_attribute_value_ids.mapped(
+        template = product.product_tmpl_id
+        pav_ids = product.product_template_attribute_value_ids.mapped(
             "product_attribute_value_id"
         )
         for value_action in self.attributes_action_ids:
@@ -120,14 +120,14 @@ class VariantAttributeValueWizard(models.TransientModel):
                         }
                     )
             # Update the values set on the product variant
-            ptav_ids = product_id.product_template_attribute_value_ids.filtered(
+            ptav_ids = product.product_template_attribute_value_ids.filtered(
                 lambda r: r.product_attribute_value_id != pav
             )
             if action == "replace":
                 ptav_ids |= tpl_attr_value
-            product_id.product_template_attribute_value_ids = ptav_ids
+            product.product_template_attribute_value_ids = ptav_ids
             # Remove the changed value from the template attribute line if needed
-            if not self._is_attribute_value_being_used(product_id, pav):
+            if not self._is_attribute_value_being_used(product, pav):
                 tpl_attr_line = template.attribute_line_ids.filtered(
                     lambda l: l.attribute_id == pav.attribute_id
                 )

@@ -8,30 +8,31 @@ class ProductVariantAttributeValueAction(models.TransientModel):
     _name = "variant.attribute.value.action"
     _description = "Wizard action to do on variant attribute value"
 
-    def _get_attribute_action_list(self):
-        return [
-            ("delete", "Delete"),
-            ("replace", "Replace"),
-            ("do_nothing", "Do Nothing"),
-        ]
-
-    product_attribute_value_id = fields.Many2one("product.attribute.value",)
+    product_attribute_value_id = fields.Many2one(comodel_name="product.attribute.value")
     attribute_action = fields.Selection(
-        selection="_get_attribute_action_list", default="do_nothing", required=True,
+        selection="_selection_action", default="do_nothing", required=True,
     )
     attribute_id = fields.Many2one(
-        "product.attribute",
+        comodel_name="product.attribute",
         related="product_attribute_value_id.attribute_id",
         readonly=True,
     )
     selectable_attribute_value_ids = fields.Many2many(
-        "product.attribute.value", compute="_compute_selectable_attribute_value_ids"
+        comodel_name="product.attribute.value",
+        compute="_compute_selectable_attribute_value_ids",
     )
     replaced_by_id = fields.Many2one(
-        "product.attribute.value",
+        comodel_name="product.attribute.value",
         string="Replace with",
         domain="[('id', 'in', selectable_attribute_value_ids)]",
     )
+
+    def _selection_action(self):
+        return [
+            ("do_nothing", "Do Nothing"),
+            ("replace", "Replace"),
+            ("delete", "Delete"),
+        ]
 
     @api.depends("attribute_action")
     def _compute_selectable_attribute_value_ids(self):

@@ -79,7 +79,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
 
         wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
         self._change_action(wiz, self.steel, "delete")
-        wiz.action_change_attributes()
+        wiz.action_apply()
 
         self.assertFalse(self.is_value_on_variant(self.variant_1, self.steel))
         self.assertFalse(
@@ -92,7 +92,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
 
         wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
         self._change_action(wiz, self.white, "replace", self.pink)
-        wiz.action_change_attributes()
+        wiz.action_apply()
 
         self.assertFalse(self.is_value_on_variant(self.variant_1, self.white))
         self.assertTrue(self.is_value_on_variant(self.variant_1, self.pink))
@@ -115,7 +115,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             default_res_ids=[self.variant_3.id, self.variant_4.id]
         ).create({})
         self._change_action(wiz, self.white, "replace", self.pink)
-        wiz.action_change_attributes()
+        wiz.action_apply()
 
         self.assertFalse(self.is_value_on_variant(self.variant_3, self.white))
         self.assertFalse(self.is_value_on_variant(self.variant_4, self.white))
@@ -142,12 +142,12 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         )
         wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
         self._change_action(wiz, self.white, "replace", self.pink)
-        wiz.action_change_attributes()
+        wiz.action_apply()
         self.assertFalse(
             self._is_attribute_value_on_template(self.variant_1, self.white)
         )
         self._change_action(wiz, self.black, "replace", self.white)
-        wiz.action_change_attributes()
+        wiz.action_apply()
         self.assertTrue(
             self._is_attribute_value_on_template(self.variant_1, self.white)
         )
@@ -165,7 +165,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         wiz = self.wizard.with_context(default_res_ids=self.variants).create({})
         self._change_action(wiz, self.white, "replace", self.pink)
         self._change_action(wiz, self.black, "replace", self.white)
-        wiz.action_change_attributes()
+        wiz.action_apply()
         self.assertTrue(
             self._is_attribute_value_on_template(self.variant_1, self.white)
         )
