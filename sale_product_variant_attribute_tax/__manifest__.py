@@ -6,7 +6,7 @@
     "version": "13.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Sales/Sales",
-    "website": "https://github.com/OCA/sale-workflow",
+    "website": "https://github.com/OCA/product-variant",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "depends": ["product_variant_attribute_tax", "sale_variant_configurator"],
