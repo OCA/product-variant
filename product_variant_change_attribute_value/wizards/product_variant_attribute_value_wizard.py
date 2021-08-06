@@ -3,7 +3,10 @@
 
 from collections import defaultdict
 
-from odoo import api, fields, models
+import psycopg2
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class VariantAttributeValueWizard(models.TransientModel):
@@ -31,7 +34,7 @@ class VariantAttributeValueWizard(models.TransientModel):
                     0,
                     {
                         "product_attribute_value_id": x.id,
-                        "attribute_id": x.attribute_id,
+                        "attribute_id": x.attribute_id.id,
                         "attribute_action": "do_nothing",
                     },
                 )
@@ -68,7 +71,7 @@ class VariantAttributeValueWizard(models.TransientModel):
         pav_ids = product.product_template_attribute_value_ids.mapped(
             "product_attribute_value_id"
         )
-        pavs_to_clean = defaultdict(self.env["product.attribute.value"].browse)
+        pavs_to_clean_by_attr = defaultdict(self.env["product.attribute.value"].browse)
         for value_action in self.attributes_action_ids:
             action = value_action.attribute_action
             if action == "do_nothing":
@@ -94,9 +97,9 @@ class VariantAttributeValueWizard(models.TransientModel):
             product.product_template_attribute_value_ids = ptav_ids
             # Remove the changed value from the template attribute line if needed
             if not self._is_attribute_value_being_used(product, pav):
-                pavs_to_clean[pav.attribute_id] |= pav
-        if pavs_to_clean:
-            self._cleanup_attribute_values(product, pavs_to_clean)
+                pavs_to_clean_by_attr[pav.attribute_id] |= pav
+        if pavs_to_clean_by_attr:
+            self._cleanup_attribute_values(product, pavs_to_clean_by_attr)
 
     def _handle_replace(self, product, pav_replacement):
         TplAttrLine = self.env["product.template.attribute.line"]
@@ -145,6 +148,17 @@ class VariantAttributeValueWizard(models.TransientModel):
             tpl_attr_line = template.attribute_line_ids.filtered(
                 lambda l: l.attribute_id == attr
             )
+            if not (tpl_attr_line.value_ids - pavs):
+                # no value left
+                error_msg = self._unique_err_msg(product, tpl_attr_line, pavs)
+            try:
+                with self.env.cr.savepoint():
+                    tpl_attr_line.active = False
+            except psycopg2.IntegrityError as e:
+                if e.pgcode == psycopg2.errorcodes.UNIQUE_VIOLATION:
+                    raise UserError(error_msg)
+                else:
+                    raise
             tpl_attr_line.with_context(
                 update_product_template_attribute_values=False
             ).write({"value_ids": [(3, pav.id) for pav in pavs]})
@@ -156,3 +170,10 @@ class VariantAttributeValueWizard(models.TransientModel):
             )
             if tpl_attr_values:
                 tpl_attr_values.unlink()
+
+    def _unique_err_msg(self, product, tpl_attr_line, pavs):
+        msg = _(
+            "Product '%s' uniqueness compromised.\n "
+            "Impossible to remove value(s): %s"
+        ) % (product.display_name, ", ".join(pavs.mapped("name")))
+        return msg
