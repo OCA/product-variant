@@ -10,7 +10,7 @@
     "name": "Product Variant Default Code",
     "version": "13.0.1.1.0",
     "author": "AvancOSC," "Shine IT," "Tecnativa," "Odoo Community Association (OCA)",
-    "website": "https://odoo-community.org/",
+    "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
     "depends": ["product"],
