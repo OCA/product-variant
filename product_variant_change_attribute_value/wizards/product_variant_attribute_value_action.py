@@ -7,8 +7,11 @@ from odoo import api, fields, models
 class ProductVariantAttributeValueAction(models.TransientModel):
     _name = "variant.attribute.value.action"
     _description = "Wizard action to do on variant attribute value"
+    _order = "attribute_id"
 
-    product_attribute_value_id = fields.Many2one(comodel_name="product.attribute.value")
+    product_attribute_value_id = fields.Many2one(
+        comodel_name="product.attribute.value", ondelete="cascade"
+    )
     attribute_action = fields.Selection(
         selection="_selection_action", default="do_nothing", required=True,
     )
@@ -16,6 +19,8 @@ class ProductVariantAttributeValueAction(models.TransientModel):
         comodel_name="product.attribute",
         related="product_attribute_value_id.attribute_id",
         readonly=True,
+        store=True,
+        ondelete="cascade",
     )
     selectable_attribute_value_ids = fields.Many2many(
         comodel_name="product.attribute.value",
@@ -25,6 +30,7 @@ class ProductVariantAttributeValueAction(models.TransientModel):
         comodel_name="product.attribute.value",
         string="Replace with",
         domain="[('id', 'in', selectable_attribute_value_ids)]",
+        ondelete="cascade",
     )
 
     def _selection_action(self):
