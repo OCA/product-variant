@@ -1,6 +1,8 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
+from collections import defaultdict
+
 from odoo import api, fields, models
 
 
@@ -33,7 +35,7 @@ class VariantAttributeValueWizard(models.TransientModel):
                         "attribute_action": "do_nothing",
                     },
                 )
-                for x in ptavs.product_attribute_value_id
+                for x in ptavs.product_attribute_value_id.sorted("attribute_id")
             ]
 
     @api.depends("product_ids")
@@ -66,6 +68,7 @@ class VariantAttributeValueWizard(models.TransientModel):
         pav_ids = product.product_template_attribute_value_ids.mapped(
             "product_attribute_value_id"
         )
+        pavs_to_clean = defaultdict(self.env["product.attribute.value"].browse)
         for value_action in self.attributes_action_ids:
             action = value_action.attribute_action
             if action == "do_nothing":
@@ -91,7 +94,9 @@ class VariantAttributeValueWizard(models.TransientModel):
             product.product_template_attribute_value_ids = ptav_ids
             # Remove the changed value from the template attribute line if needed
             if not self._is_attribute_value_being_used(product, pav):
-                self._cleanup_attribute_value(product, pav)
+                pavs_to_clean[pav.attribute_id] |= pav
+        if pavs_to_clean:
+            self._cleanup_attribute_values(product, pavs_to_clean)
 
     def _handle_replace(self, product, pav_replacement):
         TplAttrLine = self.env["product.template.attribute.line"]
@@ -133,20 +138,21 @@ class VariantAttributeValueWizard(models.TransientModel):
             )
         return tpl_attr_value
 
-    def _cleanup_attribute_value(self, product, pav):
+    def _cleanup_attribute_values(self, product, pavs_to_clean):
         TplAttrValue = self.env["product.template.attribute.value"]
         template = product.product_tmpl_id
-        tpl_attr_line = template.attribute_line_ids.filtered(
-            lambda l: l.attribute_id == pav.attribute_id
-        )
-        tpl_attr_line.with_context(
-            update_product_template_attribute_values=False
-        ).write({"value_ids": [(3, pav.id)]})
-        tpl_attr_value = TplAttrValue.search(
-            [
-                ("attribute_line_id", "=", tpl_attr_line.id),
-                ("product_attribute_value_id", "=", pav.id),
-            ]
-        )
-        if tpl_attr_value:
-            tpl_attr_value.unlink()
+        for attr, pavs in pavs_to_clean.items():
+            tpl_attr_line = template.attribute_line_ids.filtered(
+                lambda l: l.attribute_id == attr
+            )
+            tpl_attr_line.with_context(
+                update_product_template_attribute_values=False
+            ).write({"value_ids": [(3, pav.id) for pav in pavs]})
+            tpl_attr_values = TplAttrValue.search(
+                [
+                    ("attribute_line_id", "=", tpl_attr_line.id),
+                    ("product_attribute_value_id", "in", pavs.ids),
+                ]
+            )
+            if tpl_attr_values:
+                tpl_attr_values.unlink()
