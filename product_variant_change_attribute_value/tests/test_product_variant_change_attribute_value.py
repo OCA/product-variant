@@ -93,6 +93,21 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         )
 
     @mute_logger("odoo.models.unlink")
+    def test_remove_all_attribute_values(self):
+        """Check removing an attribute value on ALL variants of a template."""
+        self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
+
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.steel, "delete")
+        self._change_action(wiz, self.aluminium, "delete")
+        wiz.action_apply()
+
+        self.assertFalse(self._is_value_on_variant(self.variant_1, self.steel))
+        self.assertFalse(
+            self._is_attribute_value_on_template(self.variant_1, self.steel)
+        )
+
+    @mute_logger("odoo.models.unlink")
     def test_change_attribute_value(self):
         """Check changing an attribute value on ALL variant of a template."""
         self.assertTrue(self._is_value_on_variant(self.variant_1, self.white))
