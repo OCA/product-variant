@@ -75,14 +75,16 @@
             </form>
         </field>
     </record>
-    <act_window
-        id="action_variant_change_value"
-        name="Change attribute values assigned"
-        binding_model="product.product"
-        res_model="variant.attribute.value.wizard"
-        binding_views="list"
-        view_mode="form"
-        target="new"
-        context="{'default_product_ids': active_ids}"
-    />
+
+    <record id="action_variant_change_value_wiz" model="ir.actions.act_window">
+        <field name="name">Change attribute values assigned</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">variant.attribute.value.wizard</field>
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_view_types">list</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_product_ids': active_ids}</field>
+    </record>
+
 </odoo>
