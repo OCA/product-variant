@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 from odoo.tests import common
+from odoo.tools import mute_logger
 
 
 class TestProductVariantChangeAttributeValue(common.SavepointCase):
@@ -77,6 +78,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         # Check that it is also active
         return ptav.ptav_active
 
+    @mute_logger("odoo.models.unlink")
     def test_remove_attribute_value(self):
         """Check removing an attribute value on ALL variants of a template."""
         self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
@@ -90,7 +92,8 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             self._is_attribute_value_on_template(self.variant_1, self.steel)
         )
 
-    def test_change_attribure_value(self):
+    @mute_logger("odoo.models.unlink")
+    def test_change_attribute_value(self):
         """Check changing an attribute value on ALL variant of a template."""
         self.assertTrue(self._is_value_on_variant(self.variant_1, self.white))
 
@@ -129,6 +132,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         )
         self.assertTrue(self._is_value_on_variant(self.variant_1, self.white))
 
+    @mute_logger("odoo.models.unlink")
     def test_active_deactivate_attribute_value_2_step(self):
         """ Deactivate a pav and reactivate it in 2 steps.
 
@@ -157,6 +161,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             self._is_attribute_value_on_template(self.variant_1, self.black)
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_active_deactivate_attribute_value_1_step(self):
         """ Deactivate a pav and reactivate it in 1 steps.
 
