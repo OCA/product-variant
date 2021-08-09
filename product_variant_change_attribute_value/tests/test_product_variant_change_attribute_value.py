@@ -29,19 +29,14 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         cls.variant_2 = cls.env.ref("product.product_product_4b")
         cls.variant_3 = cls.env.ref("product.product_product_4c")
         cls.variant_4 = cls.env.ref("product.product_product_4d")
-        cls.variant_ids = [
-            cls.variant_1.id,
-            cls.variant_2.id,
-            cls.variant_3.id,
-            cls.variant_4.id,
-        ]
+        cls.variants = cls.variant_1 | cls.variant_2 | cls.variant_3 | cls.variant_4
         cls.template = cls.variant_1.product_tmpl_id
         assert len(cls.template.product_variant_ids) == 4
 
         cls.wiz_model = cls.env["variant.attribute.value.wizard"]
 
     def _get_wiz(self, prod_ids=None):
-        prod_ids = prod_ids or self.variant_ids
+        prod_ids = prod_ids or self.variants.ids
         return self.wiz_model.with_context(default_product_ids=prod_ids).create({})
 
     def _change_action(self, wiz, value, attribute_action, replaced_by_id=False):
@@ -78,6 +73,22 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         # Check that it is also active
         return ptav.ptav_active
 
+    def test_fields(self):
+        wiz = self._get_wiz()
+        self.assertEqual(wiz.product_ids, self.variants)
+        self.assertEqual(wiz.product_variant_count, len(self.variants))
+        self.assertEqual(wiz.product_template_count, len(self.variants.product_tmpl_id))
+        values = self.steel | self.aluminium | self.white | self.black
+        self.assertEqual(wiz.attribute_value_ids, values)
+        self.assertEqual(wiz.available_attribute_ids, self.legs | self.color)
+        self.assertEqual(len(wiz.attributes_action_ids), len(values))
+
+    def test_actions_field_filter(self):
+        wiz = self._get_wiz()
+        self.assertEqual(len(wiz.attributes_action_ids), len(wiz.attribute_value_ids))
+        wiz.filter_attribute_id = self.legs
+        self.assertEqual(len(wiz.attributes_action_ids), len(self.legs.value_ids))
+
     @mute_logger("odoo.models.unlink")
     def test_remove_attribute_value(self):
         """Check removing an attribute value on ALL variants of a template."""
@@ -94,7 +105,11 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
 
     @mute_logger("odoo.models.unlink")
     def test_remove_all_attribute_values(self):
-        """Check removing an attribute value on ALL variants of a template."""
+        """Check removing an attribute value on ALL variants of a template.
+
+        Normally this can cause an error because you cannot delete all values
+        if the variants left do not have a unique combination of attributes.
+        """
         self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
 
         wiz = self._get_wiz()
