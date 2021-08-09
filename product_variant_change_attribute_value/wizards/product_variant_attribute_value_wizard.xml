@@ -14,6 +14,14 @@
                     <notebook>
                         <page string="Attribute value changes">
                             <group>
+                                <field name="available_attribute_ids" invisible="1" />
+                                <label for="filter_attribute_id" />
+                                <field
+                                    name="filter_attribute_id"
+                                    class="oe_inline"
+                                    nolabel="1"
+                                    options="{'no_create': True}"
+                                />
                                 <field name="attributes_action_ids" nolabel="1">
                                     <tree
                                         editable="true"
