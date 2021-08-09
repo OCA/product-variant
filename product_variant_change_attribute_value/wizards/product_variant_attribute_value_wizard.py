@@ -23,11 +23,27 @@ class VariantAttributeValueWizard(models.TransientModel):
         readonly=False,
         store=True,
     )
+    attribute_value_ids = fields.Many2many(
+        comodel_name="product.attribute.value", compute="_compute_attribute_value_ids",
+    )
+    available_attribute_ids = fields.Many2many(
+        comodel_name="product.attribute", compute="_compute_attribute_value_ids",
+    )
+    filter_attribute_id = fields.Many2one(
+        comodel_name="product.attribute",
+        domain="[('id', 'in', available_attribute_ids)]",
+    )
 
-    @api.depends("product_ids")
+    @api.depends("product_ids", "filter_attribute_id")
     def _compute_attributes_action_ids(self):
         for rec in self:
-            ptavs = rec.product_ids.product_template_attribute_value_ids
+            values = rec.attribute_value_ids
+            if rec.filter_attribute_id:
+                values = values.filtered(
+                    lambda x: x.attribute_id == rec.filter_attribute_id
+                )
+                if rec.attributes_action_ids:
+                    rec.attributes_action_ids = False
             rec.attributes_action_ids = [
                 (
                     0,
@@ -38,8 +54,16 @@ class VariantAttributeValueWizard(models.TransientModel):
                         "attribute_action": "do_nothing",
                     },
                 )
-                for x in ptavs.product_attribute_value_id.sorted("attribute_id")
+                for x in values._origin
             ]
+
+    @api.depends("product_ids")
+    def _compute_attribute_value_ids(self):
+        for rec in self:
+            rec.attribute_value_ids = (
+                rec.product_ids.product_template_attribute_value_ids.product_attribute_value_id
+            )
+            rec.available_attribute_ids = rec.attribute_value_ids.mapped("attribute_id")
 
     @api.depends("product_ids")
     def _compute_count(self):
