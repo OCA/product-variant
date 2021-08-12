@@ -42,6 +42,25 @@ class ProductVariantAttributeValueAction(models.TransientModel):
 
     @api.depends("attribute_action")
     def _compute_selectable_attribute_value_ids(self):
+        # Use SQL because loading all `value_ids` from each related attribute
+        # is veeery slow. We don't care about permission at this point.
+        query = """
+            SELECT
+                attribute_id,array_agg(id)
+            FROM
+                product_attribute_value
+            WHERE
+                attribute_id IN %(ids)s
+            GROUP BY
+                attribute_id
+        """
+        ids = tuple(self.mapped("attribute_id").ids)
+        if not ids:
+            self.update({"selectable_attribute_value_ids": False})
+            return
+        self.env.cr.execute(query, dict(ids=ids))
+        values_by_attr = dict(self.env.cr.fetchall())
         for rec in self:
-            attribute_ids = self.attribute_id.value_ids.ids
-            rec.selectable_attribute_value_ids = [(6, 0, attribute_ids)]
+            rec.selectable_attribute_value_ids = [
+                (6, 0, values_by_attr.get(rec.attribute_id.id, []))
+            ]
