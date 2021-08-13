@@ -1,6 +1,6 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-
+from odoo import exceptions
 from odoo.tests import common
 from odoo.tools import mute_logger
 
@@ -24,15 +24,17 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         cls.blue = cls.env["product.attribute.value"].create(
             {"name": "Blue", "attribute_id": cls.color.id}
         )
-
-        cls.variant_1 = cls.env.ref("product.product_product_4")
-        cls.variant_2 = cls.env.ref("product.product_product_4b")
-        cls.variant_3 = cls.env.ref("product.product_product_4c")
-        cls.variant_4 = cls.env.ref("product.product_product_4d")
-        cls.variants = cls.variant_1 | cls.variant_2 | cls.variant_3 | cls.variant_4
-        cls.template = cls.variant_1.product_tmpl_id
-        assert len(cls.template.product_variant_ids) == 4
-
+        cls.template = cls.env.ref(
+            "product_variant_change_attribute_value.product_product_1_product_template"
+        )
+        cls.variants = cls.template.product_variant_ids
+        cls.variant_1 = cls.variants[0]
+        cls.variant_2 = cls.variants[1]
+        cls.variant_3 = cls.variants[2]
+        cls.variant_4 = cls.variants[3]
+        cls.used_values = (
+            cls.variants.product_template_attribute_value_ids.product_attribute_value_id
+        )
         cls.wiz_model = cls.env["variant.attribute.value.wizard"]
 
     def _get_wiz(self, prod_ids=None):
@@ -87,7 +89,10 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         wiz = self._get_wiz()
         self.assertEqual(len(wiz.attributes_action_ids), len(wiz.attribute_value_ids))
         wiz.filter_attribute_id = self.legs
-        self.assertEqual(len(wiz.attributes_action_ids), len(self.legs.value_ids))
+        self.assertEqual(
+            len(wiz.attributes_action_ids),
+            len([x for x in self.legs.value_ids if x in self.used_values]),
+        )
 
     @mute_logger("odoo.models.unlink")
     def test_remove_attribute_value(self):
@@ -103,24 +108,44 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
             self._is_attribute_value_on_template(self.variant_1, self.steel)
         )
 
+    # @simahawk: not sure how this was supposed to work
+    # The unique violation error is raised and it's correct!
+    # What shall we do? Delete template attrs? IMO that's dangerous.
+    # See next test.
+    # @mute_logger("odoo.models.unlink")
+    # def test_remove_all_attribute_values(self):
+    #     """Check removing an attribute value on ALL variants of a template.
+
+    #     Normally this can cause an error because you cannot delete all values
+    #     if the variants left do not have a unique combination of attributes.
+    #     """
+    #     self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
+
+    #     wiz = self._get_wiz()
+    #     self._change_action(wiz, self.steel, "delete")
+    #     self._change_action(wiz, self.aluminium, "delete")
+    #     wiz.action_apply()
+
+    #     self.assertFalse(self._is_value_on_variant(self.variant_1, self.steel))
+    #     self.assertFalse(
+    #         self._is_attribute_value_on_template(self.variant_1, self.steel)
+    #     )
+
     @mute_logger("odoo.models.unlink")
-    def test_remove_all_attribute_values(self):
-        """Check removing an attribute value on ALL variants of a template.
-
-        Normally this can cause an error because you cannot delete all values
-        if the variants left do not have a unique combination of attributes.
-        """
-        self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
-
+    def test_active_deactivate_attributes_uniqueness_error(self):
         wiz = self._get_wiz()
         self._change_action(wiz, self.steel, "delete")
         self._change_action(wiz, self.aluminium, "delete")
-        wiz.action_apply()
-
-        self.assertFalse(self._is_value_on_variant(self.variant_1, self.steel))
-        self.assertFalse(
-            self._is_attribute_value_on_template(self.variant_1, self.steel)
-        )
+        # Steel got removed but you cannot drop aluminium too
+        # otherwise the variants left won't be unique anymore
+        with self.assertRaises(exceptions.UserError) as err:
+            # assertRaisesRegex drove me insane. Let's check the string in the easy way
+            wiz.action_apply()
+            self.assertTrue(
+                err.exception.name.endswith(
+                    "uniqueness compromised.\n Impossible to remove value(s): Aluminium"
+                )
+            )
 
     @mute_logger("odoo.models.unlink")
     def test_change_attribute_value(self):
@@ -166,7 +191,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
     def test_active_deactivate_attribute_value_2_step(self):
         """ Deactivate a pav and reactivate it in 2 steps.
 
-        Use the wizard to desactivate (not used anymore) the white attribute
+        Use the wizard to deactivate (not used anymore) the white attribute
         And reactivate it by using it on another variant.
 
         """
@@ -193,12 +218,22 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
 
     @mute_logger("odoo.models.unlink")
     def test_active_deactivate_attribute_value_1_step(self):
-        """ Deactivate a pav and reactivate it in 1 steps.
+        """Deactivate a pav and reactivate it in 1 steps.
 
         Same than previous tests but both replacement are done in one
         execution of the wizard.
-
         """
+        self.assertEqual(
+            sorted(self.variants.mapped("display_name")),
+            sorted(
+                [
+                    "Custom Desk (Steel, White)",
+                    "Custom Desk (Steel, Black)",
+                    "Custom Desk (Aluminium, White)",
+                    "Custom Desk (Aluminium, Black)",
+                ]
+            ),
+        )
         wiz = self._get_wiz()
         self._change_action(wiz, self.white, "replace", self.pink)
         self._change_action(wiz, self.black, "replace", self.white)
@@ -208,4 +243,15 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
         )
         self.assertFalse(
             self._is_attribute_value_on_template(self.variant_1, self.black)
+        )
+        self.assertEqual(
+            sorted(self.variants.mapped("display_name")),
+            sorted(
+                [
+                    "Custom Desk (Steel, Pink)",
+                    "Custom Desk (Steel, White)",
+                    "Custom Desk (Aluminium, Pink)",
+                    "Custom Desk (Aluminium, White)",
+                ]
+            ),
         )
