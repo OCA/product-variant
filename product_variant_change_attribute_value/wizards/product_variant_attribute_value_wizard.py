@@ -165,6 +165,16 @@ class VariantAttributeValueWizard(models.TransientModel):
             )
         return tpl_attr_value
 
+    def _handle_unique_violation(self, func, error_msg):
+        try:
+            with self.env.cr.savepoint():
+                func()
+        except psycopg2.IntegrityError as e:
+            if e.pgcode == psycopg2.errorcodes.UNIQUE_VIOLATION:
+                raise UserError(error_msg)
+            else:
+                raise
+
     def _cleanup_attribute_values(self, product, pavs_to_clean):
         TplAttrValue = self.env["product.template.attribute.value"]
         template = product.product_tmpl_id
@@ -172,17 +182,13 @@ class VariantAttributeValueWizard(models.TransientModel):
             tpl_attr_line = template.attribute_line_ids.filtered(
                 lambda l: l.attribute_id == attr
             )
+            error_msg = self._unique_err_msg(product, tpl_attr_line, pavs)
             if not (tpl_attr_line.value_ids - pavs):
                 # no value left
-                error_msg = self._unique_err_msg(product, tpl_attr_line, pavs)
-            try:
-                with self.env.cr.savepoint():
+                def _make_inactive():
                     tpl_attr_line.active = False
-            except psycopg2.IntegrityError as e:
-                if e.pgcode == psycopg2.errorcodes.UNIQUE_VIOLATION:
-                    raise UserError(error_msg)
-                else:
-                    raise
+
+                self._handle_unique_violation(_make_inactive, error_msg)
             tpl_attr_line.with_context(
                 update_product_template_attribute_values=False
             ).write({"value_ids": [(3, pav.id) for pav in pavs]})
@@ -193,7 +199,7 @@ class VariantAttributeValueWizard(models.TransientModel):
                 ]
             )
             if tpl_attr_values:
-                tpl_attr_values.unlink()
+                self._handle_unique_violation(tpl_attr_values.unlink, error_msg)
 
     def _unique_err_msg(self, product, tpl_attr_line, pavs):
         msg = _(
