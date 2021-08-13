@@ -10,5 +10,6 @@
     "category": "Product Variant",
     "depends": ["product"],
     "data": ["wizards/product_variant_attribute_value_wizard.xml"],
+    "demo": ["demo/product_demo.xml"],
     "installable": True,
 }
