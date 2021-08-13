@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Data similar to `product` module but re-defined here to be isolated -->
+        <record id="product_product_1_product_template" model="product.template">
+            <field name="name">Custom Desk</field>
+            <field name="categ_id" ref="product.product_category_5" />
+            <field name="standard_price">100.0</field>
+            <field name="list_price">100.0</field>
+            <field name="type">consu</field>
+            <field name="weight">1.0</field>
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+        </record>
+
+        <!-- the product template attribute lines have to be defined before creating the variants -->
+        <record
+            id="product_1_attribute_1_product_template_attribute_line"
+            model="product.template.attribute.line"
+        >
+            <field name="product_tmpl_id" ref="product_product_1_product_template" />
+            <field name="attribute_id" ref="product.product_attribute_1" />
+            <field
+                name="value_ids"
+                eval="[(6, 0, [ref('product.product_attribute_value_1'), ref('product.product_attribute_value_2')])]"
+            />
+        </record>
+        <record
+            id="product_1_attribute_2_product_template_attribute_line"
+            model="product.template.attribute.line"
+        >
+            <field name="product_tmpl_id" ref="product_product_1_product_template" />
+            <field name="attribute_id" ref="product.product_attribute_2" />
+            <field
+                name="value_ids"
+                eval="[(6, 0, [ref('product.product_attribute_value_3'), ref('product.product_attribute_value_4')])]"
+            />
+        </record>
+
+    </data>
+</odoo>
