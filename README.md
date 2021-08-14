@@ -17,16 +17,16 @@ Odoo product variant addons.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[product_variant_attribute_tax](product_variant_attribute_tax/) | 13.0.1.0.0 | Set taxes on the product attribute values
-[product_variant_configurator](product_variant_configurator/) | 13.0.1.1.0 | Provides an abstract model for product variant configuration.
-[product_variant_default_code](product_variant_default_code/) | 13.0.1.1.0 | Product Variant Default Code
-[product_variant_sale_price](product_variant_sale_price/) | 13.0.1.0.1 | Allows to write fixed prices in product variants
-[purchase_variant_configurator](purchase_variant_configurator/) | 13.0.1.0.0 | Product variants in purchase management
-[purchase_variant_configurator_on_confirm](purchase_variant_configurator_on_confirm/) | 13.0.1.0.0 | Create product variants when confirming the purchase order
-[sale_product_variant_attribute_tax](sale_product_variant_attribute_tax/) | 13.0.1.0.0 | Bring the taxes associated to product values
-[sale_variant_configurator](sale_variant_configurator/) | 13.0.1.0.0 | Product variants in sale management
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[product_variant_attribute_tax](product_variant_attribute_tax/) | 13.0.1.0.0 |  | Set taxes on the product attribute values
+[product_variant_configurator](product_variant_configurator/) | 13.0.1.1.0 |  | Provides an abstract model for product variant configuration.
+[product_variant_default_code](product_variant_default_code/) | 13.0.1.1.0 |  | Product Variant Default Code
+[product_variant_sale_price](product_variant_sale_price/) | 13.0.1.0.1 |  | Allows to write fixed prices in product variants
+[purchase_variant_configurator](purchase_variant_configurator/) | 13.0.1.0.0 |  | Product variants in purchase management
+[purchase_variant_configurator_on_confirm](purchase_variant_configurator_on_confirm/) | 13.0.1.0.0 |  | Create product variants when confirming the purchase order
+[sale_product_variant_attribute_tax](sale_product_variant_attribute_tax/) | 13.0.1.0.0 |  | Bring the taxes associated to product values
+[sale_variant_configurator](sale_variant_configurator/) | 13.0.1.0.0 |  | Product variants in sale management
 
 [//]: # (end addons)
 
