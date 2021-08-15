@@ -12,14 +12,14 @@ Allows to create and manage product variants in OpenERP v6 and 7. A part of this
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[account_invoice_variant_configurator](account_invoice_variant_configurator/) | 9.0.1.0.0 | Product variant configurator on invoice lines
-[product_variant_configurator](product_variant_configurator/) | 9.0.1.0.1 | Provides an abstract model for product variant configuration.
-[product_variant_standard_price_update](product_variant_standard_price_update/) | 9.0.1.0.0 | Update all variant standard price from the product template
-[product_variant_supplierinfo](product_variant_supplierinfo/) | 9.0.1.0.0 | Supplier info to product variant scope
-[purchase_variant_configurator](purchase_variant_configurator/) | 9.0.1.0.0 | Product variants in purchase management
-[purchase_variant_configurator_on_confirm](purchase_variant_configurator_on_confirm/) | 9.0.1.0.0 | Create product variants when confirming the purchase order
-[stock_picking_variant_mgmt](stock_picking_variant_mgmt/) | 9.0.1.0.0 | Handle the addition/removal of multiple variants and the quantities transferred in the Pickings.
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[account_invoice_variant_configurator](account_invoice_variant_configurator/) | 9.0.1.0.0 |  | Product variant configurator on invoice lines
+[product_variant_configurator](product_variant_configurator/) | 9.0.1.0.1 |  | Provides an abstract model for product variant configuration.
+[product_variant_standard_price_update](product_variant_standard_price_update/) | 9.0.1.0.0 |  | Update all variant standard price from the product template
+[product_variant_supplierinfo](product_variant_supplierinfo/) | 9.0.1.0.0 |  | Supplier info to product variant scope
+[purchase_variant_configurator](purchase_variant_configurator/) | 9.0.1.0.0 |  | Product variants in purchase management
+[purchase_variant_configurator_on_confirm](purchase_variant_configurator_on_confirm/) | 9.0.1.0.0 |  | Create product variants when confirming the purchase order
+[stock_picking_variant_mgmt](stock_picking_variant_mgmt/) | 9.0.1.0.0 |  | Handle the addition/removal of multiple variants and the quantities transferred in the Pickings.
 
 [//]: # (end addons)
