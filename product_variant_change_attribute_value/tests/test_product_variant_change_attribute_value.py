@@ -131,7 +131,7 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
     #         self._is_attribute_value_on_template(self.variant_1, self.steel)
     #     )
 
-    @mute_logger("odoo.models.unlink")
+    @mute_logger("odoo.models.unlink", "odoo.sql_db")
     def test_active_deactivate_attributes_uniqueness_error(self):
         wiz = self._get_wiz()
         self._change_action(wiz, self.steel, "delete")
