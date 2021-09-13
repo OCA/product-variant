@@ -55,6 +55,13 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+msgid ""
+"Defines the variant \"Reference Prefix\" as the default reference "
+"(default_code) of the variant."
+msgstr ""
+
+#. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute__display_name
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value__display_name
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__display_name
@@ -126,6 +133,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__code_prefix
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__code_prefix
 msgid "Reference Prefix"
+msgstr ""
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__prefix_as_default_code
+msgid "Reference Prefix as default Reference"
 msgstr ""
 
 #. module: product_variant_default_code
