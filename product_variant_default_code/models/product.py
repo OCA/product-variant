@@ -170,6 +170,18 @@ class ProductTemplate(models.Model):
             # to return the language code of your choice
             return self.env["res.lang"].search([], limit=1).code
 
+    @api.depends(
+        "product_variant_ids", "product_variant_ids.default_code", "code_prefix"
+    )
+    def _compute_default_code(self):
+        super()._compute_default_code()
+        if self.env["ir.config_parameter"].get_param("prefix_as_default_code"):
+            unique_variants = self.filtered(
+                lambda template: len(template.product_variant_ids) == 1
+            )
+            for template in self - unique_variants:
+                template.default_code = template.code_prefix
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
