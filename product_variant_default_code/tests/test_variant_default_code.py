@@ -211,3 +211,9 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.assertTrue("o_o" in self.template1.product_variant_ids[0].default_code)
         self.attr1_1.code = "^_^"
         self.assertTrue("^_^" in self.template1.product_variant_ids[0].default_code)
+
+    def test_11_prefix_code_as_default_code_by_default(self):
+        self.assertFalse(self.template1.default_code)
+        self.env["ir.config_parameter"].set_param("prefix_as_default_code", True)
+        self.template1.code_prefix = "prefix_code"
+        self.assertTrue(self.template1.default_code, self.template1.code_prefix)
