@@ -20,9 +20,27 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: product_variant_inactive
+#: model:ir.model.fields,field_description:product_variant_inactive.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_variant_inactive.field_product_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_variant_inactive
+#: model:ir.model.fields,field_description:product_variant_inactive.field_product_product__id
+#: model:ir.model.fields,field_description:product_variant_inactive.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: product_variant_inactive
 #: model:ir.model.fields,field_description:product_variant_inactive.field_product_product__product_variant_count_all
 #: model:ir.model.fields,field_description:product_variant_inactive.field_product_template__product_variant_count_all
 msgid "Inactive variants"
+msgstr ""
+
+#. module: product_variant_inactive
+#: model:ir.model.fields,field_description:product_variant_inactive.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_variant_inactive.field_product_template____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: product_variant_inactive
