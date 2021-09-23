@@ -34,6 +34,7 @@ class TestProductPriceList(SavepointCase):
                 "name": "Ipad",
                 "no_create_variants": "no",
                 "categ_id": cls.physical.id,
+                "company_id": False,
                 "list_price": 750,
                 "standard_price": 500,
                 "uom_id": cls.uom_unit.id,
@@ -66,6 +67,7 @@ class TestProductPriceList(SavepointCase):
                 "name": "Ipad Retina Display",
                 "no_create_variants": "yes",
                 "categ_id": cls.physical.id,
+                "company_id": False,
                 "list_price": 500,
                 "standard_price": 300,
                 "uom_id": cls.uom_unit.id,
@@ -116,6 +118,7 @@ class TestProductPriceList(SavepointCase):
         cls.pricelist = cls.product_pricelist.create(
             {
                 "name": "Pricelist 1",
+                "company_id": False,
                 "item_ids": [
                     (
                         0,
