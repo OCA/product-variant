@@ -38,11 +38,14 @@ class PurchaseManageVariant(models.TransientModel):
             purchase_order = record.order_id
         else:
             purchase_order = record
-        num_attrs = len(template.attribute_line_ids)
-        if not template or not num_attrs:
+        attr_lines = template.attribute_line_ids.filtered(
+            lambda x: x.attribute_id.create_variant != 'no_variant'
+        )
+        num_attrs = len(attr_lines)
+        if not template or not attr_lines or num_attrs > 2:
             return
-        line_x = template.attribute_line_ids[0]
-        line_y = False if num_attrs == 1 else template.attribute_line_ids[1]
+        line_x = attr_lines[0]
+        line_y = False if num_attrs == 1 else attr_lines[1]
         lines = []
         for value_x in line_x.value_ids:
             for value_y in line_y and line_y.value_ids or [False]:
