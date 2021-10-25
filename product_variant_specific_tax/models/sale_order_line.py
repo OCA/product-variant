@@ -11,6 +11,15 @@ class SaleOrderLine(models.Model):
     def _compute_tax_id(self):
         super()._compute_tax_id()
         for line in self:
-            new_taxes = line.tax_id | line.product_id.additional_tax_ids
-            if new_taxes != line.tax_id:
-                line.tax_id = new_taxes
+            fpos = line.order_id.fiscal_position_id or \
+                line.order_id.partner_id.property_account_position_id
+            # If company_id is set, always filter taxes by the company
+            taxes = line.product_id.additional_tax_ids.filtered(
+                lambda r:
+                not line.company_id or r.company_id == line.company_id
+            )
+            fpos_taxes = fpos.map_tax(
+                taxes, line.product_id, line.order_id.partner_shipping_id
+            ) if fpos else taxes
+
+            line.tax_id |= fpos_taxes
