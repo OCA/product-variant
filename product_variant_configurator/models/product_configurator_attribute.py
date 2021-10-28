@@ -29,8 +29,7 @@ class ProductConfiguratorAttribute(models.Model):
     )
     value_id = fields.Many2one(
         comodel_name="product.attribute.value",
-        domain="[('attribute_id', '=', attribute_id), "
-        " ('id', 'in', possible_value_ids)]",
+        domain="[('id', 'in', possible_value_ids)]",
         string="Value",
     )
     possible_value_ids = fields.Many2many(
