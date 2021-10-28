@@ -25,7 +25,7 @@ class ProductConfiguratorAttribute(models.Model):
         comodel_name="product.template", string="Product Template", required=True
     )
     attribute_id = fields.Many2one(
-        comodel_name="product.attribute", string="Attribute", readonly=False
+        comodel_name="product.attribute", string="Attribute", readonly=True
     )
     value_id = fields.Many2one(
         comodel_name="product.attribute.value",
