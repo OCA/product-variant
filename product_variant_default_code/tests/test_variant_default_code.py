@@ -13,8 +13,18 @@ class TestVariantDefaultCode(common.SavepointCase):
         cls.group_default_code = cls.env.ref(
             "product_variant_default_code.group_product_default_code_manual_mask"
         )
-        cls.attr1 = cls.env["product.attribute"].create({"name": "TSize"})
-        cls.attr2 = cls.env["product.attribute"].create({"name": "TColor"})
+        cls.attr1 = cls.env["product.attribute"].create(
+            {
+                "name": "TSize",
+                "sequence": 0,
+            }
+        )
+        cls.attr2 = cls.env["product.attribute"].create(
+            {
+                "name": "TColor",
+                "sequence": 1,
+            }
+        )
         cls.attr1_1 = cls.env["product.attribute.value"].create(
             {"name": "L", "attribute_id": cls.attr1.id}
         )
@@ -217,3 +227,81 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.env["ir.config_parameter"].set_param("prefix_as_default_code", True)
         self.template1.code_prefix = "prefix_code"
         self.assertTrue(self.template1.default_code, self.template1.code_prefix)
+
+    def test_12_prefix_change(self):
+        self.assertFalse(self.template1.code_prefix)
+        self.template1.code_prefix = "prefix_code/"
+        for product in self.template1.mapped("product_variant_ids"):
+            expected_code = (
+                self.template1.code_prefix
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
+                ).name[0:2]
+                + "-"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+                ).name[0:2]
+            )
+            product.flush()
+            self.assertEqual(product.default_code, expected_code)
+
+    def test_13_new_attribute(self):
+        self.assertEqual(self.template1.reference_mask, "[TSize]-[TColor]")
+        self.assertEqual(len(self.template1.mapped("product_variant_ids")), 4)
+
+        self.attr3 = self.env["product.attribute"].create({"name": "TCollection"})
+        self.attr3_1 = self.env["product.attribute.value"].create(
+            {"name": "New", "attribute_id": self.attr3.id}
+        )
+        self.attr3_2 = self.env["product.attribute.value"].create(
+            {"name": "Old", "attribute_id": self.attr3.id}
+        )
+
+        self.template1.write(
+            {
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.attr3.id,
+                            "value_ids": [(6, 0, [self.attr3_1.id, self.attr3_2.id])],
+                        },
+                    ),
+                ]
+            }
+        )
+
+        self.assertEqual(
+            self.template1.reference_mask, "[TSize]-[TColor]-[TCollection]"
+        )
+        self.assertEqual(len(self.template1.mapped("product_variant_ids")), 8)
+
+        for product in self.template1.mapped("product_variant_ids"):
+            expected_code = (
+                product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
+                ).name[0:2]
+                + "-"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+                ).name[0:2]
+                + "-"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr3
+                ).name[0:2]
+            )
+            self.assertEqual(product.default_code, expected_code)
+
+    def test_14_rename_attribute(self):
+        self.assertEqual(self.template1.reference_mask, "[TSize]-[TColor]")
+        self.attr1.name = "TNewSize"
+        self.assertEqual(self.template1.reference_mask, "[TNewSize]-[TColor]")
+
+    def test_15_sequence_change(self):
+        self.assertEqual(self.template1.reference_mask, "[TSize]-[TColor]")
+        self.attr1.sequence = 1
+        self.attr2.sequence = 0
+        self.template1.reference_mask = "[TColor]-[TSize]"
+        self.template1.write({"name": "New"})
+        self.assertEqual(self.template1.reference_mask, "[TColor]-[TSize]")
