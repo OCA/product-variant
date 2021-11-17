@@ -4,6 +4,7 @@
 # Copyright 2017 Tecnativa - David Vidal
 # Copyright 2018 Avanzosc S.L. - Daniel Campos
 # Copyright 2020 Tecnativa - João Marques
+# Copyright 2021 Akretion - Kévin Roche
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import re
@@ -40,34 +41,6 @@ def sanitize_reference_mask(product, mask):
         )
 
 
-def get_rendered_default_code(product, mask):
-    product_attrs = defaultdict(str)
-    reference_mask = ReferenceMask(mask)
-    main_lang = product.product_tmpl_id._guess_main_lang()
-    for attr in product.product_template_attribute_value_ids:
-        value = attr.product_attribute_value_id
-        attr_name = value.attribute_id.with_context(lang=main_lang).name
-        if value.attribute_id.code:
-            product_attrs[attr_name] += value.attribute_id.code
-        if value.code:
-            product_attrs[attr_name] += value.code
-    all_attrs = extract_token(mask)
-    missing_attrs = all_attrs - set(product_attrs.keys())
-    missing = dict.fromkeys(
-        missing_attrs,
-        product.env["ir.config_parameter"]
-        .sudo()
-        .get_param("default_reference_missing_placeholder"),
-    )
-    product_attrs.update(missing)
-    default_code = reference_mask.safe_substitute(product_attrs)
-    return default_code
-
-
-def render_default_code(product, mask):
-    product.default_code = get_rendered_default_code(product, mask)
-
-
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
@@ -78,6 +51,9 @@ class ProductTemplate(models.Model):
     reference_mask = fields.Char(
         string="Variant reference mask",
         copy=False,
+        store=True,
+        compute="_compute_reference_mask",
+        inverse="_inverse_reference_mask",
         help="Reference mask for building internal references of a "
         "variant generated from this template.\n"
         "Example:\n"
@@ -100,12 +76,62 @@ class ProductTemplate(models.Model):
         "attribute name",
     )
 
+    variant_default_code_error = fields.Text(
+        compute="_compute_variant_default_code_error"
+    )
+
+    def is_automask(self):
+        return bool(
+            not self.user_has_groups(
+                "product_variant_default_code.group_product_default_code_manual_mask"
+            )
+        )
+
+    @api.depends(
+        "code_prefix",
+        "attribute_line_ids.value_ids",
+        "attribute_line_ids.value_ids.code",
+        "attribute_line_ids.value_ids.name",
+    )
+    def _compute_variant_default_code_error(self):
+        automask = self.is_automask()
+        for rec in self:
+            error_txt = ""
+            if not rec.code_prefix and automask:
+                error_txt += "Reference Prefix is missing.\n"
+            invalid_values = self.attribute_line_ids.value_ids.filtered(
+                lambda s: not s.code
+            )
+            if invalid_values:
+                error_txt += (
+                    "Following attribute value have an empty code :\n- "
+                    + "\n- ".join(invalid_values.mapped("name"))
+                )
+            if error_txt:
+                error_txt = "Default Code can not be computed.\n" + error_txt
+            rec.variant_default_code_error = error_txt
+
+    @api.depends(
+        "code_prefix",
+        "attribute_line_ids",
+        "attribute_line_ids.attribute_id.name",
+    )
+    def _compute_reference_mask(self):
+        automask = self.is_automask()
+        for rec in self:
+            if automask or rec.reference_mask == "":
+                rec.reference_mask = rec._get_default_mask()
+
+    def _inverse_reference_mask(self):
+        self._compute_reference_mask()
+
     def _get_default_mask(self):
         attribute_names = []
         default_reference_separator = (
             self.env["ir.config_parameter"]
             .sudo()
             .get_param("default_reference_separator")
+            or ""
         )
         # Get the attribute name in the main lang format, otherwise we could not
         # match mask with the proper values
@@ -133,30 +159,6 @@ class ProductTemplate(models.Model):
         elif vals.get("reference_mask"):
             sanitize_reference_mask(product, vals["reference_mask"])
         return super(ProductTemplate, self).create(vals)
-
-    def write(self, vals):
-        with_variants = self.env["product.template"]
-        product_obj = self.env["product.product"]
-        if (
-            "reference_mask" in vals
-            and not vals["reference_mask"]
-            or not self.user_has_groups(
-                "product_variant_default_code.group_product_default_code_manual_mask"
-            )
-        ):
-            with_variants = self.filtered("attribute_line_ids")
-            for template in with_variants:
-                new_dict = dict(vals)
-                new_dict["reference_mask"] = template._get_default_mask()
-                super(ProductTemplate, template).write(new_dict)
-        super(ProductTemplate, self - with_variants).write(vals)
-        if vals.get("reference_mask"):
-            cond = [("product_tmpl_id", "=", self.id), ("manual_code", "=", False)]
-            products = product_obj.search(cond)
-            for product in products:
-                if product.reference_mask:
-                    render_default_code(product, product.reference_mask)
-        return True
 
     @api.model
     def _guess_main_lang(self):
@@ -186,18 +188,47 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    manual_code = fields.Boolean(string="Manual Reference")
+    manual_code = fields.Boolean(string="Manual Reference", default=False)
+    default_code = fields.Char(
+        compute="_compute_default_code",
+        inverse="_inverse_default_code",
+        readonly=False,
+        store=True,
+    )
 
-    @api.model
-    def create(self, vals):
-        product = super(ProductProduct, self).create(vals)
-        if product.reference_mask:
-            render_default_code(product, product.reference_mask)
-        return product
+    @api.depends(
+        "product_tmpl_id.reference_mask",
+        "product_template_attribute_value_ids.attribute_id.code",
+        "product_template_attribute_value_ids.product_attribute_value_id.code",
+    )
+    def _compute_default_code(self):
+        for rec in self:
+            if not rec.manual_code:
+                rec.default_code = rec._generate_default_code()
 
-    @api.onchange("default_code")
-    def onchange_default_code(self):
-        self.manual_code = bool(self.default_code)
+    def _inverse_default_code(self):
+        for rec in self:
+            rec.manual_code = bool(rec.default_code)
+
+    def _generate_default_code(self):
+        value_codes = self.product_tmpl_id.attribute_line_ids.value_ids.mapped("code")
+        if (not self.code_prefix and self.product_tmpl_id.is_automask()) or not all(
+            value_codes
+        ):
+            return None
+        else:
+            product_attrs = defaultdict(str)
+            reference_mask = ReferenceMask(self.product_tmpl_id.reference_mask)
+            main_lang = self.product_tmpl_id._guess_main_lang()
+            for attr in self.product_template_attribute_value_ids:
+                value = attr.product_attribute_value_id
+                attr_name = value.attribute_id.with_context(lang=main_lang).name
+                if value.attribute_id.code:
+                    product_attrs[attr_name] += value.attribute_id.code
+                if value.code:
+                    product_attrs[attr_name] += value.code
+            default_code = reference_mask.safe_substitute(product_attrs)
+            return default_code
 
 
 class ProductAttribute(models.Model):
@@ -211,57 +242,19 @@ class ProductAttribute(models.Model):
         ("number_uniq", "unique(name)", _("Attribute Name must be unique!"))
     ]
 
-    def write(self, vals):
-        if "code" not in vals:
-            return super(ProductAttribute, self).write(vals)
-        result = super(ProductAttribute, self).write(vals)
-        # Rewrite reference on all product variants affected
-        for product in self.mapped(
-            "attribute_line_ids.product_tmpl_id.product_variant_ids"
-        ).filtered(lambda x: x.product_tmpl_id.reference_mask and not x.manual_code):
-            render_default_code(product, product.reference_mask)
-        return result
-
 
 class ProductAttributeValue(models.Model):
     _inherit = "product.attribute.value"
 
-    @api.onchange("name")
-    def onchange_name(self):
-        """Set a default code for the value"""
-        if self.name and not self.code:
-            self.code = self.name[:2]
-
     code = fields.Char(
         string="Attribute Value Code",
-        default=onchange_name,
+        compute="_compute_code",
+        readonly=False,
+        store=True,
     )
 
-    @api.model
-    def create(self, vals):
-        if "code" not in vals:
-            vals["code"] = vals.get("name", "")[0:2]
-        return super(ProductAttributeValue, self).create(vals)
-
-    def write(self, vals):
-        if "code" not in vals:
-            return super(ProductAttributeValue, self).write(vals)
-        result = super(ProductAttributeValue, self).write(vals)
-        # Rewrite reference on all product variants affected
-        for product in (
-            self.env["product.product"]
-            .search(
-                [
-                    (
-                        "product_template_attribute_value_ids"
-                        ".product_attribute_value_id",
-                        "in",
-                        self.ids,
-                    )
-                ]
-            )
-            .filtered(lambda x: x.product_tmpl_id.reference_mask and not x.manual_code)
-            .mapped("product_tmpl_id.product_variant_ids")
-        ):
-            render_default_code(product, product.reference_mask)
-        return result
+    @api.depends("code", "name")
+    def _compute_code(self):
+        for rec in self:
+            if rec.name and not rec.code:
+                rec.code = rec.name[:2]
