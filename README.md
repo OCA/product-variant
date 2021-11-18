@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [purchase_variant_configurator](purchase_variant_configurator/) | 13.0.1.0.0 |  | Product variants in purchase management
 [purchase_variant_configurator_on_confirm](purchase_variant_configurator_on_confirm/) | 13.0.1.0.0 |  | Create product variants when confirming the purchase order
 [sale_product_variant_attribute_tax](sale_product_variant_attribute_tax/) | 13.0.1.0.0 |  | Bring the taxes associated to product values
-[sale_variant_configurator](sale_variant_configurator/) | 13.0.1.0.0 |  | Product variants in sale management
+[sale_variant_configurator](sale_variant_configurator/) | 13.0.1.0.1 |  | Product variants in sale management
 
 [//]: # (end addons)
 
