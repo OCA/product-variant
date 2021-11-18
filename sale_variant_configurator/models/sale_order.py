@@ -110,12 +110,17 @@ class SaleOrderLine(models.Model):
     def product_id_change(self):
         """Call again the configurator onchange after this main onchange
         for making sure the SO line description is correct.
+
+        It also puts the proper lang in context for getting the product and
+        attributes in the customer language.
         """
-        res = super().product_id_change()
-        self._onchange_product_id_configurator()
+        obj = self.with_context(lang=self.order_id.partner_id.lang)
+        res = super(SaleOrderLine, obj).product_id_change()
+        obj._onchange_product_id_configurator()
         # product_configurator methods don't take into account this description
-        if self.product_id.description_sale:
-            self.name = (self.name or "") + "\n" + self.product_id.description_sale
+        product = self.product_id.with_context(lang=self.order_id.partner_id.lang)
+        if product.description_sale:
+            self.name = (self.name or "") + "\n" + product.description_sale
         return res
 
     def _update_price_configurator(self):
@@ -148,8 +153,13 @@ class SaleOrderLine(models.Model):
 
     @api.onchange("product_attribute_ids")
     def _onchange_product_attribute_ids_configurator(self):
-        """Update price for having into account possible extra prices"""
-        res = super()._onchange_product_attribute_ids_configurator()
+        """Update price for having into account possible extra prices.
+
+        It also puts the proper lang in context for getting the product and
+        attributes in the customer language.
+        """
+        obj = self.with_context(lang=self.order_id.partner_id.lang)
+        res = super(SaleOrderLine, obj)._onchange_product_attribute_ids_configurator()
         self._update_price_configurator()
         return res
 
