@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo13-addon-product_variant_attribute_tax',
         'odoo13-addon-product_variant_configurator',
+        'odoo13-addon-product_variant_configurator_website_sale',
         'odoo13-addon-product_variant_default_code',
         'odoo13-addon-product_variant_sale_price',
         'odoo13-addon-purchase_variant_configurator',
