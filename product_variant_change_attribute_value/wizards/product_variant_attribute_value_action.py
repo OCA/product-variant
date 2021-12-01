@@ -58,6 +58,7 @@ class ProductVariantAttributeValueAction(models.TransientModel):
         if not ids:
             self.update({"selectable_attribute_value_ids": False})
             return
+        self.env["product.attribute.value"].flush(["attribute_id"])
         self.env.cr.execute(query, dict(ids=ids))
         values_by_attr = dict(self.env.cr.fetchall())
         for rec in self:
