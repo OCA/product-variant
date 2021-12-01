@@ -14,64 +14,68 @@ class VariantAttributeValueWizard(models.TransientModel):
     _description = "Wizard to change attriubtes on product variants"
 
     product_ids = fields.Many2many(comodel_name="product.product")
-    product_variant_count = fields.Integer(compute="_compute_count")
-    product_template_count = fields.Integer(compute="_compute_count")
+    product_variant_count = fields.Integer(readonly=True)
+    product_template_count = fields.Integer(readonly=True)
     attributes_action_ids = fields.Many2many(
         comodel_name="variant.attribute.value.action",
         relation="variant_attribute_wizard_attribute_action_rel",
-        compute="_compute_attributes_action_ids",
-        readonly=False,
-        store=True,
     )
-    attribute_value_ids = fields.Many2many(
-        comodel_name="product.attribute.value", compute="_compute_attribute_value_ids",
-    )
-    available_attribute_ids = fields.Many2many(
-        comodel_name="product.attribute", compute="_compute_attribute_value_ids",
-    )
+    attribute_value_ids = fields.Many2many(comodel_name="product.attribute.value")
+    available_attribute_ids = fields.Many2many(comodel_name="product.attribute")
     filter_attribute_id = fields.Many2one(
         comodel_name="product.attribute",
         domain="[('id', 'in', available_attribute_ids)]",
     )
 
-    @api.depends("product_ids", "filter_attribute_id")
-    def _compute_attributes_action_ids(self):
-        for rec in self:
-            values = rec.attribute_value_ids
-            if rec.filter_attribute_id:
-                values = values.filtered(
-                    lambda x: x.attribute_id == rec.filter_attribute_id
-                )
-                if rec.attributes_action_ids:
-                    rec.attributes_action_ids = False
-            rec.attributes_action_ids = [
-                (
-                    0,
-                    0,
-                    {
-                        "product_attribute_value_id": x.id,
-                        "attribute_id": x.attribute_id.id,
-                        "attribute_action": "do_nothing",
-                    },
-                )
+    @api.model
+    def _get_actions_from_values(self, values, _filter=None):
+        if _filter:
+            values = values.filtered(lambda x: x.attribute_id == _filter)
+        return self.env["variant.attribute.value.action"].create(
+            [
+                {
+                    "product_attribute_value_id": x.id,
+                    "attribute_id": x.attribute_id.id,
+                    "attribute_action": "do_nothing",
+                }
                 for x in values._origin
             ]
+        )
 
-    @api.depends("product_ids")
-    def _compute_attribute_value_ids(self):
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        active_model = self.env.context.get("active_model")
+        if active_model != "product.product":
+            return res
+        active_ids = self.env.context.get("active_ids")
+        variants = self.env[active_model].browse(active_ids)
+        attribute_values = (
+            variants.product_template_attribute_value_ids.product_attribute_value_id
+        )
+        available_attributes = attribute_values.mapped("attribute_id")
+        actions = self._get_actions_from_values(attribute_values)
+        res.update(
+            {
+                "product_ids": [(6, 0, variants.ids)],
+                "attribute_value_ids": [(6, 0, attribute_values.ids)],
+                "available_attribute_ids": [(6, 0, available_attributes.ids)],
+                "attributes_action_ids": [(6, 0, actions.ids)],
+                "product_variant_count": len(variants),
+                "product_template_count": len(variants.mapped("product_tmpl_id")),
+            }
+        )
+        return res
+
+    @api.onchange("filter_attribute_id")
+    def _compute_attributes_action_ids(self):
+        """Update actions according to the attribute to filter on.
+        """
         for rec in self:
-            rec.attribute_value_ids = (
-                rec.product_ids.product_template_attribute_value_ids.product_attribute_value_id
+            actions = self._get_actions_from_values(
+                rec.attribute_value_ids, _filter=rec.filter_attribute_id
             )
-            rec.available_attribute_ids = rec.attribute_value_ids.mapped("attribute_id")
-
-    @api.depends("product_ids")
-    def _compute_count(self):
-        for record in self:
-            record.product_variant_count = len(record.product_ids)
-            record.product_template_count = len(
-                record.product_ids.mapped("product_tmpl_id")
-            )
+            rec.attributes_action_ids = [(6, 0, actions.ids)]
 
     def action_apply(self):
         for product in self.product_ids:
