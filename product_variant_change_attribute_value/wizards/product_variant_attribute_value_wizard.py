@@ -11,7 +11,7 @@ from odoo.exceptions import UserError
 
 class VariantAttributeValueWizard(models.TransientModel):
     _name = "variant.attribute.value.wizard"
-    _description = "Wizard to change attriubtes on product variants"
+    _description = "Wizard to change attributes on product variants"
 
     product_ids = fields.Many2many(comodel_name="product.product")
     product_variant_count = fields.Integer(readonly=True)
