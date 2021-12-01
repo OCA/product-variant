@@ -1,11 +1,11 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 from odoo import exceptions
-from odoo.tests import common
+from odoo.tests.common import Form, SavepointCase
 from odoo.tools import mute_logger
 
 
-class TestProductVariantChangeAttributeValue(common.SavepointCase):
+class TestProductVariantChangeAttributeValue(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -39,7 +39,8 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
 
     def _get_wiz(self, prod_ids=None):
         prod_ids = prod_ids or self.variants.ids
-        return self.wiz_model.with_context(default_product_ids=prod_ids).create({})
+        context = {"active_model": "product.product", "active_ids": prod_ids}
+        return Form(self.wiz_model.with_context(context)).save()
 
     def _change_action(self, wiz, value, attribute_action, replaced_by_id=False):
         """Set an action to do by the wizard on an attribute value."""
@@ -88,9 +89,10 @@ class TestProductVariantChangeAttributeValue(common.SavepointCase):
     def test_actions_field_filter(self):
         wiz = self._get_wiz()
         self.assertEqual(len(wiz.attributes_action_ids), len(wiz.attribute_value_ids))
-        wiz.filter_attribute_id = self.legs
+        with Form(wiz) as res:
+            res.filter_attribute_id = self.legs
         self.assertEqual(
-            len(wiz.attributes_action_ids),
+            len(res.attributes_action_ids),
             len([x for x in self.legs.value_ids if x in self.used_values]),
         )
 
