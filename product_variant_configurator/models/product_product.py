@@ -153,14 +153,6 @@ class ProductProduct(models.Model):
                             ],
                         ),
                         (
-                            "attribute_id",
-                            "in",
-                            [
-                                x[2]["attribute_id"]
-                                for x in vals["product_attribute_ids"]
-                            ],
-                        ),
-                        (
                             "product_attribute_value_id",
                             "in",
                             [
