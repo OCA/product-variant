@@ -3,13 +3,47 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import _, api, exceptions, models
+from odoo import _, api, exceptions, fields, models
 from odoo.tools import config
 
 
 class ProductProduct(models.Model):
     _inherit = ["product.product", "product.configurator"]
     _name = "product.product"
+
+    attributes_editable = fields.Boolean(
+        string="Attributes editable?", compute="_compute_attributes_editable",
+    )
+    attributes_allowed_ids = fields.Many2many(
+        comodel_name="product.template.attribute.value",
+        compute="_compute_attributes_allowed",
+    )
+
+    @api.depends(
+        "product_template_attribute_value_ids", "product_tmpl_id",
+    )
+    def _compute_attributes_allowed(self):
+        value_model = self.env["product.template.attribute.value"]
+        for rec in self:
+            selected_attributes = rec.product_template_attribute_value_ids.mapped(
+                "product_attribute_value_id.attribute_id"
+            )
+            allowed_values = value_model.search(
+                [
+                    ("product_tmpl_id", "=", rec.product_tmpl_id._origin.id),
+                    (
+                        "attribute_line_id.attribute_id",
+                        "not in",
+                        selected_attributes.ids,
+                    ),
+                ]
+            )
+            rec.attributes_allowed_ids = allowed_values.ids
+
+    @api.depends("product_tmpl_id.no_create_variants")
+    def _compute_attributes_editable(self):
+        for rec in self:
+            rec.attributes_editable = rec.product_tmpl_id.no_create_variants == "yes"
 
     def _get_product_attributes_values_dict(self):
         # Retrieve first the attributes from template to preserve order

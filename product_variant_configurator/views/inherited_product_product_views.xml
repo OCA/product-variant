@@ -45,7 +45,7 @@
                         <tree create="0" delete="0" editable="1">
                             <field name="owner_model" invisible="1" />
                             <field name="owner_id" invisible="1" />
-                            <field name="attribute_id" />
+                            <field name="attribute_id" force_save="1" />
                             <field
                                 name="possible_value_ids"
                                 widget="many2many_tags"
@@ -70,6 +70,83 @@
                         attrs="{'invisible': [('product_id', '=', False)]}"
                     />
                 </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record
+        id="product_product_editable_attributes_easy_edit_form_view"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >product.product.editable.attributes.easy.edit.form.view</field>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('group_product_variant_allow_edit_variants'))]"
+        />
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='product_template_attribute_value_ids']"
+                position="before"
+            >
+                <field name="attributes_editable" invisible="1" />
+                <field
+                    name="attributes_allowed_ids"
+                    invisible="1"
+                    widget="many2many_tags"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='product_template_attribute_value_ids']"
+                position="attributes"
+            >
+                <attribute name="readonly">0</attribute>
+                <attribute
+                    name="attrs"
+                >{'readonly': ['|', ('attributes_editable', '=', False), ('id', '=', False)]}</attribute>
+                <attribute
+                    name="domain"
+                >[('id', 'in', attributes_allowed_ids)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_editable_attributes_form_view" model="ir.ui.view">
+        <field name="name">product.product.editable.attributes.form.view</field>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('group_product_variant_allow_edit_variants'))]"
+        />
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='product_template_attribute_value_ids']"
+                position="before"
+            >
+                <field name="attributes_editable" invisible="1" />
+                <field
+                    name="attributes_allowed_ids"
+                    invisible="1"
+                    widget="many2many_tags"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='product_template_attribute_value_ids']"
+                position="attributes"
+            >
+                <attribute name="readonly">0</attribute>
+                <attribute
+                    name="attrs"
+                >{'readonly': ['|', ('attributes_editable', '=', False), ('id', '=', False)]}</attribute>
+                <attribute
+                    name="domain"
+                >[('id', 'in', attributes_allowed_ids)]</attribute>
             </xpath>
         </field>
     </record>

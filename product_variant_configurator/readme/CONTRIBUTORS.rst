@@ -9,3 +9,4 @@
 * Simone Versienti <s.versienti@apuliasoftware.it>
 * Adria Gil Sorribes <adria.gil@forgeflow.com>
 * Héctor Villarreal Ortega <hector.villarreal@forgeflow.com>
+* Christopher Ormaza <chris.ormaza@forgeflow.com>

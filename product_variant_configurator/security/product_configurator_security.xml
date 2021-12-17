@@ -6,4 +6,8 @@
         >Use extended description when having product attributes</field>
         <field name="category_id" ref="base.module_category_hidden" />
     </record>
+    <record id="group_product_variant_allow_edit_variants" model="res.groups">
+        <field name="name">Allow to edit attribute values in variants</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+    </record>
 </odoo>
