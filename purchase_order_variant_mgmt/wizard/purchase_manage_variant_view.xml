@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -8,35 +8,35 @@
         <field name="arch" type="xml">
             <form string="Manage Product Variants">
                 <group>
-                    <field name="product_tmpl_id"
-                           domain="[('attribute_line_ids', '!=', False)]"
-                           options="{'no_create': True}"
+                    <field
+                        name="product_tmpl_id"
+                        domain="[('attribute_line_ids', '!=', False)]"
+                        options="{'no_create': True}"
                     />
                 </group>
-                <field name="variant_line_ids"
-                       widget="x2many_2d_matrix"
-                       field_x_axis="value_x"
-                       field_y_axis="value_y"
-                       field_value="product_uom_qty"
-                       x_axis_clickable="0"
-                       y_axis_clickable="0"
+                <field
+                    name="variant_line_ids"
+                    widget="x2many_2d_matrix"
+                    field_x_axis="value_x"
+                    field_y_axis="value_y"
+                    field_value="product_uom_qty"
+                    x_axis_clickable="0"
+                    y_axis_clickable="0"
                 >
                     <tree>
-                        <field name="value_x"/>
-                        <field name="value_y"/>
-                        <field name="product_uom_qty"/>
+                        <field name="value_x" />
+                        <field name="value_y" />
+                        <field name="product_uom_qty" />
                     </tree>
                 </field>
                 <footer>
-                    <button name="button_transfer_to_order"
-                            type="object"
-                            string="Transfer to order"
-                            class="oe_highlight"
+                    <button
+                        name="button_transfer_to_order"
+                        type="object"
+                        string="Transfer to order"
+                        class="oe_highlight"
                     />
-                    <button class="oe_link"
-                            special="cancel"
-                            string="Cancel"
-                    />
+                    <button class="oe_link" special="cancel" string="Cancel" />
                 </footer>
             </form>
         </field>
