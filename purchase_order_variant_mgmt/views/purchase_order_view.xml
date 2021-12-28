@@ -23,7 +23,7 @@
                     invisible="1"
                 />
                 <field name="state_purchase_order_variant_mgmt" invisible="1" />
-                <field name="product_attribute_value_ids" invisible="1" />
+                <field name="product_template_attribute_value_ids" invisible="1" />
 
                 <button
                     name="%(action_purchase_manage_variant)d"
@@ -32,7 +32,7 @@
                     icon="fa-th"
                     class="oe_edit_only"
                     context="{'default_product_tmpl_id': product_tmpl_id_purchase_order_variant_mgmt}"
-                    attrs="{'invisible': ['|', ('state_purchase_order_variant_mgmt', 'not in', ('draft', 'sent')), ('product_attribute_value_ids', '=', [])]}"
+                    attrs="{'invisible': ['|', ('state_purchase_order_variant_mgmt', 'not in', ('draft', 'sent')), ('product_template_attribute_value_ids', '=', [])]}"
                 />
             </xpath>
             <xpath expr="//field[@name='order_line']" position="attributes">

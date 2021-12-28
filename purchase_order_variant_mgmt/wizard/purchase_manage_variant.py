@@ -3,8 +3,6 @@
 
 from odoo import api, fields, models
 
-import odoo.addons.decimal_precision as dp
-
 
 class PurchaseManageVariant(models.TransientModel):
     _name = "purchase.manage.variant"
@@ -24,8 +22,12 @@ class PurchaseManageVariant(models.TransientModel):
         values = value_x
         if value_y:
             values += value_y
+
         return self.product_tmpl_id.product_variant_ids.filtered(
-            lambda x: not (values - x.attribute_value_ids)
+            lambda x: not (
+                values
+                - x.product_template_attribute_value_ids.product_attribute_value_id
+            )
         )[:1]
 
     @api.onchange("product_tmpl_id")
@@ -60,15 +62,14 @@ class PurchaseManageVariant(models.TransientModel):
                         0,
                         0,
                         {
-                            "value_x": value_x,
-                            "value_y": value_y,
+                            "value_x": value_x.id or False,
+                            "value_y": value_y.id if value_y else False,
                             "product_uom_qty": order_line.product_qty,
                         },
                     )
                 )
         self.variant_line_ids = lines
 
-    @api.multi
     def button_transfer_to_order(self):
         context = self.env.context
         record = self.env[context["active_model"]].browse(context["active_id"])
@@ -119,5 +120,5 @@ class PurchaseManageVariantLine(models.TransientModel):
     value_y = fields.Many2one(comodel_name="product.attribute.value")
     product_uom_qty = fields.Float(
         string="Quantity",
-        digits=dp.get_precision("Product UoS"),
+        digits="Product UoS",
     )

@@ -5,7 +5,7 @@
     "name": "Handle easily multiple variants on Purchase Orders",
     "summary": "Handle the addition/removal of multiple variants from "
     "product template into the purchase order",
-    "version": "12.0.1.0.2",
+    "version": "14.0.1.0.0",
     "author": "Tecnativa," "Odoo Community Association (OCA)",
     "category": "Purchases",
     "license": "AGPL-3",
@@ -15,6 +15,7 @@
         "web_widget_x2many_2d_matrix",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "wizard/purchase_manage_variant_view.xml",
         "views/purchase_order_view.xml",
     ],
