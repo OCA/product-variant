@@ -137,9 +137,9 @@ msgstr ""
 "Color: rojo (r), amarillo (y), negro (b) #Rojo, amarillo, negro son el valor "
 "del atributo, `r`,` y`, `b` son el código correspondiente\n"
 "Tamaño: L (l), XL (x)\n"
-"Al configurar la máscara de referencia de la variante en `[Color] - [Tamaño]`"
-", el código predeterminado en las variantes será algo así como `r-l`` b-l` "
-"`r-x` ...\n"
+"Al configurar la máscara de referencia de la variante en `[Color] - "
+"[Tamaño]`, el código predeterminado en las variantes será algo así como `r-"
+"l`` b-l` `r-x` ...\n"
 "Si lo desea, incluso puede hacer que el nombre del atributo aparezca más de "
 "una vez en la máscara. Por ejemplo, `fancyA / [Size] ~ [Color] ~ [Size]`\n"
 " Cuando se guarde, el código predeterminado en las variantes será algo así "
@@ -153,11 +153,9 @@ msgstr ""
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings_group_product_default_code
 msgid ""
-"Set behaviour of codes (depends on variant use: see Sales/Purchases "
+"Set behaviour of codes (depends on variant use: see Sales/Inventory "
 "configuration)"
 msgstr ""
-"Establecer el comportamiento de los códigos (depende del uso de la variante: "
-"consulte la configuración de Ventas / Compras)"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_reference_mask
@@ -179,3 +177,10 @@ msgstr "producto.atributo.valor"
 #: model:ir.model,name:product_variant_default_code.model_res_config_settings
 msgid "res.config.settings"
 msgstr "res.config.settings"
+
+#~ msgid ""
+#~ "Set behaviour of codes (depends on variant use: see Sales/Purchases "
+#~ "configuration)"
+#~ msgstr ""
+#~ "Establecer el comportamiento de los códigos (depende del uso de la "
+#~ "variante: consulte la configuración de Ventas / Compras)"

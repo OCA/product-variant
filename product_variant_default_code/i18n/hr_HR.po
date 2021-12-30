@@ -133,7 +133,7 @@ msgstr ""
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings_group_product_default_code
 msgid ""
-"Set behaviour of codes (depends on variant use: see Sales/Purchases "
+"Set behaviour of codes (depends on variant use: see Sales/Inventory "
 "configuration)"
 msgstr ""
 

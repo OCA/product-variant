@@ -149,11 +149,9 @@ msgstr ""
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings_group_product_default_code
 msgid ""
-"Set behaviour of codes (depends on variant use: see Sales/Purchases "
+"Set behaviour of codes (depends on variant use: see Sales/Inventory "
 "configuration)"
 msgstr ""
-"Définir le comportement des codes (dépend de l'utilisation des variantes : "
-"voir la configuration Achats/Ventes"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product_reference_mask
@@ -175,3 +173,10 @@ msgstr "product.attribute.value"
 #: model:ir.model,name:product_variant_default_code.model_res_config_settings
 msgid "res.config.settings"
 msgstr "res.config.settings"
+
+#~ msgid ""
+#~ "Set behaviour of codes (depends on variant use: see Sales/Purchases "
+#~ "configuration)"
+#~ msgstr ""
+#~ "Définir le comportement des codes (dépend de l'utilisation des "
+#~ "variantes : voir la configuration Achats/Ventes"
