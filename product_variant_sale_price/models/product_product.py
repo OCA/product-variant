@@ -15,6 +15,8 @@ class ProductTemplate(models.Model):
     @api.model
     def create(self, vals):
         product_tmpl = super(ProductTemplate, self).create(vals)
+        if self.env.context.get('skip_update_fix_price', False):
+            return product_tmpl
         product_tmpl._update_fix_price(vals)
         return product_tmpl
 
