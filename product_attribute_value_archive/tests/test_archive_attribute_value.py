@@ -186,8 +186,7 @@ class TestArchiveAttributeValue(SavepointCase):
         self.assertAll(product_tmpl_attribute_vals.mapped("ptav_active"))
 
     def test_unarchive_product_archived_tmpl_attr_line(self):
-        """docstring here
-        """
+        """docstring here"""
         self._create_sale_order(self.red_products)
         # Removing the tmpl_attr_line from the product templates
         # should archive it, as well as the variant
