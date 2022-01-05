@@ -8,8 +8,7 @@ class ProductTemplateAttributeValue(models.Model):
     _inherit = "product.template.attribute.value"
 
     def _unarchive(self):
-        """Unarchive
-        """
+        """Unarchive"""
         self.ensure_one()
         self.write({"ptav_active": True})
         # get related archived product_attribute_value and unarchive it
