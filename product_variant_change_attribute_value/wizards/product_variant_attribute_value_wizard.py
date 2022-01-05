@@ -69,8 +69,7 @@ class VariantAttributeValueWizard(models.TransientModel):
 
     @api.onchange("filter_attribute_id")
     def _compute_attributes_action_ids(self):
-        """Update actions according to the attribute to filter on.
-        """
+        """Update actions according to the attribute to filter on."""
         for rec in self:
             actions = self._get_actions_from_values(
                 rec.attribute_value_ids, _filter=rec.filter_attribute_id

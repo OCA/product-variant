@@ -3,7 +3,7 @@
 
 {
     "name": "Product Variant Change Attribute Value",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Camptocamp SA, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",

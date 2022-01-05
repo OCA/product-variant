@@ -13,7 +13,9 @@ class ProductVariantAttributeValueAction(models.TransientModel):
         comodel_name="product.attribute.value", ondelete="cascade"
     )
     attribute_action = fields.Selection(
-        selection="_selection_action", default="do_nothing", required=True,
+        selection="_selection_action",
+        default="do_nothing",
+        required=True,
     )
     attribute_id = fields.Many2one(
         comodel_name="product.attribute",
