@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_variant_attribute_value_action_employee,variant.attribute.value.action employee,model_variant_attribute_value_action,base.group_user,1,0,0,0
+access_variant_attribute_value_action_manager,variant.attribute.value.action manager,model_variant_attribute_value_action,base.group_system,1,1,1,1
+access_variant_attribute_value_wizard_employee,variant.attribute.value.wizard employee,model_variant_attribute_value_wizard,base.group_user,1,0,0,0
+access_variant_attribute_value_wizard_manager,variant.attribute.value.wizard manager,model_variant_attribute_value_wizard,base.group_system,1,1,1,1
