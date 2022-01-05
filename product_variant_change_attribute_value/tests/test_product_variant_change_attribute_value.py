@@ -191,7 +191,7 @@ class TestProductVariantChangeAttributeValue(SavepointCase):
 
     @mute_logger("odoo.models.unlink")
     def test_active_deactivate_attribute_value_2_step(self):
-        """ Deactivate a pav and reactivate it in 2 steps.
+        """Deactivate a pav and reactivate it in 2 steps.
 
         Use the wizard to deactivate (not used anymore) the white attribute
         And reactivate it by using it on another variant.
