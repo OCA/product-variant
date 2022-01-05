@@ -2,8 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo.exceptions import UserError
-from odoo.tests.common import Form, SavepointCase
-from odoo.tools import mute_logger
+from odoo.tests.common import SavepointCase
 
 
 class TestArchiveAttributeValue(SavepointCase):
@@ -75,18 +74,22 @@ class TestArchiveAttributeValue(SavepointCase):
             ]
         )
         cls.red_pen = pen_template_value.ptav_product_variant_ids
+        cls.order = cls.env.ref("sale.sale_order_1")
 
     @classmethod
-    def _create_sale_order(cls, products):
+    def _create_sale_order_lines(cls, products):
         """Create a sale order with given products."""
-        sale_form = Form(cls.env["sale.order"])
-        sale_form.partner_id = cls.partner
-        with mute_logger("odoo.tests.common.onchange"):
-            for product in products:
-                with sale_form.order_line.new() as line:
-                    line.product_id = product
-                    line.product_uom_qty = 1
-        return sale_form.save()
+        vals = []
+        for product in products:
+            vals.append(
+                {
+                    "product_id": product.id,
+                    "product_uom_qty": 1,
+                    "order_id": cls.order.id,
+                }
+            )
+        cls.env["sale.order.line"].create(vals)
+        return cls.order
 
     @classmethod
     def _get_template_line_from_templates(cls, product_tmpls):
@@ -117,7 +120,7 @@ class TestArchiveAttributeValue(SavepointCase):
         self.assertNotIn(self.red, updated_values)
 
     def test_value_archive(self):
-        self._create_sale_order(self.red_products)
+        self._create_sale_order_lines(self.red_products)
         # Trying to unlink the value here should raise an exception
         # since it's still referenced by the car and pen product templates
         regex = f"You cannot delete the value color: {self.red.name}"
@@ -133,7 +136,7 @@ class TestArchiveAttributeValue(SavepointCase):
         self.assertFalse(self.red.active)
 
     def test_value_non_archiveable(self):
-        self._create_sale_order(self.red_pen)
+        self._create_sale_order_lines(self.red_pen)
         # Remove the value from the set
         self.pen_attribute_line.value_ids = [(3, self.red.id, 0)]
         # The variant should be archived, since it's referenced
@@ -142,8 +145,9 @@ class TestArchiveAttributeValue(SavepointCase):
         # The red car variant is still active, so we shouldn't be able
         # to archive or unlink the value, and odoo should raise
         # an exception saying that red is still referenced by car
-        regex = r"You cannot delete the value color: {value}.*{product}".format(
-            value=self.red.name, product=self.car.name
+        regex = (
+            f"You cannot delete the value color: {self.red.name} "
+            f"because it is used on the following products:\n{self.car.name}"
         )
         with self.assertRaisesRegex(UserError, regex):
             self.red.unlink()
@@ -152,7 +156,7 @@ class TestArchiveAttributeValue(SavepointCase):
         """If we try to create the same attribute value as an existing archived
         one, then it should be unarchived instead.
         """
-        self._create_sale_order(self.red_products)
+        self._create_sale_order_lines(self.red_products)
         # Remove the red value from the set
         self.attribute_lines.write({"value_ids": [(3, self.red.id, 0)]})
         # now, since the the variant is archived, we shouldn't be able
@@ -168,7 +172,7 @@ class TestArchiveAttributeValue(SavepointCase):
         """An archived attribute value should be unarchived if a variant
         that references it is unarchived.
         """
-        self._create_sale_order(self.red_products)
+        self._create_sale_order_lines(self.red_products)
         # Remove the red value from the set
         self.attribute_lines.write({"value_ids": [(3, self.red.id, 0)]})
         # now, since the the variant is archived, we shouldn't be able
@@ -187,7 +191,7 @@ class TestArchiveAttributeValue(SavepointCase):
 
     def test_unarchive_product_archived_tmpl_attr_line(self):
         """docstring here"""
-        self._create_sale_order(self.red_products)
+        self._create_sale_order_lines(self.red_products)
         # Removing the tmpl_attr_line from the product templates
         # should archive it, as well as the variant
         self.red_templates.write({"attribute_line_ids": [(5, 0, 0)]})
