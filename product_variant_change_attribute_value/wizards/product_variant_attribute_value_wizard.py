@@ -95,9 +95,8 @@ class VariantAttributeValueWizard(models.TransientModel):
 
     def _action_apply(self, product):
         """Update a variant with all the actions set by the user in the wizard."""
-        pav_ids = product.product_template_attribute_value_ids.mapped(
-            "product_attribute_value_id"
-        )
+        product_tmpl_av_ids = product.product_template_attribute_value_ids
+        pav_ids = product_tmpl_av_ids.mapped("product_attribute_value_id")
         pavs_to_clean_by_attr = defaultdict(self.env["product.attribute.value"].browse)
         for value_action in self.attributes_action_ids:
             action = value_action.attribute_action
@@ -110,8 +109,10 @@ class VariantAttributeValueWizard(models.TransientModel):
                 lambda r: r.product_attribute_value_id != pav
             )
             if action == "delete":
+                if pav.id in product_tmpl_av_ids.attribute_id.ids:
+                    if self._remove_duplicate_product(product):
+                        continue
                 # nothing to do because `_cleanup_attribute_value` will take care
-                pass
             elif action == "replace":
                 if not value_action.replaced_by_id:
                     continue
@@ -206,6 +207,42 @@ class VariantAttributeValueWizard(models.TransientModel):
             )
             if tpl_attr_values:
                 self._handle_unique_violation(tpl_attr_values.unlink, error_msg)
+
+    def _remove_duplicate_product(self, product):
+        product_pavs = set(product.product_template_attribute_value_ids.ids)
+        for check_product in self.product_ids - product:
+            variant_pavs = set(check_product.product_template_attribute_value_ids.ids)
+            if not variant_pavs.issubset(product_pavs):
+                continue
+            if not self._is_product_associated(product):
+                product.unlink()
+                return True
+            elif not self._is_product_associated(check_product):
+                check_product.unlink()
+            else:
+                message = _(
+                    "Both products %s are associated with"
+                    " Sale Orders/Invoices/etc., impossible to remove"
+                )
+                names = [product.display_name, check_product.display_name]
+                raise UserError(message % (", ".join(names)))
+        return False
+
+    def _is_product_associated(self, product):
+        line_models = [
+            "account.move.line",
+            "purchase.order.line",
+            "sale.order.line",
+            "stock.move.line",
+            "stock.inventory.line",
+            "sale.order.template.line",
+        ]
+        models = self.env["ir.model"].search([("model", "in", line_models)])
+        domain = [("product_id", "=", product.id)]
+        for model in models:
+            if self.env[model.model].search(domain, limit=1):
+                return True
+        return False
 
     def _unique_err_msg(self, product, tpl_attr_line, pavs):
         msg = _(
