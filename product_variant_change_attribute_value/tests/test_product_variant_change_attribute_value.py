@@ -1,10 +1,11 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from odoo import exceptions
-from odoo.tests.common import Form, SavepointCase
+from odoo.exceptions import UserError
+from odoo.tests.common import Form, SavepointCase, tagged
 from odoo.tools import mute_logger
 
 
+@tagged("post_install", "-at_install")
 class TestProductVariantChangeAttributeValue(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -110,44 +111,95 @@ class TestProductVariantChangeAttributeValue(SavepointCase):
             self._is_attribute_value_on_template(self.variant_1, self.steel)
         )
 
-    # @simahawk: not sure how this was supposed to work
-    # The unique violation error is raised and it's correct!
-    # What shall we do? Delete template attrs? IMO that's dangerous.
-    # See next test.
-    # @mute_logger("odoo.models.unlink")
-    # def test_remove_all_attribute_values(self):
-    #     """Check removing an attribute value on ALL variants of a template.
+    @mute_logger("odoo.models.unlink")
+    def test_remove_all_attribute_values(self):
+        """Check removing an attribute value on ALL variants of a template.
 
-    #     Normally this can cause an error because you cannot delete all values
-    #     if the variants left do not have a unique combination of attributes.
-    #     """
-    #     self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
+        Normally this can cause an error because you cannot delete all values
+        if the variants left do not have a unique combination of attributes.
+        """
+        self.assertTrue(self._is_value_on_variant(self.variant_1, self.steel))
 
-    #     wiz = self._get_wiz()
-    #     self._change_action(wiz, self.steel, "delete")
-    #     self._change_action(wiz, self.aluminium, "delete")
-    #     wiz.action_apply()
-
-    #     self.assertFalse(self._is_value_on_variant(self.variant_1, self.steel))
-    #     self.assertFalse(
-    #         self._is_attribute_value_on_template(self.variant_1, self.steel)
-    #     )
-
-    @mute_logger("odoo.models.unlink", "odoo.sql_db")
-    def test_active_deactivate_attributes_uniqueness_error(self):
         wiz = self._get_wiz()
         self._change_action(wiz, self.steel, "delete")
         self._change_action(wiz, self.aluminium, "delete")
-        # Steel got removed but you cannot drop aluminium too
-        # otherwise the variants left won't be unique anymore
-        with self.assertRaises(exceptions.UserError) as err:
-            # assertRaisesRegex drove me insane. Let's check the string in the easy way
+        wiz.action_apply()
+        self.assertFalse(self._is_value_on_variant(self.variant_1, self.steel))
+        self.assertFalse(
+            self._is_attribute_value_on_template(self.variant_1, self.steel)
+        )
+
+    def test_remove_attribute_values_when_both_products_are_associated(self):
+        if "sale.order" not in self.env:
+            return
+
+        self.partner = self.env["res.partner"].create(
+            {
+                "name": "Test Partner",
+            }
+        )
+        self.sale_order_1 = self.env["sale.order"].create(
+            {"partner_id": self.partner.id}
+        )
+        self.sale_order_line_1 = self.env["sale.order.line"].create(
+            {
+                "order_id": self.sale_order_1.id,
+                "name": self.variant_1.name,
+                "product_id": self.variant_1.id,
+                "product_uom_qty": 2,
+                "price_unit": 10,
+                "customer_lead": 1.0,
+            }
+        )
+        self.sale_order_line_2 = self.env["sale.order.line"].create(
+            {
+                "order_id": self.sale_order_1.id,
+                "name": self.variant_3.name,
+                "product_id": self.variant_3.id,
+                "product_uom_qty": 2,
+                "price_unit": 10,
+                "customer_lead": 1.0,
+            }
+        )
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.steel, "delete")
+        self._change_action(wiz, self.aluminium, "delete")
+        with self.assertRaises(UserError) as err:
             wiz.action_apply()
-            self.assertTrue(
-                err.exception.name.endswith(
-                    "uniqueness compromised.\n Impossible to remove value(s): Aluminium"
-                )
+        self.assertTrue(
+            err.exception.args[0].endswith(
+                "with Sale Orders/Invoices/etc., impossible to remove"
             )
+        )
+
+    def test_remove_all_attribute_values_when_one_product_is_associated(self):
+        if "sale.order" not in self.env:
+            return
+
+        self.partner = self.env["res.partner"].create(
+            {
+                "name": "Test Partner",
+            }
+        )
+        self.sale_order_1 = self.env["sale.order"].create(
+            {"partner_id": self.partner.id}
+        )
+        self.sale_order_line_1 = self.env["sale.order.line"].create(
+            {
+                "order_id": self.sale_order_1.id,
+                "name": self.variant_1.name,
+                "product_id": self.variant_1.id,
+                "product_uom_qty": 2,
+                "price_unit": 10,
+                "customer_lead": 1.0,
+            }
+        )
+
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.steel, "delete")
+        self._change_action(wiz, self.aluminium, "delete")
+        wiz.action_apply()
+        self.assertFalse(self._is_value_on_variant(self.variant_1, self.steel))
 
     @mute_logger("odoo.models.unlink")
     def test_change_attribute_value(self):
