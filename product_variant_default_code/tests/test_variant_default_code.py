@@ -113,7 +113,8 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.template1.reference_mask = "JKTÜ/[TColor]#[TSize]"
         for product in self.template1.mapped("product_variant_ids"):
             expected_code = (
-                "JKTÜ/"
+                self.template1.code_prefix
+                + "JKTÜ/"
                 + product.product_template_attribute_value_ids.filtered(
                     lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
@@ -133,7 +134,8 @@ class TestVariantDefaultCode(common.SavepointCase):
         self.template1.reference_mask = "J[TColor][TSize]"
         for product in self.template1.mapped("product_variant_ids")[1:]:
             expected_code = (
-                "J"
+                self.template1.code_prefix
+                + "J"
                 + product.product_template_attribute_value_ids.filtered(
                     lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
@@ -357,3 +359,26 @@ class TestVariantDefaultCode(common.SavepointCase):
             1,
         )
         self.assertEqual(self.template1.variant_default_code_error, expected_error)
+
+    def test_18_both_prefix_and_mask_changing(self):
+        self.env.user.groups_id |= self.group_default_code
+        self.template1.write(
+            {
+                "code_prefix": "pre/",
+                "reference_mask": "fix-[TColor]/[TSize]",
+            }
+        )
+
+        for product in self.template1.mapped("product_variant_ids"):
+            expected_code = (
+                self.template1.code_prefix
+                + "fix-"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+                ).name[0:2]
+                + "/"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
+                ).name[0:2]
+            )
+            self.assertEqual(product.default_code, expected_code)

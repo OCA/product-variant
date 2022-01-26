@@ -124,6 +124,7 @@ Authors
 * AvancOSC
 * Shine IT
 * Tecnativa
+* Akretion
 
 Contributors
 ~~~~~~~~~~~~
@@ -132,6 +133,7 @@ Contributors
 * Tony Gu <tony@openerp.cn>
 * David Beal <david.beal@akretion.com>
 * Daniel Campos <danielcampos@avanzosc.es>
+* Kévin Roche <kevin.roche@akretion.com>
 
 * Tecnativa <tecnativa.com>:
   * David Vidal
@@ -150,6 +152,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-Kev-Roche| image:: https://github.com/Kev-Roche.png?size=40px
+    :target: https://github.com/Kev-Roche
+    :alt: Kev-Roche
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-Kev-Roche| 
 
 This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/14.0/product_variant_default_code>`_ project on GitHub.
 
