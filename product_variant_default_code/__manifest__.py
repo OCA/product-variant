@@ -14,6 +14,7 @@
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
+    "maintainers": ["Kev-Roche"],
     "depends": ["product"],
     "data": [
         "security/product_security.xml",
