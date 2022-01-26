@@ -19,14 +19,12 @@
                 />
             </field>
             <xpath expr="//page/field[@name='attribute_line_ids']" position="before">
-                    <group>
                     <field
-                        name="variant_default_code_error"
-                        class="alert alert-danger alert-dismissable"
-                        role="alert"
-                        attrs="{'invisible':[('variant_default_code_error','=', False)]}"
-                    />
-                </group>
+                    name="variant_default_code_error"
+                    class="alert alert-danger alert-dismissable"
+                    role="alert"
+                    attrs="{'invisible':[('variant_default_code_error','=', False)]}"
+                />
             </xpath>
         </field>
     </record>
