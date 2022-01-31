@@ -5,26 +5,27 @@ from odoo.tests.common import TransactionCase
 
 
 class TestProductVariantPrice(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.template = self.env["product.template"]
-        self.product_product = self.env["product.product"]
-        self.attribute = self.env["product.attribute"]
-        self.attribute_value = self.env["product.attribute.value"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.template = cls.env["product.template"]
+        cls.product_product = cls.env["product.product"]
+        cls.attribute = cls.env["product.attribute"]
+        cls.attribute_value = cls.env["product.attribute.value"]
 
-        self.att_color = self.attribute.create({"name": "color_test"})
+        cls.att_color = cls.attribute.create({"name": "color_test"})
 
-        self.att_color_blue = self.attribute_value.create(
-            {"name": "Blue", "attribute_id": self.att_color.id}
+        cls.att_color_blue = cls.attribute_value.create(
+            {"name": "Blue", "attribute_id": cls.att_color.id}
         )
-        self.att_color_red = self.attribute_value.create(
-            {"name": "Red", "attribute_id": self.att_color.id}
+        cls.att_color_red = cls.attribute_value.create(
+            {"name": "Red", "attribute_id": cls.att_color.id}
         )
 
-        self.uom_unit = self.env.ref("uom.product_uom_unit")
-        self.uom_dozen = self.ref("uom.product_uom_dozen")
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
+        cls.uom_dozen = cls.env.ref("uom.product_uom_dozen")
 
-        self.product_template = self.template.create(
+        cls.product_template = cls.template.create(
             {
                 "name": "Product Template",
                 "list_price": 1500.00,
@@ -33,24 +34,24 @@ class TestProductVariantPrice(TransactionCase):
                         0,
                         0,
                         {
-                            "attribute_id": self.att_color.id,
+                            "attribute_id": cls.att_color.id,
                             "value_ids": [
-                                (6, 0, (self.att_color_blue + self.att_color_red).ids)
+                                (6, 0, (cls.att_color_blue + cls.att_color_red).ids)
                             ],
                         },
                     )
                 ],
-                "uom_id": self.uom_unit.id,
+                "uom_id": cls.uom_unit.id,
             }
         )
 
-        self.product_blue = self.product_template.product_variant_ids.filtered(
+        cls.product_blue = cls.product_template.product_variant_ids.filtered(
             lambda x: x.product_template_attribute_value_ids.product_attribute_value_id
-            == self.att_color_blue
+            == cls.att_color_blue
         )
-        self.product_red = self.product_template.product_variant_ids.filtered(
+        cls.product_red = cls.product_template.product_variant_ids.filtered(
             lambda x: x.product_template_attribute_value_ids.product_attribute_value_id
-            == self.att_color_red
+            == cls.att_color_red
         )
 
     def test_post_init_hook(self):
@@ -85,8 +86,8 @@ class TestProductVariantPrice(TransactionCase):
         )
 
     def test_create_product_template_different_uom(self):
-        new_template = self.product_template.with_context(uom=self.uom_dozen).copy(
-            {"uom_id": self.uom_dozen}
+        new_template = self.product_template.with_context(uom=self.uom_dozen.id).copy(
+            {"uom_id": self.uom_dozen.id}
         )
         self.assertEqual(
             new_template.list_price, new_template.product_variant_ids[:1].lst_price
@@ -99,8 +100,8 @@ class TestProductVariantPrice(TransactionCase):
         self.assertEqual(self.product_template.list_price, new_variant.lst_price)
 
     def test_create_variant_different_uom(self):
-        new_variant = self.product_product.with_context(uom=self.uom_dozen).create(
-            {"product_tmpl_id": self.product_template.id, "uom_id": self.uom_dozen}
+        new_variant = self.product_product.with_context(uom=self.uom_dozen.id).create(
+            {"product_tmpl_id": self.product_template.id, "uom_id": self.uom_dozen.id}
         )
         self.assertEqual(self.product_template.list_price, new_variant.lst_price)
 
@@ -116,7 +117,7 @@ class TestProductVariantPrice(TransactionCase):
 
     def test_update_variant_different_uom(self):
         self.product_blue.write({"uom_id": self.uom_dozen})
-        self.product_blue.with_context(uom=self.uom_dozen).lst_price = 2000.00
+        self.product_blue.with_context(uom=self.uom_dozen.id).lst_price = 2000.00
         self.assertEqual(self.product_blue.lst_price, self.product_blue.fix_price)
 
     def test_update_variant_no_multiple(self):
