@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestProductVariantPrice(TransactionCase):
     def setUp(self):
-        super(TestProductVariantPrice, self).setUp()
+        super().setUp()
         self.template = self.env["product.template"]
         self.product_product = self.env["product.product"]
         self.attribute = self.env["product.attribute"]
