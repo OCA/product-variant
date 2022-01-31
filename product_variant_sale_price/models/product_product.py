@@ -13,12 +13,12 @@ class ProductTemplate(models.Model):
 
     @api.model
     def create(self, vals):
-        product_tmpl = super(ProductTemplate, self).create(vals)
+        product_tmpl = super().create(vals)
         product_tmpl._update_fix_price(vals)
         return product_tmpl
 
     def write(self, vals):
-        res = super(ProductTemplate, self).write(vals)
+        res = super().write(vals)
         if self.env.context.get("skip_update_fix_price", False):
             return res
         for template in self:
