@@ -44,7 +44,7 @@ class ProductProduct(models.Model):
         return res
 
     def write(self, vals):
-        if self._context.get("no_reactivate") and vals == {"active": True}:
+        if self._context.get("skip_reactivate_variant") and vals == {"active": True}:
             _logger.info("Skip reactivating product %s" % self.ids)
             return True
         else:
