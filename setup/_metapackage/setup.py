@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-product-variant Odoo addons",
     version=version,
     install_requires=[
+        'odoo13-addon-product_attribute_value_archive',
         'odoo13-addon-product_variant_attribute_tax',
         'odoo13-addon-product_variant_configurator',
         'odoo13-addon-product_variant_configurator_website_sale',
