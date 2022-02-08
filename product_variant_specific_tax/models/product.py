@@ -10,6 +10,7 @@ class Product(models.Model):
 
     additional_tax_ids = fields.Many2many(
         comodel_name="account.tax",
-        string="Additional Taxes",
+        string="Variant Taxes",
         domain=[("type_tax_use", "=", "sale")],
+        help="Additional taxes specific to this variant",
     )
