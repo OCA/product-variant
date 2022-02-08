@@ -14,6 +14,7 @@ class TestSaleOrder(common.SavepointCase):
         cls.product_template = cls.env["product.template"]
         cls.res_partner = cls.env["res.partner"]
         cls.account_tax = cls.env["account.tax"]
+        cls.product_attribute = cls.env["product.attribute"]
 
         cls.account_tax_std = cls.account_tax.create(
             {
@@ -35,22 +36,56 @@ class TestSaleOrder(common.SavepointCase):
             }
         )
 
+        cls.recycle_attribute = cls.product_attribute.create(
+            {
+                "name": "Recycle",
+                "display_type": "select",
+                "create_variant": "always",
+                "value_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Recycle",
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Non-Recycle",
+                        },
+                    ),
+                ],
+            }
+        )
+
         cls.product_template_1 = cls.product_template.create(
             {
                 "name": "Product template 1",
                 "list_price": 100,
                 "description_sale": "Template description",
                 "taxes_id": [(6, 0, [cls.account_tax_std.id])],
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": cls.recycle_attribute.id,
+                            "value_ids": [
+                                (6, 0, cls.recycle_attribute.value_ids.ids, 0)
+                            ],
+                        },
+                    )
+                ],
             }
         )
 
-        cls.product_product_without = cls.product_product.create(
-            {"product_tmpl_id": cls.product_template_1.id}
-        )
-        cls.product_product_with = cls.product_product_without.copy(
-            {
-                "additional_tax_ids": [(6, 0, [cls.account_tax_recycling.id])],
-            }
+        cls.product_product_without = cls.product_template_1.product_variant_ids[0]
+
+        cls.product_product_with = cls.product_template_1.product_variant_ids[1]
+        cls.product_product_with.write(
+            {"additional_tax_ids": [(6, 0, [cls.account_tax_recycling.id])]}
         )
 
     def test_onchange_product_id(self):
