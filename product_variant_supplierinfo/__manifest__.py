@@ -8,6 +8,7 @@
     'version': '10.0.1.0.0',
     'author': 'Tecnativa, Akretion,'
               'Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/product-variant',
     'category': 'Product Management',
     'depends': [
         'purchase',

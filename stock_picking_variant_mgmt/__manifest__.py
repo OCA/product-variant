@@ -11,7 +11,7 @@
               'Odoo Community Association (OCA)',
     'category': 'Inventory, Logistics, Warehousing',
     'license': 'AGPL-3',
-    'website': 'https://www.tecnativa.com',
+    'website': 'https://github.com/OCA/product-variant',
     'depends': [
         'stock',
         'web_widget_x2many_2d_matrix',

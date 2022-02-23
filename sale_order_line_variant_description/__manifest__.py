@@ -7,7 +7,7 @@
     'version': '10.0.1.0.0',
     'category': 'Sales Management',
     'author': "Agile Business Group, Odoo Community Association (OCA)",
-    'website': 'https://www.agilebg.com',
+    'website': 'https://github.com/OCA/product-variant',
     'license': 'AGPL-3',
     "depends": [
         'sale',

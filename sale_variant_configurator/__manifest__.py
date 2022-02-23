@@ -18,7 +18,7 @@
               "Tecnativa,"
               "Odoo Community Association (OCA)",
     "category": "Sales Management",
-    "website": "http://www.odoomrp.com",
+    "website": "https://github.com/OCA/product-variant",
     "data": [
         "views/sale_view.xml",
     ],

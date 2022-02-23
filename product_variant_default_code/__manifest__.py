@@ -12,7 +12,7 @@
               'Shine IT,'
               'Tecnativa,'
               'Odoo Community Association (OCA)',
-    'website': 'https://odoo-community.org/',
+    'website': 'https://github.com/OCA/product-variant',
     'license': 'AGPL-3',
     'category': 'Product',
     'depends': [

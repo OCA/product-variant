@@ -9,7 +9,7 @@
     'category': 'Product Management',
     'license': 'AGPL-3',
     'author': 'Agile Business Group, Odoo Community Association (OCA)',
-    'website': 'https://www.agilebg.com/',
+    'website': 'https://github.com/OCA/product-variant',
     'depends': [
         'stock',
     ],

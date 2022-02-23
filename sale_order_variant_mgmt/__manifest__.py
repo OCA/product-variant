@@ -11,7 +11,7 @@
               'Odoo Community Association (OCA)',
     'category': 'Sale',
     'license': 'AGPL-3',
-    'website': 'https://www.tecnativa.com',
+    'website': 'https://github.com/OCA/product-variant',
     'depends': [
         'sale',
         'web_widget_x2many_2d_matrix',

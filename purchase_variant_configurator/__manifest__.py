@@ -18,7 +18,7 @@
               "ACSONE SA/NV,"
               "Odoo Community Association (OCA)",
     "category": "Purchase Management",
-    "website": "http://www.odoomrp.com",
+    "website": "https://github.com/OCA/product-variant",
     "data": [
         "views/inherited_purchase_order_views.xml",
     ],

@@ -16,7 +16,7 @@
               'Tecnativa,'
               'ACSONE SA/NV,'
               'Odoo Community Association (OCA)',
-    'website': 'https://odoo-community.org/',
+    'website': 'https://github.com/OCA/product-variant',
     'depends': [
         "product",
     ],
