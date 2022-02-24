@@ -35,7 +35,7 @@ repos:
           - --header
           - "# generated from manifests external_dependencies"
   - repo: https://github.com/OCA/mirrors-flake8
-    rev: v3.7.9
+    rev: v3.4.1
     hooks:
       - id: flake8
         language_version: python3
