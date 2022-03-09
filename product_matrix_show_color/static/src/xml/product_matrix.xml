@@ -1,0 +1,30 @@
+<template>
+    <div t-inherit="product_matrix.matrix" t-inherit-mode="extension">
+        <xpath
+            expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/td[@t-if='cell.name']"
+            position="attributes"
+        >
+            <attribute
+                name="class"
+                add="d-flex align-items-center justify-content-between w-100"
+                separator=" "
+            />
+        </xpath>
+        <xpath
+            expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/td[@t-if='cell.name']"
+            position="inside"
+        >
+
+            <div
+                class="o_field_widget d-flex align-items-center justify-content-center"
+            >
+                <span
+                    t-if="cell.html_color"
+                    class="o_field_color rounded-circle"
+                    t-attf-style="background-color: {{ cell.html_color }};"
+                >
+                </span>
+            </div>
+        </xpath>
+    </div>
+</template>
