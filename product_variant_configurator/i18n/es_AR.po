@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-11-30 03:46+0000\n"
 "PO-Revision-Date: 2021-04-04 20:46+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
-"Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/teams/"
-"23907/es_AR/)\n"
+"Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/"
+"teams/23907/es_AR/)\n"
 "Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -200,11 +200,6 @@ msgid "Product Template Attribute Line"
 msgstr "Línea de Atributo de Plantilla de Producto"
 
 #. module: product_variant_configurator
-#: model:ir.model,name:product_variant_configurator.model_product_template_attribute_value
-msgid "Product Template Attribute Value"
-msgstr "Valor de Atributo de la Plantilla de Producto"
-
-#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_id
 msgid "Product Variant"
@@ -314,3 +309,6 @@ msgid ""
 msgstr ""
 "Tiene que completar los siguientes atributos:\n"
 "%s"
+
+#~ msgid "Product Template Attribute Value"
+#~ msgstr "Valor de Atributo de la Plantilla de Producto"
