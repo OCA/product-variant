@@ -2,14 +2,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class Product(models.Model):
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
     sale_order_line_route_id = fields.Many2one(
-        comodel_name='stock.location.route',
+        comodel_name="stock.location.route",
         string="Route for Sale Order",
-        domain=[('sale_selectable', '=', True)],
+        domain=[("sale_selectable", "=", True)],
     )
