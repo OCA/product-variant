@@ -4,7 +4,7 @@
 from odoo.tests import common
 
 
-class TestSaleOrder(common.SavepointCase):
+class TestSaleOrder(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestSaleOrder, cls).setUpClass()
@@ -21,33 +21,35 @@ class TestSaleOrder(common.SavepointCase):
             }
         )
 
-        cls.product_template_1 = cls.product_template.create(
+        cls.product_product_without = cls.product_product.create(
             {
-                "name": "Product template 1",
+                "name": "Product #1",
                 "list_price": 100,
                 "description_sale": "Template description",
             }
         )
 
-        cls.product_product_without = cls.product_product.create(
+        cls.product_product_with = cls.product_product_without.create(
             {
-                "product_tmpl_id": cls.product_template_1.id,
-            }
-        )
-        cls.product_product_with = cls.product_product_without.copy(
-            {
+                "name": "Product #2",
+                "list_price": 120,
+                "description_sale": "Template description",
                 "sale_order_line_route_id": cls.wh_route.id,
             }
         )
 
     def test_onchange_product_id(self):
-        sale = self.sale_order.create({"partner_id": self.customer.id})
+        sale = self.sale_order.create(
+            {
+                "partner_id": self.customer.id,
+            }
+        )
         line = self.sale_order_line.create(
             {
                 "order_id": sale.id,
                 "product_id": self.product_product_without.id,
                 "price_unit": 100,
-                "product_uom": self.product_template_1.uom_id.id,
+                "product_uom": self.product_product_without.uom_id.id,
                 "product_uom_qty": 1,
             }
         )
