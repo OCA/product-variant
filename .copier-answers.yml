@@ -1,14 +1,19 @@
 # Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.5.2-7-ge78684a
+_src_path: https://github.com/coopiteasy/oca-addons-repo-template.git
 ci: GitHub
 dependency_installation_mode: OCA
 generate_requirements_txt: true
 include_wkhtmltopdf: false
 odoo_version: 10.0
+org_name: Odoo Community Association (OCA)
+org_slug: OCA
 rebel_module_groups: []
 repo_description: Allows to create and manage product variants in OpenERP v6 and 7.
   A part of this work has been integrated in the core of Odoo v8 but it's likely we
   still use this repo for advanced variants even in v8.
 repo_name: Product Variants
 repo_slug: product-variant
+repo_website: https://github.com/OCA/product-variant
 travis_apt_packages: []
 travis_apt_sources: []
