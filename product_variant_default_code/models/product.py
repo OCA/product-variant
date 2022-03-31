@@ -112,7 +112,7 @@ class ProductTemplate(models.Model):
         main_lang = self._guess_main_lang()
         for line in self.attribute_line_ids:
             attribute_names.append(
-                u"[{}]".format(line.attribute_id.with_context(lang=main_lang).name)
+                "[{}]".format(line.attribute_id.with_context(lang=main_lang).name)
             )
         default_mask = (self.code_prefix or "") + default_reference_separator.join(
             attribute_names
