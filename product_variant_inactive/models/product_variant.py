@@ -25,7 +25,7 @@ class ProductProduct(models.Model):
     def fields_view_get(
         self, view_id=None, view_type="tree", toolbar=False, submenu=False
     ):
-        """ Dynamic modification of fields """
+        """Dynamic modification of fields"""
         res = super(ProductProduct, self).fields_view_get(
             view_id=view_id,
             view_type=view_type,
