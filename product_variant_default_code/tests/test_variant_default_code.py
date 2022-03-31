@@ -97,10 +97,10 @@ class TestVariantDefaultCode(common.SavepointCase):
 
     def test_04_custom_reference_mask(self):
         self.env.user.groups_id |= self.group_default_code
-        self.template1.reference_mask = u"JKTÜ/[TColor]#[TSize]"
+        self.template1.reference_mask = "JKTÜ/[TColor]#[TSize]"
         for product in self.template1.mapped("product_variant_ids"):
             expected_code = (
-                u"JKTÜ/"
+                "JKTÜ/"
                 + product.product_template_attribute_value_ids.filtered(
                     lambda x: x.product_attribute_value_id.attribute_id == self.attr2
                 ).name[0:2]
