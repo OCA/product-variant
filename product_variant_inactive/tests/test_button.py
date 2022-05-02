@@ -74,5 +74,7 @@ class TestProductProduct(TransactionCase):
         variant_count = template.product_variant_count
         variant_count_all = template.product_variant_count_all
         product.active = True
+        template._compute_product_variant_count_all()
+        template._compute_product_variant_count()
         self.assertEqual(template.product_variant_count, variant_count + 1)
         self.assertEqual(template.product_variant_count_all, variant_count_all)
