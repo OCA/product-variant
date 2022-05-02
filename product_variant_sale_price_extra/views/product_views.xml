@@ -9,7 +9,11 @@
         />
         <field name="arch" type="xml">
             <field name="fix_price" position="after">
-                <field name="variant_sale_price" />
+                <field
+                    name="variant_sale_price"
+                    widget='monetary'
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
+                />
             </field>
         </field>
     </record>
@@ -22,7 +26,11 @@
         />
         <field name="arch" type="xml">
             <field name="fix_price" position="after">
-                <field name="variant_sale_price" />
+                <field
+                    name="variant_sale_price"
+                    widget='monetary'
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
+                />
             </field>
         </field>
     </record>

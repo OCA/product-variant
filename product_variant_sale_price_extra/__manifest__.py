@@ -1,6 +1,6 @@
 {
     "name": "Product Variant Sale Price Extra",
-    "summary": "Show product variant fixed price + extra price",
+    "summary": "Show product variant fix price + extra price",
     "version": "14.0.1.0.0",
     "category": "Product Management",
     "website": "https://github.com/OCA/product-variant",
