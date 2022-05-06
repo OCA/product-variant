@@ -34,7 +34,13 @@ class ProductProduct(models.Model):
     def _build_attributes_domain(self, product_template, product_attributes):
         domain = []
         cont = 0
+        attributes_ids = []
         if product_template:
+            for attr_line in product_attributes:
+                if isinstance(attr_line, dict):
+                    attributes_ids.append(attr_line.get("attribute_id"))
+                else:
+                    attributes_ids.append(attr_line.attribute_id.id)
             domain.append(("product_tmpl_id", "=", product_template.id))
             for attr_line in product_attributes:
                 if isinstance(attr_line, dict):
@@ -45,11 +51,7 @@ class ProductProduct(models.Model):
                     ptav = self.env["product.template.attribute.value"].search(
                         [
                             ("product_tmpl_id", "=", product_template.id),
-                            (
-                                "attribute_id",
-                                "in",
-                                [x.attribute_id.id for x in product_attributes],
-                            ),
+                            ("attribute_id", "in", attributes_ids),
                             ("product_attribute_value_id", "=", value_id),
                         ]
                     )
