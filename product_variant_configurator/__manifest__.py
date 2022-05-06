@@ -7,7 +7,7 @@
 {
     "name": "Product Variant Configurator",
     "summary": "Provides an abstract model for product variant configuration.",
-    "version": "13.0.1.1.4",
+    "version": "13.0.1.1.5",
     "category": "Product Variant",
     "license": "AGPL-3",
     "author": "AvanzOSC, "
