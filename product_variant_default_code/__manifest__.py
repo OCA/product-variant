@@ -5,14 +5,16 @@
 # Copyright 2017 Akretion - David Beal
 # Copyright 2018 AvancOSC - Daniel Campos
 # Copyright 2020 Tecnativa - João Marques
+# Copyright 2021 Akretion - Kévin Roche
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Product Variant Default Code",
     "version": "14.0.2.0.0",
-    "author": "AvancOSC, Shine IT, Tecnativa, Odoo Community Association (OCA)",
+    "author": "AvancOSC, Shine IT, Tecnativa, Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
+    "maintainers": ["Kev-Roche"],
     "depends": ["product"],
     "data": [
         "security/product_security.xml",

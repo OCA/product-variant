@@ -18,6 +18,14 @@
                     groups="product_variant_default_code.group_product_default_code_manual_mask"
                 />
             </field>
+            <xpath expr="//page/field[@name='attribute_line_ids']" position="before">
+                    <field
+                    name="variant_default_code_error"
+                    class="alert alert-danger alert-dismissable"
+                    role="alert"
+                    attrs="{'invisible':[('variant_default_code_error','=', False)]}"
+                />
+            </xpath>
         </field>
     </record>
     <record id="product_normal_form_view" model="ir.ui.view">
