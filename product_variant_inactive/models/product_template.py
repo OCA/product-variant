@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
@@ -22,3 +22,7 @@ class ProductTemplate(models.Model):
         return super(
             ProductTemplate, self.with_context(no_reactivate=True)
         )._create_variant_ids()
+
+    @api.depends("product_variant_ids.active")
+    def _compute_product_variant_count(self):
+        return super()._compute_product_variant_count()
