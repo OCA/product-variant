@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-product-variant Odoo addons",
     version=version,
     install_requires=[
+        'odoo14-addon-product_matrix_show_color',
         'odoo14-addon-product_variant_default_code',
         'odoo14-addon-product_variant_inactive',
         'odoo14-addon-product_variant_sale_price',
