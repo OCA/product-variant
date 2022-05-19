@@ -20,6 +20,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[product_matrix_show_color](product_matrix_show_color/) | 14.0.1.0.0 |  | Technical module: Show attribute color in product matrix table
 [product_variant_default_code](product_variant_default_code/) | 14.0.2.0.0 |  | Product Variant Default Code
 [product_variant_inactive](product_variant_inactive/) | 14.0.1.0.0 |  | Product Variant Inactive
 [product_variant_sale_price](product_variant_sale_price/) | 14.0.1.0.0 |  | Allows to write fixed prices in product variants
