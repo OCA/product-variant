@@ -86,6 +86,7 @@ class PurchaseManageVariant(models.TransientModel):
                     'product_uom': product.uom_id,
                     'product_uom_qty': line.product_uom_qty,
                     'order_id': purchase_order.id,
+                    'partner_id': purchase_order.partner_id.id,
                 })
                 order_line.onchange_product_id()
                 # This should be done later for handling supplier quantities
