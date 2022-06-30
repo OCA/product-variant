@@ -76,3 +76,30 @@ class TestProductProduct(TransactionCase):
         product.active = True
         self.assertEqual(template.product_variant_count, variant_count + 1)
         self.assertEqual(template.product_variant_count_all, variant_count_all)
+
+    def test_reactive_template(self):
+        template = self.env["product.template"].create(
+            {
+                "name": "FOO",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.env.ref(
+                                "product.product_attribute_2"
+                            ).id,
+                            "value_ids": [
+                                self.env.ref("product.product_attribute_value_3").id,
+                                self.env.ref("product.product_attribute_value_4").id,
+                            ],
+                        },
+                    )
+                ],
+            }
+        )
+        variants = template.product_variant_ids
+        template.write({"active": False})
+        self.assertEqual(variants.mapped("active"), [False, False])
+        template.write({"active": True})
+        self.assertEqual(variants.mapped("active"), [True, True])
