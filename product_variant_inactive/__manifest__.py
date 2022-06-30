@@ -6,7 +6,7 @@
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "depends": ["stock"],
     "data": [
         "views/product_template_view.xml",
