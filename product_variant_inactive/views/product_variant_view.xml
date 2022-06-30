@@ -1,15 +1,4 @@
 <odoo>
-   <record model="ir.ui.view" id="view_stock_product_tree">
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="stock.view_stock_product_tree" />
-        <field name="arch" type="xml">
-            <!-- Add grey color for inactive record -->
-            <xpath expr="//tree" position="attributes">
-                <attribute name="decoration-muted">active==False</attribute>
-            </xpath>
-        </field>
-    </record>
-
 
     <record model="ir.ui.view" id="detail_field_custom_in_view">
         <field name="model">product.product</field>
@@ -20,12 +9,33 @@
                 <attribute name="widget">boolean_toggle</attribute>
                 <attribute name="optional">show</attribute>
             </xpath>
+            <!-- Add grey color for inactive record -->
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-muted">active==False</attribute>
+            </xpath>
         </field>
     </record>
+
     <record id="product.product_variant_action" model="ir.actions.act_window">
         <field name="context">{'search_default_product_tmpl_id': [active_id],
                                'default_product_tmpl_id': active_id,
                                'active_test': False}</field>
+        <field name="domain">[('combination_deleted', '!=', True)]</field>
+    </record>
+
+    <record id="product_search_form_view" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view" />
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator />
+                <filter
+                    string="Deleted combination"
+                    name="combination_deleted"
+                    domain="[('active', 'in', [False, True]),('combination_deleted', '=', True)]"
+                />
+            </filter>
+        </field>
     </record>
 
 </odoo>
