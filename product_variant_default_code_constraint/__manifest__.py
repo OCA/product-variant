@@ -15,4 +15,5 @@
     "depends": [
         "product_variant_default_code",
     ],
+    "pre_init_hook": "pre_init_hook",
 }
