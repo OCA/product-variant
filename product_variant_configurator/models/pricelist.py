@@ -16,7 +16,9 @@ class ProductPricelist(models.Model):
         if products_qty_partner[0][0]._name != "product.template":
             # Standard use case - Nothing to do
             return super(ProductPricelist, self)._compute_price_rule(
-                products_qty_partner, date=date, uom_id=uom_id,
+                products_qty_partner,
+                date=date,
+                uom_id=uom_id,
             )
         # Isolate object
         pricelist_obj = self
@@ -35,7 +37,9 @@ class ProductPricelist(models.Model):
                 for index, data_struct in enumerate(products_qty_partner)
             ]
         return super(ProductPricelist, pricelist_obj)._compute_price_rule(
-            products_qty_partner, date=date, uom_id=False,
+            products_qty_partner,
+            date=date,
+            uom_id=False,
         )
 
     def template_price_get(self, prod_id, qty, partner=None):
