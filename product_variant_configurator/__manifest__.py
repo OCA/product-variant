@@ -7,13 +7,10 @@
 {
     "name": "Product Variant Configurator",
     "summary": "Provides an abstract model for product variant configuration.",
-    "version": "13.0.1.1.5",
+    "version": "14.0.1.0.0",
     "category": "Product Variant",
     "license": "AGPL-3",
-    "author": "AvanzOSC, "
-    "Tecnativa, "
-    "ACSONE SA/NV, "
-    "Odoo Community Association (OCA)",
+    "author": "AvanzOSC, Tecnativa, ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "depends": ["product"],
     "data": [
