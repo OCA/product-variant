@@ -15,8 +15,9 @@ class ProductTemplate(models.Model):
             )
 
     product_variant_count_all = fields.Integer(
-        "Inactive variants", compute=_compute_product_variant_count_all
+        "Inactive variants", compute="_compute_product_variant_count_all"
     )
+    active = fields.Boolean(compute="_compute_active", readonly=False, store=True)
 
     def write(self, vals):
         if vals.get("active"):
@@ -31,3 +32,11 @@ class ProductTemplate(models.Model):
     @api.depends("product_variant_ids.active")
     def _compute_product_variant_count(self):
         return super()._compute_product_variant_count()
+
+    @api.depends("product_variant_ids.active")
+    def _compute_active(self):
+        for template in self:
+            if not template.product_variant_ids.mapped("active"):
+                template.active = False
+            else:
+                template.active = True
