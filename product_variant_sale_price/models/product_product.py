@@ -76,4 +76,4 @@ class ProductProduct(models.Model):
         compute="_compute_lst_price", inverse="_inverse_product_lst_price",
     )
     list_price = fields.Float(compute="_compute_list_price",)
-    fix_price = fields.Float(string="Fix Price")
+    fix_price = fields.Float(string="Fix Price", digits="Product Price")
