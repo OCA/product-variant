@@ -2,10 +2,10 @@
 # Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestProductConfiguratorAttribute(SavepointCase):
+class TestProductConfiguratorAttribute(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductConfiguratorAttribute, cls).setUpClass()

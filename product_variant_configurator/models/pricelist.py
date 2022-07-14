@@ -26,7 +26,7 @@ class ProductPricelist(models.Model):
             ctx = dict(pricelist_obj.env.context)
             # Remove uom context for avoiding the re-processing
             uom_id = ctx.pop("uom")
-            pricelist_obj = pricelist_obj.with_context(ctx)
+            pricelist_obj = pricelist_obj.with_context(**ctx)
         if uom_id:
             # rebrowse templates with uom if given
             tmpl_ids = [item[0].id for item in products_qty_partner]
