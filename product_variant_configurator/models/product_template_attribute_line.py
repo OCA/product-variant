@@ -9,7 +9,6 @@ class ProductTemplateAttributeLine(models.Model):
     _inherit = "product.template.attribute.line"
 
     required = fields.Boolean(
-        string="Required",
         default=False,
     )
 

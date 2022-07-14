@@ -90,7 +90,7 @@ class ProductConfigurator(models.AbstractModel):
     @api.onchange("product_tmpl_id")
     def _onchange_product_tmpl_id_configurator(self):
         self.ensure_one()
-        if not self.product_tmpl_id:
+        if not self.product_tmpl_id._origin:
             self.product_id = False
             self._empty_attributes()
             # no product template: allow any product
