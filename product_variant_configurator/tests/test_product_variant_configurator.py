@@ -4,10 +4,10 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestProductVariantConfigurator(SavepointCase):
+class TestProductVariantConfigurator(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductVariantConfigurator, cls).setUpClass()
