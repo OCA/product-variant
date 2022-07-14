@@ -2,10 +2,10 @@
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestProductPriceList(SavepointCase):
+class TestProductPriceList(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductPriceList, cls).setUpClass()
