@@ -43,9 +43,7 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        values = super(
-            WizardProductVariantConfiguratorManualCreation, self
-        ).default_get(fields_list)
+        values = super().default_get(fields_list)
         current_product = self.env["product.template"].browse(
             self.env.context.get("active_ids")
         )
