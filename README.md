@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[product_variant_configurator](product_variant_configurator/) | 15.0.1.0.0 |  | Provides an abstract model for product variant configuration.
 [product_variant_sale_price](product_variant_sale_price/) | 15.0.1.0.0 |  | Allows to write fixed prices in product variants
 
 [//]: # (end addons)
