@@ -22,7 +22,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_attribute_value_archive](product_attribute_value_archive/) | 13.0.1.0.0 | [![mmequignon](https://github.com/mmequignon.png?size=30px)](https://github.com/mmequignon) | Allows to archive a `product.attribute.value` referenced by archived `product.product`.
 [product_variant_attribute_tax](product_variant_attribute_tax/) | 13.0.1.0.0 |  | Set taxes on the product attribute values
-[product_variant_configurator](product_variant_configurator/) | 13.0.1.1.5 |  | Provides an abstract model for product variant configuration.
+[product_variant_configurator](product_variant_configurator/) | 13.0.1.1.6 |  | Provides an abstract model for product variant configuration.
 [product_variant_configurator_website_sale](product_variant_configurator_website_sale/) | 13.0.1.0.0 |  | Product Variant Configurator glue to Website Sale
 [product_variant_default_code](product_variant_default_code/) | 13.0.1.1.0 |  | Product Variant Default Code
 [product_variant_sale_price](product_variant_sale_price/) | 13.0.1.0.2 |  | Allows to write fixed prices in product variants
