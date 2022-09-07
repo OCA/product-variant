@@ -119,6 +119,8 @@ class ProductTemplate(models.Model):
     def _compute_reference_mask(self):
         automask = self.is_automask()
         for rec in self:
+            if rec.default_code and not rec.code_prefix:
+                rec.code_prefix = rec.default_code
             if automask or not rec.reference_mask:
                 rec.reference_mask = rec._get_default_mask()
             elif not automask and rec.code_prefix:
