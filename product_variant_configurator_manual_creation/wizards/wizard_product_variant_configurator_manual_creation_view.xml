@@ -15,11 +15,9 @@
             <field name="arch" type="xml">
                 <form string="Variants Manual Creation">
                     <sheet>
-                        <group>
-                        <group>
-                        <field name="product_tmpl_id" />
-                        <field name="variants_to_create" />
-                        </group>
+                        <group name="product_info">
+                            <field name="product_tmpl_id" />
+                            <field name="variants_to_create" />
                         </group>
                         <field name="line_ids" nolabel="1">
                             <tree editable="top" create="false" delete="false">
