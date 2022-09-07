@@ -18,7 +18,6 @@
                         attrs="{'invisible': [('has_pending_variants', '=', False)]}"
                     />
                     <field name="has_pending_variants" invisible="1" />
-                    <field name="pending_variants" invisible="1" />
                 </button>
             </field>
         </record>
