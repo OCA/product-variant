@@ -1,13 +1,11 @@
 # Copyright 2022 ForgeFlow S.L. <https://forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import json
 from itertools import product
 
 from odoo import api, fields, models
 
 
 class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
-
     _name = "wizard.product.variant.configurator.manual.creation"
     _description = "Manual Creation Variant Configurator"
 
@@ -44,10 +42,7 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         values = super().default_get(fields_list)
-        current_product = self.env["product.template"].browse(
-            self.env.context.get("active_ids")
-        )
-        values["product_tmpl_id"] = current_product.id
+        values["product_tmpl_id"] = self.env.context.get("active_id")
         return values
 
     @api.onchange("product_tmpl_id")
@@ -57,7 +52,7 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
         ]
         if self.product_tmpl_id:
             lines = line_model.browse()
-            pending_variants = json.loads(self.product_tmpl_id.pending_variants)
+            pending_variants = self.product_tmpl_id._get_values_without_variant()
             for line_data in [
                 {
                     "attribute_id": int(attribute_id),
@@ -72,13 +67,14 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
             self.line_ids = lines
 
     def action_create_variants(self):
+        """Create variant of product based on selected attributes values in wizard"""
         product_model = self.env["product.product"]
         attribute_value_model = self.env["product.template.attribute.value"]
         current_variants_to_create = []
         current_variants_to_activate = product_model.browse()
         variants_to_show = product_model.browse()
-        tmpl_id = self.product_tmpl_id
-        all_variants = tmpl_id.with_context(
+        product_tmpl = self.product_tmpl_id
+        all_variants = product_tmpl.with_context(
             active_test=False
         ).product_variant_ids.sorted(lambda p: (p.active, -p.id))
         existing_variants = {
@@ -87,26 +83,35 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
         }
         for combination_ids in self._get_combinations():
             combination = attribute_value_model.browse()
-            for value in tmpl_id.valid_product_template_attribute_line_ids.mapped(
+            for value in product_tmpl.valid_product_template_attribute_line_ids.mapped(
                 "product_template_value_ids"
             ):
                 if value.product_attribute_value_id.id in combination_ids:
                     combination |= value
-            is_combination_possible = tmpl_id._is_combination_possible_by_config(
+            is_combination_possible = product_tmpl._is_combination_possible_by_config(
                 combination, ignore_no_variant=False
             )
             if not is_combination_possible:
                 continue
             if combination in existing_variants:
                 current_variants_to_activate += existing_variants[combination]
+            elif (
+                existing_variants
+                and len(existing_variants) == 1
+                and not all_variants.product_template_attribute_value_ids
+            ):
+                variants_to_show += all_variants
+                all_variants.write(
+                    {"product_template_attribute_value_ids": [(6, 0, combination.ids)]}
+                )
             else:
                 current_variants_to_create.append(
                     {
-                        "product_tmpl_id": tmpl_id.id,
+                        "product_tmpl_id": product_tmpl.id,
                         "product_template_attribute_value_ids": [
                             (6, 0, combination.ids)
                         ],
-                        "active": tmpl_id.active,
+                        "active": product_tmpl.active,
                     }
                 )
         if current_variants_to_activate:
@@ -120,8 +125,8 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
                 {
                     "domain": [("id", "in", variants_to_show.ids)],
                     "context": {
-                        "search_default_product_tmpl_id": [tmpl_id.id],
-                        "default_product_tmpl_id": tmpl_id.id,
+                        "search_default_product_tmpl_id": [product_tmpl.id],
+                        "default_product_tmpl_id": product_tmpl.id,
                         "create": False,
                     },
                 }
@@ -131,7 +136,6 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
 
 
 class WizardProductVariantConfiguratorManualCreationLines(models.TransientModel):
-
     _name = "wizard.product.variant.configurator.manual.creation.line"
     _description = "Manual Creation Variant Configurator Attributes"
 
