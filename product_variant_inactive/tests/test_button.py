@@ -3,10 +3,16 @@
 
 from lxml import etree
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class TestProductProduct(TransactionCase):
+class TestProductProduct(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.template = cls.env.ref("product.product_product_4_product_template")
+        cls.product_product_4 = cls.env.ref("product.product_product_4")
+
     def test_fields_view_get_tree(self):
         product = self.help_create_product()
         product = product.with_context({"search_disable_custom_filters": True})
@@ -48,20 +54,17 @@ class TestProductProduct(TransactionCase):
     def test_create_variant_do_not_reactivate(self):
         """Ensure that re-generating variants does not
         change the "active" state of the existing variant"""
-        product = self.env.ref("product.product_product_4")
-        product.active = False
-        product.product_tmpl_id._create_variant_ids()
-        self.assertFalse(product.active)
+        self.product_product_4.active = False
+        self.product_product_4.product_tmpl_id._create_variant_ids()
+        self.assertFalse(self.product_product_4.active)
 
     def test_product_variant_count(self):
-        template = self.env.ref("product.product_product_4_product_template")
-        product = self.env.ref("product.product_product_4")
-        product.active = False
-        variant_count = template.product_variant_count
-        variant_count_all = template.product_variant_count_all
-        product.active = True
-        self.assertEqual(template.product_variant_count, variant_count + 1)
-        self.assertEqual(template.product_variant_count_all, variant_count_all)
+        self.product_product_4.active = False
+        variant_count = self.template.product_variant_count
+        variant_count_all = self.template.product_variant_count_all
+        self.product_product_4.active = True
+        self.assertEqual(self.template.product_variant_count, variant_count + 1)
+        self.assertEqual(self.template.product_variant_count_all, variant_count_all)
 
     def test_reactive_template(self):
         template = self.env["product.template"].create(
@@ -89,3 +92,15 @@ class TestProductProduct(TransactionCase):
         self.assertEqual(variants.mapped("active"), [False, False])
         template.write({"active": True})
         self.assertEqual(variants.mapped("active"), [True, True])
+
+    def _deactivate_all_variants_of_template(self):
+        self.template.product_variant_ids.write({"active": False})
+
+    def test_template_after_deactivate_all_variants(self):
+        self._deactivate_all_variants_of_template()
+        self.assertFalse(self.template.active)
+
+    def test_template_after_reactivate_one_variant(self):
+        self._deactivate_all_variants_of_template()
+        self.product_product_4.active = True
+        self.assertTrue(self.template.active)
