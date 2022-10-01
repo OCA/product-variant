@@ -22,7 +22,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_matrix_show_color](product_matrix_show_color/) | 14.0.1.0.0 |  | Technical module: Show attribute color in product matrix table
 [product_variant_default_code](product_variant_default_code/) | 14.0.3.0.0 | [![Kev-Roche](https://github.com/Kev-Roche.png?size=30px)](https://github.com/Kev-Roche) | Product Variant Default Code
-[product_variant_inactive](product_variant_inactive/) | 14.0.1.2.0 |  | Product Variant Inactive
+[product_variant_inactive](product_variant_inactive/) | 14.0.1.3.0 |  | Product Variant Inactive
 [product_variant_sale_price](product_variant_sale_price/) | 14.0.1.0.0 |  | Allows to write fixed prices in product variants
 [sale_order_line_variant_description](sale_order_line_variant_description/) | 14.0.1.0.0 |  | Sale order line variant description
 
