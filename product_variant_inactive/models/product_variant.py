@@ -13,14 +13,6 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    def button_activate(self):
-        for product in self:
-            product.active = True
-
-    def button_deactivate(self):
-        for product in self:
-            product.active = False
-
     @api.model
     def fields_view_get(
         self, view_id=None, view_type="tree", toolbar=False, submenu=False

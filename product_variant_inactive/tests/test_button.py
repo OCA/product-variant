@@ -39,20 +39,6 @@ class TestProductProduct(TransactionCase):
         button = root.findall(".//button[@name='%d']" % button_action_ref)[0]
         self.assertEqual("0", button.get("invisible", "0"))
 
-    def test_button_activate(self):
-        self.help_button_active(False)
-
-    def test_button_deactivate(self):
-        self.help_button_active(True)
-
-    def help_button_active(self, active=True):
-        product = self.help_create_product(active)
-        if active:
-            product.button_deactivate()
-        else:
-            product.button_activate()
-        self.assertEqual(product.active, not (active))
-
     def help_create_product(self, active=True):
         product = self.env["product.product"].create(
             {"active": active, "name": "test_product"}
