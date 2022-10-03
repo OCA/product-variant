@@ -10,7 +10,8 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     has_pending_variants = fields.Boolean(
-        string="Has pending variants?", compute="_compute_pending_variants",
+        string="Has pending variants?",
+        compute="_compute_pending_variants",
     )
 
     @api.depends(
