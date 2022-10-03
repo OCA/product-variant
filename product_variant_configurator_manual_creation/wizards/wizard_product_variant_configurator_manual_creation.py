@@ -23,7 +23,8 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
     )
 
     @api.depends(
-        "product_tmpl_id", "line_ids.selected_value_ids",
+        "product_tmpl_id",
+        "line_ids.selected_value_ids",
     )
     def _compute_variants_to_create(self):
         for rec in self:
