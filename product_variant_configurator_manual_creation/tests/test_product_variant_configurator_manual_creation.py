@@ -1,10 +1,10 @@
 # Copyright 2022 ForgeFlow S.L. <https://forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestProductVariantConfiguratorManualCreation(SavepointCase):
+class TestProductVariantConfiguratorManualCreation(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
