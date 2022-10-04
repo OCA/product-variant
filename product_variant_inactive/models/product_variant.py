@@ -5,13 +5,19 @@ import logging
 
 from lxml import etree
 
-from odoo import api, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
+
+    combination_deleted = fields.Boolean(
+        help="If tick then this combination of variant"
+        " has been deleted and can not be reactivated"
+    )
 
     @api.model
     def fields_view_get(
@@ -36,8 +42,36 @@ class ProductProduct(models.Model):
         return res
 
     def write(self, vals):
-        if self._context.get("skip_reactivate_variant") and vals == {"active": True}:
-            _logger.info("Skip reactivating product %s" % self.ids)
-            return True
-        else:
-            return super().write(vals)
+        if vals.get("active") and self._context.get("unset_combination_deleted"):
+            vals["combination_deleted"] = False
+        for product in self:
+            if (
+                self._context.get("skip_reactivate_variant")
+                and vals.get("active", False)
+                and not product.active
+                and not product.combination_deleted
+            ):
+                _logger.info("Skip reactivating product %s" % product.id)
+            else:
+                super(ProductProduct, product).write(vals)
+        return True
+
+    def _unlink_or_archive(self, check_access=True):
+        records = self
+        if not self._context.get("skip_filter_deleted"):
+            records = records.filtered(
+                lambda p: not p.combination_deleted
+            ).with_context(skip_filter_deleted=True)
+            records.write({"combination_deleted": True, "active": False})
+        super(ProductProduct, records)._unlink_or_archive(check_access=check_access)
+
+    @api.constrains("active", "combination_deleted")
+    def _check_can_not_be_reativated(self):
+        for record in self:
+            if record.active and record.combination_deleted:
+                raise UserError(
+                    _(
+                        "You cannot activate the product because this "
+                        "combination has been deleted"
+                    )
+                )

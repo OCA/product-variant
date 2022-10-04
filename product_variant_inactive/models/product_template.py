@@ -27,6 +27,7 @@ class ProductTemplate(models.Model):
     def _create_variant_ids(self):
         if "skip_reactivate_variant" not in self._context:
             self = self.with_context(skip_reactivate_variant=True)
+        self = self.with_context(unset_combination_deleted=True)
         return super()._create_variant_ids()
 
     @api.depends("product_variant_ids.active")
