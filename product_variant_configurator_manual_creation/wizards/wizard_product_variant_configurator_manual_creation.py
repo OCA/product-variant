@@ -12,9 +12,7 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
     product_tmpl_id = fields.Many2one(
         comodel_name="product.template", string="Template", readonly=True
     )
-    variants_to_create = fields.Integer(
-        string="Variants to create", compute="_compute_variants_to_create"
-    )
+    variants_to_create = fields.Integer(compute="_compute_variants_to_create")
     line_ids = fields.One2many(
         comodel_name="wizard.product.variant.configurator.manual.creation.line",
         inverse_name="wizard_id",
