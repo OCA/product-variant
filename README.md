@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_variant_configurator](product_variant_configurator/) | 15.0.1.0.0 |  | Provides an abstract model for product variant configuration.
+[product_variant_configurator_manual_creation](product_variant_configurator_manual_creation/) | 15.0.1.0.0 | [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | Provides a wizards to make variants on demand
 [product_variant_sale_price](product_variant_sale_price/) | 15.0.1.0.0 |  | Allows to write fixed prices in product variants
 
 [//]: # (end addons)
