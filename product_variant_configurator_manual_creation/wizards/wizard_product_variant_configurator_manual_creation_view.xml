@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record
+        id="wizard_product_variant_configurator_manual_creation_view_form"
+        model="ir.ui.view"
+    >
+            <field
+            name="name"
+        >wizard_product_variant_configurator_manual_creation_view_form</field>
+            <field
+            name="model"
+        >wizard.product.variant.configurator.manual.creation</field>
+            <field name="arch" type="xml">
+                <form string="Variants Manual Creation">
+                    <sheet>
+                        <group name="product_info">
+                            <field name="product_tmpl_id" />
+                            <field name="variants_to_create" />
+                        </group>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="top" create="false" delete="false">
+                                <field
+                                name="attribute_id"
+                                readonly="1"
+                                force_save="1"
+                            />
+                                <field name="required" readonly="1" force_save="1" />
+                                <field
+                                name="attribute_value_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                                <field
+                                name="selected_value_ids"
+                                attrs="{'required': [('required', '=', True)]}"
+                                widget="many2many_tags"
+                                domain="[('id', 'in', attribute_value_ids or [])]"
+                                options="{'no_create': True}"
+                            />
+                            </tree>
+                        </field>
+                    </sheet>
+                    <footer>
+                        <button
+                        string="Create Variants"
+                        name="action_create_variants"
+                        type="object"
+                        class="btn-primary"
+                    />
+                        <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record
+        id="wizard_product_variant_configurator_manual_creation_action"
+        model="ir.actions.act_window"
+    >
+            <field name="name">Variants Manual Creation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field
+            name="res_model"
+        >wizard.product.variant.configurator.manual.creation</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>
