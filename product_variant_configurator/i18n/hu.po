@@ -77,8 +77,14 @@ msgid "Created on"
 msgstr "Létrehozás dátuma"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_value__display_name
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__display_name
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__display_name
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__display_name
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_pricelist__display_name
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_template__display_name
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_template_attribute_line__display_name
 msgid "Display Name"
 msgstr "Név megjelenítése"
 
@@ -93,14 +99,26 @@ msgid "Don't create variants automatically"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_value__id
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__id
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_pricelist__id
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__id
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_template__id
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_template_attribute_line__id
 msgid "ID"
 msgstr "ID"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_attribute_value____last_update
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_category____last_update
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator____last_update
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute____last_update
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_pricelist____last_update
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_template____last_update
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_template_attribute_line____last_update
 msgid "Last Modified on"
 msgstr "Utolsó frissítés dátuma"
 
