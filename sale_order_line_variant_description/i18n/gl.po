@@ -19,14 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_line_variant_description
-#: model:ir.model.fields,help:sale_order_line_variant_description.field_product_product_variant_description_sale
+#: model:ir.model.fields,help:sale_order_line_variant_description.field_product_product__variant_description_sale
 msgid ""
 "A description of the product variant that you want to communicate to your "
 "customers.This description will be copied to every Sale Order"
 msgstr ""
 
 #. module: sale_order_line_variant_description
-#: model:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
 msgid "Notes"
 msgstr ""
 
@@ -36,7 +36,7 @@ msgid "Product"
 msgstr "Produto"
 
 #. module: sale_order_line_variant_description
-#: model:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
 msgid "Sale Description"
 msgstr ""
 
@@ -46,11 +46,11 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_order_line_variant_description
-#: model:ir.model.fields,field_description:sale_order_line_variant_description.field_product_product_variant_description_sale
+#: model:ir.model.fields,field_description:sale_order_line_variant_description.field_product_product__variant_description_sale
 msgid "Variant Sale Description"
 msgstr ""
 
 #. module: sale_order_line_variant_description
-#: model:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
 msgid "Variant description for quotations"
 msgstr ""
