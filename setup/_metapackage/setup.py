@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo-addon-product_variant_configurator>=15.0dev,<15.1dev',
         'odoo-addon-product_variant_configurator_manual_creation>=15.0dev,<15.1dev',
         'odoo-addon-product_variant_sale_price>=15.0dev,<15.1dev',
+        'odoo-addon-sale_order_line_variant_description>=15.0dev,<15.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
