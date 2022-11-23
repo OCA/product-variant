@@ -3,7 +3,7 @@
 
 {
     "name": "Sale order line variant description",
-    "version": "15.0.1.0.0",
+    "version": "15.0.2.0.0",
     "category": "Sales Management",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
