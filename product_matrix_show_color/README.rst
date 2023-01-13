@@ -55,6 +55,8 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
+* Nextev Srl <https://www.nextev.it>
+
 * Studio73 <studio73.es>:
 * `Studio73 <https://studio73.es>`_:
   * Miguel Gandia
