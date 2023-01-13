@@ -55,7 +55,7 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Nextev Srl <https://www.nextev.it>
+* `Nextev Srl <https://www.nextev.it>`
 
 * Studio73 <studio73.es>:
 * `Studio73 <https://studio73.es>`_:
