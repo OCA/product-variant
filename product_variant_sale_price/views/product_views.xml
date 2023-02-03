@@ -10,6 +10,11 @@
                     ('product_variant_count', '>', 1)
                     ]}</attribute>
             </xpath>
+            <xpath expr="//label[@for='list_price']" position="attributes">
+                <attribute name="attrs">{'invisible': [
+                    ('product_variant_count', '>', 1)
+                    ]}</attribute>
+            </xpath>
         </field>
     </record>
     <record id="product_normal_form_view_default_check" model="ir.ui.view">
