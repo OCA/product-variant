@@ -45,7 +45,7 @@ class ProductProduct(models.Model):
             price = product.fix_price or product.product_tmpl_id.list_price
             if self.env.context.get("uom"):
                 context_uom = uom_model.browse(self.env.context.get("uom"))
-                price = context_uom._compute_price(price, context_uom)
+                price = product.uom_id._compute_price(price, context_uom)
             product.list_price = price
 
     def _inverse_product_lst_price(self):
