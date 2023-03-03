@@ -10,36 +10,30 @@ from odoo import models
 class ProductPricelist(models.Model):
     _inherit = "product.pricelist"
 
-    def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):
+    def _compute_price_rule(self, products, qty, uom=None, date=False, **kwargs):
         """Overwrite for covering the case where templates are passed and a
         different uom is used."""
-        if products_qty_partner[0][0]._name != "product.template":
+        if products[0]._name != "product.template":
             # Standard use case - Nothing to do
             return super(ProductPricelist, self)._compute_price_rule(
-                products_qty_partner,
+                products,
+                qty,
                 date=date,
-                uom_id=uom_id,
+                uom=uom,
             )
         # Isolate object
         pricelist_obj = self
-        if not uom_id and pricelist_obj.env.context.get("uom"):
+
+        if not uom and pricelist_obj.env.context.get("uom"):
             ctx = dict(pricelist_obj.env.context)
             # Remove uom context for avoiding the re-processing
-            uom_id = ctx.pop("uom")
             pricelist_obj = pricelist_obj.with_context(**ctx)
-        if uom_id:
-            # rebrowse templates with uom if given
-            tmpl_ids = [item[0].id for item in products_qty_partner]
-            tmpl_obj = self.env["product.template"]
-            tmpls = tmpl_obj.with_context(uom=uom_id).browse(tmpl_ids)
-            products_qty_partner = [
-                (tmpls[index], data_struct[1], data_struct[2])
-                for index, data_struct in enumerate(products_qty_partner)
-            ]
+
         return super(ProductPricelist, pricelist_obj)._compute_price_rule(
-            products_qty_partner,
+            products,
+            qty,
             date=date,
-            uom_id=False,
+            uom=False,
         )
 
     def template_price_get(self, prod_id, qty, partner=None):
@@ -51,7 +45,4 @@ class ProductPricelist(models.Model):
         }
 
     def template_price_rule_get(self, prod_id, qty, partner=None):
-        product = self.env["product.template"].browse([prod_id])
-        return self.price_rule_get_multi(
-            products_by_qty_by_partner=[(product, qty, partner)]
-        )[prod_id]
+        return self._compute_price_rule_multi(prod_id, qty)[prod_id.id]
