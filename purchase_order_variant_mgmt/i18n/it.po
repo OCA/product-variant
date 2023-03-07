@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-01-18 11:55+0000\n"
+"PO-Revision-Date: 2023-03-07 19:35+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -39,7 +39,7 @@ msgstr "Cancella"
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_create_uid
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_line_create_uid
 msgid "Created by"
-msgstr "Created by"
+msgstr "Creato da"
 
 #. module: purchase_order_variant_mgmt
 #: model:ir.model.fields,field_description:purchase_order_variant_mgmt.field_purchase_manage_variant_create_date
