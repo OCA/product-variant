@@ -4,10 +4,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests import common
+from odoo.tests.common import TransactionCase
 
 
-class TestVariantDefaultCode(common.SavepointCase):
+class TestVariantDefaultCode(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestVariantDefaultCode, cls).setUpClass()
