@@ -187,6 +187,7 @@ class ProductTemplate(models.Model):
             )
             for template in self - unique_variants:
                 template.default_code = template.code_prefix
+        return True
 
 
 class ProductProduct(models.Model):
@@ -206,6 +207,7 @@ class ProductProduct(models.Model):
         "product_template_attribute_value_ids.product_attribute_value_id.code",
     )
     def _compute_default_code(self):
+        self.env.cr.flush()  # https://github.com/odoo/odoo/blob/16.0/odoo/models.py#L5592
         for rec in self:
             if not rec.manual_code:
                 rec.default_code = rec._generate_default_code()
