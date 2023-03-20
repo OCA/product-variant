@@ -6,14 +6,18 @@
        Technical module: Show attribute color in product matrix table
     """,
     "category": "Sales/Sales",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "license": "LGPL-3",
     "author": "Studio73," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "depends": ["product_matrix"],
-    "qweb": [
-        "static/src/xml/product_matrix.xml",
-    ],
-    "data": ["views/assets.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "product_matrix_show_color/static/src/scss/product_matrix.scss",
+        ],
+        "web.assets_qweb": [
+            "product_matrix_show_color/static/src/xml/product_matrix.xml",
+        ],
+    },
     "installable": True,
 }
