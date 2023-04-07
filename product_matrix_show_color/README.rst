@@ -50,6 +50,8 @@ Credits
 Authors
 ~~~~~~~
 
+* Nextev Srl <https://www.nextev.it>
+
 * Studio73
 
 Contributors

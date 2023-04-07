@@ -8,12 +8,14 @@
     "category": "Sales/Sales",
     "version": "16.0.1.0.0",
     "license": "LGPL-3",
-    "author": "Studio73," "Odoo Community Association (OCA)",
+    "author": "Nextev S.r.l, Studio73," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "depends": ["product_matrix"],
-    "qweb": [
-        "static/src/xml/product_matrix.xml",
-    ],
-    "data": ["views/assets.xml"],
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "product_matrix_show_color/static/src/scss/product_matrix.scss",
+            "product_matrix_show_color/static/src/xml/product_matrix.xml",
+        ],
+    },
 }
