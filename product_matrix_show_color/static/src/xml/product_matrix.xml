@@ -1,17 +1,17 @@
 <template>
     <div t-inherit="product_matrix.matrix" t-inherit-mode="extension">
         <xpath
-            expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/td[@t-if='cell.name']"
+            expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/th[@t-if='cell.name']"
             position="attributes"
         >
-            <attribute
+        <attribute
                 name="class"
                 add="d-flex align-items-center justify-content-between w-100"
                 separator=" "
             />
         </xpath>
         <xpath
-            expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/td[@t-if='cell.name']"
+            expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/th[@t-if='cell.name']"
             position="inside"
         >
 
