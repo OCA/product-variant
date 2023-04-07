@@ -216,12 +216,16 @@ class ProductProduct(models.Model):
 
     def _generate_default_code(self):
         value_codes = self.product_tmpl_id.attribute_line_ids.value_ids.mapped("code")
-        if (not self.code_prefix and self.product_tmpl_id.is_automask()) or not all(
-            value_codes
+        if (
+            (not self.code_prefix and self.product_tmpl_id.is_automask())
+            or not all(value_codes)
+            or not self.product_template_attribute_value_ids
         ):
             return None
         else:
             product_attrs = defaultdict(str)
+            if self.product_tmpl_id.reference_mask is False:
+                self.product_tmpl_id._compute_reference_mask()
             reference_mask = ReferenceMask(self.product_tmpl_id.reference_mask)
             main_lang = self.product_tmpl_id._guess_main_lang()
             for attr in self.product_template_attribute_value_ids:
