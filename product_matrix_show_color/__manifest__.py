@@ -6,7 +6,7 @@
        Technical module: Show attribute color in product matrix table
     """,
     "category": "Sales/Sales",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "LGPL-3",
     "author": "Studio73," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
