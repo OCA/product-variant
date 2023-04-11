@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-product_matrix_show_color',
         'odoo14-addon-product_matrix_sticky_header',
         'odoo14-addon-product_variant_configurator',
+        'odoo14-addon-product_variant_configurator_manual_creation',
         'odoo14-addon-product_variant_default_code',
         'odoo14-addon-product_variant_inactive',
         'odoo14-addon-product_variant_sale_price',
