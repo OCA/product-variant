@@ -11,11 +11,13 @@ class ProductTemplate(models.Model):
         if "list_price" in vals:
             self.mapped("product_variant_ids").write({"fix_price": vals["list_price"]})
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
-        product_tmpl = super().create(vals)
-        product_tmpl._update_fix_price(vals)
-        return product_tmpl
+        records = super().create(vals)
+        for i, product_tmpl in enumerate(records):
+            single_vals = vals[i] if isinstance(vals, list) else vals
+            product_tmpl._update_fix_price(single_vals)
+        return records
 
     def write(self, vals):
         res = super().write(vals)
@@ -34,27 +36,25 @@ class ProductProduct(models.Model):
         uom_model = self.env["uom.uom"]
         for product in self:
             price = product.fix_price or product.list_price
-            if "uom" in self.env.context:
-                price = product.uom_id._compute_price(
-                    price, uom_model.browse(self.env.context["uom"])
-                )
+            if self.env.context.get("uom"):
+                context_uom = uom_model.browse(self.env.context["uom"])
+                price = product.uom_id._compute_price(price, context_uom)
             product.lst_price = price
 
     def _compute_list_price(self):
         uom_model = self.env["uom.uom"]
         for product in self:
             price = product.fix_price or product.product_tmpl_id.list_price
-            if "uom" in self.env.context:
-                price = product.uom_id._compute_price(
-                    price, uom_model.browse(self.env.context["uom"])
-                )
+            if self.env.context.get("uom"):
+                context_uom = uom_model.browse(self.env.context["uom"])
+                price = product.uom_id._compute_price(price, context_uom)
             product.list_price = price
 
     def _inverse_product_lst_price(self):
         uom_model = self.env["uom.uom"]
         for product in self:
             vals = {}
-            if "uom" in self.env.context:
+            if self.env.context.get("uom"):
                 vals["fix_price"] = product.uom_id._compute_price(
                     product.lst_price, uom_model.browse(self.env.context["uom"])
                 )
@@ -63,9 +63,8 @@ class ProductProduct(models.Model):
             if product.product_variant_count == 1:
                 product.product_tmpl_id.list_price = vals["fix_price"]
             else:
-                fix_prices = product.product_tmpl_id.mapped(
-                    "product_variant_ids.fix_price"
-                )
+                other_products = product.product_tmpl_id.product_variant_ids - product
+                fix_prices = other_products.mapped("fix_price") + [product.lst_price]
                 # for consistency with price shown in the shop
                 product.product_tmpl_id.with_context(
                     skip_update_fix_price=True
