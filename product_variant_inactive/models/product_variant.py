@@ -75,3 +75,8 @@ class ProductProduct(models.Model):
                         "combination has been deleted"
                     )
                 )
+
+    def unlink(self):
+        # Pass active_test = False to avoid deleting template
+        # with inactive variant
+        return super(ProductProduct, self.with_context(active_test=False)).unlink()

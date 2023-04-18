@@ -69,8 +69,8 @@ class TestProductProduct(SavepointCase):
         self.assertEqual(self.template.product_variant_count, variant_count + 1)
         self.assertEqual(self.template.product_variant_count_all, variant_count_all)
 
-    def test_reactive_template(self):
-        template = self.env["product.template"].create(
+    def _create_template_with_variant(self):
+        return self.env["product.template"].create(
             {
                 "name": "FOO",
                 "attribute_line_ids": [
@@ -90,11 +90,21 @@ class TestProductProduct(SavepointCase):
                 ],
             }
         )
+
+    def test_reactive_template(self):
+        template = self._create_template_with_variant()
         variants = template.product_variant_ids
         template.write({"active": False})
         self.assertEqual(variants.mapped("active"), [False, False])
         template.write({"active": True})
         self.assertEqual(variants.mapped("active"), [True, True])
+
+    def test_unlink_variant_with_archive_template(self):
+        template = self._create_template_with_variant()
+        variant = template.product_variant_ids[0]
+        template.active = False
+        variant.unlink()
+        self.assertTrue(template.exists())
 
     def _deactivate_all_variants_of_template(self):
         self.template.product_variant_ids.write({"active": False})
