@@ -30,6 +30,7 @@ msgid "Attribute Code"
 msgstr ""
 
 #. module: product_variant_default_code
+#. odoo-python
 #: code:addons/product_variant_default_code/models/product.py:0
 #: model:ir.model.constraint,message:product_variant_default_code.constraint_product_attribute_number_uniq
 #, python-format
@@ -67,27 +68,10 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute__display_name
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value__display_name
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__display_name
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__display_name
-#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: product_variant_default_code
+#. odoo-python
 #: code:addons/product_variant_default_code/models/product.py:0
 #, python-format
 msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
-msgstr ""
-
-#. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute__id
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value__id
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__id
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__id
-#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__id
-msgid "ID"
 msgstr ""
 
 #. module: product_variant_default_code
@@ -96,21 +80,12 @@ msgid "Internal Reference"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute____last_update
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value____last_update
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product____last_update
-#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template____last_update
-#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__manual_code
 msgid "Manual Reference"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model,name:product_variant_default_code.model_product_product
+#: model:ir.model,name:product_variant_default_code.model_product_template
 msgid "Product"
 msgstr ""
 
@@ -130,9 +105,9 @@ msgid "Product Default Code Manual Mask"
 msgstr ""
 
 #. module: product_variant_default_code
-#: model:ir.model,name:product_variant_default_code.model_product_template
-msgid "Product Template"
-msgstr "Tuotteen malli"
+#: model:ir.model,name:product_variant_default_code.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_variant_default_code
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
@@ -196,3 +171,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
 msgid "[attribute3]-[attribute1]"
 msgstr ""
+
+#~ msgid "Product Template"
+#~ msgstr "Tuotteen malli"
