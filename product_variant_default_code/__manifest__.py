@@ -15,7 +15,7 @@
     "license": "AGPL-3",
     "category": "Product",
     "maintainers": ["Kev-Roche"],
-    "depends": ["product_attribute_archive"],
+    "depends": ["product"],
     "data": [
         "security/product_security.xml",
         "data/ir_config_parameter.xml",
