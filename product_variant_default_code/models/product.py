@@ -217,11 +217,7 @@ class ProductProduct(models.Model):
             rec.manual_code = bool(rec.default_code)
 
     def _generate_default_code(self):
-        value_codes = [
-            rec.code
-            for rec in self.product_tmpl_id.attribute_line_ids.value_ids
-            if rec.active
-        ]
+        value_codes = self.product_tmpl_id.attribute_line_ids.value_ids.mapped("code")
         if (not self.code_prefix and self.product_tmpl_id.is_automask()) or not all(
             value_codes
         ):
