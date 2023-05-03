@@ -109,7 +109,7 @@ class ProductTemplate(models.Model):
                 )
             if error_txt:
                 error_txt = "Default Code can not be computed.\n" + error_txt
-            rec.variant_default_code_error = error_txt
+            rec.variant_default_code_error = error_txt or False
 
     @api.depends(
         "code_prefix",
@@ -180,13 +180,14 @@ class ProductTemplate(models.Model):
         "product_variant_ids", "product_variant_ids.default_code", "code_prefix"
     )
     def _compute_default_code(self):
-        super()._compute_default_code()
+        res = super()._compute_default_code()
         if self.env["ir.config_parameter"].get_param("prefix_as_default_code"):
             unique_variants = self.filtered(
                 lambda template: len(template.product_variant_ids) == 1
             )
             for template in self - unique_variants:
                 template.default_code = template.code_prefix
+        return res
 
 
 class ProductProduct(models.Model):

@@ -14,14 +14,14 @@ Product Variant Default Code
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fproduct--variant-lightgray.png?logo=github
-    :target: https://github.com/OCA/product-variant/tree/14.0/product_variant_default_code
+    :target: https://github.com/OCA/product-variant/tree/15.0/product_variant_default_code
     :alt: OCA/product-variant
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/product-variant-14-0/product-variant-14-0-product_variant_default_code
+    :target: https://translation.odoo-community.org/projects/product-variant-15-0/product-variant-15-0-product_variant_default_code
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/137/14.0
-    :alt: Try me on Runbot
+.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
+    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/product-variant&target_branch=15.0
+    :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
@@ -48,6 +48,28 @@ variants references are automatically set. For example:
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+To configure the default code of the product variant, it is necessary:
+
+#. Edit or create the attributes that define the variants of a product, adding an
+   abbreviation that identifies the attribute in the `Attribute Code` field, also in
+   the `Attribute Value Code` field of the attribute values. These abbreviations will
+   appear in the default code of the product variant.
+   Example: `Colour - C`, `White - Wh`
+
+By default the product code is assigned and updated automatically, to do it manually
+it is necessary:
+
+#. Activate the option `Default product code Manual mask` from settings.
+#. Edit or create a product variant and activate the option `Manual Reference`.
+   If the `Internal Reference` field is edited, the above option will be activated when
+   the changes are saved.
+
+To be able to edit the reference mask, the user must have the
+`Product Default Code Behavior` permission active.
 
 Usage
 =====
@@ -111,7 +133,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/product-variant/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/product-variant/issues/new?body=module:%20product_variant_default_code%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/product-variant/issues/new?body=module:%20product_variant_default_code%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -139,6 +161,7 @@ Contributors
   * David Vidal
   * Pedro M. Baeza
   * João Marques
+  * Pilar Vargas
 
 Maintainers
 ~~~~~~~~~~~
@@ -161,6 +184,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-Kev-Roche| 
 
-This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/14.0/product_variant_default_code>`_ project on GitHub.
+This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/15.0/product_variant_default_code>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

@@ -9,7 +9,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Product Variant Default Code",
-    "version": "14.0.3.0.2",
+    "version": "15.0.1.0.0",
     "author": "AvancOSC, Shine IT, Tecnativa, Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",

@@ -8,3 +8,4 @@
   * David Vidal
   * Pedro M. Baeza
   * João Marques
+  * Pilar Vargas
