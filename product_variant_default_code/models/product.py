@@ -123,7 +123,11 @@ class ProductTemplate(models.Model):
                 rec.code_prefix = rec.default_code
             if automask or not rec.reference_mask:
                 rec.reference_mask = rec._get_default_mask()
-            elif not automask and rec.code_prefix:
+            elif (
+                not automask
+                and rec.code_prefix
+                and rec.code_prefix not in rec.reference_mask
+            ):
                 rec.reference_mask = rec.code_prefix + rec.reference_mask
 
     def _inverse_reference_mask(self):
