@@ -109,7 +109,7 @@ class ProductTemplate(models.Model):
                 )
             if error_txt:
                 error_txt = "Default Code can not be computed.\n" + error_txt
-            rec.variant_default_code_error = error_txt
+            rec.variant_default_code_error = error_txt or False
 
     @api.depends(
         "code_prefix",
