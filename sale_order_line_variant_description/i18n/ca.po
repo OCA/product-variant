@@ -32,7 +32,7 @@ msgstr ""
 
 #. module: sale_order_line_variant_description
 #: model:ir.model,name:sale_order_line_variant_description.model_product_product
-msgid "Product"
+msgid "Product Variant"
 msgstr ""
 
 #. module: sale_order_line_variant_description
