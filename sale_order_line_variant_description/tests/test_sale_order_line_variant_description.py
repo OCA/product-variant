@@ -30,12 +30,12 @@ class TestSaleOrderLineVariantDescription(TransactionCase):
                 taxes_id=[(6, 0, [tax_include.id])],
             )
         )
-        product = self.product_model.create(
+        product_tmpl.product_variant_id.update(
             dict(
-                product_tmpl_id=product_tmpl.id,
                 variant_description_sale="Product variant description",
             )
         )
+        product = product_tmpl.product_variant_id
         fp = self.fiscal_position_model.create(dict(name="fiscal position", sequence=1))
         so = self.so_model.create(
             {
@@ -54,5 +54,5 @@ class TestSaleOrderLineVariantDescription(TransactionCase):
                 "order_id": so.id,
             }
         )
-        so_line.product_id_change()
+        so_line._onchange_product_id_warning()
         self.assertEqual(product.variant_description_sale, so_line.name)
