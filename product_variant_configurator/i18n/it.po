@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-05-17 04:15+0000\n"
+"PO-Revision-Date: 2023-05-25 14:10+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_attribute_view_form
@@ -151,8 +151,8 @@ msgid ""
 "Price Extra: Extra price for the variant with the currently selected "
 "attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
-"Prezzo Extra: Prezzo Extra per la variante con gli attributi attualmente "
-"selezionati sul prezzo di vendita: es. 200 di prezzo extra, 1000 + 200 = "
+"Extra prezzo : extra prezzo sul prezzo di vendita per la variante con gli "
+"attributi attualmente selezionati: es. 200 di extra prezzo , 1000 + 200 = "
 "1200."
 
 #. module: product_variant_configurator
