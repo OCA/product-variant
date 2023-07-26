@@ -55,4 +55,4 @@ class TestSaleOrderLineVariantDescription(TransactionCase):
             }
         )
         so_line.product_id_change()
-        self.assertEqual(product.variant_description_sale, so_line.name)
+        self.assertIn(product.variant_description_sale, so_line.name)

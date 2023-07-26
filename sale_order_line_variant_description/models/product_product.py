@@ -15,3 +15,11 @@ class ProductProduct(models.Model):
         "This description will be copied to every Sale Order",
         translate=True,
     )
+
+    def get_product_multiline_description_sale(self):
+        name = super().get_product_multiline_description_sale()
+
+        if self.variant_description_sale:
+            name += "\n" + self.variant_description_sale
+
+        return name
