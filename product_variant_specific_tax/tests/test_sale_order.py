@@ -70,9 +70,7 @@ class TestSaleOrder(common.SavepointCase):
 
         line.product_id = self.product_product_with
         line.product_id_change()
-        self.assertEqual(
-            line.tax_id, self.account_tax_std | self.account_tax_recycling
-        )
+        self.assertEqual(line.tax_id, self.account_tax_std | self.account_tax_recycling)
 
         line.product_id = self.product_product_without
         line.product_id_change()
