@@ -25,7 +25,7 @@ class ProductConfigurator(models.AbstractModel):
         copy=True,
     )
     price_extra = fields.Float(
-        compute="_compute_price_extra",
+        compute="_compute_can_be_created",
         digits="Product Price",
         help="Price Extra: Extra price for the variant with the currently "
         "selected attributes values on sale price. eg. 200 price extra, "
@@ -34,7 +34,7 @@ class ProductConfigurator(models.AbstractModel):
     product_id = fields.Many2one(
         string="Product Variant", comodel_name="product.product"
     )
-    can_create_product = fields.Boolean(compute="_compute_can_be_created", store=False)
+    can_create_product = fields.Boolean(compute="_compute_can_be_created")
     create_product_variant = fields.Boolean(string="Create product now!")
 
     @api.depends(
@@ -42,25 +42,18 @@ class ProductConfigurator(models.AbstractModel):
     )
     def _compute_can_be_created(self):
         for rec in self:
-            if rec.product_id:
-                # product already selected
-                rec.can_create_product = False
-                continue
-            if not rec.product_tmpl_id:
-                # no product nor template
+            if rec.product_id or not rec.product_tmpl_id:
+                # product already selected or no product nor template
                 rec.can_create_product = False
                 continue
             rec.can_create_product = not bool(
                 len(rec.product_tmpl_id.attribute_line_ids.mapped("attribute_id"))
                 - len(list(filter(None, rec.product_attribute_ids.mapped("value_id"))))
             )
-
-    @api.depends("product_attribute_ids", "product_attribute_ids.value_id")
-    def _compute_price_extra(self):
-        for record in self:
-            record.price_extra = sum(record.mapped("product_attribute_ids.price_extra"))
+            rec.price_extra = sum(rec.mapped("product_attribute_ids.price_extra"))
 
     def _set_product_tmpl_attributes(self):
+        self.ensure_one()
         if self.product_tmpl_id:
             attribute_lines = self.product_attribute_ids.browse([])
             for attribute_line in self.product_tmpl_id.attribute_line_ids:
@@ -75,6 +68,7 @@ class ProductConfigurator(models.AbstractModel):
             self.product_attribute_ids = attribute_lines
 
     def _set_product_attributes(self):
+        self.ensure_one()
         if self.product_id:
             attribute_lines = self.product_attribute_ids.browse([])
             for vals in self.product_id._get_product_attributes_values_dict():
@@ -92,6 +86,7 @@ class ProductConfigurator(models.AbstractModel):
         self.ensure_one()
         if not self.product_tmpl_id._origin:
             self.product_id = False
+            self.product_id = False
             self._empty_attributes()
             # no product template: allow any product
             return {"domain": {"product_id": []}}
@@ -99,15 +94,12 @@ class ProductConfigurator(models.AbstractModel):
         if not self.product_tmpl_id.attribute_line_ids:
             # template without attribute, use the unique variant
             self.product_id = self.product_tmpl_id.product_variant_ids[0].id
-        else:
-            # verify the product correspond to the template
-            # otherwise reset it
-            if (
-                self.product_id
-                and self.product_id.product_tmpl_id != self.product_tmpl_id
-            ):
-                if not self.env.context.get("not_reset_product"):
-                    self.product_id = False
+
+        elif self.product_id and (
+            self.product_id.product_tmpl_id != self.product_tmpl_id
+            and not self.env.context.get("not_reset_product")
+        ):
+            self.product_id = False
 
         # populate attributes
         if self.product_id:
