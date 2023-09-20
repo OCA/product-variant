@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_order_line_variant_description
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: sale-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-23 01:48+0000\n"
+"PO-Revision-Date: 2019-01-26 15:41+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
+"Language-Team: Portuguese (http://www.transifex.com/oca/OCA-sale-"
+"workflow-8-0/language/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.3\n"
+
+#. module: sale_order_line_variant_description
+#: model:ir.model.fields,help:sale_order_line_variant_description.field_product_product__variant_description_sale
+msgid ""
+"A description of the product variant that you want to communicate to your "
+"customers.This description will be copied to every Sale Order"
+msgstr ""
+"A descrição da variante de produto que quer comunicar aos seus clientes. "
+"Esta descrição será copiado para cada Encomenda de Venda"
+
+#. module: sale_order_line_variant_description
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
+msgid "Notes"
+msgstr "Notas"
+
+#. module: sale_order_line_variant_description
+#: model:ir.model,name:sale_order_line_variant_description.model_product_product
+msgid "Product"
+msgstr "Produto"
+
+#. module: sale_order_line_variant_description
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
+msgid "Sale Description"
+msgstr "Descrição na Venda"
+
+#. module: sale_order_line_variant_description
+#: model:ir.model,name:sale_order_line_variant_description.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linha de Encomenda de Venda"
+
+#. module: sale_order_line_variant_description
+#: model:ir.model.fields,field_description:sale_order_line_variant_description.field_product_product__variant_description_sale
+msgid "Variant Sale Description"
+msgstr "Descrição da Variante na Venda"
+
+#. module: sale_order_line_variant_description
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
+msgid "Variant description for quotations"
+msgstr "Descrição da variante em orçamentos"
