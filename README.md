@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_variant_default_code](product_variant_default_code/) | 16.0.1.0.3 | [![Kev-Roche](https://github.com/Kev-Roche.png?size=30px)](https://github.com/Kev-Roche) | Product Variant Default Code
+[product_variant_name](product_variant_name/) | 16.0.1.0.0 |  | Product Variant Name
 
 [//]: # (end addons)
 
