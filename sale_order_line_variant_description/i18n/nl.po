@@ -35,8 +35,8 @@ msgstr "Opmerkingen"
 
 #. module: sale_order_line_variant_description
 #: model:ir.model,name:sale_order_line_variant_description.model_product_product
-msgid "Product"
-msgstr "Product"
+msgid "Product Variant"
+msgstr ""
 
 #. module: sale_order_line_variant_description
 #: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_variant_easy_edit_view
@@ -57,3 +57,6 @@ msgstr "Variant verkoopomschrijving"
 #: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
 msgid "Variant description for quotations"
 msgstr "Variant omschrijving voor offertes"
+
+#~ msgid "Product"
+#~ msgstr "Product"
