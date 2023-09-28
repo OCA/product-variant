@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ForgeFlow, S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+
+    <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description']/.." position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('product_variant_count', '>', 1)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('is_system_multi_lang', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="before">
+                <field name="is_system_multi_lang" invisible="1" />
+                <p
+                    colspan="2"
+                    attrs="{'invisible': [('is_system_multi_lang', '=', False)]}"
+                >
+                    <i
+                        class="fa fa-info-circle"
+                    /> This field is maintained in the product variant form.
+                    <button
+                        name="open_product_variant"
+                        type="object"
+                        string="Go to Product Variant"
+                        class="btn-link"
+                    />
+                </p>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
