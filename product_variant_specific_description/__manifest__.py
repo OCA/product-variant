@@ -3,7 +3,7 @@
 
 {
     "name": "Product Variant Specific Description",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Product",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
