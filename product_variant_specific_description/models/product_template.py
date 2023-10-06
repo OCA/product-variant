@@ -10,6 +10,7 @@ class ProductTemplate(models.Model):
 
     description = fields.Html(
         compute="_compute_description",
+        search="_search_description",
         inverse="_inverse_description",
     )
     is_system_multi_lang = fields.Boolean(
@@ -41,6 +42,9 @@ class ProductTemplate(models.Model):
         for template in self:
             if len(template.product_variant_ids) == 1:
                 template.product_variant_ids.description = template.description
+
+    def _search_description(self, operator, value):
+        return [("product_variant_ids.description", operator, value)]
 
     def open_product_variant(self):
         self.ensure_one()
