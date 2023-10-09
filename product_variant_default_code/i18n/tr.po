@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* product_variant_default_code
+# 	* product_variant_default_code
 #
 msgid ""
 msgstr ""
@@ -63,7 +63,8 @@ msgstr "Ürün kodunu nasıl yöneteceğinizi tanımlar"
 #: code:addons/product_variant_default_code/models/product.py:38
 #, python-format
 msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
-msgstr "\"Çeşit referans maskesi\" alanında tanımlanamayan nitelik ismi bulundu"
+msgstr ""
+"\"Çeşit referans maskesi\" alanında tanımlanamayan nitelik ismi bulundu"
 
 #. module: product_variant_default_code
 #: selection:res.config.settings,group_product_default_code:0
@@ -115,16 +116,22 @@ msgstr "Referans Öneki"
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_product_product__reference_mask
 #: model:ir.model.fields,help:product_variant_default_code.field_product_template__reference_mask
-msgid "Reference mask for building internal references of a variant generated from this template.\n"
+msgid ""
+"Reference mask for building internal references of a variant generated from "
+"this template.\n"
 "Example:\n"
 "A product named ABC with 2 attributes: Size and Color:\n"
 "Product: ABC\n"
-"Color: Red(r), Yellow(y), Black(b)  #Red, Yellow, Black are the attribute value, `r`, `y`, `b` are the corresponding code\n"
+"Color: Red(r), Yellow(y), Black(b)  #Red, Yellow, Black are the attribute "
+"value, `r`, `y`, `b` are the corresponding code\n"
 "Size: L (l), XL(x)\n"
-"When setting Variant reference mask to `[Color]-[Size]`, the default code on the variants will be something like `r-l` `b-l` `r-x` ...\n"
-"If you like, You can even have the attribute name appear more than once in the mask. Such as,`fancyA/[Size]~[Color]~[Size]`\n"
+"When setting Variant reference mask to `[Color]-[Size]`, the default code on "
+"the variants will be something like `r-l` `b-l` `r-x` ...\n"
+"If you like, You can even have the attribute name appear more than once in "
+"the mask. Such as,`fancyA/[Size]~[Color]~[Size]`\n"
 " When saved, the default code on variants will be something like \n"
-" `fancyA/l~r~l` (for variant with Color \"Red\" and Size \"L\")  `fancyA/x~y~x` (for variant with Color \"Yellow\" and Size \"XL\")\n"
+" `fancyA/l~r~l` (for variant with Color \"Red\" and Size \"L\")  `fancyA/"
+"x~y~x` (for variant with Color \"Yellow\" and Size \"XL\")\n"
 "Note: make sure characters \"[,]\" do not appear in your attribute name"
 msgstr ""
 "Bu şablondan oluşturulan bir varyantın dahili referanslarını oluşturmak için "
@@ -140,13 +147,15 @@ msgstr ""
 "İsterseniz, öznitelik adının maskede birden fazla görünmesini bile "
 "sağlayabilirsiniz. `fanteziA/[Boyut]~[Renk]~[Boyut]` gibi\n"
 "Kaydedildiğinde, varyantlardaki varsayılan kod şöyle olacaktır:\n"
-"`fancyA/l~r~l` (\"Kırmızı\" Renk ve \"L\" Beden varyantı için) `fancyA/x~y~x`"
-" (\"Sarı\" Renk ve \"XL\" Beden varyantı için)\n"
+"`fancyA/l~r~l` (\"Kırmızı\" Renk ve \"L\" Beden varyantı için) `fancyA/"
+"x~y~x` (\"Sarı\" Renk ve \"XL\" Beden varyantı için)\n"
 "Not: \"[,]\" karakterlerinin özellik adınızda görünmediğinden emin olun"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code
-msgid "Set behaviour of codes (depends on variant use: see Sales/Purchases configuration)"
+msgid ""
+"Set behaviour of codes (depends on variant use: see Sales/Purchases "
+"configuration)"
 msgstr ""
 "Ürün kodlarının davranışı ayarlayın (varyant göre değişir: Satış/Satınalma "
 "ayarlarına bakınız)"
