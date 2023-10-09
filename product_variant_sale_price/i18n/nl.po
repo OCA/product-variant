@@ -20,14 +20,31 @@ msgstr ""
 "X-Generator: Weblate 3.1.1\n"
 
 #. module: product_variant_sale_price
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__fix_price
 msgid "Fix Price"
 msgstr "Bepaal prijs"
 
 #. module: product_variant_sale_price
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__id
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: product_variant_sale_price
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_variant_sale_price.field_product_template____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__list_price
 #, fuzzy
-#| msgid "Fix Price"
 msgid "List Price"
 msgstr "Bepaal prijs"
 
@@ -43,10 +60,8 @@ msgstr "Product sjabloon"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__lst_price
-#, fuzzy
-#| msgid "Fix Price"
-msgid "Sale Price"
-msgstr "Bepaal prijs"
+msgid "Public Price"
+msgstr ""
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
@@ -54,6 +69,11 @@ msgid ""
 "The sale price is managed from the product template. Click on the 'Configure "
 "Variants' button to set the extra attribute prices."
 msgstr ""
+
+#, fuzzy
+#~| msgid "Fix Price"
+#~ msgid "Sale Price"
+#~ msgstr "Bepaal prijs"
 
 #~ msgid ""
 #~ "{'invisible': [\n"
