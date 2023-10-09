@@ -21,7 +21,18 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: purchase_variant_configurator_on_confirm
+#: model:ir.model.constraint,message:purchase_variant_configurator_on_confirm.constraint_purchase_order_line_non_accountable_null_fields
+msgid "Forbidden values on non-accountable purchase order line"
+msgstr ""
+
+#. module: purchase_variant_configurator_on_confirm
+#: model:ir.model.constraint,message:purchase_variant_configurator_on_confirm.constraint_purchase_order_line_accountable_required_fields
+msgid "Missing required fields on accountable purchase order line."
+msgstr ""
+
+#. module: purchase_variant_configurator_on_confirm
 #: model:ir.model,name:purchase_variant_configurator_on_confirm.model_product_product
+#: model:ir.model.fields,field_description:purchase_variant_configurator_on_confirm.field_purchase_order_line__product_id
 msgid "Product"
 msgstr "Producto"
 
@@ -39,3 +50,8 @@ msgstr "Pedido de Compra"
 #: model:ir.model,name:purchase_variant_configurator_on_confirm.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Línea pedido de compra"
+
+#. module: purchase_variant_configurator_on_confirm
+#: model:ir.model,name:purchase_variant_configurator_on_confirm.model_product_supplierinfo
+msgid "Supplier Pricelist"
+msgstr ""
