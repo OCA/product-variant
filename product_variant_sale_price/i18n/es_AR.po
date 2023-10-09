@@ -44,8 +44,8 @@ msgstr "Precio Público"
 #. module: product_variant_sale_price
 #: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
 msgid ""
-"The sale price is managed from the product template. Click on the 'Configure"
-" Variants' button to set the extra attribute prices."
+"The sale price is managed from the product template. Click on the 'Configure "
+"Variants' button to set the extra attribute prices."
 msgstr ""
 "El precio de venta se gestiona desde la plantilla del producto. Haga clic en "
 "el botón 'Configurar Variantes' para establecer los precios de los atributos "
