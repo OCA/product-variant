@@ -19,18 +19,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: sale_variant_configurator
-#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line_partner_id
-msgid "Customer"
+#: model:ir.model.constraint,message:sale_variant_configurator.constraint_sale_order_line_non_accountable_null_fields
+msgid "Forbidden values on non-accountable sale order line"
 msgstr ""
 
 #. module: sale_variant_configurator
-#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line_product_tmpl_id
+#: model:ir.model.constraint,message:sale_variant_configurator.constraint_sale_order_line_accountable_required_fields
+msgid "Missing required fields on accountable sale order line."
+msgstr ""
+
+#. module: sale_variant_configurator
+#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: sale_variant_configurator
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_order_line_tree
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
 msgid "Product Template"
 msgstr "Modèle de produit"
 
 #. module: sale_variant_configurator
+#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line__product_tmpl_id
+msgid "Product Template (no related)"
+msgstr ""
+
+#. module: sale_variant_configurator
 #: model:ir.model,name:sale_variant_configurator.model_sale_order
-msgid "Quotation"
+msgid "Sales Order"
 msgstr ""
 
 #. module: sale_variant_configurator
@@ -39,6 +56,6 @@ msgid "Sales Order Line"
 msgstr "Ligne de commandes de vente"
 
 #. module: sale_variant_configurator
-#: model:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
 msgid "Template"
 msgstr "Modèle"
