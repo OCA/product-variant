@@ -4,7 +4,7 @@
 {
     "name": "Product Variant Configurator Manual Creation",
     "summary": "Provides a wizards to make variants on demand",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Product Variant",
     "license": "AGPL-3",
     "author": "ForgeFlow, Odoo Community Association (OCA)",

@@ -6,7 +6,7 @@
        Technical module: Add sticky header for Matrix Product
     """,
     "category": "Sales/Sales",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "LGPL-3",
     "author": "Studio73," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
