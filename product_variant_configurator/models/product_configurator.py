@@ -97,8 +97,9 @@ class ProductConfigurator(models.AbstractModel):
             return {"domain": {"product_id": []}}
 
         if not self.product_tmpl_id.attribute_line_ids:
-            # template without attribute, use the unique variant
-            self.product_id = self.product_tmpl_id.product_variant_ids[0].id
+            # template without attribute, use the unique variant if exists (prevents from crashing on variant creation in the product variants menu)
+            if self.product_tmpl_id.product_variant_ids:
+                self.product_id = self.product_tmpl_id.product_variant_ids[0].id
         else:
             # verify the product correspond to the template
             # otherwise reset it
@@ -117,8 +118,11 @@ class ProductConfigurator(models.AbstractModel):
         else:
             self._empty_attributes()
 
-        # Restrict product possible values to current selection
-        domain = [("product_tmpl_id", "=", self.product_tmpl_id.ids[0])]
+        # Restrict product possible values to current selection if there is one (prevents from crashing on variant creation in the product variants menu)
+        if self.product_tmpl_id.ids:
+            domain = [("product_tmpl_id", "=", self.product_tmpl_id.ids[0])]
+        else:
+            domain = [("product_tmpl_id", "=", [])]
         return {"domain": {"product_id": domain}}
 
     @api.onchange("product_attribute_ids")
