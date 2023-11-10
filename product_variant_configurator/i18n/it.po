@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-11-10 12:39+0000\n"
+"PO-Revision-Date: 2023-11-10 16:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -133,17 +133,17 @@ msgstr "Proprietario"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__owner_model
 msgid "Owner Model"
-msgstr "Modello Proprietario"
+msgstr "Modello proprietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__possible_value_ids
 msgid "Possible Value"
-msgstr "Possibile valore"
+msgstr "Valore possibile"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__price_extra
 msgid "Price Extra"
-msgstr "Prezzo Extra"
+msgstr "Extra prezzo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator__price_extra
@@ -161,7 +161,7 @@ msgid ""
 "Price Extra: Extra price for the variant with this attribute value on sale "
 "price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
-"Prezzo Extra: Prezzo Extra per la variante con questo attributo sul prezzo "
+"Prezzo extra: prezzo extra per la variante con questo attributo sul prezzo "
 "di vendita. es. 200 di prezzo extra, 1000 + 200 = 1200."
 
 #. module: product_variant_configurator
@@ -276,7 +276,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
 msgid "Use Odoo's default variant management"
-msgstr "Utilizza la gestione standard delle varianti"
+msgstr "Utilizza la gestione Odoo predefinita delle varianti"
 
 #. module: product_variant_configurator
 #: model:res.groups,name:product_variant_configurator.group_product_variant_extended_description
