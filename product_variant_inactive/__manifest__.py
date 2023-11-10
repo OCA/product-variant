@@ -13,4 +13,5 @@
         "views/product_variant_view.xml",
     ],
     "demo": ["data/product.product.csv"],
+    "uninstall_hook": "uninstall_hook",
 }
