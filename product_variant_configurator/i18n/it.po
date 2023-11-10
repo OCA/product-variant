@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-10-29 16:39+0000\n"
+"PO-Revision-Date: 2023-11-10 12:39+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -27,7 +27,7 @@ msgid ""
 "Product Template level"
 msgstr ""
 "<strong>Informazione:</strong> Ora si può gestire la creazione della "
-"variante dal Modello di prodotto"
+"variante dal livello modello prodotto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__attribute_id
@@ -37,7 +37,7 @@ msgstr "Attributo"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__price_extra
 msgid "Attribute Price Extra"
-msgstr "Extra prezzo per attributo"
+msgstr "Extra prezzo attributo"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_value
@@ -48,7 +48,7 @@ msgstr "Valore attributo"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
 msgid "Can Create Product"
-msgstr "Puoi creare il prodotto"
+msgstr "Si può creare il prodotto"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:22
@@ -90,7 +90,7 @@ msgstr "Nome visualizzato"
 #. module: product_variant_configurator
 #: selection:product.template,no_create_variants:0
 msgid "Don't create them automatically"
-msgstr "Non crearle automaticamente"
+msgstr "Non le crea automaticamente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__no_create_variants
