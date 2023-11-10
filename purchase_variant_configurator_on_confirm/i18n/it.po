@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-04-18 12:33+0000\n"
+"PO-Revision-Date: 2023-11-10 16:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: purchase_variant_configurator_on_confirm
 #: model:ir.model.constraint,message:purchase_variant_configurator_on_confirm.constraint_purchase_order_line_non_accountable_null_fields
 msgid "Forbidden values on non-accountable purchase order line"
-msgstr ""
+msgstr "Valori vietati nella riga ordine acquisto non giustificabile"
 
 #. module: purchase_variant_configurator_on_confirm
 #: model:ir.model.constraint,message:purchase_variant_configurator_on_confirm.constraint_purchase_order_line_accountable_required_fields
 msgid "Missing required fields on accountable purchase order line."
-msgstr ""
+msgstr "Campi richesti non compilati su riga ordine acquisto giustificabile."
 
 #. module: purchase_variant_configurator_on_confirm
 #: model:ir.model,name:purchase_variant_configurator_on_confirm.model_product_product
@@ -54,4 +54,4 @@ msgstr "Riga ordine di acquisto"
 #. module: purchase_variant_configurator_on_confirm
 #: model:ir.model,name:purchase_variant_configurator_on_confirm.model_product_supplierinfo
 msgid "Supplier Pricelist"
-msgstr ""
+msgstr "Listino prezzi fornitore"
