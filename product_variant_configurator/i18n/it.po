@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-11-09 17:39+0000\n"
+"PO-Revision-Date: 2023-11-10 11:39+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -23,7 +23,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_variant_count
 msgid "# Product Variants"
-msgstr ""
+msgstr "Nr. varianti prodotto"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_attribute_view_form
@@ -31,6 +31,8 @@ msgid ""
 "<strong>Info:</strong> You can now manage the variant creation from the "
 "Product Template level"
 msgstr ""
+"<strong>Informazione:</strong> Ora si può gestire la creazione della "
+"variante dal livello modello prodotto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__description_sale
@@ -52,7 +54,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__account_tag_ids
 msgid "Account Tags"
-msgstr ""
+msgstr "Etichette conto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__attribute_id
@@ -62,29 +64,28 @@ msgstr "Attributo"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__price_extra
 msgid "Attribute Price Extra"
-msgstr ""
+msgstr "Extra prezzo attributo"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_value
 msgid "Attribute Value"
-msgstr ""
+msgstr "Valore attributo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
-#, fuzzy
 msgid "Can Create Product"
-msgstr "Crea prodotto ora!"
+msgstr "Si può creare il prodotto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_ok
 msgid "Can be Purchased"
-msgstr ""
+msgstr "Può essere acquistato"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_ok
 msgid "Can be Sold"
-msgstr ""
+msgstr "Può essere venduto"
 
 #. module: product_variant_configurator
 #. odoo-python
@@ -92,7 +93,7 @@ msgstr ""
 #: code:addons/product_variant_configurator/models/product_template.py:0
 #, python-format
 msgid "Change warning!"
-msgstr ""
+msgstr "Avviso di modifica!"
 
 #. module: product_variant_configurator
 #. odoo-python
@@ -101,21 +102,22 @@ msgstr ""
 #, python-format
 msgid "Changing this parameter may cause automatic variants creation"
 msgstr ""
+"Il cambio di questo parametro può causare la creazione automatica di varianti"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__color
 msgid "Color Index"
-msgstr ""
+msgstr "Indice colore"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__cost_currency_id
 msgid "Cost Currency"
-msgstr ""
+msgstr "Valuta costo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__create_product_variant
@@ -136,27 +138,27 @@ msgstr "Creato il"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__taxes_id
 msgid "Customer Taxes"
-msgstr ""
+msgstr "Tasse cliente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__supplier_taxes_id
 msgid "Default taxes used when buying the product."
-msgstr ""
+msgstr "Tasse predefinite nell'acquisto del prodotto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__taxes_id
 msgid "Default taxes used when selling the product."
-msgstr ""
+msgstr "Tasse predefinite quando si vende il prodotto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "Unità di misura predefinita per tutte le operazioni di magazzino."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__uom_po_id
@@ -164,11 +166,13 @@ msgid ""
 "Default unit of measure used for purchase orders. It must be in the same "
 "category as the default unit of measure."
 msgstr ""
+"Unità di misura predefinita utilizzata per ordini di acquisto. Deve essere "
+"della stessa categoria dell'unità di misura predefinita."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__display_name
@@ -178,7 +182,7 @@ msgstr "Nome visualizzato"
 #. module: product_variant_configurator
 #: model:ir.model.fields.selection,name:product_variant_configurator.selection__product_template__no_create_variants__yes
 msgid "Don't create them automatically"
-msgstr ""
+msgstr "Non le crea automaticamente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__no_create_variants
@@ -188,7 +192,7 @@ msgstr "Non creare varianti automaticamente"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_expense_id
 msgid "Expense Account"
-msgstr ""
+msgstr "Conto spese"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__expense_policy
