@@ -6,33 +6,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-12 23:56+0000\n"
+"Last-Translator: Gil Arasa Verge <gilarasaverge@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Atributo"
 
 #. module: product_variant_configurator_manual_creation
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: product_variant_configurator_manual_creation
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.product_template_form_view
 msgid "Create Pending Variants"
-msgstr ""
+msgstr "Crear variantes pendientes"
 
 #. module: product_variant_configurator_manual_creation
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_view_form
 msgid "Create Variants"
-msgstr ""
+msgstr "Crear variantes"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__create_uid
@@ -51,20 +53,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__display_name
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre a mostrar"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_product_product__has_pending_variants
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_product_template__has_pending_variants
 msgid "Has pending variants?"
-msgstr ""
+msgstr "Tiene variantes pendientes?"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_product_template__id
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__id
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_product_template____last_update
@@ -88,7 +90,7 @@ msgstr ""
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__line_ids
 msgid "Lines"
-msgstr ""
+msgstr "Líneas"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model,name:product_variant_configurator_manual_creation.model_wizard_product_variant_configurator_manual_creation
@@ -108,31 +110,31 @@ msgstr ""
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__required
 msgid "Required?"
-msgstr ""
+msgstr "Requerido?"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__product_tmpl_id
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__attribute_value_ids
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__selected_value_ids
 msgid "Values"
-msgstr ""
+msgstr "Valores"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.actions.act_window,name:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_action
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_view_form
 msgid "Variants Manual Creation"
-msgstr ""
+msgstr "Creación manual de variantes"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__variants_to_create
 msgid "Variants to create"
-msgstr ""
+msgstr "Variantes a crear"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Asistente"
