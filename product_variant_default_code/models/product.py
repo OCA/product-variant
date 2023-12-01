@@ -153,20 +153,21 @@ class ProductTemplate(models.Model):
         )
         return default_mask
 
-    @api.model
-    def create(self, vals):
-        product = self.new(vals)
-        if (
-            not vals.get("reference_mask")
-            and product.attribute_line_ids
-            or not self.user_has_groups(
-                "product_variant_default_code.group_product_default_code_manual_mask"
-            )
-        ):
-            vals["reference_mask"] = product._get_default_mask()
-        elif vals.get("reference_mask"):
-            sanitize_reference_mask(product, vals["reference_mask"])
-        return super(ProductTemplate, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            product = self.new(vals)
+            if (
+                not vals.get("reference_mask")
+                and product.attribute_line_ids
+                or not self.user_has_groups(
+                    "product_variant_default_code.group_product_default_code_manual_mask"
+                )
+            ):
+                vals["reference_mask"] = product._get_default_mask()
+            elif vals.get("reference_mask"):
+                sanitize_reference_mask(product, vals["reference_mask"])
+        return super(ProductTemplate, self).create(vals_list)
 
     @api.model
     def _guess_main_lang(self):
