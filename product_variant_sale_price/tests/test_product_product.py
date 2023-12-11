@@ -95,13 +95,20 @@ class TestProductVariantPrice(TransactionCase):
 
     def test_create_variant(self):
         new_variant = self.product_product.create(
-            {"product_tmpl_id": self.product_template.id}
+            {
+                "product_tmpl_id": self.product_template.id,
+                "name": self.product_template.name,
+            }
         )
         self.assertEqual(self.product_template.list_price, new_variant.lst_price)
 
     def test_create_variant_different_uom(self):
         new_variant = self.product_product.with_context(uom=self.uom_dozen.id).create(
-            {"product_tmpl_id": self.product_template.id, "uom_id": self.uom_dozen.id}
+            {
+                "product_tmpl_id": self.product_template.id,
+                "uom_id": self.uom_dozen.id,
+                "name": self.product_template.name,
+            }
         )
         self.assertEqual(self.product_template.list_price, new_variant.lst_price)
 
