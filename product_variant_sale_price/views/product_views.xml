@@ -22,6 +22,9 @@
                     attrs="{'invisible': [('product_variant_count', '=', 1)]}"
                 />
             </xpath>
+            <xpath expr="//field[@name='lst_price']" position="attributes">
+                <attribute name="attrs">{'readonly':False}</attribute>
+            </xpath>
         </field>
     </record>
     <record id="product_variant_easy_edit_price_view" model="ir.ui.view">

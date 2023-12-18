@@ -3,3 +3,4 @@
 * Alex Comba <alex.comba@agilebg.com>
 * Fabien Bourgeois <fabien@yaltik.com>
 * Vicent Cubells <info@obertix.net>
+* Frank Cespedes <fcespedes@nuobit.com>
