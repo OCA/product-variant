@@ -8,10 +8,20 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='description_sale']" position="after">
-                <separator string="Variant description for quotations" colspan="2" />
-                <field name="variant_description_sale" colspan="2" nolabel="1" />
-            </xpath>
+            <field name="description_sale" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('product_variant_count', '&gt;', 1)]}</attribute>
+            </field>
+            <field name="description_sale" position="after">
+                <field
+                    name="variant_description_sale"
+                    attrs="{'invisible': [('product_variant_count', '=', 1)]}"
+                    colspan="2"
+                    nolabel="1"
+                    placeholder="This note is added to sales orders and invoices."
+                />
+            </field>
         </field>
     </record>
 
