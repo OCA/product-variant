@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-11-10 11:39+0000\n"
+"PO-Revision-Date: 2024-04-19 09:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -50,14 +50,17 @@ msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"
 
 #. module: sale_order_line_variant_description
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
+msgid "This note is added to sales orders and invoices."
+msgstr "Questa nota è aggiunta agli ordini di vendita e alle fatture."
+
+#. module: sale_order_line_variant_description
 #: model:ir.model.fields,field_description:sale_order_line_variant_description.field_product_product__variant_description_sale
 msgid "Variant Sale Description"
 msgstr "Descrizione vendita variante"
 
-#. module: sale_order_line_variant_description
-#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
-msgid "Variant description for quotations"
-msgstr "Descrizione Variante per preventivi"
+#~ msgid "Variant description for quotations"
+#~ msgstr "Descrizione Variante per preventivi"
 
 #~ msgid "Product"
 #~ msgstr "Prodotto"

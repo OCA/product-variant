@@ -46,11 +46,11 @@ msgid "Sales Order Line"
 msgstr "Línia de comanda de vendes"
 
 #. module: sale_order_line_variant_description
-#: model:ir.model.fields,field_description:sale_order_line_variant_description.field_product_product__variant_description_sale
-msgid "Variant Sale Description"
+#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
+msgid "This note is added to sales orders and invoices."
 msgstr ""
 
 #. module: sale_order_line_variant_description
-#: model_terms:ir.ui.view,arch_db:sale_order_line_variant_description.product_normal_form_view
-msgid "Variant description for quotations"
+#: model:ir.model.fields,field_description:sale_order_line_variant_description.field_product_product__variant_description_sale
+msgid "Variant Sale Description"
 msgstr ""
