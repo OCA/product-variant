@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="product_product_variant_list_view_qty_available">
+        <field name="name">product.product.variant.list.view.qty.available</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_available']" position="after">
+                <button
+                    name="action_open_product_quants"
+                    type="object"
+                    string="Open"
+                    class="btn-link"
+                    attrs="{'invisible':[('type', '!=', 'product')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
