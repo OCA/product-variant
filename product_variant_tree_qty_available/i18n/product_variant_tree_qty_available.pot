@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_tree_qty_available
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_variant_tree_qty_available
+#: code:addons/product_variant_tree_qty_available/models/product_product.py:0
+#, python-format
+msgid "%s - Update Quantity"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: model:ir.model.fields,field_description:product_variant_tree_qty_available.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_variant_tree_qty_available.field_stock_quant__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: model:ir.model.fields,field_description:product_variant_tree_qty_available.field_product_product__id
+#: model:ir.model.fields,field_description:product_variant_tree_qty_available.field_stock_quant__id
+msgid "ID"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: model:ir.model.fields,field_description:product_variant_tree_qty_available.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_variant_tree_qty_available.field_stock_quant____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: model_terms:ir.ui.view,arch_db:product_variant_tree_qty_available.product_product_variant_list_view_qty_available
+msgid "Open"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: code:addons/product_variant_tree_qty_available/models/stock_quant.py:0
+#, python-format
+msgid "Operation not supported"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: model:ir.model,name:product_variant_tree_qty_available.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: product_variant_tree_qty_available
+#: model:ir.model,name:product_variant_tree_qty_available.model_stock_quant
+msgid "Quants"
+msgstr ""
