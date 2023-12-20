@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [product_variant_default_code](product_variant_default_code/) | 14.0.3.0.4 | [![Kev-Roche](https://github.com/Kev-Roche.png?size=30px)](https://github.com/Kev-Roche) | Product Variant Default Code
 [product_variant_inactive](product_variant_inactive/) | 14.0.2.0.2 |  | Product Variant Inactive
 [product_variant_sale_price](product_variant_sale_price/) | 14.0.1.0.0 |  | Allows to write fixed prices in product variants
+[product_variant_tree_qty_available](product_variant_tree_qty_available/) | 14.0.1.0.0 | [![dessanhemrayev](https://github.com/dessanhemrayev.png?size=30px)](https://github.com/dessanhemrayev) [![CetmixGitDrone](https://github.com/CetmixGitDrone.png?size=30px)](https://github.com/CetmixGitDrone) | Adds the 'QTY' button to product variant tree view
 [sale_order_line_variant_description](sale_order_line_variant_description/) | 14.0.1.0.0 |  | Sale order line variant description
 
 [//]: # (end addons)

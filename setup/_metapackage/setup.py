@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-product_variant_default_code',
         'odoo14-addon-product_variant_inactive',
         'odoo14-addon-product_variant_sale_price',
+        'odoo14-addon-product_variant_tree_qty_available',
         'odoo14-addon-sale_order_line_variant_description',
     ],
     classifiers=[
