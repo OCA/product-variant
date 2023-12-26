@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-10 16:36+0000\n"
+"PO-Revision-Date: 2023-12-26 18:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -82,7 +82,7 @@ msgstr "Ultimo aggiornamento di"
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__write_date
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__write_date
 msgid "Last Updated on"
-msgstr "Ultimo"
+msgstr "Ultimo aggiornamento il"
 
 #. module: product_variant_configurator_manual_creation
 #: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__line_ids
