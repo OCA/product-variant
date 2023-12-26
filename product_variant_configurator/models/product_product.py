@@ -139,9 +139,11 @@ class ProductProduct(models.Model):
                 res.append(super(ProductProduct, product).name_get()[0])
         return res
 
-    @api.model
-    def create(self, vals):
-        if vals.get("product_attribute_ids"):
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("product_attribute_ids"):
+                continue
             ptav = (
                 self.env["product.template.attribute.value"]
                 .search(
@@ -169,5 +171,4 @@ class ProductProduct(models.Model):
             )
             vals.pop("product_attribute_ids")
             vals["product_template_attribute_value_ids"] = [(4, x) for x in ptav]
-        obj = self.with_context(product_name=vals.get("name", ""))
-        return super(ProductProduct, obj).create(vals)
+        return super(ProductProduct, self).create(vals_list)
