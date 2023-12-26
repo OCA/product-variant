@@ -215,25 +215,26 @@ class ProductConfigurator(models.AbstractModel):
             return name
         return ("%s\n%s" if extended else "%s (%s)") % (name, description)
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Fill `product_tmpl_id` in case `product_id` is supplied but not the
         other one.
         """
-        if vals.get("product_id"):
-            product = self.env["product.product"].browse(vals["product_id"])
-            if not vals.get("product_tmpl_id"):
-                vals["product_tmpl_id"] = product.product_tmpl_id.id
-            if not vals.get("product_attribute_ids"):
-                vals["product_attribute_ids"] = []
-                gen_dict = {
-                    "owner_model": self._name,
-                    "product_tmpl_id": product.product_tmpl_id.id,
-                }
-                for att_val in product._get_product_attributes_values_dict():
-                    att_val.update(gen_dict)
-                    vals["product_attribute_ids"].append((0, 0, att_val))
-        return super().create(vals)
+        for vals in vals_list:
+            if vals.get("product_id"):
+                product = self.env["product.product"].browse(vals["product_id"])
+                if not vals.get("product_tmpl_id"):
+                    vals["product_tmpl_id"] = product.product_tmpl_id.id
+                if not vals.get("product_attribute_ids"):
+                    vals["product_attribute_ids"] = []
+                    gen_dict = {
+                        "owner_model": self._name,
+                        "product_tmpl_id": product.product_tmpl_id.id,
+                    }
+                    for att_val in product._get_product_attributes_values_dict():
+                        att_val.update(gen_dict)
+                        vals["product_attribute_ids"].append((0, 0, att_val))
+        return super().create(vals_list)
 
     def unlink(self):
         """Mimic `ondelete="cascade"`."""

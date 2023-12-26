@@ -44,13 +44,6 @@ class ProductTemplate(models.Model):
                 }
             }
 
-    @api.model
-    def create(self, vals):
-        if "product_name" in self.env.context:
-            # Needed because ORM removes this value from the dictionary
-            vals["name"] = self.env.context["product_name"]
-        return super(ProductTemplate, self).create(vals)
-
     def write(self, values):
         res = super(ProductTemplate, self).write(values)
         if "no_create_variants" in values:
