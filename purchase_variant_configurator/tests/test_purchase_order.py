@@ -1,10 +1,10 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestPurchaseOrder(SavepointCase):
+class TestPurchaseOrder(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestPurchaseOrder, cls).setUpClass()
@@ -114,6 +114,7 @@ class TestPurchaseOrder(SavepointCase):
     def test_onchange_product_attribute_ids(self):
         product = self.product_product.create(
             {
+                "name": "Test product 01",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
                     (
@@ -198,6 +199,7 @@ class TestPurchaseOrder(SavepointCase):
     def test_onchange_product_id(self):
         product = self.product_product.create(
             {
+                "name": "Test product 02",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
                     (
@@ -289,8 +291,8 @@ class TestPurchaseOrder(SavepointCase):
 
         order.write({"order_line": [(4, line_1.id), (4, line_2.id)]})
         order.button_confirm()
-        order.flush()
-        order.invalidate_cache()
+        order.flush_recordset()
+        order.invalidate_recordset()
         order_line_without_product = order.order_line.filtered(
             lambda x: not x.product_id
         )
