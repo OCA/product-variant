@@ -60,6 +60,33 @@
                     name="attrs"
                 >{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}</attribute>
             </xpath>
+            <xpath
+                expr="//field[@name='order_line']/form//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}</attribute>
+                <attribute name="domain">product_id_configurator_domain</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/form//field[@name='product_id']"
+                position="after"
+            >
+                <field name="product_id_configurator_domain" invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                position="after"
+            >
+                <field name="product_id_configurator_domain" invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute name="domain">product_id_configurator_domain</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
