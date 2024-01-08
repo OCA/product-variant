@@ -291,6 +291,7 @@ class ProductConfigurator(models.AbstractModel):
                 )
             product = product_obj.create(
                 {
+                    "name": self.product_tmpl_id.name,
                     "product_tmpl_id": self.product_tmpl_id.id,
                     "product_template_attribute_value_ids": [
                         (6, 0, product_template_attribute_values.ids)
