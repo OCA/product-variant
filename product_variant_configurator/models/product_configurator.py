@@ -70,12 +70,14 @@ class ProductConfigurator(models.AbstractModel):
     def _set_product_attributes(self):
         self.ensure_one()
         if self.product_id:
+            self.product_attribute_ids.unlink()
             attribute_lines = self.product_attribute_ids.browse([])
             for vals in self.product_id._get_product_attributes_values_dict():
                 vals["product_tmpl_id"] = self.product_id.product_tmpl_id
                 vals["owner_model"] = self._name
-                vals["owner_id"] = self.id
-                attribute_lines += attribute_lines.new(vals)
+                vals["owner_id"] = self
+                new_attribute_line = attribute_lines.new(vals)
+                attribute_lines |= new_attribute_line
             self.product_attribute_ids = attribute_lines
 
     def _empty_attributes(self):
