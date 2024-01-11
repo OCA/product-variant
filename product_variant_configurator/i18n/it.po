@@ -649,6 +649,11 @@ msgid "Vendors"
 msgstr "Fornitori"
 
 #. module: product_variant_configurator
+#: model:ir.model,name:product_variant_configurator.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__volume_uom_name
 msgid "Volume unit of measure label"
 msgstr "Etichetta unità di misura volume"
