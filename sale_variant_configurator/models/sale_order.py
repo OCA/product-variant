@@ -102,7 +102,9 @@ class SaleOrderLine(models.Model):
             self.name = (self.name or "") + "\n" + product_tmpl.description_sale
         if self.order_id.pricelist_id and self.order_id.partner_id:
             self.price_unit = self.env["account.tax"]._fix_tax_included_price(
-                product_tmpl.price, product_tmpl.taxes_id, self.tax_id,
+                product_tmpl.price,
+                product_tmpl.taxes_id,
+                self.tax_id,
             )
         return res
 
