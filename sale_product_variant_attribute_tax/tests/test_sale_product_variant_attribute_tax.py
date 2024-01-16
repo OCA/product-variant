@@ -1,9 +1,10 @@
 # Copyright 2016-2017 Tecnativa - Pedro M. Baeza
+# Copyright 2024 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import Form, common
+from odoo.tests import common
 
 
-class TestSaleProductVariantAttributeTax(common.SavepointCase):
+class TestSaleProductVariantAttributeTax(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -57,25 +58,83 @@ class TestSaleProductVariantAttributeTax(common.SavepointCase):
                 ],
             }
         )
-        order_form = Form(cls.env["sale.order"])
-        order_form.partner_id = cls.partner
-        with order_form.order_line.new() as order_line_form:
-            order_line_form.product_tmpl_id = cls.product_template
-        cls.order = order_form.save()
-        cls.order_line = cls.order.order_line
+        cls.order = cls.env["sale.order"].create({"partner_id": cls.partner.id})
 
     def test_select_attribute_wo_tax(self):
-        self.order_line.product_attribute_ids[0].value_id = self.attribute_value2.id
-        self.order_line._onchange_product_attribute_ids_configurator()
-        self.assertFalse(self.order_line.tax_id)
+        line = self.env["sale.order.line"].new(
+            {
+                "order_id": self.order.id,
+                "product_tmpl_id": self.product_template.id,
+                "name": self.product_template.name,
+                "product_uom_qty": 1,
+                "product_uom": self.product_template.uom_id.id,
+                "product_attribute_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_tmpl_id": self.product_template.id,
+                            "attribute_id": self.attribute.id,
+                            "value_id": self.attribute_value2.id,
+                            "owner_model": "sale.order.line",
+                        },
+                    )
+                ],
+                "create_product_variant": True,
+            }
+        )
+        line._onchange_product_attribute_ids_configurator()
+        self.assertFalse(line.tax_id)
 
     def test_select_attribute_with_tax(self):
-        self.order_line.product_attribute_ids[0].value_id = self.attribute_value.id
-        self.order_line._onchange_product_attribute_ids_configurator()
-        self.assertEqual(self.order_line.tax_id, self.tax)
+        line = self.env["sale.order.line"].new(
+            {
+                "order_id": self.order.id,
+                "product_tmpl_id": self.product_template.id,
+                "name": self.product_template.name,
+                "product_uom_qty": 1,
+                "product_uom": self.product_template.uom_id.id,
+                "product_attribute_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_tmpl_id": self.product_template.id,
+                            "attribute_id": self.attribute.id,
+                            "value_id": self.attribute_value.id,
+                            "owner_model": "sale.order.line",
+                        },
+                    )
+                ],
+                "create_product_variant": True,
+            }
+        )
+        line._onchange_product_attribute_ids_configurator()
+        self.assertIn(self.tax.id, line.tax_id.ids)
 
     def test_select_attribute_with_tax_fp_mapped(self):
-        self.order_line.product_attribute_ids[0].value_id = self.attribute_value.id
         self.order.fiscal_position_id = self.fiscal_position
-        self.order_line._onchange_product_attribute_ids_configurator()
-        self.assertEqual(self.order_line.tax_id, self.tax2)
+        line = self.env["sale.order.line"].new(
+            {
+                "order_id": self.order.id,
+                "product_tmpl_id": self.product_template.id,
+                "name": self.product_template.name,
+                "product_uom_qty": 1,
+                "product_uom": self.product_template.uom_id.id,
+                "product_attribute_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_tmpl_id": self.product_template.id,
+                            "attribute_id": self.attribute.id,
+                            "value_id": self.attribute_value.id,
+                            "owner_model": "sale.order.line",
+                        },
+                    )
+                ],
+                "create_product_variant": True,
+            }
+        )
+        line._onchange_product_attribute_ids_configurator()
+        self.assertIn(self.tax2.id, line.tax_id.ids)
