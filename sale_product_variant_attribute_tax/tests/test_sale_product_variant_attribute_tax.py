@@ -17,7 +17,11 @@ class TestSaleProductVariantAttributeTax(common.SavepointCase):
             {
                 "name": "Test fiscal position",
                 "tax_ids": [
-                    (0, 0, {"tax_src_id": cls.tax.id, "tax_dest_id": cls.tax2.id},),
+                    (
+                        0,
+                        0,
+                        {"tax_src_id": cls.tax.id, "tax_dest_id": cls.tax2.id},
+                    ),
                 ],
             }
         )
