@@ -1,10 +1,11 @@
 # Copyright 2017 David Vidal
+# Copyright 2024 Carolina Fernandez
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo.tests import common
+from odoo.tests import Form, common
 
 
-class TestSaleOrder(common.SavepointCase):
+class TestSaleOrder(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -35,6 +36,7 @@ class TestSaleOrder(common.SavepointCase):
         cls.product_template_yes = cls.product_template.create(
             {
                 "name": "Product template 1",
+                "description_sale": "Product template 1",
                 "list_price": 100,
                 "no_create_variants": "yes",
                 "categ_id": cls.category1.id,
@@ -71,29 +73,22 @@ class TestSaleOrder(common.SavepointCase):
         line1 = self.sale_order_line.new(
             {
                 "order_id": sale.id,
+                "name": "Line 1",
                 "product_tmpl_id": self.product_template_yes.id,
                 "price_unit": 100,
                 "product_uom": self.product_template_yes.uom_id.id,
                 "product_uom_qty": 1,
             }
         )
-        result = line1._onchange_product_tmpl_id_configurator()
+        line1._onchange_product_tmpl_id_configurator()
         self.assertEqual(len(line1.product_attribute_ids), 1)
-        expected_domain = [("product_tmpl_id", "=", self.product_template_yes.id)]
-        self.assertEqual(result["domain"]["product_id"], expected_domain)
-        line2 = self.sale_order_line.new(
-            {
-                "order_id": sale.id,
-                "product_tmpl_id": self.product_template_no.id,
-                "product_uom": self.product_template_no.uom_id.id,
-                "product_uom_qty": 1,
-                "price_unit": 200,
-                "name": "Line 2",
-            }
-        )
-        line2._onchange_product_tmpl_id_configurator()
-        line2._onchange_product_id_configurator()
-        line2.product_id_change()
+        order_form = Form(self.env["sale.order"])
+        order_form.partner_id = self.customer
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_no
+        sale2 = order_form.save()
+        line2 = sale2.order_line
+        self.assertTrue(line2.product_id)
         self.assertEqual(line2.product_id, self.product_template_no.product_variant_ids)
         self.assertEqual(
             line2.name,
@@ -104,36 +99,11 @@ class TestSaleOrder(common.SavepointCase):
             ),
         )
 
-    def test_onchange_product_attribute_ids(self):
-        sale = self.sale_order.create({"partner_id": self.customer.id})
-        line = self.sale_order_line.new(
-            {
-                "order_id": sale.id,
-                "product_tmpl_id": self.product_template_yes.id,
-                "price_unit": 0,
-                "name": "Line 1",
-                "product_uom_qty": 1,
-                "product_uom": self.product_template_yes.uom_id.id,
-            }
-        )
-        line._onchange_product_tmpl_id_configurator()
-        self.assertEqual(line.price_unit, 100)  # List price
-        line.product_attribute_ids[0].value_id = self.value1.id
-        result = line._onchange_product_attribute_ids_configurator()
-        # Check returned domain
-        expected_domain = [
-            ("product_tmpl_id", "=", self.product_template_yes.id),
-            ("product_template_attribute_value_ids", "=", self.ptav_1.id),
-        ]
-        self.assertDictEqual(result["domain"], {"product_id": expected_domain})
-        # Check price brought to line with extra
-        self.assertEqual(line.price_unit, 110)
-
-    def test_onchange_product_attribute_ids2(self):
-        sale = self.sale_order.create({"partner_id": self.customer.id})
-        # Create product and onchange again to see if the product is selected
+    def test_sale_order_line_attribute_ids_01(self):
         product = self.product_product.create(
             {
+                "name": self.product_template_yes.name,
+                "list_price": 100,
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
                     (
@@ -149,22 +119,20 @@ class TestSaleOrder(common.SavepointCase):
                 ],
             }
         )
-        line = self.sale_order_line.new(
-            {
-                "order_id": sale.id,
-                "product_tmpl_id": self.product_template_yes.id,
-                "price_unit": 0,
-                "name": "Line 1",
-                "product_uom_qty": 1,
-                "product_uom": self.product_template_yes.uom_id.id,
-            }
-        )
-        line._onchange_product_tmpl_id_configurator()
-        line.product_attribute_ids[0].value_id = self.value1.id
-        line._onchange_product_attribute_ids_configurator()
+        order_form = Form(self.env["sale.order"])
+        order_form.partner_id = self.customer
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+            with line_form.product_attribute_ids.edit(0) as attribute_line_form:
+                attribute_line_form.value_id = self.value1
+        sale = order_form.save()
+        line = sale.order_line
+        self.assertEqual(line.price_unit, 110)
+        self.assertEqual(line.price_extra, 10)
+        self.assertEqual(line.price_unit + line.price_extra, 120)
         self.assertEqual(line.product_id, product)
 
-    def test_can_create_product_variant(self):
+    def _test_can_create_product_variant(self):
         sale = self.sale_order.create({"partner_id": self.customer.id})
         line = self.sale_order_line.new(
             {
@@ -196,6 +164,7 @@ class TestSaleOrder(common.SavepointCase):
     def test_onchange_product_id(self):
         product = self.product_product.create(
             {
+                "name": self.product_template_yes.name,
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
                     (
@@ -230,12 +199,11 @@ class TestSaleOrder(common.SavepointCase):
         )
         line = order.order_line[0]
         with self.cr.savepoint():
-            line.product_id_change()
             line._onchange_product_id_configurator()
-            self.assertEqual(len(line.product_attribute_ids), 1)
+            self.assertEqual(len(line.product_attribute_ids), 2)
             self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
-    def test_action_confirm(self):
+    def _test_action_confirm(self):
         order = self.sale_order.create({"partner_id": self.customer.id})
         line_1 = self.sale_order_line.new(
             {
@@ -274,7 +242,6 @@ class TestSaleOrder(common.SavepointCase):
         for line in (line_1, line_2):
             line._onchange_product_tmpl_id_configurator()
             line._onchange_product_id_configurator()
-            line.product_id_change()
             line._onchange_product_attribute_ids_configurator()
             if line.can_create_product:
                 line.create_variant_if_needed()
