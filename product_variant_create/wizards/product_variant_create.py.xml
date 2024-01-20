@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="product_variant_create_form" model="ir.ui.view">
         <field name="name">product.variant.create.form</field>
@@ -6,31 +6,48 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <form>
-                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                <field
+                    name="image_1920"
+                    widget="image"
+                    class="oe_avatar"
+                    options="{'preview_image': 'image_128'}"
+                />
                 <group col="2">
                     <group>
-                        <field name="product_tmpl_id" invisible="1"/>
-                        <field name="combination_indices" invisible="1"/>
-                        <field name="default_code"/>
-                        <field name="barcode"/>
+                        <field name="product_tmpl_id" invisible="1" />
+                        <field name="combination_indices" invisible="1" />
+                        <field name="default_code" />
+                        <field name="barcode" />
                     </group>
                     <group>
-                        <field name="volume"/>
-                        <field name="weight"/>
+                        <field name="volume" />
+                        <field name="weight" />
                     </group>
                 </group>
-                <field name="product_template_attribute_value_ids"
-                       context="{'product_tmpl_id': product_tmpl_id}"
+                <field
+                    name="product_template_attribute_value_ids"
+                    context="{'product_tmpl_id': product_tmpl_id}"
                 >
                     <tree editable="bottom" create="0">
-                        <field name="product_tmpl_id" invisible="1"/>
-                        <field name="attribute_id" options="{'no_create':True, 'no_open': True}"/>
-                        <field name="product_attribute_value_id" domain="[('attribute_id', '=', attribute_id)]"/>
+                        <field name="product_tmpl_id" invisible="1" />
+                        <field
+                            name="attribute_id"
+                            options="{'no_create':True, 'no_open': True}"
+                        />
+                        <field
+                            name="product_attribute_value_id"
+                            domain="[('attribute_id', '=', attribute_id)]"
+                        />
                     </tree>
                 </field>
                 <footer>
-                    <button name="process" string="Confirm" type="object" class="btn-primary"/>
-                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                    <button
+                        name="process"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Discard" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>
@@ -39,7 +56,7 @@
     <record id="action_open_product_variant_create" model="ir.actions.act_window">
         <field name="name">Create variant</field>
         <field name="res_model">product.variant.create</field>
-        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template" />
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
