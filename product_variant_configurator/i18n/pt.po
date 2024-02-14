@@ -255,6 +255,11 @@ msgid "Last Updated on"
 msgstr "Atualizado pela última vez em"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
+msgid "List Price"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__service_type
 msgid ""
 "Manually set quantities on order: Invoice based on the manually entered "
@@ -326,11 +331,6 @@ msgstr ""
 msgid ""
 "Price Extra: Extra price for the variant with this attribute value on sale "
 "price. eg. 200 price extra, 1000 + 200 = 1200."
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product__list_price
-msgid "Price at which the product is sold to customers."
 msgstr ""
 
 #. module: product_variant_configurator
@@ -456,11 +456,6 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn
 msgid "Sales Order Line"
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
-msgid "Sales Price"
 msgstr ""
 
 #. module: product_variant_configurator
