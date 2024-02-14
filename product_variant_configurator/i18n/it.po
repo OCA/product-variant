@@ -280,6 +280,11 @@ msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
+msgid "List Price"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__service_type
 msgid ""
 "Manually set quantities on order: Invoice based on the manually entered "
@@ -368,11 +373,6 @@ msgid ""
 msgstr ""
 "Prezzo extra: prezzo extra per la variante con questo attributo sul prezzo "
 "di vendita. es. 200 di prezzo extra, 1000 + 200 = 1200."
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product__list_price
-msgid "Price at which the product is sold to customers."
-msgstr "Prezzo di vendita del prodotto al cliente."
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
@@ -498,11 +498,6 @@ msgstr "Descrizione vendite"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn
 msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
-msgid "Sales Price"
-msgstr "Prezzo di vendita"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
@@ -673,6 +668,12 @@ msgid ""
 msgstr ""
 "Devi riempire i seguenti attributi:\n"
 "%s"
+
+#~ msgid "Price at which the product is sold to customers."
+#~ msgstr "Prezzo di vendita del prodotto al cliente."
+
+#~ msgid "Sales Price"
+#~ msgstr "Prezzo di vendita"
 
 #~ msgid "Create them automatically"
 #~ msgstr "Creali automaticamente"

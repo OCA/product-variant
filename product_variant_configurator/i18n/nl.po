@@ -260,6 +260,11 @@ msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
+msgid "List Price"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__service_type
 msgid ""
 "Manually set quantities on order: Invoice based on the manually entered "
@@ -337,11 +342,6 @@ msgid ""
 msgstr ""
 "Extra prijs: Extra prijs voor de variant met deze attribuutwaarde op de "
 "verkoopprijs. bijv. 200 extra prijs, 1000 + 200 = 1200."
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,help:product_variant_configurator.field_product_product__list_price
-msgid "Price at which the product is sold to customers."
-msgstr ""
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
@@ -466,11 +466,6 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn
 msgid "Sales Order Line"
-msgstr ""
-
-#. module: product_variant_configurator
-#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
-msgid "Sales Price"
 msgstr ""
 
 #. module: product_variant_configurator
