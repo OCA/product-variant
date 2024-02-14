@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo-addon-product_variant_configurator>=16.0dev,<16.1dev',
         'odoo-addon-product_variant_default_code>=16.0dev,<16.1dev',
         'odoo-addon-product_variant_name>=16.0dev,<16.1dev',
+        'odoo-addon-product_variant_sale_price>=16.0dev,<16.1dev',
         'odoo-addon-product_variant_specific_description>=16.0dev,<16.1dev',
         'odoo-addon-sale_order_line_variant_description>=16.0dev,<16.1dev',
     ],
