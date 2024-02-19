@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_create
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4\n"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__attribute_id
+msgid "Attribute"
+msgstr "Attribute"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__product_attribute_value_id
+msgid "Attribute Value"
+msgstr "Attribute Value"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__barcode
+msgid "Barcode"
+msgstr "Barcode"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__combination_indices
+msgid "Combination Indices"
+msgstr "Combination Indices"
+
+#. module: product_variant_create
+#: model_terms:ir.ui.view,arch_db:product_variant_create.product_variant_create_form
+msgid "Confirm"
+msgstr "Confirm"
+
+#. module: product_variant_create
+#: model:ir.model,name:product_variant_create.model_product_variant_create
+msgid "Create Variant from attribute"
+msgstr "Create Variant from attribute"
+
+#. module: product_variant_create
+#: model:ir.model,name:product_variant_create.model_product_variant_create_lines
+msgid "Create Variant from attribute lines"
+msgstr "Create Variant from attribute lines"
+
+#. module: product_variant_create
+#: model:ir.actions.act_window,name:product_variant_create.action_open_product_variant_create
+msgid "Create variant"
+msgstr "Create variant"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__create_uid
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__create_uid
+msgid "Created by"
+msgstr "Created by"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__create_date
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__create_date
+msgid "Created on"
+msgstr "Created on"
+
+#. module: product_variant_create
+#: model_terms:ir.ui.view,arch_db:product_variant_create.product_variant_create_form
+msgid "Discard"
+msgstr "Discard"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__display_name
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__id
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__image_1920
+msgid "Image"
+msgstr "Image"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__image_1024
+msgid "Image 1024"
+msgstr "Image 1024"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__image_128
+msgid "Image 128"
+msgstr "Image 128"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__image_256
+msgid "Image 256"
+msgstr "Image 256"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__image_512
+msgid "Image 512"
+msgstr "Image 512"
+
+#. module: product_variant_create
+#. odoo-python
+#: code:addons/product_variant_create/wizards/product_variant_create.py:0
+#, python-format
+msgid "In template is not defined any attribute, maybe is single product"
+msgstr "In template is not defined any attribute, maybe is single product"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__default_code
+msgid "Internal Reference"
+msgstr "Internal Reference"
+
+#. module: product_variant_create
+#: model:ir.model.fields,help:product_variant_create.field_product_variant_create__barcode
+msgid "International Article Number used for product identification."
+msgstr "International Article Number used for product identification."
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create____last_update
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines____last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__write_uid
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__write_uid
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__write_date
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__write_date
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__product_tmpl_id
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__product_tmpl_id
+msgid "Product Template"
+msgstr "Product Template"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__product_template_attribute_value_ids
+msgid "Product attributes"
+msgstr "Product attributes"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__product_variant_create_id
+msgid "Product variant create"
+msgstr "Product variant create"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__smart_search
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create_lines__smart_search
+msgid "Smart Search"
+msgstr "Smart Search"
+
+#. module: product_variant_create
+#. odoo-python
+#: code:addons/product_variant_create/wizards/product_variant_create.py:0
+#, python-format
+msgid "This product is available"
+msgstr "This product is available"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__volume
+msgid "Volume"
+msgstr "Volume"
+
+#. module: product_variant_create
+#: model:ir.model.fields,field_description:product_variant_create.field_product_variant_create__weight
+msgid "Weight"
+msgstr "Weight"
