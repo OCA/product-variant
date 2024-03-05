@@ -20,6 +20,13 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: product_variant_sale_price
+#: model_terms:ir.ui.view,arch_db:product_variant_sale_price.product_template_form_view
+msgid ""
+"<span class=\"text-muted fst-italic\">Setting the price here will update all "
+"variants.</span>"
+msgstr ""
+
+#. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__fix_price
 msgid "Fix Price"
 msgstr "Preu fix"
@@ -30,19 +37,19 @@ msgid "List Price"
 msgstr "Preu de llista"
 
 #. module: product_variant_sale_price
-#: model:ir.model,name:product_variant_sale_price.model_product_product
+#: model:ir.model,name:product_variant_sale_price.model_product_template
 msgid "Product"
 msgstr "Producte"
 
 #. module: product_variant_sale_price
-#: model:ir.model,name:product_variant_sale_price.model_product_template
-msgid "Product Template"
-msgstr "Plantilla del producte"
+#: model:ir.model,name:product_variant_sale_price.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__lst_price
-msgid "Sale Price"
-msgstr "Preu de venta"
+msgid "Sales Price"
+msgstr ""
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
@@ -53,3 +60,9 @@ msgstr ""
 "El preu de venda es gestiona des de la plantilla del producte. Feu clic al "
 "botó \"Configura les variants\" per establir els preus dels atributs "
 "addicionals."
+
+#~ msgid "Product Template"
+#~ msgstr "Plantilla del producte"
+
+#~ msgid "Sale Price"
+#~ msgstr "Preu de venta"
