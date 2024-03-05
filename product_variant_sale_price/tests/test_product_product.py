@@ -70,7 +70,7 @@ class TestProductVariantPrice(TransactionCase):
         self.product_template.product_variant_ids.flush_model()
         self.product_blue.product_template_attribute_value_ids.flush_model()
 
-        set_sale_price_on_variant(self.cr, None, self.product_template.id)
+        set_sale_price_on_variant(self.env, self.product_template.id)
         self.product_template.product_variant_ids.invalidate_recordset()
         self.assertEqual(
             self.product_template.list_price + 100.00, self.product_blue.lst_price
