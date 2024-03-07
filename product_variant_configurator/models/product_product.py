@@ -41,7 +41,7 @@ class ProductProduct(models.Model):
                     attributes_ids.append(attr_line.get("attribute_id"))
                 else:
                     attributes_ids.append(attr_line.attribute_id.id)
-            domain.append(("product_tmpl_id", "=", product_template.id))
+            domain.append(("product_tmpl_id", "=", product_template._origin.id))
             for attr_line in product_attributes:
                 if isinstance(attr_line, dict):
                     value_id = attr_line.get("value_id")
@@ -50,7 +50,7 @@ class ProductProduct(models.Model):
                 if value_id:
                     ptav = self.env["product.template.attribute.value"].search(
                         [
-                            ("product_tmpl_id", "=", product_template.id),
+                            ("product_tmpl_id", "=", product_template._origin.id),
                             ("attribute_id", "in", attributes_ids),
                             ("product_attribute_value_id", "=", value_id),
                         ]
