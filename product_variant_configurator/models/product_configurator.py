@@ -6,6 +6,7 @@
 import logging
 
 from odoo import _, api, exceptions, fields, models
+from odoo.osv.expression import TRUE_DOMAIN
 
 _logger = logging.getLogger(__name__)
 
@@ -34,6 +35,11 @@ class ProductConfigurator(models.AbstractModel):
     product_id = fields.Many2one(
         string="Product Variant", comodel_name="product.product"
     )
+    product_id_configurator_domain = fields.Binary(
+        compute="_compute_product_id_configurator_domain",
+        readonly=True,
+        store=False,
+    )
     can_create_product = fields.Boolean(compute="_compute_can_be_created")
     create_product_variant = fields.Boolean(string="Create product now!")
 
@@ -51,6 +57,19 @@ class ProductConfigurator(models.AbstractModel):
                 - len(list(filter(None, rec.product_attribute_ids.mapped("value_id"))))
             )
             rec.price_extra = sum(rec.mapped("product_attribute_ids.price_extra"))
+
+    @api.depends("product_tmpl_id", "product_attribute_ids")
+    def _compute_product_id_configurator_domain(self):
+        product_obj = self.env["product.product"]
+        for rec in self:
+            if not rec.product_tmpl_id._origin:
+                # no product template: allow any product
+                rec.product_id_configurator_domain = TRUE_DOMAIN
+            else:
+                domain, _cont = product_obj._build_attributes_domain(
+                    rec.product_tmpl_id, rec.product_attribute_ids
+                )
+                rec.product_id_configurator_domain = domain
 
     def _set_product_tmpl_attributes(self):
         self.ensure_one()
@@ -88,10 +107,11 @@ class ProductConfigurator(models.AbstractModel):
             self.product_id = False
             self.product_id = False
             self._empty_attributes()
-            # no product template: allow any product
-            return {"domain": {"product_id": []}}
 
-        if not self.product_tmpl_id.attribute_line_ids:
+        if (
+            not self.product_tmpl_id.attribute_line_ids
+            and self.product_tmpl_id.product_variant_ids
+        ):
             # template without attribute, use the unique variant
             self.product_id = self.product_tmpl_id.product_variant_ids[0].id
 
@@ -109,18 +129,9 @@ class ProductConfigurator(models.AbstractModel):
         else:
             self._empty_attributes()
 
-        # Restrict product possible values to current selection
-        domain = [("product_tmpl_id", "=", self.product_tmpl_id.ids[0])]
-        return {"domain": {"product_id": domain}}
-
     @api.onchange("product_attribute_ids")
     def _onchange_product_attribute_ids_configurator(self):
         self.ensure_one()
-        if not self.product_tmpl_id:
-            return {"domain": {"product_id": []}}
-        if not self.product_attribute_ids:
-            domain = [("product_tmpl_id", "=", self.product_tmpl_id.id)]
-            return {"domain": {"product_id": domain}}
         product_obj = self.env["product.product"]
         domain, cont = product_obj._build_attributes_domain(
             self.product_tmpl_id, self.product_attribute_ids
@@ -146,8 +157,8 @@ class ProductConfigurator(models.AbstractModel):
                     lang=self.partner_id.lang
                 )
                 product_tmpl = obj.browse(self.product_tmpl_id.id)
-            self.name = self._get_product_description(product_tmpl, False, values)
-        return {"domain": {"product_id": domain}}
+            if "name" in self._fields:
+                self.name = self._get_product_description(product_tmpl, False, values)
 
     @api.onchange("product_id")
     def _onchange_product_id_configurator(self):
