@@ -368,17 +368,21 @@ class TestVariantDefaultCode(common.TransactionCase):
                 "reference_mask": "fix-[TColor]/[TSize]",
             }
         )
-
         for product in self.template1.mapped("product_variant_ids"):
-            expected_code = (
-                self.template1.code_prefix
-                + "fix-"
-                + product.product_template_attribute_value_ids.filtered(
-                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
-                ).name[0:2]
-                + "/"
-                + product.product_template_attribute_value_ids.filtered(
-                    lambda x: x.product_attribute_value_id.attribute_id == self.attr1
-                ).name[0:2]
-            )
-            self.assertEqual(product.default_code, expected_code)
+            attr1 = product.product_template_attribute_value_ids.filtered(
+                lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+            ).name[0:2]
+            attr2 = product.product_template_attribute_value_ids.filtered(
+                lambda x: x.product_attribute_value_id.attribute_id == self.attr1
+            ).name[0:2]
+            self.assertEqual(product.default_code, f"pre/fix-{attr1}/{attr2}")
+        # The reference_mask stays the same even if recomputed
+        self.template1._compute_reference_mask()
+        for product in self.template1.mapped("product_variant_ids"):
+            attr1 = product.product_template_attribute_value_ids.filtered(
+                lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+            ).name[0:2]
+            attr2 = product.product_template_attribute_value_ids.filtered(
+                lambda x: x.product_attribute_value_id.attribute_id == self.attr1
+            ).name[0:2]
+            self.assertEqual(product.default_code, f"pre/fix-{attr1}/{attr2}")

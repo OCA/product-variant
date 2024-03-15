@@ -124,7 +124,13 @@ class ProductTemplate(models.Model):
             if automask or not rec.reference_mask:
                 rec.reference_mask = rec._get_default_mask()
             elif not automask and rec.code_prefix:
-                rec.reference_mask = rec.code_prefix + rec.reference_mask
+                reference_mask = rec.reference_mask
+                # Avoid prefixing the mask twice (or more).
+                # TODO: This needs a better design with a third field that sums both
+                # or using the sum of them in the variant default code computation
+                if reference_mask.startswith(rec.code_prefix):
+                    reference_mask = reference_mask.lstrip(rec.code_prefix)
+                rec.reference_mask = rec.code_prefix + reference_mask
 
     def _inverse_reference_mask(self):
         self._compute_reference_mask()
