@@ -1,0 +1,17 @@
+<odoo>
+    <record model="ir.actions.server" id="set_price_reference">
+        <field name="name">Set price reference</field>
+        <field name="model_id" ref="model_product_product" />
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="model_product_product" />
+        <field name="binding_type">action</field>
+        <field name="code">
+if len(records) > len(records.mapped("product_tmpl_id")):
+    raise UserError("You can only set one variant as the price reference of a product.")
+for r in records.with_context(skip_update_fix_price=True):
+    r.product_tmpl_id.write({"list_price": r.fix_price})
+    new_seq = min(r.product_tmpl_id.attribute_line_ids.mapped("value_ids.sequence") or [r.fix_price])
+    r.mapped("product_template_variant_value_ids.product_attribute_value_id").write({"sequence": new_seq - 1})
+        </field>
+    </record>
+</odoo>

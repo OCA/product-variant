@@ -12,6 +12,6 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["account", "sale"],
-    "data": ["views/product_views.xml"],
+    "data": ["data/server_actions.xml", "views/product_views.xml"],
     "post_init_hook": "set_sale_price_on_variant",
 }
