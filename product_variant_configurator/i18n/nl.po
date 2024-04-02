@@ -376,6 +376,12 @@ msgid "Product Configurator Attribute"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_id_configurator_domain
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_id_configurator_domain
+msgid "Product Id Configurator Domain"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_tag_ids
 msgid "Product Tags"
 msgstr ""
