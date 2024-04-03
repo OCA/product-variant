@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2024-02-16 16:36+0000\n"
+"PO-Revision-Date: 2024-04-03 06:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -410,7 +410,7 @@ msgstr "Attributo configuratore prodotto"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_id_configurator_domain
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_id_configurator_domain
 msgid "Product Id Configurator Domain"
-msgstr ""
+msgstr "Dominio configurazione ID prodotto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_tag_ids
