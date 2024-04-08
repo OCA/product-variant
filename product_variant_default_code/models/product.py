@@ -167,7 +167,7 @@ class ProductTemplate(models.Model):
                 vals["reference_mask"] = product._get_default_mask()
             elif vals.get("reference_mask"):
                 sanitize_reference_mask(product, vals["reference_mask"])
-        return super(ProductTemplate, self).create(vals_list)
+        return super().create(vals_list)
 
     @api.model
     def _guess_main_lang(self):
@@ -228,6 +228,8 @@ class ProductProduct(models.Model):
         if (not self.code_prefix and self.product_tmpl_id.is_automask()) or not all(
             value_codes
         ):
+            return None
+        elif not self.product_tmpl_id.reference_mask:
             return None
         else:
             product_attrs = defaultdict(str)
