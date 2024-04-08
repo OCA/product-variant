@@ -167,7 +167,7 @@ class ProductTemplate(models.Model):
                 vals["reference_mask"] = product._get_default_mask()
             elif vals.get("reference_mask"):
                 sanitize_reference_mask(product, vals["reference_mask"])
-        return super(ProductTemplate, self).create(vals_list)
+        return super().create(vals_list)
 
     @api.model
     def _guess_main_lang(self):

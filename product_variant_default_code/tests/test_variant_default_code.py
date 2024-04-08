@@ -10,7 +10,7 @@ from odoo.tests.common import TransactionCase
 class TestVariantDefaultCode(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestVariantDefaultCode, cls).setUpClass()
+        super().setUpClass()
         cls.group_default_code = cls.env.ref(
             "product_variant_default_code.group_product_default_code_manual_mask"
         )
