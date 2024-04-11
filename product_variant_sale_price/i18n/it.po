@@ -21,6 +21,13 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: product_variant_sale_price
+#: model_terms:ir.ui.view,arch_db:product_variant_sale_price.product_template_form_view
+msgid ""
+"<span class=\"text-muted fst-italic\">Setting the price here will update all "
+"variants.</span>"
+msgstr ""
+
+#. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__fix_price
 msgid "Fix Price"
 msgstr "Prezzo fisso"
@@ -31,19 +38,19 @@ msgid "List Price"
 msgstr "Prezzo di listino"
 
 #. module: product_variant_sale_price
-#: model:ir.model,name:product_variant_sale_price.model_product_product
+#: model:ir.model,name:product_variant_sale_price.model_product_template
 msgid "Product"
 msgstr "Prodotto"
 
 #. module: product_variant_sale_price
-#: model:ir.model,name:product_variant_sale_price.model_product_template
-msgid "Product Template"
-msgstr "Template Prodotto"
+#: model:ir.model,name:product_variant_sale_price.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__lst_price
-msgid "Sale Price"
-msgstr "Prezzo di vendita"
+msgid "Sales Price"
+msgstr ""
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
@@ -53,6 +60,12 @@ msgid ""
 msgstr ""
 "Il prezzo di vendita è gestito dal modello prodotto. Fare clic sul pulsante "
 "'Configura varianti' per impostare i prezzi dell'atributo extra."
+
+#~ msgid "Product Template"
+#~ msgstr "Template Prodotto"
+
+#~ msgid "Sale Price"
+#~ msgstr "Prezzo di vendita"
 
 #~ msgid ""
 #~ "{'invisible': [\n"
