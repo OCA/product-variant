@@ -33,7 +33,10 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         # create product with attribute and "Variant creation" option is
         # set on "Don't create automatically"
         self.product_template1 = self.product_template.create(
-            {"name": "Product template 1", "no_create_variants": "yes","name": "table"}
+            {
+                "name": "Product template 1",
+                "no_create_variants": "yes",
+            }
         )
         self.attribute_line_model.with_context(check_variant_creation=True).create(
             {

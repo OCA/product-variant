@@ -138,7 +138,7 @@ class ProductProduct(models.Model):
             else:
                 res.append(super(ProductProduct, product).name_get()[0])
         return res
-    
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
