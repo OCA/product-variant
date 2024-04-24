@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestProductVariant(TransactionCase):
     def setUp(self):
-        super(TestProductVariant, self).setUp()
+        super().setUp()
         self.tmpl_model = self.env["product.template"].with_context(
             check_variant_creation=True
         )

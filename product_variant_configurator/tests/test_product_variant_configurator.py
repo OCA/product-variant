@@ -10,7 +10,7 @@ from odoo.tests.common import TransactionCase
 class TestProductVariantConfigurator(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestProductVariantConfigurator, cls).setUpClass()
+        super().setUpClass()
 
         # ENVIRONMENTS
         cls.product_attribute = cls.env["product.attribute"]
@@ -529,7 +529,6 @@ class TestProductVariantConfigurator(TransactionCase):
         self.assertEqual(result, self.product_template_yes.name)
 
     def test_unlink(self):
-
         product = self.product_product.create(
             {
                 "name": "Test product Check",

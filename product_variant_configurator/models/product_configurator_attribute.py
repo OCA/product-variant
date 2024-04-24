@@ -44,7 +44,7 @@ class ProductConfiguratorAttribute(models.Model):
         for record in self:
             # This should be unique due to the new constraint added
             attribute = record.product_tmpl_id.attribute_line_ids.filtered(
-                lambda x: x.attribute_id == record.attribute_id
+                lambda x: x.attribute_id == record.attribute_id  # noqa
             )
             record.possible_value_ids = attribute.value_ids.sorted()
 

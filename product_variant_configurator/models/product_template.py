@@ -50,10 +50,10 @@ class ProductTemplate(models.Model):
             for vals in vals_list:
                 # Needed because ORM removes this value from the dictionary
                 vals["name"] = self.env.context["product_name"]
-        return super(ProductTemplate, self).create(vals_list)
+        return super().create(vals_list)
 
     def write(self, values):
-        res = super(ProductTemplate, self).write(values)
+        res = super().write(values)
         if "no_create_variants" in values:
             self._create_variant_ids()
         return res
@@ -86,7 +86,7 @@ class ProductTemplate(models.Model):
             name=name, args=args, operator=operator, limit=limit
         )
         # Make the other search
-        temp += super(ProductTemplate, self).name_search(
+        temp += super().name_search(
             name=name, args=args, operator=operator, limit=limit
         )
         # Merge both results

@@ -15,7 +15,7 @@ class ProductPricelist(models.Model):
         different uom is used."""
         if products[0]._name != "product.template":
             # Standard use case - Nothing to do
-            return super(ProductPricelist, self)._compute_price_rule(
+            return super()._compute_price_rule(
                 products,
                 qty,
                 date=date,
