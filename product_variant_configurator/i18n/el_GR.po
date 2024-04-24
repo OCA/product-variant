@@ -111,6 +111,11 @@ msgid "Company"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_method
+msgid "Control Policy"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__cost_currency_id
 msgid "Cost Currency"
 msgstr ""
@@ -212,6 +217,14 @@ msgid "ID"
 msgstr "Κωδικός"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__service_to_purchase
+msgid ""
+"If ticked, each time you sell this product through a SO, a RfQ is "
+"automatically created to buy the product. Tip: don't forget to set a vendor "
+"on the product."
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_income_id
 msgid "Income Account"
 msgstr ""
@@ -272,6 +285,11 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn_msg
+msgid "Message for Purchase Order Line"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn_msg
 msgid "Message for Sales Order Line"
 msgstr ""
@@ -279,6 +297,13 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__name
 msgid "Name"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__purchase_method
+msgid ""
+"On ordered quantities: Control bills based on ordered quantities.\n"
+"On received quantities: Control bills based on received quantities."
 msgstr ""
 
 #. module: product_variant_configurator
@@ -431,6 +456,11 @@ msgid "Purchase Description"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn
+msgid "Purchase Order Line Warning"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__uom_po_id
 msgid "Purchase UoM"
 msgstr ""
@@ -471,6 +501,7 @@ msgid "Select a template for a variant. Keep empty for a new full product."
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__purchase_line_warn
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__sale_line_warn
 msgid ""
 "Selecting the \"Warning\" option will notify user with the message, "
@@ -481,6 +512,11 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sequence
 msgid "Sequence"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__service_to_purchase
+msgid "Subcontract Service"
 msgstr ""
 
 #. module: product_variant_configurator
