@@ -20,6 +20,48 @@ msgstr ""
 "2:1));\n"
 
 #. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__can_create_product
+msgid "Can Create Product"
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__create_product_variant
+msgid "Create product now!"
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__price_extra
+msgid "Price Extra"
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,help:purchase_variant_configurator.field_purchase_order_line__price_extra
+msgid ""
+"Price Extra: Extra price for the variant with the currently selected "
+"attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_id_configurator_domain
+msgid "Product Id Configurator Domain"
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_tmpl_id
+msgid "Product Template"
+msgstr ""
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_attribute_ids
+msgid "Product attributes"
+msgstr ""
+
+#. module: purchase_variant_configurator
 #: model:ir.model,name:purchase_variant_configurator.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Linie comandă achiziție"
