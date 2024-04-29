@@ -6,7 +6,7 @@ from odoo.tests import TransactionCase
 
 class TestSaleOrderLineVariantDescription(TransactionCase):
     def setUp(self):
-        super(TestSaleOrderLineVariantDescription, self).setUp()
+        super().setUp()
         self.fiscal_position_model = self.env["account.fiscal.position"]
         self.tax_model = self.env["account.tax"]
         self.pricelist_model = self.env["product.pricelist"]
