@@ -9,30 +9,30 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-01-02 11:50+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-04-29 17:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__can_create_product
 msgid "Can Create Product"
-msgstr ""
+msgstr "Può creare il prodotto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__create_product_variant
 msgid "Create product now!"
-msgstr ""
+msgstr "Crea prodotto ora!"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__price_extra
 msgid "Price Extra"
-msgstr ""
+msgstr "Extra prezzo"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,help:purchase_variant_configurator.field_purchase_order_line__price_extra
@@ -40,26 +40,29 @@ msgid ""
 "Price Extra: Extra price for the variant with the currently selected "
 "attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
+"Extra prezzo : extra prezzo sul prezzo di vendita per la variante con gli "
+"attributi attualmente selezionati: es. 200 di extra prezzo , 1000 + 200 = "
+"1200."
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_id
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_id_configurator_domain
 msgid "Product Id Configurator Domain"
-msgstr ""
+msgstr "Dominio configurazione ID prodotto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_tmpl_id
 msgid "Product Template"
-msgstr ""
+msgstr "Modello prodotto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_attribute_ids
 msgid "Product attributes"
-msgstr ""
+msgstr "Attributi prodotto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model,name:purchase_variant_configurator.model_purchase_order_line
