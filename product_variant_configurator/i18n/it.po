@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2024-04-03 06:46+0000\n"
+"PO-Revision-Date: 2024-04-29 17:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -83,7 +83,7 @@ msgstr "Valore attributo"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
 msgid "Can Create Product"
-msgstr "Si può creare il prodotto"
+msgstr "Può creare il prodotto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_ok
@@ -125,7 +125,7 @@ msgstr "Azienda"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_method
 msgid "Control Policy"
-msgstr ""
+msgstr "Politica di controllo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__cost_currency_id
@@ -242,6 +242,9 @@ msgid ""
 "automatically created to buy the product. Tip: don't forget to set a vendor "
 "on the product."
 msgstr ""
+"Se selezionata, ogni volta che si vende un prodotto tramite un OV, viene "
+"creata automaticamente un aRdP per acquistare il prodotto. Nota: non "
+"dimenticare di impostare il fornitore del prodotto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_income_id
@@ -317,7 +320,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn_msg
 msgid "Message for Purchase Order Line"
-msgstr ""
+msgstr "Messaggio per riga ordine di acquisto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn_msg
@@ -335,6 +338,8 @@ msgid ""
 "On ordered quantities: Control bills based on ordered quantities.\n"
 "On received quantities: Control bills based on received quantities."
 msgstr ""
+"Sulla quntità ordinata: controllo fatture in base alle quantità ordinate.\n"
+"Sulla quantità ricevuta: controllo fatture in base alle quantità ricevute."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__optional_product_ids
@@ -476,7 +481,7 @@ msgstr "Variante prodotto"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_attribute_ids
 msgid "Product attributes"
-msgstr "Attributi Prodotto"
+msgstr "Attributi prodotto"
 
 #. module: product_variant_configurator
 #. odoo-python
@@ -498,7 +503,7 @@ msgstr "Descrizione acquisto"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn
 msgid "Purchase Order Line Warning"
-msgstr ""
+msgstr "Avviso riga ordine acquisto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__uom_po_id
@@ -563,7 +568,7 @@ msgstr "Sequenza"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__service_to_purchase
 msgid "Subcontract Service"
-msgstr ""
+msgstr "Servizio in conto lavoro"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__account_tag_ids
