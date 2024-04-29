@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2023-11-10 16:36+0000\n"
+"PO-Revision-Date: 2024-04-29 17:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -48,7 +48,7 @@ msgstr "Valore attributo"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
 msgid "Can Create Product"
-msgstr "Si può creare il prodotto"
+msgstr "Può creare il prodotto"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_category.py:0
@@ -225,7 +225,7 @@ msgstr "Variante prodotto"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_attribute_ids
 msgid "Product attributes"
-msgstr "Attributi Prodotto"
+msgstr "Attributi prodotto"
 
 #. module: product_variant_configurator
 #: code:addons/product_variant_configurator/models/product_configurator.py:0
