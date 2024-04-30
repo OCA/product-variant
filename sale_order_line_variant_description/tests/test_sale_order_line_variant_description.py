@@ -18,7 +18,7 @@ class TestSaleOrderLineVariantDescription(TransactionCase):
         self.partner = self.env.ref("base.res_partner_1")
 
     def test_product_id_change(self):
-        pricelist = self.pricelist_model.search([("name", "=", "Public Pricelist")])[0]
+        pricelist = self.pricelist_model.create({"name": "Public Pricelist"})[0]
         uom = self.uom_uom_model.search([("name", "=", "Units")])[0]
         tax_include = self.tax_model.create(
             dict(name="Include tax", amount="0.21", price_include=True)

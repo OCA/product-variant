@@ -2,29 +2,25 @@
 <!-- © 2015-17 Alex Comba - Agile Business Group
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
 <odoo>
-
     <record id="product_normal_form_view" model="ir.ui.view">
         <field name="name">product.product.form</field>
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
             <field name="description_sale" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('product_variant_count', '&gt;', 1)]}</attribute>
+                <attribute name="invisible">product_variant_count > 1</attribute>
             </field>
             <field name="description_sale" position="after">
                 <field
                     name="variant_description_sale"
-                    attrs="{'invisible': [('product_variant_count', '=', 1)]}"
                     colspan="2"
+                    invisible="product_variant_count == 1"
                     nolabel="1"
                     placeholder="This note is added to sales orders and invoices."
                 />
             </field>
         </field>
     </record>
-
     <record id="product_variant_easy_edit_view" model="ir.ui.view">
         <field name="name">product.product.view.form.easy</field>
         <field name="model">product.product</field>
@@ -37,6 +33,4 @@
             </xpath>
         </field>
     </record>
-
-
 </odoo>
