@@ -6,20 +6,14 @@
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
             <field name="name" position="attributes">
-                <attribute
-                    name="invisible"
-                >id != False or product_tmpl_id != False</attribute>
-                <attribute name="readonly">product_tmpl_id != False</attribute>
+                <attribute name="readonly">product_tmpl_id</attribute>
             </field>
             <field name="product_tmpl_id" position="attributes">
-                <attribute name="placeholder">Product Template</attribute>
-                <attribute name="invisible">0</attribute>
-                <attribute name="readonly">0</attribute>
-                <attribute name="readonly">id != False</attribute>
-                <attribute name="required">id != False</attribute>
+                <attribute name="readonly">id</attribute>
             </field>
-            <xpath expr="//field[@name='product_tmpl_id']/.." position="after">
-                <p class="oe_grey" invisible="id != False">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <field name="product_tmpl_id" placeholder="Product Template" />
+                 <p class="oe_grey" invisible="id">
                     Select a template for a variant. Keep empty for a new full product.
                 </p>
             </xpath>
