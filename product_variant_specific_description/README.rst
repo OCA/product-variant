@@ -58,6 +58,9 @@ Contributors
 ------------
 
 -  Lois Rilo <lois.rilo@forgeflow.com>
+-  `Binhex <https://binhex.cloud//com>`__:
+
+   -  David Luis Mora <d.luis@binhex.cloud>
 
 Maintainers
 -----------

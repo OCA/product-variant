@@ -9,21 +9,14 @@
         <field name="inherit_id" ref="product.product_template_only_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='description']/.." position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('product_variant_count', '>', 1)]}</attribute>
+                <attribute name="invisible">product_variant_count &gt; 1</attribute>
             </xpath>
             <xpath expr="//field[@name='description']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'readonly': [('is_system_multi_lang', '=', True)]}</attribute>
+                <attribute name="readonly">is_system_multi_lang</attribute>
             </xpath>
             <xpath expr="//field[@name='description']" position="before">
-                <field name="is_system_multi_lang" invisible="1" />
-                <p
-                    colspan="2"
-                    attrs="{'invisible': [('is_system_multi_lang', '=', False)]}"
-                >
+                <field name="is_system_multi_lang" column_invisible="1" />
+                <p colspan="2" invisible="not is_system_multi_lang">
                     <i
                         class="fa fa-info-circle"
                     /> This field is maintained in the product variant form.

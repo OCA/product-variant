@@ -6,9 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def post_init_hook(cr, registry):
+def post_init_hook(env):
     logger.info("Setting product variant description with product template description")
-    cr.execute(
+    env.cr.execute(
         """
         UPDATE product_product pp
         SET description = pt.description
