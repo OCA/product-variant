@@ -9,6 +9,7 @@
     "website": "https://github.com/OCA/product-variant",
     "category": "Product Management",
     "version": "16.0.1.0.0",
+    "development_status": "Production/Stable",
     "license": "AGPL-3",
     "depends": ["product", "account"],
     "data": ["views/product_attribute_views.xml"],
