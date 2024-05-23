@@ -7,7 +7,7 @@
 {
     "name": "Product Variant Configurator",
     "summary": "Provides an abstract model for product variant configuration.",
-    "version": "16.0.1.0.4",
+    "version": "16.0.1.0.5",
     "category": "Product Variant",
     "development_status": "Production/Stable",
     "license": "AGPL-3",
