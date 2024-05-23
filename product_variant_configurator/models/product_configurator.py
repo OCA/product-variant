@@ -172,11 +172,12 @@ class ProductConfigurator(models.AbstractModel):
                     .with_context(lang=self.partner_id.lang)
                     .browse(self.product_id.id)
                 )
-            self.name = self._get_product_description(
-                product.product_tmpl_id,
-                product,
-                product.product_template_attribute_value_ids,
-            )
+            if "name" in self._fields:
+                self.name = self._get_product_description(
+                    product.product_tmpl_id,
+                    product,
+                    product.product_template_attribute_value_ids,
+                )
             self.product_tmpl_id = product.product_tmpl_id.id
             self._set_product_attributes()
 
