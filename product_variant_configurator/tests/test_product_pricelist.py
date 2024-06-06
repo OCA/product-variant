@@ -179,9 +179,7 @@ class TestProductPriceList(TransactionCase):
             uom=self.iphone_template.uom_po_id.id, date="2016-01-01"
         ).template_price_get(
             self.iphone_template, 4, self.env.ref("base.res_partner_1").id
-        )[
-            self.pricelist.id
-        ]
+        )[self.pricelist.id]
         self.assertEqual(price, 500 * 0.9)
 
     def test_03_price_rule_get_multi_template(self):

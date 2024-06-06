@@ -23,7 +23,7 @@ class ProductProduct(models.Model):
 
     def _get_product_attributes_values_text(self):
         description = self.product_template_attribute_value_ids.mapped(
-            lambda x: "{}: {}".format(x.attribute_id.name, x.name)
+            lambda x: f"{x.attribute_id.name}: {x.name}"
         )
         if description:
             return "{}\n{}".format(self.product_tmpl_id.name, "\n".join(description))
