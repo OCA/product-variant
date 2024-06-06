@@ -10,7 +10,7 @@ from odoo.tests.common import TransactionCase
 class TestProductVariantConfigurator(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestProductVariantConfigurator, cls).setUpClass()
+        super().setUpClass()
 
         # ENVIRONMENTS
         cls.product_attribute = cls.env["product.attribute"]

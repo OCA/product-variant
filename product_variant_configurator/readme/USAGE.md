@@ -1,7 +1,7 @@
 (after installing sale_management application)
 
-1.  Go to `Sales > Catalog > Product Variants`.
-2.  Click on "Create" button for creating a new one.
+1.  Go to `Sales > Products > Product Variants`.
+2.  Click on "New" button for creating a new one.
 3.  On the field "Product Template", select a product template that has
     several attributes.
 4.  A table with the attributes of the template will appear below.

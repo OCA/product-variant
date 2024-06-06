@@ -16,7 +16,7 @@ class ProductProduct(models.Model):
         res = self.product_tmpl_id._get_product_attributes_dict()
         for val in res:
             value = self.product_template_attribute_value_ids.filtered(
-                lambda x: x.attribute_id.id == val["attribute_id"]
+                lambda x, val=val: x.attribute_id.id == val["attribute_id"]
             )
             val["value_id"] = value.product_attribute_value_id.id
         return res
@@ -171,4 +171,4 @@ class ProductProduct(models.Model):
             )
             vals.pop("product_attribute_ids")
             vals["product_template_attribute_value_ids"] = [(4, x) for x in ptav]
-        return super(ProductProduct, self).create(vals_list)
+        return super().create(vals_list)

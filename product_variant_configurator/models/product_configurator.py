@@ -200,7 +200,7 @@ class ProductConfigurator(models.AbstractModel):
         res2 = []
         for val in res:
             value = product_attribute_values.filtered(
-                lambda x: x.attribute_id.id == val["attribute_id"]
+                lambda x, val=val: x.attribute_id.id == val["attribute_id"]
             )
             if value:
                 val["value_id"] = value
@@ -252,7 +252,7 @@ class ProductConfigurator(models.AbstractModel):
     def unlink(self):
         """Mimic `ondelete="cascade"`."""
         attributes = self.mapped("product_attribute_ids")
-        result = super(ProductConfigurator, self).unlink()
+        result = super().unlink()
         if result:
             attributes.unlink()
         return result
@@ -281,14 +281,15 @@ class ProductConfigurator(models.AbstractModel):
                 product_attribute = product_attribute_value.attribute_id
                 existing_attribute_line = (
                     self.product_tmpl_id.attribute_line_ids.filtered(  # noqa
-                        lambda l: l.attribute_id == product_attribute
+                        lambda line,
+                        product_attribute=product_attribute: line.attribute_id
+                        == product_attribute
                     )
                 )
-                product_template_attribute_values |= (
-                    existing_attribute_line.product_template_value_ids.filtered(  # noqa
-                        lambda v: v.product_attribute_value_id
-                        == product_attribute_value
-                    )
+                product_template_attribute_values |= existing_attribute_line.product_template_value_ids.filtered(  # noqa
+                    lambda v,
+                    prod_attr_val=product_attribute_value: v.product_attribute_value_id
+                    == prod_attr_val
                 )
             product = product_obj.create(
                 {

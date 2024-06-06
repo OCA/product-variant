@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 class TestProductPriceList(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestProductPriceList, cls).setUpClass()
+        super().setUpClass()
 
         # ENVIRONMENTS
         cls.product_template = cls.env["product.template"].with_context(

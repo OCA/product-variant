@@ -13,14 +13,14 @@ class ProductAttributeValue(models.Model):
 
         This happens when quick-creating values from the product configurator.
         """
-        attr_values = super(ProductAttributeValue, self).create(vals_list)
+        attr_values = super().create(vals_list)
         if "template_for_attribute_value" in self.env.context:
             template = self.env["product.template"].browse(
                 self.env.context["template_for_attribute_value"]
             )
             for attr in attr_values:
                 line = template.attribute_line_ids.filtered(
-                    lambda x: x.attribute_id == attr.attribute_id
+                    lambda x, attr=attr: x.attribute_id == attr.attribute_id
                 )
                 line.value_ids = [(4, attr.id)]
         return attr_values

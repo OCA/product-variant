@@ -6,20 +6,17 @@
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
             <field name="name" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': ['|', ('id', '!=', False), ('product_tmpl_id', '!=', False)], 'readonly': [('product_tmpl_id', '!=', False)]}</attribute>
+                <attribute name="invisible">id or product_tmpl_id</attribute>
+                <attribute name="readonly">product_tmpl_id</attribute>
             </field>
             <field name="product_tmpl_id" position="attributes">
                 <attribute name="placeholder">Product Template</attribute>
                 <attribute name="invisible">0</attribute>
-                <attribute name="readonly">0</attribute>
-                <attribute
-                    name="attrs"
-                >{'readonly': [('id', '!=', False)], 'required': [('id', '!=', False)]}</attribute>
+                <attribute name="readonly">id</attribute>
+                <attribute name="required">id</attribute>
             </field>
             <xpath expr="//field[@name='product_tmpl_id']/.." position="after">
-                <p class="oe_grey" attrs="{'invisible':[('id','!=',False)]}">
+                <p class="oe_grey" invisible="id">
                     Select a template for a variant. Keep empty for a new full product.
                 </p>
             </xpath>
@@ -39,26 +36,26 @@
                         name="product_attribute_ids"
                         nolabel="1"
                         colspan="2"
-                        attrs="{'invisible': ['|', ('id','!=',False), '|', ('product_tmpl_id','=',False), ('product_attribute_ids', '=', [])]}"
+                        invisible="id or not product_tmpl_id or not product_attribute_ids"
                         context="{'default_product_template_id': product_tmpl_id, 'default_owner_model': 'product.product', 'show_price_extra': True, 'show_attribute': False}"
                     >
                         <tree create="0" delete="0" editable="1">
-                            <field name="owner_model" invisible="1" />
-                            <field name="owner_id" invisible="1" />
+                            <field name="owner_model" column_invisible="1" />
+                            <field name="owner_id" column_invisible="1" />
                             <field name="attribute_id" />
                             <field
                                 name="possible_value_ids"
                                 widget="many2many_tags"
-                                invisible="1"
+                                column_invisible="1"
                             />
-                            <field name="product_tmpl_id" invisible="1" />
+                            <field name="product_tmpl_id" column_invisible="1" />
                             <field
                                 name="value_id"
                                 context="{'show_attribute': False, 'default_attribute_id': attribute_id, 'template_for_attribute_value': product_tmpl_id}"
                             />
                             <field
                                 name="price_extra"
-                                invisible="not context.get('show_price_extra', False)"
+                                column_invisible="not context.get('show_price_extra', False)"
                             />
                         </tree>
                     </field>
@@ -67,7 +64,7 @@
                         for="product_id"
                         string="This product already exists."
                         style="color: red;"
-                        attrs="{'invisible': [('product_id', '=', False)]}"
+                        invisible="not product_id"
                     />
                 </group>
             </xpath>

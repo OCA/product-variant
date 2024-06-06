@@ -10,16 +10,28 @@ from odoo import models
 class ProductPricelist(models.Model):
     _inherit = "product.pricelist"
 
-    def _compute_price_rule(self, products, qty, uom=None, date=False, **kwargs):
+    def _compute_price_rule(
+        self,
+        products,
+        quantity,
+        currency=None,
+        uom=None,
+        date=False,
+        compute_price=True,
+        **kwargs,
+    ):
         """Overwrite for covering the case where templates are passed and a
         different uom is used."""
         if products[0]._name != "product.template":
             # Standard use case - Nothing to do
-            return super(ProductPricelist, self)._compute_price_rule(
+            return super()._compute_price_rule(
                 products,
-                qty,
-                date=date,
-                uom=uom,
+                quantity,
+                currency,
+                uom,
+                date,
+                compute_price,
+                **kwargs,
             )
         # Isolate object
         pricelist_obj = self
@@ -31,9 +43,12 @@ class ProductPricelist(models.Model):
 
         return super(ProductPricelist, pricelist_obj)._compute_price_rule(
             products,
-            qty,
-            date=date,
-            uom=False,
+            quantity,
+            currency,
+            uom,
+            date,
+            compute_price,
+            **kwargs,
         )
 
     def template_price_get(self, prod_id, qty, partner=None):
