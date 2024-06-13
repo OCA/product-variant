@@ -4,7 +4,7 @@
     'name': 'Product Variant Sale Order Route',
     'version': '11.0.1.0.0',
     'category': 'Product',
-    'author': 'Camptocamp SA, '
+    'author': 'Camptocamp, '
               'Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'depends': [
