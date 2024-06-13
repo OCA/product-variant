@@ -7,7 +7,7 @@
     "version": "13.0.1.0.0",
     "category": "Product",
     "website": "https://github.com/OCA/product-variant",
-    "author": "Camptocamp SA, Odoo Community Association (OCA)",
+    "author": "Camptocamp, Odoo Community Association (OCA)",
     "maintainers": ["mmequignon"],
     "license": "AGPL-3",
     "installable": True,
