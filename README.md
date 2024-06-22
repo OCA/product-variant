@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [product_variant_specific_description](product_variant_specific_description/) | 16.0.1.0.1 |  | Product Variant Specific Description
 [purchase_variant_configurator](purchase_variant_configurator/) | 16.0.1.0.0 |  | Product variants in purchase management
 [sale_order_line_variant_description](sale_order_line_variant_description/) | 16.0.1.1.0 |  | Sale order line variant description
+[sale_variant_configurator](sale_variant_configurator/) | 16.0.1.0.0 |  | Product variants in sale management
 
 [//]: # (end addons)
 
