@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_variant_configurator
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Paolo Valier <paolo.valier@hotmail.it>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 08:37+0000\n"
+"PO-Revision-Date: 2023-11-10 16:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: sale_variant_configurator
+#: model:ir.model.constraint,message:sale_variant_configurator.constraint_sale_order_line_non_accountable_null_fields
+msgid "Forbidden values on non-accountable sale order line"
+msgstr "Valori vietati nella riga ordine vendita non giustificabile"
+
+#. module: sale_variant_configurator
+#: model:ir.model.constraint,message:sale_variant_configurator.constraint_sale_order_line_accountable_required_fields
+msgid "Missing required fields on accountable sale order line."
+msgstr "Campi richesti non compilati su riga ordine vendta giustificabile."
+
+#. module: sale_variant_configurator
+#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line__product_id
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: sale_variant_configurator
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_order_line_tree
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
+msgid "Product Template"
+msgstr "Modello prodotto"
+
+#. module: sale_variant_configurator
+#: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line__product_tmpl_id
+msgid "Product Template (no related)"
+msgstr "Modello prodotto (non relazionato)"
+
+#. module: sale_variant_configurator
+#: model:ir.model,name:sale_variant_configurator.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
+
+#. module: sale_variant_configurator
+#: model:ir.model,name:sale_variant_configurator.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Riga ordine di vendita"
+
+#. module: sale_variant_configurator
+#: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_sales_order_line_filter
+msgid "Template"
+msgstr "Modello"

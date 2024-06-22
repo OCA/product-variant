@@ -8,6 +8,9 @@ class TestProductVariantPrice(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(
+            context=dict(cls.env.context, test_test_product_variant_sale_price=True)
+        )
         cls.template = cls.env["product.template"]
         cls.product_product = cls.env["product.product"]
         cls.attribute = cls.env["product.attribute"]

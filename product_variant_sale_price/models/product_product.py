@@ -2,6 +2,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, fields, models
+from odoo.tools import config
 
 
 class ProductTemplate(models.Model):
@@ -44,7 +45,12 @@ class ProductTemplate(models.Model):
             parent_combination,
             only_template,
         )
-        res["price_extra"] = 0.0
+        test_condition = not config["test_enable"] or (
+            config["test_enable"]
+            and self.env.context.get("test_product_variant_sale_price")
+        )
+        if test_condition:
+            res["price_extra"] = 0.0
         return res
 
 
@@ -104,5 +110,12 @@ class ProductProduct(models.Model):
         """the sale.order.line module calculates the price_unit by adding
         the value of price_extra and this can generate inconsistencies
         if the field has old data stored."""
-        for product in self:
-            product.price_extra = 0.0
+        super()._compute_product_price_extra()
+        test_condition = not config["test_enable"] or (
+            config["test_enable"]
+            and self.env.context.get("test_product_variant_sale_price")
+        )
+        if test_condition:
+            for product in self:
+                product.price_extra = 0.0
+        return
