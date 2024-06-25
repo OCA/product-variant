@@ -15,7 +15,10 @@
     "Odoo Community Association (OCA)",
     "category": "Purchase Management",
     "website": "https://github.com/OCA/product-variant",
-    "data": ["views/inherited_purchase_order_views.xml"],
+    "data": [
+        "views/inherited_purchase_order_views.xml",
+        "views/res_config_settings_views.xml",
+    ],
     "installable": True,
     "post_init_hook": "assign_product_template",
 }
