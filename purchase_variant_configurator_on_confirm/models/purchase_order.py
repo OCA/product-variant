@@ -59,7 +59,7 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange("product_tmpl_id")
     def _onchange_product_tmpl_id_configurator(self):
-        """ Make use of PurchaseOrderLine onchange_product_id method with
+        """Make use of PurchaseOrderLine onchange_product_id method with
         a virtual product created on the fly.
         """
         res = super()._onchange_product_tmpl_id_configurator()

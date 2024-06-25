@@ -10,7 +10,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     def _product_from_tmpl(self):
-        """ Creates a product in memory from template to use its methods """
+        """Creates a product in memory from template to use its methods"""
         return self.env["product.product"].new(
             {"product_tmpl_id": self.id, "name": self.name}
         )
