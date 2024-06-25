@@ -6,7 +6,7 @@
 {
     "name": "Purchase - Product variants",
     "summary": "Product variants in purchase management",
-    "version": "16.0.1.0.0",
+    "version": "16.0.2.0.0",
     "license": "AGPL-3",
     "depends": ["purchase", "product_variant_configurator"],
     "author": "AvanzOSC, "
@@ -15,7 +15,10 @@
     "Odoo Community Association (OCA)",
     "category": "Purchase Management",
     "website": "https://github.com/OCA/product-variant",
-    "data": ["views/inherited_purchase_order_views.xml"],
+    "data": [
+        "views/inherited_purchase_order_views.xml",
+        "views/res_config_settings_views.xml",
+    ],
     "installable": True,
     "post_init_hook": "assign_product_template",
 }

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2024-04-29 17:36+0000\n"
+"PO-Revision-Date: 2024-07-01 11:47+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -25,9 +25,42 @@ msgid "Can Create Product"
 msgstr "Può creare il prodotto"
 
 #. module: purchase_variant_configurator
+#: model:ir.model,name:purchase_variant_configurator.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: purchase_variant_configurator
+#: model:ir.model,name:purchase_variant_configurator.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__create_product_variant
 msgid "Create product now!"
 msgstr "Crea prodotto ora!"
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,help:purchase_variant_configurator.field_res_company__po_confirm_create_variant
+#: model:ir.model.fields,help:purchase_variant_configurator.field_res_config_settings__po_confirm_create_variant
+#: model_terms:ir.ui.view,arch_db:purchase_variant_configurator.res_config_settings_view_form_purchase
+msgid "Create product variants when confirming"
+msgstr "Crea varianti prodotto alla conferma"
+
+#. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_res_company__po_confirm_create_variant
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_res_config_settings__po_confirm_create_variant
+msgid "Create variants on confirm"
+msgstr "Crea varianti alla conferma"
+
+#. module: purchase_variant_configurator
+#: model:ir.model.constraint,message:purchase_variant_configurator.constraint_purchase_order_line_non_accountable_null_fields
+msgid "Forbidden values on non-accountable purchase order line"
+msgstr "Valori vietati nella riga ordine acquisto non giustificabile"
+
+#. module: purchase_variant_configurator
+#: model:ir.model.constraint,message:purchase_variant_configurator.constraint_purchase_order_line_accountable_required_fields
+msgid "Missing required fields on accountable purchase order line."
+msgstr "Campi richesti non compilati su riga ordine acquisto giustificabile."
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__price_extra
@@ -45,6 +78,7 @@ msgstr ""
 "1200."
 
 #. module: purchase_variant_configurator
+#: model:ir.model,name:purchase_variant_configurator.model_product_template
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_id
 msgid "Product"
 msgstr "Prodotto"
@@ -55,9 +89,19 @@ msgid "Product Id Configurator Domain"
 msgstr "Dominio configurazione ID prodotto"
 
 #. module: purchase_variant_configurator
+#: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_id_is_required
+msgid "Product Id Is Required"
+msgstr "È richiesto l'ID prodotto"
+
+#. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_tmpl_id
 msgid "Product Template"
 msgstr "Modello prodotto"
+
+#. module: purchase_variant_configurator
+#: model:ir.model,name:purchase_variant_configurator.model_product_product
+msgid "Product Variant"
+msgstr "Variante prodotto"
 
 #. module: purchase_variant_configurator
 #: model:ir.model.fields,field_description:purchase_variant_configurator.field_purchase_order_line__product_attribute_ids
@@ -65,6 +109,21 @@ msgid "Product attributes"
 msgstr "Attributi prodotto"
 
 #. module: purchase_variant_configurator
+#: model_terms:ir.ui.view,arch_db:purchase_variant_configurator.res_config_settings_view_form_purchase
+msgid "Product configurator"
+msgstr "Configuratore di prodotto"
+
+#. module: purchase_variant_configurator
+#: model:ir.model,name:purchase_variant_configurator.model_purchase_order
+msgid "Purchase Order"
+msgstr "Ordine di acquisto"
+
+#. module: purchase_variant_configurator
 #: model:ir.model,name:purchase_variant_configurator.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Riga ordine di acquisto"
+
+#. module: purchase_variant_configurator
+#: model:ir.model,name:purchase_variant_configurator.model_product_supplierinfo
+msgid "Supplier Pricelist"
+msgstr "Listino prezzi fornitore"
