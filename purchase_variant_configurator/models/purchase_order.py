@@ -1,7 +1,7 @@
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
+# Copyright 2016-2017 Tecnativa - Pedro M. Baeza
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 Tecnativa - David Vidal
-# Copyright 2016-2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, fields, models
@@ -39,6 +39,7 @@ class PurchaseOrderLine(models.Model):
     _name = "purchase.order.line"
 
     product_id = fields.Many2one(required=False)
+    product_id_is_required = fields.Boolean(compute="_compute_product_id_is_required")
 
     _sql_constraints = [
         (
@@ -57,13 +58,18 @@ class PurchaseOrderLine(models.Model):
         ),
     ]
 
+    @api.depends("company_id")
+    def _compute_product_id_is_required(self):
+        for item in self:
+            item.product_id_is_required = not item.company_id.po_confirm_create_variant
+
     @api.onchange("product_tmpl_id")
     def _onchange_product_tmpl_id_configurator(self):
         """Make use of PurchaseOrderLine onchange_product_id method with
         a virtual product created on the fly.
         """
         res = super()._onchange_product_tmpl_id_configurator()
-        if not self.product_id:
+        if not self.product_id and self.product_tmpl_id:
             self.product_id = self.product_tmpl_id._product_from_tmpl()
             # HACK: With NewId, the `search` method that looks for vendor pricelists
             # related to the product is unable to find the linked template as the
@@ -74,26 +80,28 @@ class PurchaseOrderLine(models.Model):
             self.with_context(
                 pvc_product_tmpl=self.product_tmpl_id.id
             ).onchange_product_id()
-            self.product_id = False
-            # HACK: With NewId, making `with_context` loses temp values, so we
-            # need to recreate these operations
-            product_lang = self.product_tmpl_id.with_context(
-                {"lang": self.partner_id.lang, "partner_id": self.partner_id.id}
-            )
-            self.name = product_lang.display_name
-            if product_lang.description_purchase:
-                self.name += "\n" + product_lang.description_purchase
         return res
 
-    def create(self, vals):
+    @api.model
+    def _get_product_description(self, template, product, product_attributes):
+        """Add description_purchase to name field (similar to what purchase does)."""
+        name = super()._get_product_description(
+            template=template, product=product, product_attributes=product_attributes
+        )
+        if template.description_purchase:
+            name += "\n" + template.description_purchase
+        return name
+
+    @api.model_create_multi
+    def create(self, vals_list):
         """Create variant before calling super when the purchase order is
         confirmed, as it creates associated stock moves.
         """
-        if "order_id" not in vals or vals.get("product_id"):
-            return super().create(vals)
-        order = self.env["purchase.order"].browse(vals["order_id"])
-        if order.state == "purchase":
-            line = self.new(vals)
-            product = line.create_variant_if_needed()
-            vals["product_id"] = product.id
-        return super().create(vals)
+        for vals in vals_list:
+            if vals.get("order_id") and not vals.get("product_id"):
+                order = self.env["purchase.order"].browse(vals["order_id"])
+                if order.state == "purchase":
+                    line = self.new(vals)
+                    product = line.create_variant_if_needed()
+                    vals["product_id"] = product.id
+        return super().create(vals_list)
