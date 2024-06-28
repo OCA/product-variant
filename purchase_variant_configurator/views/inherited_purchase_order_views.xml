@@ -77,15 +77,28 @@
             </xpath>
             <xpath
                 expr="//field[@name='order_line']/tree//field[@name='product_id']"
+                position="before"
+            >
+                <field
+                    name="product_tmpl_id"
+                    attrs="{'invisible': [('display_type', '!=', False)]}"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/tree//field[@name='product_id']"
                 position="after"
             >
                 <field name="product_id_configurator_domain" invisible="1" />
+                <field name="product_id_is_required" invisible="1" />
             </xpath>
             <xpath
                 expr="//field[@name='order_line']/tree//field[@name='product_id']"
                 position="attributes"
             >
                 <attribute name="domain">product_id_configurator_domain</attribute>
+                <attribute
+                    name="attrs"
+                >{'required': [('product_id_is_required', '=', True)]}</attribute>
             </xpath>
         </field>
     </record>

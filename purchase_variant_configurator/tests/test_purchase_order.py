@@ -38,12 +38,18 @@ class TestPurchaseOrder(BaseCommon):
             {"name": "Value 2", "attribute_id": cls.attribute1.id}
         )
 
+        # Instances: supplier
+        cls.supplier = cls.res_partner.create(
+            {"name": "Supplier 1", "is_company": True}
+        )
         # Instances: product template
         cls.product_template_yes = cls.product_template.create(
             {
                 "name": "Product template 1",
+                "description_purchase": "Purchase Description",
                 "no_create_variants": "yes",
                 "categ_id": cls.category1.id,
+                "standard_price": 100,
                 "attribute_line_ids": [
                     (
                         0,
@@ -56,7 +62,14 @@ class TestPurchaseOrder(BaseCommon):
                 ],
             }
         )
-
+        cls.supplier_pricelist = cls.env["product.supplierinfo"].create(
+            {
+                "product_tmpl_id": cls.product_template_yes.id,
+                "partner_id": cls.supplier.id,
+                "min_qty": 11,
+                "price": 90,
+            }
+        )
         cls.product_template_no = cls.product_template.create(
             {
                 "name": "Product template 2",
@@ -65,12 +78,9 @@ class TestPurchaseOrder(BaseCommon):
                 "description_purchase": "Purchase Description",
             }
         )
+        cls.env.user.groups_id += cls.env.ref("uom.group_uom")
 
-        cls.supplier = cls.res_partner.create(
-            {"name": "Supplier 1", "is_company": True}
-        )
-
-    def test_onchange_product_tmpl_id(self):
+    def test_onchange_product_tmpl_id_01(self):
         line1 = self.purchase_order_line.new(
             {
                 "product_tmpl_id": self.product_template_yes.id,
@@ -105,6 +115,25 @@ class TestPurchaseOrder(BaseCommon):
                 self.product_template_no.description_purchase,
             ),
         )
+
+    def test_onchange_product_tmpl_id_02(self):
+        order_form = Form(self.env["purchase.order"])
+        order_form.partner_id = self.supplier
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+        order = order_form.save()
+        line = order.order_line
+        self.assertFalse(line.product_id)
+        self.assertIn("Product template 1", line.name)
+        self.assertIn("Purchase Description", line.name)
+        self.assertEqual(line.product_uom, self.product_template_yes.uom_id)
+        self.assertEqual(line.price_unit, 90)
+        self.assertEqual(line.product_qty, 11)
+        self.assertTrue(line.date_planned)
+        order.button_confirm()
+        self.assertTrue(line.product_id)
+        self.assertIn("Product template 1", line.name)
+        self.assertIn("Purchase Description", line.name)
 
     def test_onchange_product_attribute_ids(self):
         product = self.product_product.create(
@@ -199,7 +228,7 @@ class TestPurchaseOrder(BaseCommon):
         self.assertEqual(len(line.product_attribute_ids), 1)
         self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
-    def test_button_confirm(self):
+    def test_button_confirm_01(self):
         order = self.purchase_order.create({"partner_id": self.supplier.id})
         line_1 = self.purchase_order_line.new(
             {
@@ -256,3 +285,38 @@ class TestPurchaseOrder(BaseCommon):
             0,
             "All purchase lines must have a product",
         )
+
+    def test_button_confirm_02(self):
+        order_form = Form(self.env["purchase.order"])
+        order_form.partner_id = self.supplier
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+            with line_form.product_attribute_ids.edit(0) as pa_form:
+                pa_form.value_id = self.value1
+        order = order_form.save()
+        line1 = order.order_line
+        self.assertFalse(line1.product_id)
+        order.button_confirm()
+        self.assertTrue(line1.product_id)
+        purchase = Form(order)
+        with purchase.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+            with line_form.product_attribute_ids.edit(0) as pa_form:
+                pa_form.value_id = self.value2
+        purchase.save()
+        line2 = order.order_line - line1
+        self.assertTrue(line2.product_id)
+        self.assertNotEqual(line1.product_id, line2.product_id)
+
+    def test_copy(self):
+        old_date = "2017-01-01"
+        order_form = Form(self.env["purchase.order"])
+        order_form.partner_id = self.supplier
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+            line_form.date_planned = old_date
+            with line_form.product_attribute_ids.edit(0) as pa_form:
+                pa_form.value_id = self.value1
+        order = order_form.save()
+        new_order = order.copy()
+        self.assertNotEqual(new_order.order_line.date_planned, old_date)
