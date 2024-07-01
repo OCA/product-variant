@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 08:37+0000\n"
-"PO-Revision-Date: 2022-05-31 18:05+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-07-01 11:47+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_product_product__code_prefix
@@ -118,7 +118,7 @@ msgstr "Maschera manuale codice predefinito prodotto"
 #. module: product_variant_default_code
 #: model:ir.model,name:product_variant_default_code.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: product_variant_default_code
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
