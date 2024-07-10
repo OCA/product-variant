@@ -6,3 +6,4 @@
 - RabbitJon-S73 \<<roger@studio73.es>\>
 - Emanuel Cino \<<ecino@compassion.ch>\>
 - Pedroguirao \<<pguirao@puntsistemes.es>\>
+- Gabriel Grinspan \<<gabriel@rooteam.net>\>
