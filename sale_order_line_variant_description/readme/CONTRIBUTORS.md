@@ -1,0 +1,5 @@
+- Alex Comba \<<alex.comba@agilebg.com>\>
+- Simone Vanin \<<simone.vanin@agilebg.com>\>
+- Dhara Solanki \<<dhara.solanki@initos.com>\>
+- OERP Canada \<<https://www.oerp.ca/>\>
+  - Foram Darji \<<fd@oerp.ca>\>
