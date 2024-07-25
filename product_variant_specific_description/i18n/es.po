@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_specific_description
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-02-14 19:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: product_variant_specific_description
+#: model_terms:ir.ui.view,arch_db:product_variant_specific_description.product_template_only_form_view
+msgid ""
+"<i class=\"fa fa-info-circle\"/> This field is maintained in the product "
+"variant form."
+msgstr ""
+"<i class=\"fa fa-info-circle\"/> Este campo se mantiene en el formulario de "
+"variante del producto."
+
+#. module: product_variant_specific_description
+#: model:ir.model.fields,field_description:product_variant_specific_description.field_product_product__description
+#: model:ir.model.fields,field_description:product_variant_specific_description.field_product_template__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: product_variant_specific_description
+#: model_terms:ir.ui.view,arch_db:product_variant_specific_description.product_template_only_form_view
+msgid "Go to Product Variant"
+msgstr "Ir a Variante de Producto"
+
+#. module: product_variant_specific_description
+#: model_terms:ir.ui.view,arch_db:product_variant_specific_description.product_variant_easy_edit_view
+msgid "Internal Notes"
+msgstr "Notas Internas"
+
+#. module: product_variant_specific_description
+#: model:ir.model.fields,field_description:product_variant_specific_description.field_product_product__is_system_multi_lang
+#: model:ir.model.fields,field_description:product_variant_specific_description.field_product_template__is_system_multi_lang
+msgid "Is System Multi Lang"
+msgstr "El Sistema es Multilingüe"
+
+#. module: product_variant_specific_description
+#: model:ir.model,name:product_variant_specific_description.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_variant_specific_description
+#: model:ir.model,name:product_variant_specific_description.model_product_product
+msgid "Product Variant"
+msgstr "Variante de Producto"
