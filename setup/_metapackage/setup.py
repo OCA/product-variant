@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo-addon-product_variant_specific_description>=16.0dev,<16.1dev',
         'odoo-addon-purchase_variant_configurator>=16.0dev,<16.1dev',
         'odoo-addon-sale_order_line_variant_description>=16.0dev,<16.1dev',
+        'odoo-addon-sale_product_variant_attribute_tax>=16.0dev,<16.1dev',
         'odoo-addon-sale_variant_configurator>=16.0dev,<16.1dev',
     ],
     classifiers=[
