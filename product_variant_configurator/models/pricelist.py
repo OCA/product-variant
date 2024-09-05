@@ -13,7 +13,7 @@ class ProductPricelist(models.Model):
     def _compute_price_rule(self, products, qty, uom=None, date=False, **kwargs):
         """Overwrite for covering the case where templates are passed and a
         different uom is used."""
-        if products[0]._name != "product.template":
+        if products._name != "product.template":
             # Standard use case - Nothing to do
             return super(ProductPricelist, self)._compute_price_rule(
                 products,
