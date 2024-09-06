@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="wizard_product_variant_change_template_view_form" model="ir.ui.view">
+        <field name="name">wizard_product_variant_change_template_view_form</field>
+        <field name="model">wizard.product.variant.change.template</field>
+        <field name="arch" type="xml">
+            <form string="Change Template">
+                <sheet>
+                    <group>
+                        <field name="current_product_id" force_save="1" />
+                        <field name="current_template_id" />
+                        <field name="require_attribute_selection" />
+                        <field name="destination_template_id" required="1" />
+                        <field
+                            name="available_value_ids"
+                            widget="many2many_tags"
+                            force_save="1"
+                        />
+                        <field
+                            name="selected_value_ids"
+                            widget="many2many_tags"
+                            attrs="{'required': [('require_attribute_selection', '=', True)]}"
+                            domain="[('id', 'in', available_value_ids)]"
+                        />
+                        <label
+                            for="already_exist_variant_ids"
+                            attrs="{'invisible': [('already_exist_variant_ids', '=', [])]}"
+                            colspan="2"
+                        />
+                        <field
+                            name="is_different_uom"
+                            attrs="{'invisible': [('is_different_uom', '=', False)]}"
+                        />
+                        <field
+                            name="current_uom_id"
+                            attrs="{'invisible': [('is_different_uom', '=', False)]}"
+                        />
+                        <field
+                            name="destination_uom_id"
+                            attrs="{'invisible': [('is_different_uom', '=', False)]}"
+                        />
+                        <div
+                            class="alert alert-danger"
+                            role="alert"
+                            colspan="2"
+                            attrs="{'invisible': ['|', ('is_different_uom', '=', False), ('destination_template_id', '=', False)]}"
+                        >
+                            You can't use a destination template with different UoM of original template
+                        </div>
+                        <field
+                            name="already_exist_variant_ids"
+                            nolabel="1"
+                            attrs="{'invisible': [('already_exist_variant_ids', '=', [])]}"
+                            colspan="2"
+                        />
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                        special="cancel"
+                        data-hotkey="z"
+                        string="Oops, no!"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_change_template"
+                        string="Yes, I understand the risks"
+                        type="object"
+                        class="btn-secondary"
+                        attrs="{'invisible': ['|', ('already_exist_variant_ids', '!=', []), ('is_different_uom', '=', True)]}"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        id="wizard_product_variant_change_template_view_form_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Change Template of Variant</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.product.variant.change.template</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_view_types">form</field>
+    </record>
+
+</odoo>

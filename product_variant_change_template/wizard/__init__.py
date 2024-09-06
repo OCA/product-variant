@@ -1,0 +1,1 @@
+from . import wizard_product_variant_change_template
