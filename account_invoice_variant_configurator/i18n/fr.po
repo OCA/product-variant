@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_invoice_variant_configurator
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_move_line__can_create_product
+msgid "Can Create Product"
+msgstr ""
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_move_line__create_product_variant
+msgid "Create product now!"
+msgstr "Créer un article maintenant!"
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model,name:account_invoice_variant_configurator.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_move_line__price_extra
+msgid "Price Extra"
+msgstr ""
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,help:account_invoice_variant_configurator.field_account_move_line__price_extra
+msgid ""
+"Price Extra: Extra price for the variant with the currently selected "
+"attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
+msgstr ""
+"Prix Extra: Augmentation du prix de vente pour la variante avec les "
+"attributs actuels sélectionnés. ex. prix extra 200, 1000 + 200 = 1200"
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_move_line__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_move_line__product_tmpl_id
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: account_invoice_variant_configurator
+#: model:ir.model.fields,field_description:account_invoice_variant_configurator.field_account_move_line__product_attribute_ids
+msgid "Product attributes"
+msgstr "Attriibuts d'article"

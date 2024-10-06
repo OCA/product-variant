@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2016 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="account_move_form_view">
+        <field name="name">account.move.form (in
+            invoice_product_variant_configurator)
+        </field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
+                <!-- force using the form -->
+                <attribute name="editable" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/form//field[@name='partner_id']"
+                position="after"
+            >
+                <group name="group_variant_configurator_head">
+                    <field name="product_tmpl_id" />
+                    <field
+                        name="product_attribute_ids"
+                        widget="one2many"
+                        attrs="{'invisible': [('product_attribute_ids', '=', [])]}"
+                        nolabel="1"
+                        colspan="2"
+                    >
+                        <tree create="0" delete="0" editable="1">
+                            <field name="owner_model" invisible="1" />
+                            <field name="owner_id" invisible="1" />
+                            <field name="attribute_id" />
+                            <field
+                                name="possible_value_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                            <field name="product_tmpl_id" invisible="1" />
+                            <field name="value_id" />
+                        </tree>
+                    </field>
+                    <field name="can_create_product" invisible="1" />
+                    <field
+                        name="create_product_variant"
+                        attrs="{'invisible':
+                    [('can_create_product', '=', False)]}"
+                    />
+                </group>
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/form//field[@name='product_id']"
+                position="after"
+            >
+                <field name="product_id_configurator_domain" invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/form//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute name="domain">product_id_configurator_domain</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']"
+                position="after"
+            >
+                <field name="product_id_configurator_domain" invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute name="domain">product_id_configurator_domain</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
