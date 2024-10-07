@@ -230,6 +230,8 @@ class ProductProduct(models.Model):
         else:
             product_attrs = defaultdict(str)
             reference_mask = ReferenceMask(self.product_tmpl_id.reference_mask)
+            if reference_mask.template is False:
+                reference_mask.template = ""
             main_lang = self.product_tmpl_id._guess_main_lang()
             for attr in self.product_template_attribute_value_ids:
                 value = attr.product_attribute_value_id
