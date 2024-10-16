@@ -9,8 +9,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Product Variant Default Code",
-    "version": "16.0.1.0.2",
-    "author": "AvancOSC, Shine IT, Tecnativa, Akretion, Odoo Community Association (OCA)",
+    "version": "17.0.1.0.0",
+    "author": "AvancOSC, Shine IT, Tecnativa, Akretion, "
+    "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
@@ -21,7 +22,7 @@
         "data/ir_config_parameter.xml",
         "views/product_attribute_view.xml",
         "views/product_view.xml",
-        "views/config_settings_view.xml",
+        "views/res_config_settings_views.xml",
     ],
     "demo": ["demo/attribute_demo.xml"],
     "installable": True,
