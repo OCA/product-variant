@@ -7,14 +7,12 @@
             <field name="default_code" position="after">
                 <field
                     name="code_prefix"
-                    attrs="{'invisible':
-                          [('attribute_line_ids', '=', [])]}"
+                    invisible="attribute_line_ids == []"
                 />
                 <field
                     name="reference_mask"
                     placeholder="[attribute3]-[attribute1]"
-                    attrs="{'invisible':
-                          [('attribute_line_ids', '=', [])]}"
+                    invisible="attribute_line_ids == []"
                     groups="product_variant_default_code.group_product_default_code_manual_mask"
                 />
             </field>
@@ -23,7 +21,7 @@
                     name="variant_default_code_error"
                     class="alert alert-danger alert-dismissable"
                     role="alert"
-                    attrs="{'invisible':[('variant_default_code_error','=', False)]}"
+                    invisible="not variant_default_code_error"
                 />
             </xpath>
         </field>
