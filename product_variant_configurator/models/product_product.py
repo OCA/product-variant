@@ -142,6 +142,9 @@ class ProductProduct(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            # Verificar si no se proporciona un nombre y establecer un valor predeterminado
+            if not vals.get("name"):
+                vals["name"] = "New Product"
             if not vals.get("product_attribute_ids"):
                 continue
             ptav = (

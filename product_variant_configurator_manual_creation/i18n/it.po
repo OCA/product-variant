@@ -1,0 +1,137 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_configurator_manual_creation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-10 15:37+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__attribute_id
+msgid "Attribute"
+msgstr "Attributo"
+
+#. module: product_variant_configurator_manual_creation
+#: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_view_form
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: product_variant_configurator_manual_creation
+#: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.product_template_form_view
+msgid "Create Pending Variants"
+msgstr "Crea varianti in attesa"
+
+#. module: product_variant_configurator_manual_creation
+#: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_view_form
+msgid "Create Variants"
+msgstr "Crea varianti"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__create_uid
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__create_date
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__display_name
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_product_product__has_pending_variants
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_product_template__has_pending_variants
+msgid "Has pending variants?"
+msgstr "Ha varianti in attesa?"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__id
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation____last_update
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__write_uid
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__write_date
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__line_ids
+msgid "Lines"
+msgstr "Righe"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model,name:product_variant_configurator_manual_creation.model_wizard_product_variant_configurator_manual_creation
+msgid "Manual Creation Variant Configurator"
+msgstr "Creazione manuale configuratore variante"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model,name:product_variant_configurator_manual_creation.model_wizard_product_variant_configurator_manual_creation_line
+msgid "Manual Creation Variant Configurator Attributes"
+msgstr "Creazione manuale attributi configuratore variante"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model,name:product_variant_configurator_manual_creation.model_product_template
+msgid "Product Template"
+msgstr "Modello prodotto"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__required
+msgid "Required?"
+msgstr "Richiesta?"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__product_tmpl_id
+msgid "Template"
+msgstr "Modello"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__attribute_value_ids
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__selected_value_ids
+msgid "Values"
+msgstr "Valori"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.actions.act_window,name:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_action
+#: model_terms:ir.ui.view,arch_db:product_variant_configurator_manual_creation.wizard_product_variant_configurator_manual_creation_view_form
+msgid "Variants Manual Creation"
+msgstr "Creazione manuale varianti"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation__variants_to_create
+msgid "Variants To Create"
+msgstr "Varianti da creare"
+
+#. module: product_variant_configurator_manual_creation
+#: model:ir.model.fields,field_description:product_variant_configurator_manual_creation.field_wizard_product_variant_configurator_manual_creation_line__wizard_id
+msgid "Wizard"
+msgstr "Procedura guidata"
