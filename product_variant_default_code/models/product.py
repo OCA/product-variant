@@ -186,7 +186,9 @@ class ProductTemplate(models.Model):
     )
     def _compute_default_code(self):
         super()._compute_default_code()
-        if self.env["ir.config_parameter"].get_param("prefix_as_default_code"):
+        if self.env["ir.config_parameter"].get_param(
+            "product_variant_default_code.prefix_as_default_code"
+        ):
             unique_variants = self.filtered(
                 lambda template: len(template.product_variant_ids) == 1
             )
