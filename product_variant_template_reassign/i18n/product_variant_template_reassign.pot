@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_template_reassign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-05 17:35+0000\n"
+"PO-Revision-Date: 2024-11-05 17:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\"/> No attributes available for create"
+" a new variant in the target template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\"/> Reassigning this template variant to the selected target\n"
+"                        <strong>can't be undone</strong>"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__allowed_attribute_value_ids
+msgid "Allowed Attribute Value"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__allowed_target_product_template_ids
+msgid "Allowed Target Product Template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__attribute_value_ids
+msgid "Attribute Value"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid "Cancel"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__id
+msgid "ID"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__method
+msgid "Method"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields.selection,name:product_variant_template_reassign.selection__reassign_variant__method__orm
+msgid "ORM - Try to respect Odoo's data flows"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__origin_product_template_id
+msgid "Origin Product Template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid "Reassign"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.actions.act_window,name:product_variant_template_reassign.reassign_variant_action
+msgid "Reassign variant"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model,name:product_variant_template_reassign.model_reassign_variant
+msgid "Reassign variant template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields.selection,name:product_variant_template_reassign.selection__reassign_variant__method__sql
+msgid "SQL - When the first on fails"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid "Select the target template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__target_product_template_id
+msgid "Target Product Template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
+#, python-format
+msgid ""
+"The selected attributes didn't generate a variant in the target template"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
+#, python-format
+msgid ""
+"The selected attributes generate more than one variant. Refine your "
+"configuration"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid ""
+"This will merge the current template into the selected one and it can't be "
+"undone"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
+msgid "Variant to move"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
+#, python-format
+msgid "You can only reassign unique variant products"
+msgstr ""
