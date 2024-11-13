@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-23 03:56+0000\n"
-"PO-Revision-Date: 2024-09-20 20:06+0000\n"
+"PO-Revision-Date: 2024-11-13 17:06+0000\n"
 "Last-Translator: Rodrigo Sottomaior Macedo "
 "<sottomaiormacedotec@sottomaiormacedo.tech>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
@@ -197,7 +197,6 @@ msgstr "Máscara de referência variante"
 
 #. module: product_variant_default_code
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
-#, fuzzy
 msgid "[attribute3]-[attribute1]"
 msgstr "[attribute3]-[attribute1]"
 
