@@ -104,5 +104,4 @@ class ProductProduct(models.Model):
         """the sale.order.line module calculates the price_unit by adding
         the value of price_extra and this can generate inconsistencies
         if the field has old data stored."""
-        for product in self:
-            product.price_extra = 0.0
+        self.price_extra = 0.0
