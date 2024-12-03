@@ -106,7 +106,7 @@ class VariantAttributeValueWizard(models.TransientModel):
             if pav not in pav_ids:
                 continue
             ptav_ids = product.product_template_attribute_value_ids.filtered(
-                lambda r: r.product_attribute_value_id != pav
+                lambda r, pav=pav: r.product_attribute_value_id != pav
             )
             if action == "delete":
                 if pav.id in product_tmpl_av_ids.attribute_id.ids:
@@ -136,7 +136,7 @@ class VariantAttributeValueWizard(models.TransientModel):
         # Find corresponding attribute line on template or create it
         attr = pav_replacement.attribute_id
         tpl_attr_line = template.attribute_line_ids.filtered(
-            lambda l: l.attribute_id == attr
+            lambda x: x.attribute_id == attr
         )
         if not tpl_attr_line:
             tpl_attr_line = TplAttrLine.create(
@@ -175,7 +175,7 @@ class VariantAttributeValueWizard(models.TransientModel):
                 func()
         except psycopg2.IntegrityError as e:
             if e.pgcode == psycopg2.errorcodes.UNIQUE_VIOLATION:
-                raise UserError(error_msg)
+                raise UserError(error_msg) from e
             else:
                 raise
 
@@ -184,7 +184,7 @@ class VariantAttributeValueWizard(models.TransientModel):
         template = product.product_tmpl_id
         for attr, pavs in pavs_to_clean.items():
             tpl_attr_line = template.attribute_line_ids.filtered(
-                lambda l: l.attribute_id == attr
+                lambda x, attr=attr: x.attribute_id == attr
             )
             # Ensure that product variant combinations are not created
             # during cleanup.
@@ -192,12 +192,12 @@ class VariantAttributeValueWizard(models.TransientModel):
                 update_product_template_attribute_values=False
             )
             error_msg = self._unique_err_msg(product, tpl_attr_line, pavs)
-            if not (tpl_attr_line.value_ids - pavs):
+            if not set(tpl_attr_line.value_ids.ids) - set(pavs.ids):
                 # no value left
-                def _make_inactive():
+                def _make_inactive(tpl_attr_line):
                     tpl_attr_line.active = False
 
-                self._handle_unique_violation(_make_inactive, error_msg)
+                self._handle_unique_violation(_make_inactive(tpl_attr_line), error_msg)
             tpl_attr_line.write({"value_ids": [(3, pav.id) for pav in pavs]})
             tpl_attr_values = TplAttrValue.search(
                 [
@@ -246,7 +246,10 @@ class VariantAttributeValueWizard(models.TransientModel):
 
     def _unique_err_msg(self, product, tpl_attr_line, pavs):
         msg = _(
-            "Product '%s' uniqueness compromised.\n "
-            "Impossible to remove value(s): %s"
-        ) % (product.display_name, ", ".join(pavs.mapped("name")))
+            "Product '%(product_name)s' uniqueness compromised.\n "
+            "Impossible to remove value(s): %(values)s"
+        ) % {
+            "product_name": product.display_name,
+            "values": ", ".join(pavs.mapped("name")),
+        }
         return msg

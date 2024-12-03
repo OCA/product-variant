@@ -7,10 +7,10 @@
             <form string="Product Variant Change Attribute">
                 <sheet>
                     <div>Updating <field
-                            name="product_variant_count"
-                        /> variant(s) selected out of <field
-                            name="product_template_count"
-                        /> product template(s).</div>
+                        name="product_variant_count"
+                    /> variant(s) selected out of <field
+                        name="product_template_count"
+                    /> product template(s).</div>
                     <notebook>
                         <page string="Attribute value changes">
                             <label for="filter_attribute_id" class="oe_inline" />
@@ -94,5 +94,4 @@
         <field name="target">new</field>
         <field name="context">{'default_product_ids': active_ids}</field>
     </record>
-
 </odoo>

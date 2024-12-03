@@ -41,7 +41,7 @@ class TestProductVariantChangeAttributeValue(SavepointCase):
     def _get_wiz(self, prod_ids=None):
         prod_ids = prod_ids or self.variants.ids
         context = {"active_model": "product.product", "active_ids": prod_ids}
-        return Form(self.wiz_model.with_context(context)).save()
+        return Form(self.wiz_model.with_context(**context)).save()
 
     def _change_action(self, wiz, value, attribute_action, replaced_by_id=False):
         """Set an action to do by the wizard on an attribute value."""
@@ -61,7 +61,7 @@ class TestProductVariantChangeAttributeValue(SavepointCase):
         template = product.product_tmpl_id
         attribute = attribute_value.attribute_id
         attribute_line = template.attribute_line_ids.filtered(
-            lambda l: l.attribute_id == attribute
+            lambda x: x.attribute_id == attribute
         )
         if not attribute_line:
             return False
