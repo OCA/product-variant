@@ -1,17 +1,17 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 from odoo.exceptions import UserError
-from odoo.tests.common import Form, SavepointCase, tagged
+from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestProductVariantChangeAttributeValue(SavepointCase):
+class TestProductVariantChangeAttributeValue(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-
         cls.legs = cls.env.ref("product.product_attribute_1")
         cls.steel = cls.env.ref("product.product_attribute_value_1")
         cls.aluminium = cls.env.ref("product.product_attribute_value_2")

@@ -5,7 +5,7 @@ from collections import defaultdict
 
 import psycopg2
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -220,7 +220,7 @@ class VariantAttributeValueWizard(models.TransientModel):
             elif not self._is_product_associated(check_product):
                 check_product.unlink()
             else:
-                message = _(
+                message = self.env._(
                     "Both products %s are associated with"
                     " Sale Orders/Invoices/etc., impossible to remove"
                 )
@@ -245,11 +245,10 @@ class VariantAttributeValueWizard(models.TransientModel):
         return False
 
     def _unique_err_msg(self, product, tpl_attr_line, pavs):
-        msg = _(
+        msg = self.env._(
             "Product '%(product_name)s' uniqueness compromised.\n "
-            "Impossible to remove value(s): %(values)s"
-        ) % {
-            "product_name": product.display_name,
-            "values": ", ".join(pavs.mapped("name")),
-        }
+            "Impossible to remove value(s): %(values)s",
+            product_name=product.display_name,
+            values=", ".join(pavs.mapped("name")),
+        )
         return msg

@@ -1,1 +1,2 @@
 - Thierry Ducrest \<<thierry.ducrest@camptocamp.com>\>
+- Khoi (Kien Kim) \<<khoikk@trobz.com>\>

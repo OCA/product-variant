@@ -23,11 +23,11 @@
                             <group>
                                 <field name="available_attribute_ids" invisible="1" />
                                 <field name="attributes_action_ids" nolabel="1">
-                                    <tree
-                                        editable="true"
+                                    <list
+                                        editable="bottom"
                                         create="false"
                                         delete="0"
-                                        open="0"
+                                        no_open="1"
                                     >
                                         <field
                                             name="attribute_action"
@@ -35,21 +35,17 @@
                                         />
                                         <field name="product_attribute_value_id" />
                                         <field
-                                            name="selectable_attribute_value_ids"
-                                            invisible="1"
-                                        />
-                                        <field
                                             name="replaced_by_id"
-                                            attrs="{'readonly':[['attribute_action', '!=', 'replace' ]]}"
+                                            readonly="attribute_action != 'replace'"
                                         />
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>
                         <page string="Selected variants">
                             <group>
                                 <field name="product_ids" nolabel="1">
-                                    <tree
+                                    <list
                                         edit="false"
                                         create="false"
                                         delete="false"
@@ -61,7 +57,7 @@
                                             name="product_template_attribute_value_ids"
                                             widget="many2many_tags"
                                         />
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>

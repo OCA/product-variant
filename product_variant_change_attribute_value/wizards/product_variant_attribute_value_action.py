@@ -20,7 +20,6 @@ class ProductVariantAttributeValueAction(models.TransientModel):
     attribute_id = fields.Many2one(
         comodel_name="product.attribute",
         related="product_attribute_value_id.attribute_id",
-        readonly=True,
         store=True,
         ondelete="cascade",
     )
@@ -60,7 +59,7 @@ class ProductVariantAttributeValueAction(models.TransientModel):
         if not ids:
             self.update({"selectable_attribute_value_ids": False})
             return
-        self.env["product.attribute.value"].flush(["attribute_id"])
+        self.env["product.attribute.value"].flush_model(["attribute_id"])
         self.env.cr.execute(query, dict(ids=ids))
         values_by_attr = dict(self.env.cr.fetchall())
         for rec in self:
