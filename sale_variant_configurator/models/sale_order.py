@@ -74,7 +74,6 @@ class SaleOrderLine(models.Model):
             res = (res or "") + "\n" + product.description_sale
         return res
 
-    @api.depends("product_attribute_ids")
     def _compute_price_unit(self):
         """Add the proper dependency to compute the price correctly."""
         return super()._compute_price_unit()
