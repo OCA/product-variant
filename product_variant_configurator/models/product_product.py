@@ -136,7 +136,7 @@ class ProductProduct(models.Model):
             if isinstance(product.id, models.NewId):
                 res.append((product.id, product.name))
             else:
-                res.append(super(ProductProduct, product).name_get()[0])
+                res.extend(tuple(super(ProductProduct, product).name_get()))
         return res
 
     @api.model_create_multi
