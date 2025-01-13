@@ -92,10 +92,9 @@ class TestSaleOrder(common.TransactionCase):
         self.assertEqual(line2.product_id, self.product_template_no.product_variant_ids)
         self.assertEqual(
             line2.name,
-            "%s\n%s"
-            % (
+            "{}\n{}".format(
                 self.product_template_no.name,
-                (self.product_template_no.description_sale),
+                self.product_template_no.description_sale or "",
             ),
         )
 
