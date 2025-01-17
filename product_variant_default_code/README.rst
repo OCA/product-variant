@@ -150,6 +150,10 @@ Contributors
   - Pedro M. Baeza
   - João Marques
 
+- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+
+  - Bhavesh Heliconia
+
 Maintainers
 -----------
 

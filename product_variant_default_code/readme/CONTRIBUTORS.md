@@ -7,3 +7,6 @@
   - David Vidal
   - Pedro M. Baeza
   - João Marques
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
+

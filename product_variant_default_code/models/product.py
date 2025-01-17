@@ -11,7 +11,7 @@ import re
 from collections import defaultdict
 from string import Template
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -29,7 +29,7 @@ def extract_token(s):
     return set(pattern.findall(s))
 
 
-def sanitize_reference_mask(product, mask):
+def sanitize_reference_mask(self, product, mask):
     main_lang = product._guess_main_lang()
     tokens = extract_token(mask)
     attribute_names = set()
@@ -37,7 +37,7 @@ def sanitize_reference_mask(product, mask):
         attribute_names.add(line.attribute_id.with_context(lang=main_lang).name)
     if not tokens.issubset(attribute_names):
         raise UserError(
-            _('Found unrecognized attribute name in "Variant ' 'Reference Mask"')
+            self.env._('Found unrecognized attribute name in "Variant Reference Mask"')
         )
 
 
@@ -82,7 +82,7 @@ class ProductTemplate(models.Model):
 
     def is_automask(self):
         return bool(
-            not self.user_has_groups(
+            not self.env.user.has_groups(
                 "product_variant_default_code.group_product_default_code_manual_mask"
             )
         )
@@ -160,13 +160,13 @@ class ProductTemplate(models.Model):
             if (
                 not vals.get("reference_mask")
                 and product.attribute_line_ids
-                or not self.user_has_groups(
+                or not self.env.user.has_groups(
                     "product_variant_default_code.group_product_default_code_manual_mask"
                 )
             ):
                 vals["reference_mask"] = product._get_default_mask()
             elif vals.get("reference_mask"):
-                sanitize_reference_mask(product, vals["reference_mask"])
+                sanitize_reference_mask(self, product, vals["reference_mask"])
         return super().create(vals_list)
 
     @api.model
@@ -186,7 +186,9 @@ class ProductTemplate(models.Model):
     )
     def _compute_default_code(self):
         super()._compute_default_code()
-        if self.env["ir.config_parameter"].get_param("prefix_as_default_code"):
+        if self.env["ir.config_parameter"].get_param(
+            "product_variant_default_code.prefix_as_default_code"
+        ):
             unique_variants = self.filtered(
                 lambda template: len(template.product_variant_ids) == 1
             )
@@ -227,6 +229,8 @@ class ProductProduct(models.Model):
             value_codes
         ):
             return None
+        elif not self.product_tmpl_id.reference_mask:
+            return None
         else:
             product_attrs = defaultdict(str)
             reference_mask = ReferenceMask(self.product_tmpl_id.reference_mask)
@@ -250,7 +254,7 @@ class ProductAttribute(models.Model):
     )
 
     _sql_constraints = [
-        ("number_uniq", "unique(name)", _("Attribute Name must be unique!"))
+        ("number_uniq", "unique(name)", "Attribute Name must be unique!")
     ]
 
 
