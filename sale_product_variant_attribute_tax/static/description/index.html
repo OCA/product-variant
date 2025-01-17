@@ -369,10 +369,10 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:9afce924b2b6f83d04c9b06c9127b5876656fbc7171f1a9c0e828388eb114948
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/product-variant/tree/16.0/sale_product_variant_attribute_tax"><img alt="OCA/product-variant" src="https://img.shields.io/badge/github-OCA%2Fproduct--variant-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/product-variant-16-0/product-variant-16-0-sale_product_variant_attribute_tax"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/product-variant&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module uses <em>product_variant_attribute_tax</em> for adding the taxes set
-on product attribute values when adding a product in sales orders that contains
-this attribute value.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/product-variant/tree/18.0/sale_product_variant_attribute_tax"><img alt="OCA/product-variant" src="https://img.shields.io/badge/github-OCA%2Fproduct--variant-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/product-variant-18-0/product-variant-18-0-sale_product_variant_attribute_tax"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/product-variant&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module uses <em>product_variant_attribute_tax</em> for adding the taxes
+set on product attribute values when adding a product in sales orders
+that contains this attribute value.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -390,8 +390,13 @@ this attribute value.</p>
 </div>
 <div class="section" id="use-cases-context">
 <h1><a class="toc-backref" href="#toc-entry-1">Use Cases / Context</a></h1>
-<p>As the product taxes are defined at product template level, you can’t have some variants with an specific tax.</p>
-<p>These modules family covers the gap, adding the taxes at attribute level. This design decision has been taken for allowing to define the tax only once, as other options like having taxes at product variant level will force you to define the specific taxes for each of the variants that are affected.</p>
+<p>As the product taxes are defined at product template level, you can’t
+have some variants with an specific tax.</p>
+<p>These modules family covers the gap, adding the taxes at attribute
+level. This design decision has been taken for allowing to define the
+tax only once, as other options like having taxes at product variant
+level will force you to define the specific taxes for each of the
+variants that are affected.</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
@@ -408,7 +413,8 @@ specified.</li>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-3">Known issues / Roadmap</a></h1>
 <ul class="simple">
-<li>This module requires <cite>sale_variant_configurator</cite> as a way to avoid 2 glue modules, but it may be independent.</li>
+<li>This module requires sale_variant_configurator as a way to avoid 2
+glue modules, but it may be independent.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
@@ -416,7 +422,7 @@ specified.</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/product-variant/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/product-variant/issues/new?body=module:%20sale_product_variant_attribute_tax%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/product-variant/issues/new?body=module:%20sale_product_variant_attribute_tax%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -448,7 +454,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/product-variant/tree/16.0/sale_product_variant_attribute_tax">OCA/product-variant</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/product-variant/tree/18.0/sale_product_variant_attribute_tax">OCA/product-variant</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

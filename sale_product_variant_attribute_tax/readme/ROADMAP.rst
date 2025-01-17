@@ -1,1 +1,0 @@
-- This module requires `sale_variant_configurator` as a way to avoid 2 glue modules, but it may be independent.
