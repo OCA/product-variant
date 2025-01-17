@@ -146,7 +146,7 @@ class ProductTemplate(models.Model):
         main_lang = self._guess_main_lang()
         for line in self.attribute_line_ids:
             attribute_names.append(
-                "[{}]".format(line.attribute_id.with_context(lang=main_lang).name)
+                f"[{line.attribute_id.with_context(lang=main_lang).name}]"
             )
         default_mask = (self.code_prefix or "") + default_reference_separator.join(
             attribute_names
@@ -167,7 +167,7 @@ class ProductTemplate(models.Model):
                 vals["reference_mask"] = product._get_default_mask()
             elif vals.get("reference_mask"):
                 sanitize_reference_mask(product, vals["reference_mask"])
-        return super(ProductTemplate, self).create(vals_list)
+        return super().create(vals_list)
 
     @api.model
     def _guess_main_lang(self):

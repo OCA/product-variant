@@ -19,7 +19,7 @@
                 />
             </field>
             <xpath expr="//page/field[@name='attribute_line_ids']" position="before">
-                    <field
+                <field
                     name="variant_default_code_error"
                     class="alert alert-danger alert-dismissable"
                     role="alert"

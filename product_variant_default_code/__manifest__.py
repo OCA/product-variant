@@ -11,7 +11,8 @@
     "name": "Product Variant Default Code",
     "summary": "Allow to automatically generate the variant default code",
     "version": "16.0.1.1.1",
-    "author": "AvancOSC, Shine IT, Tecnativa, Akretion, Odoo Community Association (OCA)",
+    "author": "AvancOSC, Shine IT, Tecnativa, Akretion, "
+    "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
     "license": "AGPL-3",
     "category": "Product",
