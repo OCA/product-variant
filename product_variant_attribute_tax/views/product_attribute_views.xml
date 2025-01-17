@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="product.product_attribute_view_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='value_ids']/tree/field[@name='name']"
+                expr="//field[@name='value_ids']/list/field[@name='name']"
                 position="after"
             >
                 <field name="tax_ids" widget="many2many_tags" />
