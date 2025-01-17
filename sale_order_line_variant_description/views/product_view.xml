@@ -2,7 +2,6 @@
 <!-- © 2015-17 Alex Comba - Agile Business Group
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
 <odoo>
-
     <record id="product_normal_form_view" model="ir.ui.view">
         <field name="name">product.product.form</field>
         <field name="model">product.product</field>
@@ -37,6 +36,4 @@
             </xpath>
         </field>
     </record>
-
-
 </odoo>
