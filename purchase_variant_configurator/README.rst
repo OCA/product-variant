@@ -17,20 +17,21 @@ Purchase - Product variants
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fproduct--variant-lightgray.png?logo=github
-    :target: https://github.com/OCA/product-variant/tree/16.0/purchase_variant_configurator
+    :target: https://github.com/OCA/product-variant/tree/17.0/purchase_variant_configurator
     :alt: OCA/product-variant
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/product-variant-16-0/product-variant-16-0-purchase_variant_configurator
+    :target: https://translation.odoo-community.org/projects/product-variant-17-0/product-variant-17-0-purchase_variant_configurator
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/product-variant&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/product-variant&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows you to create the product variant when a purchase order is
-confirmed. It adds to the purchase line a product configurator, so that
-selecting a product and its attributes can be created a new product variant.
+This module allows you to create the product variant when a purchase
+order is confirmed. It adds to the purchase line a product configurator,
+so that selecting a product and its attributes can be created a new
+product variant.
 
 **Table of contents**
 
@@ -40,33 +41,35 @@ selecting a product and its attributes can be created a new product variant.
 Configuration
 =============
 
-#. Go to ``Purchase > Configuration > Settings``.
-#. Check the "Create variants on confirm" option if you want to delay the creation
-   of them until the order confirmation.
+1. Go to ``Purchase > Configuration > Settings``.
+2. Check the "Create variants on confirm" option if you want to delay
+   the creation of them until the order confirmation.
 
 Usage
 =====
 
-#. Go to a purchase order or create a new one.
-#. Create a new line
-#. Set in Product Template some product with attributes and variants.
-#. All product attributes will be displayed in table mode just below.
-#. Set a value for all attributes.
-#. A product variant (with the selected options) will be auto-set.
+1. Go to a purchase order or create a new one.
+2. Create a new line
+3. Set in Product Template some product with attributes and variants.
+4. All product attributes will be displayed in table mode just below.
+5. Set a value for all attributes.
+6. A product variant (with the selected options) will be auto-set.
 
+Only if the "Create variants on confirm" option in the configuration is
+set.
 
-Only if the "Create variants on confirm" option in the configuration is set.
-
-
-#. Go to ``Purchase > Products > Product`` and create a new one.
-#. Go to the "Attributes & Variants" tab.
-#. Set in "Variant creation" the option "Do not create them automatically".
-#. Set some attribute and value(s)
-#. Go to a purchase order or create a new one.
-#. Create a new line
-#. Set in Product Template the one created before and select values for attributes.
-#. Confirm orden.
-#. A product variant (with the selected options) will have been created for the Product Template.
+1. Go to ``Purchase > Products > Product`` and create a new one.
+2. Go to the "Attributes & Variants" tab.
+3. Set in "Variant creation" the option "Do not create them
+   automatically".
+4. Set some attribute and value(s)
+5. Go to a purchase order or create a new one.
+6. Create a new line
+7. Set in Product Template the one created before and select values for
+   attributes.
+8. Confirm orden.
+9. A product variant (with the selected options) will have been created
+   for the Product Template.
 
 Bug Tracker
 ===========
@@ -74,7 +77,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/product-variant/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/product-variant/issues/new?body=module:%20purchase_variant_configurator%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/product-variant/issues/new?body=module:%20purchase_variant_configurator%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -82,26 +85,26 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * AvanzOSC
 * Tecnativa
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
-* David Díaz <d.diazp@gmail.com>
-* Ana Juaristi <ajuaristio@gmail.com>
-* `Tecnativa <https://www.tecnativa.com>`_:
+- Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+- David Díaz <d.diazp@gmail.com>
+- Ana Juaristi <ajuaristio@gmail.com>
+- `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Pedro M. Baeza
-  * David Vidal
-  * Ernesto Tejeda
+  - Pedro M. Baeza
+  - David Vidal
+  - Ernesto Tejeda
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -113,6 +116,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/16.0/purchase_variant_configurator>`_ project on GitHub.
+This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/17.0/purchase_variant_configurator>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
