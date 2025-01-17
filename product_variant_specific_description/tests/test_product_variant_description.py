@@ -2,18 +2,20 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.fields import Command
-from odoo.tests import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductVariantDescription(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.product_tmpl_model = self.env["product.template"]
-        self.product_model = self.env["product.product"]
+class TestProductVariantDescription(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product_tmpl_model = cls.env["product.template"]
+        cls.product_model = cls.env["product.product"]
 
-        self.uom_unit = self.env.ref("uom.product_uom_unit")
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
 
-        self.color_attribute = self.env["product.attribute"].create(
+        cls.color_attribute = cls.env["product.attribute"].create(
             {
                 "name": "Base Color",
                 "value_ids": [

@@ -58,6 +58,9 @@ Contributors
 ------------
 
 - Lois Rilo <lois.rilo@forgeflow.com>
+- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+
+  - Bhavesh Heliconia
 
 Maintainers
 -----------
