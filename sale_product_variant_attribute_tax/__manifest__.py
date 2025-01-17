@@ -4,7 +4,7 @@
 {
     "name": "Put attribute taxes on sales orders",
     "summary": "Bring the taxes associated to product values",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Sales/Sales",
     "website": "https://github.com/OCA/product-variant",

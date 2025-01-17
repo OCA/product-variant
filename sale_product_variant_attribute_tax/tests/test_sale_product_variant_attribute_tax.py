@@ -1,10 +1,12 @@
 # Copyright 2016-2017 Tecnativa - Pedro M. Baeza
 # Copyright 2024 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import common
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleProductVariantAttributeTax(common.TransactionCase):
+class TestSaleProductVariantAttributeTax(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -18,9 +20,7 @@ class TestSaleProductVariantAttributeTax(common.TransactionCase):
             {
                 "name": "Test fiscal position",
                 "tax_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {"tax_src_id": cls.tax.id, "tax_dest_id": cls.tax2.id},
                     ),
                 ],
@@ -34,7 +34,7 @@ class TestSaleProductVariantAttributeTax(common.TransactionCase):
             {
                 "name": "Test value",
                 "attribute_id": cls.attribute.id,
-                "tax_ids": [(6, 0, cls.tax.ids)],
+                "tax_ids": [Command.set(cls.tax.ids)],
             }
         )
         cls.attribute_value2 = cls.env["product.attribute.value"].create(
@@ -47,12 +47,10 @@ class TestSaleProductVariantAttributeTax(common.TransactionCase):
                 "no_create_variants": "yes",
                 "taxes_id": False,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute.id,
-                            "value_ids": [(6, 0, cls.attribute_value.ids)],
+                            "value_ids": [Command.set(cls.attribute_value.ids)],
                         },
                     ),
                 ],
@@ -69,9 +67,7 @@ class TestSaleProductVariantAttributeTax(common.TransactionCase):
                 "product_uom_qty": 1,
                 "product_uom": self.product_template.uom_id.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template.id,
                             "attribute_id": self.attribute.id,
@@ -95,9 +91,7 @@ class TestSaleProductVariantAttributeTax(common.TransactionCase):
                 "product_uom_qty": 1,
                 "product_uom": self.product_template.uom_id.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template.id,
                             "attribute_id": self.attribute.id,
@@ -122,9 +116,7 @@ class TestSaleProductVariantAttributeTax(common.TransactionCase):
                 "product_uom_qty": 1,
                 "product_uom": self.product_template.uom_id.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template.id,
                             "attribute_id": self.attribute.id,
