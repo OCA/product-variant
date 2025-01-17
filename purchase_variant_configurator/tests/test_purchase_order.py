@@ -109,11 +109,7 @@ class TestPurchaseOrder(BaseCommon):
         self.assertEqual(line2.product_id, self.product_template_no.product_variant_ids)
         self.assertEqual(
             line2.name,
-            "%s\n%s"
-            % (
-                self.product_template_no.name,
-                self.product_template_no.description_purchase,
-            ),
+            f"{self.product_template_no.name}\n{self.product_template_no.description_purchase}",
         )
 
     def test_onchange_product_tmpl_id_02(self):
