@@ -1,17 +1,14 @@
 # Copyright 2015-17 Alex Comba - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import models
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    @api.onchange("product_id")
-    def _onchange_product_id_warning(self):
-        res = super()._onchange_product_id_warning()
-        if self.product_id:
-            product = self.product_id.with_context(lang=self.order_id.partner_id.lang)
-            if product.variant_description_sale:
-                self.name = product.variant_description_sale
-        return res
+    def _get_sale_order_line_multiline_description_sale(self):
+        return (
+            self.product_id.variant_description_sale
+            or super()._get_sale_order_line_multiline_description_sale()
+        )
