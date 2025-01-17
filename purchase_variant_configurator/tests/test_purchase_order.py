@@ -1,6 +1,7 @@
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+from odoo import Command
 from odoo.tests import Form
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -19,7 +20,6 @@ class TestPurchaseOrder(BaseCommon):
         cls.purchase_order = cls.env["purchase.order"]
         cls.product_product = cls.env["product.product"]
         cls.purchase_order_line = cls.env["purchase.order.line"]
-        cls.res_partner = cls.env["res.partner"]
         cls.product_category = cls.env["product.category"]
 
         # Instances: product category
@@ -38,10 +38,6 @@ class TestPurchaseOrder(BaseCommon):
             {"name": "Value 2", "attribute_id": cls.attribute1.id}
         )
 
-        # Instances: supplier
-        cls.supplier = cls.res_partner.create(
-            {"name": "Supplier 1", "is_company": True}
-        )
         # Instances: product template
         cls.product_template_yes = cls.product_template.create(
             {
@@ -51,12 +47,10 @@ class TestPurchaseOrder(BaseCommon):
                 "categ_id": cls.category1.id,
                 "standard_price": 100,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     )
                 ],
@@ -65,7 +59,7 @@ class TestPurchaseOrder(BaseCommon):
         cls.supplier_pricelist = cls.env["product.supplierinfo"].create(
             {
                 "product_tmpl_id": cls.product_template_yes.id,
-                "partner_id": cls.supplier.id,
+                "partner_id": cls.partner.id,
                 "min_qty": 11,
                 "price": 90,
             }
@@ -114,7 +108,7 @@ class TestPurchaseOrder(BaseCommon):
 
     def test_onchange_product_tmpl_id_02(self):
         order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.supplier
+        order_form.partner_id = self.partner
         with order_form.order_line.new() as line_form:
             line_form.product_tmpl_id = self.product_template_yes
         order = order_form.save()
@@ -137,9 +131,7 @@ class TestPurchaseOrder(BaseCommon):
                 "name": "Test product 01",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -150,7 +142,7 @@ class TestPurchaseOrder(BaseCommon):
             }
         )
         order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.supplier
+        order_form.partner_id = self.partner
         with order_form.order_line.new() as line_form:
             line_form.product_tmpl_id = self.product_template_yes
             with line_form.product_attribute_ids.edit(0) as pa_form:
@@ -203,9 +195,7 @@ class TestPurchaseOrder(BaseCommon):
                 "name": "Test product 02",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -216,7 +206,7 @@ class TestPurchaseOrder(BaseCommon):
             }
         )
         order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.supplier
+        order_form.partner_id = self.partner
         with order_form.order_line.new() as line_form:
             line_form.product_id = product
         order = order_form.save()
@@ -225,7 +215,7 @@ class TestPurchaseOrder(BaseCommon):
         self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
     def test_button_confirm_01(self):
-        order = self.purchase_order.create({"partner_id": self.supplier.id})
+        order = self.purchase_order.create({"partner_id": self.partner.id})
         line_1 = self.purchase_order_line.new(
             {
                 "product_tmpl_id": self.product_template_yes.id,
@@ -235,9 +225,7 @@ class TestPurchaseOrder(BaseCommon):
                 "date_planned": "2016-01-01",
                 "product_uom": self.product_template_yes.uom_id.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -269,7 +257,7 @@ class TestPurchaseOrder(BaseCommon):
                 line.create_variant_if_needed()
                 line.create_product_variant = True
                 line._onchange_create_product_variant()
-        order.write({"order_line": [(4, line_1.id), (4, line_2.id)]})
+        order.write({"order_line": [Command.link(line_1.id), Command.link(line_2.id)]})
         order.button_confirm()
         order.flush_recordset()
         order.invalidate_recordset()
@@ -284,7 +272,7 @@ class TestPurchaseOrder(BaseCommon):
 
     def test_button_confirm_02(self):
         order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.supplier
+        order_form.partner_id = self.partner
         with order_form.order_line.new() as line_form:
             line_form.product_tmpl_id = self.product_template_yes
             with line_form.product_attribute_ids.edit(0) as pa_form:
@@ -307,7 +295,7 @@ class TestPurchaseOrder(BaseCommon):
     def test_copy(self):
         old_date = "2017-01-01"
         order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.supplier
+        order_form.partner_id = self.partner
         with order_form.order_line.new() as line_form:
             line_form.product_tmpl_id = self.product_template_yes
             line_form.date_planned = old_date

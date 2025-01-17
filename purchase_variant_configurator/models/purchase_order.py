@@ -80,6 +80,9 @@ class PurchaseOrderLine(models.Model):
             self.with_context(
                 pvc_product_tmpl=self.product_tmpl_id.id
             ).onchange_product_id()
+        for attr in self.product_attribute_ids:
+            if not attr.owner_model:
+                attr.owner_model = self._name
         return res
 
     @api.model
@@ -98,6 +101,13 @@ class PurchaseOrderLine(models.Model):
         confirmed, as it creates associated stock moves.
         """
         for vals in vals_list:
+            if "product_attribute_ids" in vals:
+                for attr_vals in vals["product_attribute_ids"]:
+                    if isinstance(attr_vals, list | tuple) and len(attr_vals) == 3:
+                        if isinstance(attr_vals[2], dict):
+                            if "owner_model" not in attr_vals[2]:
+                                attr_vals[2]["owner_model"] = "purchase.order.line"
+
             if vals.get("order_id") and not vals.get("product_id"):
                 order = self.env["purchase.order"].browse(vals["order_id"])
                 if order.state == "purchase":

@@ -7,27 +7,18 @@
             ref="purchase.res_config_settings_view_form_purchase"
         />
         <field name="arch" type="xml">
-            <xpath expr="//div[@data-key='purchase']" position="inside">
-                <h2>Product configurator</h2>
-                <div
-                    class="row mt16 o_settings_container"
-                    name="purchase_setting_product_configuration_container"
+            <xpath expr="//app[@name='purchase']" position="inside">
+                <block
+                    title="Product configurator"
+                    name="purchase_product_configurator_block"
                 >
-                    <div
-                        class="col-12 col-lg-6 o_setting_box"
+                    <setting
                         id="po_confirm_create_variant"
+                        string="Create product variants when confirming"
                     >
-                        <div class="o_setting_left_pane">
-                            <field name="po_confirm_create_variant" />
-                        </div>
-                        <div class="o_setting_right_pane">
-                            <label for="po_confirm_create_variant" />
-                            <div class="text-muted">
-                                Create product variants when confirming
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <field name="po_confirm_create_variant" />
+                    </setting>
+                </block>
             </xpath>
         </field>
     </record>
