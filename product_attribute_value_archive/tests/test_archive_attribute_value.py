@@ -2,17 +2,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo.exceptions import UserError
-from odoo.tests.common import SavepointCase
+from odoo.tests import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestArchiveAttributeValue(SavepointCase):
-    at_install = False
-    post_install = True
-
+@tagged("post_install", "-at_install")
+class TestArchiveAttributeValue(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.setUpClassTemplate()
         cls.setUpClassAttribute()
         cls.setUpClassProduct()

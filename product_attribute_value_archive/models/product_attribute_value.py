@@ -18,7 +18,7 @@ class ProductAttributeValue(models.Model):
         product.
         """
         self.ensure_one()
-        self.flush()
+        self.flush_model()
         query = """
             SELECT array_agg(pp.id)
             FROM product_product pp
@@ -47,9 +47,12 @@ class ProductAttributeValue(models.Model):
             related_variants = pav._get_related_variants()
             # Archive only if all related variants are archived
             # (none is active)
-            all_variants_are_archived = related_variants and not any(
-                related_variants.mapped("active")
-            )
+            active_variants = related_variants.with_context(
+                prefetch_fields=False
+            ).mapped("active")
+            # Performance optimization:
+            # fetch only 'active' field instead of prefetching all fields
+            all_variants_are_archived = related_variants and not any(active_variants)
             if all_variants_are_archived:
                 pav_to_archive_ids.add(pav.id)
         return self.browse(pav_to_archive_ids)
