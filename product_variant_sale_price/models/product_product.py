@@ -7,24 +7,25 @@ from odoo import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    def _update_fix_price(self, vals):
-        if "list_price" in vals:
-            self.mapped("product_variant_ids").write({"fix_price": vals["list_price"]})
+    def _prepare_variant_values(self, combination):
+        values = super()._prepare_variant_values(combination)
+        values["fix_price"] = self.list_price
+        return values
 
-    @api.model_create_multi
-    def create(self, vals):
-        records = super().create(vals)
-        for i, product_tmpl in enumerate(records):
-            single_vals = vals[i] if isinstance(vals, list) else vals
-            product_tmpl._update_fix_price(single_vals)
-        return records
+    def _create_variant_ids(self):
+        res = super()._create_variant_ids()
+        for variant in self.product_variant_ids:
+            variant.with_context(skip_update_fix_price=True).write(
+                {"fix_price": self.list_price}
+            )
+        return res
 
     def write(self, vals):
         res = super().write(vals)
         if self.env.context.get("skip_update_fix_price", False):
             return res
-        for template in self:
-            template._update_fix_price(vals)
+        if "list_price" in vals:
+            self.mapped("product_variant_ids").write({"fix_price": vals["list_price"]})
         return res
 
     def _get_combination_info(
