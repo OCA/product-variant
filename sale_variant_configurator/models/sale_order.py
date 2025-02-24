@@ -94,15 +94,15 @@ class SaleOrderLine(models.Model):
         return super()._compute_tax_id()
 
     @api.depends("product_tmpl_id")
-    def _compute_product_uom(self):
-        # Fill product_uom when no product is yet defined
+    def _compute_product_uom_id(self):
+        # Fill product_uom_id when no product is yet defined
         lines_with_template = self.filtered(
             lambda x: x.product_tmpl_id and not x.product_id
         )
         for line in lines_with_template:
-            line.product_uom = line.product_tmpl_id.uom_id
+            line.product_uom_id = line.product_tmpl_id.uom_id
         self -= lines_with_template
-        return super()._compute_product_uom()
+        return super()._compute_product_uom_id()
 
     @api.depends("product_tmpl_id")
     def _compute_allowed_uom_ids(self):
