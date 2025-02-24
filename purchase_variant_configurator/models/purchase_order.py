@@ -40,6 +40,13 @@ class PurchaseOrderLine(models.Model):
 
     product_id = fields.Many2one(required=False)
     product_id_is_required = fields.Boolean(compute="_compute_product_id_is_required")
+    product_uom_category_id = fields.Many2one(
+        comodel_name="uom.category",
+        compute="_compute_product_uom_category_id",
+        # We need to define related=False so that the field is only compute
+        # and not related.
+        related=False,
+    )
 
     _sql_constraints = [
         (
@@ -62,6 +69,19 @@ class PurchaseOrderLine(models.Model):
     def _compute_product_id_is_required(self):
         for item in self:
             item.product_id_is_required = not item.company_id.po_confirm_create_variant
+
+    @api.depends("product_tmpl_id", "product_id")
+    def _compute_product_uom_category_id(self):
+        """This compute is intended to do something similar to the related of the
+        purchase module product_id.uom_id.category_id but adding the casuistry of the
+        product_tmpl_id field.
+        """
+        for line in self:
+            product = line.product_id or line.product_tmpl_id
+            if product:
+                line.product_uom_category_id = product.uom_id.category_id
+            else:
+                line.product_uom_category_id = line.product_uom_category_id
 
     @api.onchange("product_tmpl_id")
     def _onchange_product_tmpl_id_configurator(self):
