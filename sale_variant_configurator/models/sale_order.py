@@ -31,6 +31,13 @@ class SaleOrderLine(models.Model):
         string="Product Template (no related)",
     )
     product_id = fields.Many2one(required=False)
+    product_uom_category_id = fields.Many2one(
+        comodel_name="uom.category",
+        compute="_compute_product_uom_category_id",
+        # We need to define related=False so that the field is only compute
+        # and not related.
+        related=False,
+    )
 
     _sql_constraints = [
         (
@@ -49,6 +56,33 @@ class SaleOrderLine(models.Model):
             "Forbidden values on non-accountable sale order line",
         ),
     ]
+
+    @api.depends("product_tmpl_id")
+    def _compute_product_uom(self):
+        lines_with_template = self.filtered(
+            lambda x: x.product_tmpl_id and not x.product_id
+        )
+        for line in lines_with_template:
+            # This condition is intended to set the value in a way similar to
+            # what the _compute_product_uom() method of the sale module does.
+            if not line.product_uom or (
+                line.product_tmpl_id.uom_id.id != line.product_uom.id
+            ):
+                line.product_uom = line.product_tmpl_id.uom_id
+        return super(SaleOrderLine, self - lines_with_template)._compute_product_uom()
+
+    @api.depends("product_tmpl_id", "product_id")
+    def _compute_product_uom_category_id(self):
+        """This compute is intended to do something similar to the related of the
+        sale module product_id.uom_id.category_id but adding the casuistry of the
+        product_tmpl_id field.
+        """
+        for line in self:
+            product = line.product_id or line.product_tmpl_id
+            if product:
+                line.product_uom_category_id = product.uom_id.category_id
+            else:
+                line.product_uom_category_id = line.product_uom_category_id
 
     @api.model_create_multi
     def create(self, vals_list):
