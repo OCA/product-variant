@@ -148,6 +148,44 @@ class TestProductVariantConfigurator(TransactionCase):
         # default behavior: one variant should be created
         self.assertEqual(len(tmpl.product_variant_ids), 1)
 
+    def test_no_create_variants_force(self):
+        tmpl = self.product_template.create(
+            {
+                "name": "No create variants template",
+                "no_create_variants": "yes",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.attribute1.id,
+                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                        },
+                    )
+                ],
+            }
+        )
+        self.assertEqual(len(tmpl.product_variant_ids), 0)
+        # We create a product identical to the last one, but
+        # we force the creation of variants with the context
+        tmpl = self.product_template.with_context(force_create_variants=True).create(
+            {
+                "name": "No create variants template",
+                "no_create_variants": "yes",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.attribute1.id,
+                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                        },
+                    )
+                ],
+            }
+        )
+        self.assertEqual(len(tmpl.product_variant_ids), 2)
+
     def test_create_variants(self):
         tmpl = self.product_template.create(
             {

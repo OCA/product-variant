@@ -75,6 +75,7 @@ class ProductTemplate(models.Model):
                 )
                 or tmpl.no_create_variants == "no"
                 or not tmpl.attribute_line_ids
+                or self.env.context.get("force_create_variants", False)
             ):
                 super(ProductTemplate, tmpl)._create_variant_ids()
         return True
