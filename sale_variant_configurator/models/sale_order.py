@@ -90,7 +90,11 @@ class SaleOrderLine(models.Model):
         confirmed and a line is added.
         """
         for vals in vals_list:
-            if vals.get("order_id") and not vals.get("product_id"):
+            if (
+                vals.get("order_id")
+                and not vals.get("product_id")
+                and not vals.get("is_downpayment")
+            ):
                 order = self.env["sale.order"].browse(vals["order_id"])
                 if order.state == "sale":
                     line = self.new(vals)
