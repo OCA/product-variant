@@ -35,7 +35,7 @@ class SaleOrderLine(models.Model):
     _sql_constraints = [
         (
             "accountable_required_fields",
-            "CHECK(display_type IS NOT NULL OR "
+            "CHECK(display_type IS NOT NULL OR is_downpayment OR"
             "((product_id IS NOT NULL OR product_tmpl_id IS NOT NULL) AND "
             "product_uom IS NOT NULL))",
             "Missing required fields on accountable sale order line.",
@@ -61,6 +61,7 @@ class SaleOrderLine(models.Model):
                 and not vals.get("product_id")
                 and not vals.get("display_type")
                 and vals.get("product_tmpl_id")
+                and not vals.get("is_downpayment")
             ):
                 order = self.env["sale.order"].browse(vals["order_id"])
                 if order.state == "sale":
