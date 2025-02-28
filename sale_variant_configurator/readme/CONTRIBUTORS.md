@@ -1,0 +1,6 @@
+- Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+- Pedro M. Baeza <pedro.baeza@tecnativa.com>
+- Ana Juaristi <ajuaristio@gmail.com>
+- David Vidal <david.vidal@tecnativa.com>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia

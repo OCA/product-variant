@@ -38,6 +38,10 @@ class SaleOrderLine(models.Model):
         # and not related.
         related=False,
     )
+    price_extra = fields.Float(
+        compute="_compute_price_extra",
+        store=True,
+    )
 
     _sql_constraints = [
         (
@@ -112,7 +116,11 @@ class SaleOrderLine(models.Model):
             res = (res or "") + "\n" + product.description_sale
         return res
 
-    @api.depends("product_attribute_ids")
-    def _compute_price_unit(self):
-        """Add the proper dependency to compute the price correctly."""
-        return super()._compute_price_unit()
+    @api.depends("product_attribute_ids.price_extra")
+    def _compute_price_extra(self):
+        for line in self:
+            line.price_extra = (
+                sum(line.product_attribute_ids.mapped("price_extra"))
+                if line.product_attribute_ids
+                else 0.0
+            )

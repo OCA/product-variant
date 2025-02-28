@@ -1,11 +1,13 @@
 # Copyright 2017 David Vidal
 # Copyright 2024 Carolina Fernandez
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+from odoo import Command
+from odoo.tests import Form
 
-from odoo.tests import Form, common
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleOrder(common.TransactionCase):
+class TestSaleOrder(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -41,12 +43,10 @@ class TestSaleOrder(common.TransactionCase):
                 "no_create_variants": "yes",
                 "categ_id": cls.category1.id,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     )
                 ],
@@ -94,7 +94,7 @@ class TestSaleOrder(common.TransactionCase):
             line2.name,
             "{}\n{}".format(
                 self.product_template_no.name,
-                self.product_template_no.description_sale or "",
+                self.product_template_no.description_sale,
             ),
         )
 
@@ -105,9 +105,7 @@ class TestSaleOrder(common.TransactionCase):
                 "list_price": 100,
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -126,9 +124,10 @@ class TestSaleOrder(common.TransactionCase):
                 attribute_line_form.value_id = self.value1
         sale = order_form.save()
         line = sale.order_line
+        attribute_price_extra = sum(line.product_attribute_ids.mapped("price_extra"))
+        self.assertEqual(attribute_price_extra, 10)
         self.assertEqual(line.price_unit, 110)
         self.assertEqual(line.price_extra, 10)
-        self.assertEqual(line.price_unit + line.price_extra, 120)
         self.assertEqual(line.product_id, product)
 
     def _test_can_create_product_variant(self):
@@ -166,9 +165,7 @@ class TestSaleOrder(common.TransactionCase):
                 "name": self.product_template_yes.name,
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -182,9 +179,7 @@ class TestSaleOrder(common.TransactionCase):
             {
                 "partner_id": self.customer.id,
                 "order_line": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": product.id,
                             "price_unit": 100,
@@ -213,9 +208,7 @@ class TestSaleOrder(common.TransactionCase):
                 "product_uom_qty": 1,
                 "product_uom": self.product_template_yes.uom_id.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -246,7 +239,7 @@ class TestSaleOrder(common.TransactionCase):
                 line.create_variant_if_needed()
                 line.create_product_variant = True
                 line._onchange_create_product_variant()
-        order.write({"order_line": [(4, line_1.id), (4, line_2.id)]})
+        order.write({"order_line": [Command.link(line_1.id), Command.link(line_2.id)]})
         order.action_confirm()
         order_line_without_product = order.order_line.filtered(
             lambda x: not x.product_id
