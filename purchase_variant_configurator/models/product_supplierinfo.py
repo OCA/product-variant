@@ -34,3 +34,14 @@ class ProductSupplierinfo(models.Model):
         return super().search(
             args, offset=offset, limit=limit, order=order, count=count
         )
+
+    def sorted(self, key=None, reverse=False):
+        # Override this function to avoid a problem using NewId in the sorted sequence
+        # because Odoo converts the .id to it when handling one2many of a virtual
+        # record, and thus getting the error:
+        # TypeError: '<' not supported between instances of 'NewId' and 'NewId'
+        # The workaround is to remove the id sorting criteria for this specific case.
+        if callable(key):
+            if key.__code__.co_names == ("sequence", "min_qty", "price", "id"):
+                key = lambda s=self: (s.sequence, -s.min_qty, s.price)  # noqa
+        return super().sorted(key=key, reverse=reverse)
