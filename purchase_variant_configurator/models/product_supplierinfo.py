@@ -7,7 +7,7 @@ class ProductSupplierinfo(models.Model):
     _inherit = "product.supplierinfo"
 
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
+    def search(self, args, offset=0, limit=None, order=None):
         """HACK: With NewId, the linked product_tmpl_id won't be a proper interger
         that we can use in a search. As we need it to get the proper pricelists
         we'll be passing it by context. The propper solution would be to
@@ -29,10 +29,16 @@ class ProductSupplierinfo(models.Model):
                     )
                 args2.append(arg)
             return super().search(
-                args2, offset=offset, limit=limit, order=order, count=count
+                args2,
+                offset=offset,
+                limit=limit,
+                order=order,
             )
         return super().search(
-            args, offset=offset, limit=limit, order=order, count=count
+            args,
+            offset=offset,
+            limit=limit,
+            order=order,
         )
 
     def sorted(self, key=None, reverse=False):

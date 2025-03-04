@@ -2,8 +2,9 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 
-def assign_product_template(cr, registry):
+def assign_product_template(env):
     """This post-init-hook will update all existing purchase.order.line"""
+    cr = env.cr
     cr.execute(
         """
         UPDATE purchase_order_line AS line
