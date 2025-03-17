@@ -69,12 +69,16 @@ class ProductAttributeValue(models.Model):
         values_to_create = []
         unarchived_record_ids = set()
         for value in values:
+            attribute_id = value.get(
+                "attribute_id", self._context.get("default_attribute_id")
+            )
             existing_archived_value = self.search(
                 [
                     ("active", "=", False),
                     ("name", "=", value["name"]),
-                    ("attribute_id", "=", value["attribute_id"]),
-                ]
+                    ("attribute_id", "=", attribute_id),
+                ],
+                limit=1,
             )
             if existing_archived_value:
                 existing_archived_value.active = True
