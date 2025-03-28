@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-25 12:06+0000\n"
-"Last-Translator: İsmail Çağan Yılmaz <ismail.cagan.yilmaz@gmail.com>\n"
+"PO-Revision-Date: 2025-03-28 10:06+0000\n"
+"Last-Translator: Ahmet Yiğit Budak <yigit@altinkaya.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,help:product_variant_default_code.field_product_product__code_prefix
@@ -76,12 +76,12 @@ msgstr ""
 #: code:addons/product_variant_default_code/models/product.py:0
 #, python-format
 msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
-msgstr "\"Varyant Referans Maskesi\"nde tanınmayan özellik adı bulundu"
+msgstr "\"Referans Maskesi\"nde tanınmayan özellik adı bulundu"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__default_code
 msgid "Internal Reference"
-msgstr "Dahili Referans"
+msgstr "İç Referans"
 
 #. module: product_variant_default_code
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__manual_code
@@ -181,7 +181,7 @@ msgstr "Varyant Varsayılan Kod Hatası"
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__reference_mask
 #: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__reference_mask
 msgid "Variant reference mask"
-msgstr "Varyant referans maskeleme"
+msgstr "Referans Maskesi"
 
 #. module: product_variant_default_code
 #: model_terms:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
