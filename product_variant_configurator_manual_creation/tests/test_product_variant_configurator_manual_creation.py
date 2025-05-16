@@ -48,6 +48,7 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
             variants.product_template_attribute_value_ids.product_attribute_value_id.id,
             False,
         )
+        self.assertTrue(self.product_template1.has_pending_variants)
         variant_creation_wizard1 = self.wizard_variant_manual_creation.with_context(
             active_id=self.product_template1.id
         ).create({})
@@ -88,3 +89,4 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
             variants.product_template_attribute_value_ids.product_attribute_value_id.ids,
             [self.value1.id, self.value2.id],
         )
+        self.assertFalse(self.product_template1.has_pending_variants)
