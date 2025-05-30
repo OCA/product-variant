@@ -15,10 +15,9 @@ class ProductTemplate(models.Model):
     def _create_variant_ids(self):
         res = super()._create_variant_ids()
         for tmpl in self:
-            for variant in tmpl.product_variant_ids:
-                variant.with_context(skip_update_fix_price=True).write(
-                    {"fix_price": tmpl.list_price}
-                )
+            tmpl.product_variant_ids.with_context(skip_update_fix_price=True).write(
+                {"fix_price": tmpl.list_price}
+            )
         return res
 
     def write(self, vals):
