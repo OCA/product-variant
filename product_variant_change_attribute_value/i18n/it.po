@@ -6,48 +6,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-06-04 09:26+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Attributo"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__attribute_action
 msgid "Attribute Action"
-msgstr ""
+msgstr "Azione attributo"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__attribute_value_ids
 msgid "Attribute Value"
-msgstr ""
+msgstr "Valore attributo"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Attribute value changes"
-msgstr ""
+msgstr "Modifiche valore attributo"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__attributes_action_ids
 msgid "Attributes Action"
-msgstr ""
+msgstr "Azione attributo"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__available_attribute_ids
 msgid "Available Attribute"
-msgstr ""
+msgstr "Attributo disponibile"
 
 #. module: product_variant_change_attribute_value
 #. odoo-python
@@ -56,67 +58,69 @@ msgid ""
 "Both products %s are associated with Sale Orders/Invoices/etc., impossible "
 "to remove"
 msgstr ""
+"Entrambi i prodotti %s sono associati a ordini di vendita/fatture/ecc., "
+"impossibile rimuiovere"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.actions.act_window,name:product_variant_change_attribute_value.action_variant_change_value_wiz
 msgid "Change attribute values assigned"
-msgstr ""
+msgstr "Modifica valori attributo assegnati"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__create_uid
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__create_date
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: product_variant_change_attribute_value
 #: model:product.template,name:product_variant_change_attribute_value.product_product_1_product_template
 msgid "Custom Desk"
-msgstr ""
+msgstr "Desk predefinito"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__display_name
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__filter_attribute_id
 msgid "Filter Attribute"
-msgstr ""
+msgstr "Filtra attributo"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__id
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__write_uid
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__write_date
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__product_ids
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: product_variant_change_attribute_value
 #. odoo-python
@@ -125,41 +129,43 @@ msgid ""
 "Product '%(product_name)s' uniqueness compromised.\n"
 " Impossible to remove value(s): %(values)s"
 msgstr ""
+"Unicità prodotto '%(product_name)s' compromessa.\n"
+" Impossibile rimuovere il valore: %(values)s"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__product_attribute_value_id
 msgid "Product Attribute Value"
-msgstr ""
+msgstr "Valore attributo prodotto"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__product_template_count
 msgid "Product Template Count"
-msgstr ""
+msgstr "Conteggio modelli prodotto"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Product Variant Change Attribute"
-msgstr ""
+msgstr "Modifica attributo variante prodotto"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__product_variant_count
 msgid "Product Variant Count"
-msgstr ""
+msgstr "Conteggio varianti prodotto"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__replaced_by_id
 msgid "Replace with"
-msgstr ""
+msgstr "Sostituisci con"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__selectable_attribute_value_ids
 msgid "Selectable Attribute Value"
-msgstr ""
+msgstr "Valore attributo selezionabile"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Selected variants"
-msgstr ""
+msgstr "Varianti selezionate"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,help:product_variant_change_attribute_value.field_variant_attribute_value_action__attribute_id
@@ -167,33 +173,35 @@ msgid ""
 "The attribute cannot be changed once the value is used on at least one "
 "product."
 msgstr ""
+"L'attributo non può essere modificato una volta che è utilizzato almeno in "
+"un prodotto."
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Updating"
-msgstr ""
+msgstr "Aggiornamento"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model,name:product_variant_change_attribute_value.model_variant_attribute_value_action
 msgid "Wizard action to do on variant attribute value"
-msgstr ""
+msgstr "Azione procedura guidata da eseguire sul valore attributo variante"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model,name:product_variant_change_attribute_value.model_variant_attribute_value_wizard
 msgid "Wizard to change attributes on product variants"
-msgstr ""
+msgstr "Procedura guidata per modificare gli attributi nelle varianti prodotto"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "action"
-msgstr ""
+msgstr "azione"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "product template(s)."
-msgstr ""
+msgstr "modello prodotto."
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "variant(s) selected out of"
-msgstr ""
+msgstr "Variante selezionata tra"
