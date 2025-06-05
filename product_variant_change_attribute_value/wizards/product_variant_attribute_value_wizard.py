@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 from collections import defaultdict
+from contextlib import contextmanager
 
 import psycopg2
 
@@ -169,10 +170,11 @@ class VariantAttributeValueWizard(models.TransientModel):
             )
         return tpl_attr_value
 
-    def _handle_unique_violation(self, func, error_msg):
+    @contextmanager
+    def _handle_unique_violation(self, error_msg):
         try:
             with self.env.cr.savepoint():
-                func()
+                yield
         except psycopg2.IntegrityError as e:
             if e.pgcode == psycopg2.errorcodes.UNIQUE_VIOLATION:
                 raise UserError(error_msg) from e
@@ -194,10 +196,8 @@ class VariantAttributeValueWizard(models.TransientModel):
             error_msg = self._unique_err_msg(product, tpl_attr_line, pavs)
             if not set(tpl_attr_line.value_ids.ids) - set(pavs.ids):
                 # no value left
-                def _make_inactive(tpl_attr_line):
+                with self._handle_unique_violation(error_msg):
                     tpl_attr_line.active = False
-
-                self._handle_unique_violation(_make_inactive(tpl_attr_line), error_msg)
             tpl_attr_line.write({"value_ids": [(3, pav.id) for pav in pavs]})
             tpl_attr_values = TplAttrValue.search(
                 [
@@ -206,7 +206,8 @@ class VariantAttributeValueWizard(models.TransientModel):
                 ]
             )
             if tpl_attr_values:
-                self._handle_unique_violation(tpl_attr_values.unlink, error_msg)
+                with self._handle_unique_violation(error_msg):
+                    tpl_attr_values.unlink()
 
     def _remove_duplicate_product(self, product):
         product_pavs = set(product.product_template_attribute_value_ids.ids)
