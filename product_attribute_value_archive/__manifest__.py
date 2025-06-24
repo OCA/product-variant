@@ -4,7 +4,7 @@
         "Allows to archive a `product.attribute.value` "
         "referenced by archived `product.product`."
     ),
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Product",
     "website": "https://github.com/OCA/product-variant",
     "author": "Camptocamp SA, Odoo Community Association (OCA)",
