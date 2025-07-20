@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_variant_configurator](product_variant_configurator/) | 17.0.1.0.0 |  | Provides an abstract model for product variant configuration.
 [product_variant_sale_price](product_variant_sale_price/) | 17.0.1.1.0 |  | Allows to write fixed prices in product variants
+[purchase_variant_configurator](purchase_variant_configurator/) | 17.0.1.0.0 |  | Product variants in purchase management
 
 [//]: # (end addons)
 
