@@ -123,6 +123,11 @@ msgid "Company"
 msgstr "Azienda"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_method
+msgid "Control Policy"
+msgstr "Politica di controllo"
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__cost_currency_id
 msgid "Cost Currency"
 msgstr "Valuta costo"
@@ -225,6 +230,17 @@ msgid "ID"
 msgstr "ID"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__service_to_purchase
+msgid ""
+"If ticked, each time you sell this product through a SO, a RfQ is "
+"automatically created to buy the product. Tip: don't forget to set a vendor "
+"on the product."
+msgstr ""
+"Se selezionata, ogni volta che si vende un prodotto tramite un OV, viene "
+"creata automaticamente un aRdP per acquistare il prodotto. Nota: non "
+"dimenticare di impostare il fornitore del prodotto."
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_income_id
 msgid "Income Account"
 msgstr "Conto ricavi"
@@ -291,6 +307,11 @@ msgstr ""
 "dell'ordine di vendita e traccia le ore lavorate."
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn_msg
+msgid "Message for Purchase Order Line"
+msgstr "Messaggio per riga ordine di acquisto"
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn_msg
 msgid "Message for Sales Order Line"
 msgstr "Messaggio per riga ordine vendita"
@@ -299,6 +320,15 @@ msgstr "Messaggio per riga ordine vendita"
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__name
 msgid "Name"
 msgstr "Nome"
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__purchase_method
+msgid ""
+"On ordered quantities: Control bills based on ordered quantities.\n"
+"On received quantities: Control bills based on received quantities."
+msgstr ""
+"Sulla quntità ordinata: controllo fatture in base alle quantità ordinate.\n"
+"Sulla quantità ricevuta: controllo fatture in base alle quantità ricevute."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__invoice_policy
@@ -450,6 +480,11 @@ msgid "Purchase Description"
 msgstr "Descrizione acquisto"
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn
+msgid "Purchase Order Line Warning"
+msgstr "Avviso riga ordine acquisto"
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__uom_po_id
 msgid "Purchase UoM"
 msgstr "UdM acquisto"
@@ -487,6 +522,7 @@ msgstr ""
 "completo."
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__purchase_line_warn
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__sale_line_warn
 msgid ""
 "Selecting the \"Warning\" option will notify user with the message, "
@@ -502,6 +538,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sequence
 msgid "Sequence"
 msgstr "Sequenza"
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__service_to_purchase
+msgid "Subcontract Service"
+msgstr "Servizio in conto lavoro"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__account_tag_ids
@@ -658,9 +699,6 @@ msgstr ""
 "Devi riempire i seguenti attributi:\n"
 "%s"
 
-#~ msgid "Control Policy"
-#~ msgstr "Politica di controllo"
-
 #~ msgid ""
 #~ "Expenses and vendor bills can be re-invoiced to a customer.With this "
 #~ "option, a validated expense can be re-invoice to a customer at its cost "
@@ -670,28 +708,8 @@ msgstr ""
 #~ "questa opzione, una spesa validata può essere rifatturata ad un cliente "
 #~ "al suo costo o a prezzo di vendita."
 
-#~ msgid ""
-#~ "If ticked, each time you sell this product through a SO, a RfQ is "
-#~ "automatically created to buy the product. Tip: don't forget to set a "
-#~ "vendor on the product."
-#~ msgstr ""
-#~ "Se selezionata, ogni volta che si vende un prodotto tramite un OV, viene "
-#~ "creata automaticamente un aRdP per acquistare il prodotto. Nota: non "
-#~ "dimenticare di impostare il fornitore del prodotto."
-
 #~ msgid "Last Modified on"
 #~ msgstr "Ultima modifica il"
-
-#~ msgid "Message for Purchase Order Line"
-#~ msgstr "Messaggio per riga ordine di acquisto"
-
-#~ msgid ""
-#~ "On ordered quantities: Control bills based on ordered quantities.\n"
-#~ "On received quantities: Control bills based on received quantities."
-#~ msgstr ""
-#~ "Sulla quntità ordinata: controllo fatture in base alle quantità "
-#~ "ordinate.\n"
-#~ "Sulla quantità ricevuta: controllo fatture in base alle quantità ricevute."
 
 #~ msgid "Optional Products"
 #~ msgstr "Prodotti opzionali"
@@ -707,14 +725,8 @@ msgstr ""
 #~ msgid "Product Tags"
 #~ msgstr "Etichette prodotto"
 
-#~ msgid "Purchase Order Line Warning"
-#~ msgstr "Avviso riga ordine acquisto"
-
 #~ msgid "Quantity visible in configurator"
 #~ msgstr "Quantità visibile nel configuratore"
-
-#~ msgid "Subcontract Service"
-#~ msgstr "Servizio in conto lavoro"
 
 #~ msgid "Price at which the product is sold to customers."
 #~ msgstr "Prezzo di vendita del prodotto al cliente."
