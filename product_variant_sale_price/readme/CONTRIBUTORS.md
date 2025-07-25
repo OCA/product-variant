@@ -7,3 +7,4 @@
 - Emanuel Cino \<<ecino@compassion.ch>\>
 - Pedroguirao \<<pguirao@puntsistemes.es>\>
 - Gabriel Grinspan \<<gabriel@rooteam.net>\>
+- Cédric Paradis \<<cparadis@impressfoods.com>\>
