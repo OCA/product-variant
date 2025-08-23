@@ -6,7 +6,7 @@
 {
     "name": "Purchase - Product variants",
     "summary": "Product variants in purchase management",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "license": "AGPL-3",
     "depends": ["purchase", "product_variant_configurator"],
     "author": "AvanzOSC, "
