@@ -10,7 +10,13 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     def _select_seller(
-        self, partner_id=False, quantity=0.0, date=None, uom_id=False, params=False
+        self,
+        partner_id=False,
+        quantity=0.0,
+        date=None,
+        uom_id=False,
+        ordered_by="price_discounted",
+        params=False,
     ):
         """Don't fail on empty products for allowing to copy purchase order lines."""
         if not self:
@@ -20,5 +26,6 @@ class ProductProduct(models.Model):
             quantity=quantity,
             date=date,
             uom_id=uom_id,
+            ordered_by=ordered_by,
             params=params,
         )
