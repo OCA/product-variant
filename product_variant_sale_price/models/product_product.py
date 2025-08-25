@@ -32,7 +32,6 @@ class ProductTemplate(models.Model):
         combination=False,
         product_id=False,
         add_qty=1,
-        pricelist=False,
         parent_combination=False,
         only_template=False,
     ):
@@ -40,7 +39,6 @@ class ProductTemplate(models.Model):
             combination,
             product_id,
             add_qty,
-            pricelist,
             parent_combination,
             only_template,
         )
