@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright (c) 2025 braintec AG (https://braintec.com)
+All Rights Reserved
+Licensed under the AGPL-3.0 (http://www.gnu.org/licenses/agpl.html)
+See LICENSE file for full licensing details.
+-->
+<odoo>
+    <record id="product_variant_easy_edit_view" model="ir.ui.view">
+        <field
+            name="name"
+        >product.product.view.form.easy.inherit.sale_line_warn_variant</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="arch" type="xml">
+            <group name="sales" position="inside">
+                <t groups="sales_team.group_sale_salesman">
+                    <group
+                        string="Warning when Selling this Variant"
+                        groups="sale.group_warning_sale"
+                    >
+                        <field name="variant_sale_line_warn" string="Warning" />
+                        <field
+                            name="variant_sale_line_warn_msg"
+                            string="Message"
+                            placeholder="Type a message..."
+                            invisible="variant_sale_line_warn == 'no-message'"
+                            required="variant_sale_line_warn != 'no-message'"
+                        />
+                    </group>
+                </t>
+            </group>
+        </field>
+    </record>
+
+    <record id="product_form_view_sale_order_button" model="ir.ui.view">
+        <field
+            name="name"
+        >product.product.sale.order.inherit.sale_line_warn_variant</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="sale.product_form_view_sale_order_button" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='sale_line_warn']/parent::group"
+                position="after"
+            >
+                <group
+                    string="Warning when Selling this Variant"
+                    groups="sale.group_warning_sale"
+                >
+                    <field name="variant_sale_line_warn" string="Warning" />
+                    <field
+                        name="variant_sale_line_warn_msg"
+                        string="Message"
+                        placeholder="Type a message..."
+                        invisible="variant_sale_line_warn == 'no-message'"
+                        required="variant_sale_line_warn != 'no-message'"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

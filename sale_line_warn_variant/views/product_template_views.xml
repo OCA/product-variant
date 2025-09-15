@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright (c) 2025 braintec AG (https://braintec.com)
+All Rights Reserved
+Licensed under the AGPL-3.0 (http://www.gnu.org/licenses/agpl.html)
+See LICENSE file for full licensing details.
+-->
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field
+            name="name"
+        >product.template.form.view.inherit.sale_line_warn_variant</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='sale_line_warn']/parent::group"
+                position="attributes"
+            >
+                <attribute name="invisible">is_product_variant</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
