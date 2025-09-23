@@ -17,6 +17,7 @@
     "category": "Product",
     "maintainers": ["Kev-Roche"],
     "depends": ["product"],
+    "pre_init_hook": "pre_init_hook",
     "data": [
         "security/product_security.xml",
         "data/ir_config_parameter.xml",
