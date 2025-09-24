@@ -1,7 +1,8 @@
-# Copyright 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2016 Tecnativa - Sergio Teruel
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import models
+from odoo.tools import config
 
 
 class ProductTemplate(models.Model):
@@ -43,5 +44,10 @@ class ProductTemplate(models.Model):
             parent_combination,
             only_template,
         )
-        res["price_extra"] = 0.0
+        test_condition = not config["test_enable"] or (
+            config["test_enable"]
+            and self.env.context.get("test_product_variant_sale_price")
+        )
+        if test_condition:
+            res["price_extra"] = 0.0
         return res

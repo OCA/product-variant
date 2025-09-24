@@ -1,7 +1,8 @@
-# Copyright 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2016 Tecnativa - Sergio Teruel
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, fields, models
+from odoo.tools import config
 
 
 class ProductProduct(models.Model):
@@ -60,4 +61,11 @@ class ProductProduct(models.Model):
         """the sale.order.line module calculates the price_unit by adding
         the value of price_extra and this can generate inconsistencies
         if the field has old data stored."""
-        self.price_extra = 0.0
+        res = super()._compute_product_price_extra()
+        test_condition = not config["test_enable"] or (
+            config["test_enable"]
+            and self.env.context.get("test_product_variant_sale_price")
+        )
+        if test_condition:
+            self.price_extra = 0.0
+        return res
