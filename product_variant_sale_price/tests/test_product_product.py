@@ -1,13 +1,16 @@
-# Copyright 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2016 Tecnativa - Sergio Teruel
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductVariantPrice(TransactionCase):
+class TestProductVariantPrice(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(
+            context=dict(cls.env.context, test_product_variant_sale_price=True)
+        )
         cls.template = cls.env["product.template"]
         cls.product_product = cls.env["product.product"]
         cls.attribute = cls.env["product.attribute"]
