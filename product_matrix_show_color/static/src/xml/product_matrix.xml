@@ -4,7 +4,7 @@
             expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/th[@t-if='cell.name']"
             position="attributes"
         >
-        <attribute
+            <attribute
                 name="class"
                 add="d-flex align-items-center justify-content-between w-100"
                 separator=" "
@@ -14,7 +14,6 @@
             expr="//table[hasclass('o_matrix_input_table')]/tbody/tr/t/th[@t-if='cell.name']"
             position="inside"
         >
-
             <div
                 class="o_field_widget d-flex align-items-center justify-content-center"
             >
@@ -22,8 +21,7 @@
                     t-if="cell.html_color"
                     class="o_field_color rounded-circle"
                     t-attf-style="background-color: {{ cell.html_color }};"
-                >
-                </span>
+                />
             </div>
         </xpath>
     </div>

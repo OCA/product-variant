@@ -6,7 +6,7 @@ from odoo.tests import common
 
 class TestProductTemplateAttributeValue(common.TransactionCase):
     def setUp(self):
-        super(TestProductTemplateAttributeValue, self).setUp()
+        super().setUp()
 
         product_attributes = self.env["product.attribute"].create(
             [
