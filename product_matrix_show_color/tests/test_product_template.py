@@ -1,23 +1,26 @@
 # Copyright 2020 Studio73 - Miguel Gandia
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests import common
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductTemplateAttributeValue(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+class TestProductTemplateAttributeValue(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        product_attributes = self.env["product.attribute"].create(
+        product_attributes = cls.env["product.attribute"].create(
             [
-                {"name": "PA1", "create_variant": "always", "sequence": 1},
-                {"name": "PA2", "create_variant": "always", "sequence": 2},
-                {"name": "PA3", "create_variant": "dynamic", "sequence": 3},
-                {"name": "PA4", "create_variant": "no_variant", "sequence": 4},
+                {"name": "PA1_test", "create_variant": "always", "sequence": 1},
+                {"name": "PA2_test", "create_variant": "always", "sequence": 2},
+                {"name": "PA3_test", "create_variant": "dynamic", "sequence": 3},
+                {"name": "PA4_test", "create_variant": "no_variant", "sequence": 4},
             ]
         )
 
-        self.env["product.attribute.value"].create(
+        cls.env["product.attribute.value"].create(
             [
                 {
                     "name": "PAV" + str(product_attribute.sequence) + str(i),
@@ -29,19 +32,17 @@ class TestProductTemplateAttributeValue(common.TransactionCase):
             ]
         )
 
-        self.matrix_template2 = self.env["product.template"].create(
+        cls.matrix_template2 = cls.env["product.template"].create(
             {
                 "name": "Matrix",
                 "type": "consu",
-                "uom_id": self.ref("uom.product_uom_unit"),
-                "uom_po_id": self.ref("uom.product_uom_unit"),
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
+                "uom_po_id": cls.env.ref("uom.product_uom_unit").id,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": attribute.id,
-                            "value_ids": [(6, 0, attribute.value_ids.ids)],
+                            "value_ids": [Command.set(attribute.value_ids.ids)],
                         },
                     )
                     for attribute in product_attributes
