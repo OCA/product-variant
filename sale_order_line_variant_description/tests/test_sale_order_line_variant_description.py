@@ -1,14 +1,13 @@
 # Copyright 2015-17 Alex Comba - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleOrderLineVariantDescription(TransactionCase):
+class TestSaleOrderLineVariantDescription(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("base.res_partner_1")
         cls.uom_uom_model = cls.env["uom.uom"]
         cls.product_tmpl_model = cls.env["product.template"]
         cls.so_model = cls.env["sale.order"]
@@ -37,7 +36,7 @@ class TestSaleOrderLineVariantDescription(TransactionCase):
                 "order_id": so.id,
                 "product_id": product.id,
                 "product_uom_qty": 1.0,
-                "product_uom": uom.id,
+                "product_uom_id": uom.id,
                 "price_unit": 121.0,
             }
         )
