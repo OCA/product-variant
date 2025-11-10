@@ -26,4 +26,5 @@
     ],
     "demo": ["demo/attribute_demo.xml"],
     "installable": True,
+    "pre_init_hook": "pre_init_hook",
 }

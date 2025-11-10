@@ -14,6 +14,8 @@ from string import Template
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+SEQUENCE_PATTERN = "[SEQUENCE]"
+
 
 class ReferenceMask(Template):
     pattern = r"""\[(?:
@@ -33,11 +35,13 @@ def sanitize_reference_mask(product, mask):
     main_lang = product._guess_main_lang()
     tokens = extract_token(mask)
     attribute_names = set()
+    attribute_names.add(SEQUENCE_PATTERN[1:-1])
+    attribute_names.add("ID")
     for line in product.attribute_line_ids:
         attribute_names.add(line.attribute_id.with_context(lang=main_lang).name)
     if not tokens.issubset(attribute_names):
         raise UserError(
-            _('Found unrecognized attribute name in "Variant ' 'Reference Mask"')
+            _('Found unrecognized attribute name in "Variant Reference Mask"')
         )
 
 
@@ -73,11 +77,20 @@ class ProductTemplate(models.Model):
         ' `fancyA/l~r~l` (for variant with Color "Red" and Size "L") '
         ' `fancyA/x~y~x` (for variant with Color "Yellow" and Size "XL")'
         '\nNote: make sure characters "[,]" do not appear in your '
-        "attribute name",
+        "attribute name"
+        "Specific : set `%s` to add séquence number, [ID] for variant identifier"
+        % SEQUENCE_PATTERN,
     )
 
     variant_default_code_error = fields.Text(
         compute="_compute_variant_default_code_error"
+    )
+
+    code_sequence_id = fields.Many2one(
+        string="Default sequence as Reference",
+        comodel_name="ir.sequence",
+        default=False,
+        copy=False,
     )
 
     def is_automask(self):
@@ -196,6 +209,54 @@ class ProductTemplate(models.Model):
                 template.default_code = template.code_prefix
         return True
 
+    def _create_default_code_sequence(self):
+        current_pdt = self if len(self.ids) == 1 else False
+        params = self.env["ir.config_parameter"].sudo()
+        seq_model = self.env["ir.sequence"]
+        for_global = not bool(
+            params.get_param(
+                "product_variant_default_code.use_sequence_per_product_tmp_as_default_code"
+            )
+        )
+        seq = (
+            False
+            if not for_global
+            else seq_model.browse(
+                int(
+                    params.get_param(
+                        "product_variant_default_code.sequence_as_default_code"
+                    )
+                )
+            )
+        )
+        if for_global:
+            seq_name = _("Global Product Sequence")
+        else:
+            assert current_pdt
+            seq = self.code_sequence_id
+            seq_name = _("Product Sequence of %(name)s - %(identifier)s") % {
+                "name": current_pdt.name,
+                "identifier": current_pdt.id,
+            }
+        if not seq:
+            vals = {
+                "name": seq_name,
+                "code": "product_sequence_%s"
+                % (current_pdt.id if not for_global else 0),
+                "implementation": "no_gap",
+                "prefix": "",
+                "suffix": "",
+                "padding": 3,
+            }
+            seq = seq_model.create(vals)
+            if not for_global:
+                self.code_sequence_id = seq.id
+            else:
+                params.set_param(
+                    "product_variant_default_code.sequence_as_default_code", seq.id
+                )
+        return seq
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -231,6 +292,10 @@ class ProductProduct(models.Model):
             return None
         else:
             product_attrs = defaultdict(str)
+            product_attrs["ID"] = str(self.id)
+            if SEQUENCE_PATTERN in self.product_tmpl_id.reference_mask:
+                seq = self.product_tmpl_id._create_default_code_sequence()
+                product_attrs[SEQUENCE_PATTERN[1:-1]] = seq.next_by_id()
             reference_mask = ReferenceMask(self.product_tmpl_id.reference_mask)
             main_lang = self.product_tmpl_id._guess_main_lang()
             for attr in self.product_template_attribute_value_ids:
