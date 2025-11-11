@@ -81,7 +81,7 @@ class TestVariantDefaultCode(TransactionCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_02_check_default_codes_preexistent_mask(self):
-        self.env.user.groups_id |= self.group_default_code
+        self.env.user.group_ids |= self.group_default_code
         # Second template with custom reference mask must be created with correct
         # user permissions
         template2 = self.template1.copy(
@@ -109,7 +109,7 @@ class TestVariantDefaultCode(TransactionCase):
         self.assertEqual(self.template1.reference_mask, "prefix/[TSize]-[TColor]")
 
     def test_04_custom_reference_mask(self):
-        self.env.user.groups_id |= self.group_default_code
+        self.env.user.group_ids |= self.group_default_code
         self.template1.reference_mask = "JKTÜ/[TColor]#[TSize]"
         for product in self.template1.mapped("product_variant_ids"):
             expected_code = (
@@ -126,7 +126,7 @@ class TestVariantDefaultCode(TransactionCase):
             self.assertEqual(product.default_code, expected_code)
 
     def test_05_manual_code(self):
-        self.env.user.groups_id |= self.group_default_code
+        self.env.user.group_ids |= self.group_default_code
         self.assertEqual(self.template1.product_variant_ids[0].manual_code, False)
         self.template1.product_variant_ids[0].default_code = "CANT-TOUCH-THIS"
         self.assertEqual(self.template1.product_variant_ids[0].manual_code, True)
@@ -188,7 +188,7 @@ class TestVariantDefaultCode(TransactionCase):
             self.assertTrue("Od" in product.default_code)
 
     def test_08_sanitize_exception(self):
-        self.env.user.groups_id |= self.group_default_code
+        self.env.user.group_ids |= self.group_default_code
         with self.assertRaises(UserError):
             self.env["product.template"].create(
                 {
@@ -363,7 +363,7 @@ class TestVariantDefaultCode(TransactionCase):
         self.assertEqual(self.template1.variant_default_code_error, expected_error)
 
     def test_18_both_prefix_and_mask_changing(self):
-        self.env.user.groups_id |= self.group_default_code
+        self.env.user.group_ids |= self.group_default_code
         self.template1.write(
             {
                 "code_prefix": "pre/",

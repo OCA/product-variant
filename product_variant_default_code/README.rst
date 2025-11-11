@@ -21,13 +21,13 @@ Product Variant Default Code
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fproduct--variant-lightgray.png?logo=github
-    :target: https://github.com/OCA/product-variant/tree/18.0/product_variant_default_code
+    :target: https://github.com/OCA/product-variant/tree/19.0/product_variant_default_code
     :alt: OCA/product-variant
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/product-variant-18-0/product-variant-18-0-product_variant_default_code
+    :target: https://translation.odoo-community.org/projects/product-variant-19-0/product-variant-19-0-product_variant_default_code
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/product-variant&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/product-variant&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -38,19 +38,19 @@ according to attributes data with a configurable behavior.
 It defines a reference mask on the product templates so the variants
 references are automatically set. For example:
 
-- Product template: Jacket
-- Attributes:
+-  Product template: Jacket
+-  Attributes:
 
-  - Color: White, Black
-  - Size: M, L
+   -  Color: White, Black
+   -  Size: M, L
 
-- Reference mask: JKT01-[Color]-[Size]
-- Reference on variants:
+-  Reference mask: JKT01-[Color]-[Size]
+-  Reference on variants:
 
-  - JKT01-Wh-M Jacket White M
-  - JKT01-Bl-M Jacket Black M
-  - JKT01-Wh-L Jacket White L
-  - JKT01-Bl-L Jacket Black L
+   -  JKT01-Wh-M Jacket White M
+   -  JKT01-Bl-M Jacket Black M
+   -  JKT01-Wh-L Jacket White L
+   -  JKT01-Bl-L Jacket Black L
 
 **Table of contents**
 
@@ -117,7 +117,7 @@ Unset manual code and the reference code will be unlocked again.
 Known issues / Roadmap
 ======================
 
-- In case of attribute name update, related mask are not updated.
+-  In case of attribute name update, related mask are not updated.
 
 Bug Tracker
 ===========
@@ -125,7 +125,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/product-variant/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/product-variant/issues/new?body=module:%20product_variant_default_code%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/product-variant/issues/new?body=module:%20product_variant_default_code%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -143,20 +143,20 @@ Authors
 Contributors
 ------------
 
-- Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
-- Tony Gu <tony@openerp.cn>
-- David Beal <david.beal@akretion.com>
-- Daniel Campos <danielcampos@avanzosc.es>
-- Kévin Roche <kevin.roche@akretion.com>
-- Tecnativa <tecnativa.com>:
+-  Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
+-  Tony Gu <tony@openerp.cn>
+-  David Beal <david.beal@akretion.com>
+-  Daniel Campos <danielcampos@avanzosc.es>
+-  Kévin Roche <kevin.roche@akretion.com>
+-  Tecnativa <tecnativa.com>:
 
-  - David Vidal
-  - Pedro M. Baeza
-  - João Marques
+   -  David Vidal
+   -  Pedro M. Baeza
+   -  João Marques
 
-- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+-  `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
 
-  - Bhavesh Heliconia
+   -  Bhavesh Heliconia
 
 Maintainers
 -----------
@@ -179,6 +179,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-Kev-Roche| 
 
-This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/18.0/product_variant_default_code>`_ project on GitHub.
+This module is part of the `OCA/product-variant <https://github.com/OCA/product-variant/tree/19.0/product_variant_default_code>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

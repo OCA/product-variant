@@ -10,7 +10,7 @@
 {
     "name": "Product Variant Default Code",
     "summary": "Allow to automatically generate the variant default code",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "AvancOSC, Shine IT, Tecnativa, Akretion, "
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",

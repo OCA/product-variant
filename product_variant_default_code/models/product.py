@@ -259,9 +259,7 @@ class ProductAttribute(models.Model):
         string="Attribute Code",
     )
 
-    _sql_constraints = [
-        ("number_uniq", "unique(name)", "Attribute Name must be unique!")
-    ]
+    _number_uniq = models.Constraint("unique(name)", "Attribute Name must be unique!")
 
 
 class ProductAttributeValue(models.Model):
