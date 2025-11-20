@@ -61,6 +61,7 @@ class ProductProduct(models.Model):
     )
     list_price = fields.Float(
         compute="_compute_list_price",
+        store=True,
     )
     fix_price = fields.Float()
 
