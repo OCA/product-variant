@@ -75,6 +75,7 @@ class ProductProduct(models.Model):
                 price = product.uom_id._compute_price(price, context_uom)
             product.lst_price = price
 
+    @api.depends("fix_price")
     def _compute_list_price(self):
         uom_model = self.env["uom.uom"]
         for product in self:
