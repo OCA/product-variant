@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ForgeFlow, S.L.
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
 <odoo>
-
     <record id="product_template_only_form_view" model="ir.ui.view">
         <field name="name">product.template.product.form</field>
         <field name="model">product.template</field>
@@ -25,17 +24,16 @@
                     attrs="{'invisible': [('is_system_multi_lang', '=', False)]}"
                 >
                     <i
-                        class="fa fa-info-circle"
-                    /> This field is maintained in the product variant form.
+                    class="fa fa-info-circle"
+                /> This field is maintained in the product variant form.
                     <button
-                        name="open_product_variant"
-                        type="object"
-                        string="Go to Product Variant"
-                        class="btn-link"
-                    />
+                    name="open_product_variant"
+                    type="object"
+                    string="Go to Product Variant"
+                    class="btn-link"
+                />
                 </p>
             </xpath>
         </field>
     </record>
-
 </odoo>
