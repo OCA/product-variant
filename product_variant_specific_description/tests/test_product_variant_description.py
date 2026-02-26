@@ -6,14 +6,13 @@ from odoo.tests import TransactionCase
 
 
 class TestProductVariantDescription(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.product_tmpl_model = self.env["product.template"]
-        self.product_model = self.env["product.product"]
-
-        self.uom_unit = self.env.ref("uom.product_uom_unit")
-
-        self.color_attribute = self.env["product.attribute"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product_tmpl_model = cls.env["product.template"]
+        cls.product_model = cls.env["product.product"]
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
+        cls.color_attribute = cls.env["product.attribute"].create(
             {
                 "name": "Base Color",
                 "value_ids": [
@@ -48,7 +47,6 @@ class TestProductVariantDescription(TransactionCase):
             {
                 "name": "Sofa",
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
                 "description": "Template description",
                 "attribute_line_ids": [
                     Command.create(
