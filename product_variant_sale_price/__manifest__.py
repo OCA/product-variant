@@ -5,13 +5,20 @@
 {
     "name": "Product Variant Sale Price",
     "summary": "Allows to write fixed prices in product variants",
-    "version": "18.0.1.0.1",
+    "version": "19.0.1.0.0",
     "category": "Product Management",
     "website": "https://github.com/OCA/product-variant",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["account", "sale"],
-    "data": ["views/product_views.xml"],
+    "application": False,
+    "depends": [
+        "account",
+        "sale",
+        "product",  # Added explicit dependency on product just to be safe
+    ],
+    "data": [
+        "views/product_views.xml"
+    ],
     "post_init_hook": "set_sale_price_on_variant",
 }

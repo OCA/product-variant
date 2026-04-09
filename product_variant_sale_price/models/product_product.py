@@ -15,7 +15,7 @@ class ProductProduct(models.Model):
     list_price = fields.Float(
         compute="_compute_list_price",
     )
-    fix_price = fields.Float()
+    fix_price = fields.Float(string="Fixed Price")
 
     @api.depends("fix_price")
     def _compute_lst_price(self):

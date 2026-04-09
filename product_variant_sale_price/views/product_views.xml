@@ -17,17 +17,17 @@
             </field>
         </field>
     </record>
+
     <record id="product_variant_easy_edit_price_view" model="ir.ui.view">
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
         <field name="arch" type="xml">
-            <!-- Make the field editable -->
             <field name="lst_price" position="attributes">
                 <attribute name="readonly" />
             </field>
         </field>
     </record>
-    <!-- Hide price extra fields, as they are no longer useful -->
+
     <record id="product_template_attribute_value_view_tree" model="ir.ui.view">
         <field name="name">product.template.attribute.value.tree.hide.extra</field>
         <field name="model">product.template.attribute.value</field>
@@ -41,6 +41,7 @@
             </field>
         </field>
     </record>
+
     <record id="product_template_attribute_value_view_form" model="ir.ui.view">
         <field name="name">product.template.attribute.value.form.hide.extra</field>
         <field name="model">product.template.attribute.value</field>

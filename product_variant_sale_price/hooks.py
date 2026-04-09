@@ -2,7 +2,6 @@
 # Copyright 2018 Fabien Bourgeois <fabien@yaltik.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-
 def set_sale_price_on_variant(env, template_id=None):
     sql = """
         UPDATE product_product pp
