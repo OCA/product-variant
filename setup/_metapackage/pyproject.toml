@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-product-variant"
-version = "18.0.20260105.0"
+version = "18.0.20260417.0"
 dependencies = [
     "odoo-addon-product_attribute_value_archive==18.0.*",
+    "odoo-addon-product_variant_attribute_tax==18.0.*",
     "odoo-addon-product_variant_change_attribute_value==18.0.*",
     "odoo-addon-product_variant_configurator==18.0.*",
     "odoo-addon-product_variant_configurator_manual_creation==18.0.*",
