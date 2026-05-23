@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-30 03:46+0000\n"
-"PO-Revision-Date: 2017-11-30 03:46+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2026-05-23 04:30+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: Galician (https://www.transifex.com/oca/teams/23907/gl/)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_variant_count
 msgid "# Product Variants"
-msgstr ""
+msgstr "# Variantes de produto"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_attribute_view_form
@@ -29,6 +30,8 @@ msgid ""
 "<strong>Info:</strong> You can now manage the variant creation from the "
 "Product Template level"
 msgstr ""
+"<strong>Info:</strong> Agora pode xestionar a creación de variantes desde o "
+"nivel Modelo de produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__description_sale
@@ -37,6 +40,9 @@ msgid ""
 "This description will be copied to every Sales Order, Delivery Order and "
 "Customer Invoice/Credit Note"
 msgstr ""
+"Descrición do Produto que desexa comunicar aos seus clientes. Esta "
+"descrición copiarase en cada Pedido de Venda, Orde de Entrega e Factura/"
+"Abono de Cliente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__detailed_type
@@ -46,42 +52,46 @@ msgid ""
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"Un produto almacenable é un produto para o que se xestionan existencias. A "
+"aplicación Inventario debe estar instalada.\n"
+"Un produto consumible é un produto para o que non se xestionan existencias.\n"
+"Un servizo é un produto non material que vostede proporciona."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__account_tag_ids
 msgid "Account Tags"
-msgstr ""
+msgstr "Etiquetas de conta"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Atributo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__price_extra
 msgid "Attribute Price Extra"
-msgstr ""
+msgstr "Atributo Prezo Extra"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_attribute_value
 msgid "Attribute Value"
-msgstr ""
+msgstr "Valor de atributo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
 msgid "Can Create Product"
-msgstr ""
+msgstr "Pode crear produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_ok
 msgid "Can be Purchased"
-msgstr ""
+msgstr "Pódese comprar"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_ok
 msgid "Can be Sold"
-msgstr ""
+msgstr "Pódese vender"
 
 #. module: product_variant_configurator
 #. odoo-python
@@ -89,7 +99,7 @@ msgstr ""
 #: code:addons/product_variant_configurator/models/product_template.py:0
 #, python-format
 msgid "Change warning!"
-msgstr ""
+msgstr "Aviso de cambio!"
 
 #. module: product_variant_configurator
 #. odoo-python
@@ -97,17 +107,17 @@ msgstr ""
 #: code:addons/product_variant_configurator/models/product_template.py:0
 #, python-format
 msgid "Changing this parameter may cause automatic variants creation"
-msgstr ""
+msgstr "Cambiando este parámetro pode causar a creación automática de variantes"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__color
 msgid "Color Index"
-msgstr ""
+msgstr "Índice de Cor"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__company_id
 msgid "Company"
-msgstr ""
+msgstr "Compañía"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_method
@@ -117,13 +127,13 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__cost_currency_id
 msgid "Cost Currency"
-msgstr ""
+msgstr "Custo Divisa"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__create_product_variant
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__create_product_variant
 msgid "Create product now!"
-msgstr ""
+msgstr "Crear produto agora!"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__create_uid
@@ -138,27 +148,29 @@ msgstr "Creado en"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Divisa"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__taxes_id
 msgid "Customer Taxes"
-msgstr ""
+msgstr "Impostos do cliente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__supplier_taxes_id
 msgid "Default taxes used when buying the product."
-msgstr ""
+msgstr "Impostos aplicados por defecto cando se compra un produto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__taxes_id
 msgid "Default taxes used when selling the product."
-msgstr ""
+msgstr "Impostos por defecto utilizados ao vender o produto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__uom_id
 msgid "Default unit of measure used for all stock operations."
 msgstr ""
+"Unidade de medida por defecto utilizada para todas as operacións de "
+"existencias."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__uom_po_id
@@ -166,31 +178,33 @@ msgid ""
 "Default unit of measure used for purchase orders. It must be in the same "
 "category as the default unit of measure."
 msgstr ""
+"Unidade de medida por defecto utilizada para os pedidos de compra. Debe "
+"pertencer á mesma categoría que a unidade de medida por defecto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description
 msgid "Description"
-msgstr ""
+msgstr "Descrición"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome mostrado"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields.selection,name:product_variant_configurator.selection__product_template__no_create_variants__yes
 msgid "Don't create them automatically"
-msgstr ""
+msgstr "Non crealas automaticamente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__no_create_variants
 msgid "Don't create variants automatically"
-msgstr ""
+msgstr "Non crear variantes automaticamente"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_expense_id
 msgid "Expense Account"
-msgstr ""
+msgstr "Conta de Gastos"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__expense_policy
@@ -199,16 +213,19 @@ msgid ""
 "a validated expense can be re-invoice to a customer at its cost or sales "
 "price."
 msgstr ""
+"Os gastos e as facturas de provedores poden refacturarse a un cliente. Con "
+"esta opción, un gasto validado pode refacturarse a un cliente ao seu custo "
+"ou prezo de venda."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__priority
 msgid "Favorite"
-msgstr ""
+msgstr "Favorito"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__sequence
 msgid "Gives the sequence order when displaying a product list"
-msgstr ""
+msgstr "Proporciona a orde de secuencia ao mostrar unha lista de produtos"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__id
@@ -226,23 +243,25 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_income_id
 msgid "Income Account"
-msgstr ""
+msgstr "Conta de Ingresos"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__invoice_policy
 msgid "Invoicing Policy"
-msgstr ""
+msgstr "Política de Facturación"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__has_configurable_attributes
 msgid "Is a configurable product"
-msgstr ""
+msgstr "É un produto configurable"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__property_account_income_id
 msgid ""
 "Keep this field empty to use the default value from the product category."
 msgstr ""
+"Manteña este campo baleiro para utilizar o valor por defecto da categoría de "
+"produto."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__property_account_expense_id
@@ -251,6 +270,9 @@ msgid ""
 "anglo-saxon accounting with automated valuation method is configured, the "
 "expense account on the product category will be used."
 msgstr ""
+"Matener este campo baleirou para usar o valor por defecto da categoría do "
+"produto. Se a contabilidade anglosaxoa cun método de avaliación automático "
+"está configurado, a conta de gastos da categoría do produto será usada."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute____last_update
@@ -270,7 +292,7 @@ msgstr "Última actualización en"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
 msgid "List Price"
-msgstr ""
+msgstr "Lista de Prezos"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__service_type
@@ -282,6 +304,13 @@ msgid ""
 "Create a task and track hours: Create a task on the sales order validation "
 "and track the work hours."
 msgstr ""
+"Fixar manualmente as cantidades no pedido: Facture en función da cantidade "
+"introducida manualmente, sen crear unha conta analítica.\n"
+"Follas de horas no contrato: Facture en función das horas rexistradas na "
+"folla de horas correspondente.\n"
+"Crear unha tarefa e realizar un seguimento das horas: Cre unha tarefa na "
+"validación do pedido de cliente e realice un seguimento das horas de "
+"traballo."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn_msg
@@ -291,12 +320,12 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn_msg
 msgid "Message for Sales Order Line"
-msgstr ""
+msgstr "Mensaxe para liña de pedido de vendas"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__purchase_method
@@ -308,7 +337,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__optional_product_ids
 msgid "Optional Products"
-msgstr ""
+msgstr "Produtos opcionais"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__optional_product_ids
@@ -316,6 +345,9 @@ msgid ""
 "Optional Products are suggested whenever the customer hits *Add to Cart* "
 "(cross-sell strategy, e.g. for computers: warranty, software, etc.)."
 msgstr ""
+"Os produtos opcionais suxírense cada vez que o cliente pulsa Engadir ao "
+"carriño (estratexia de venda cruzada, por exemplo, para computadores: "
+"garantía, software etc.)/ etc.)."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__invoice_policy
@@ -323,26 +355,28 @@ msgid ""
 "Ordered Quantity: Invoice quantities ordered by the customer.\n"
 "Delivered Quantity: Invoice quantities delivered to the customer."
 msgstr ""
+"Cantidade pedida: Cantidades facturadas pedidas polo cliente.\n"
+"Cantidade entregada: Cantidades facturadas entregadas ao cliente."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__owner_id
 msgid "Owner"
-msgstr ""
+msgstr "Propietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__owner_model
 msgid "Owner Model"
-msgstr ""
+msgstr "Modelo propietario"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__possible_value_ids
 msgid "Possible Value"
-msgstr ""
+msgstr "Posible valor"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__price_extra
 msgid "Price Extra"
-msgstr ""
+msgstr "Prezo extra"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator__price_extra
@@ -350,6 +384,8 @@ msgid ""
 "Price Extra: Extra price for the variant with the currently selected "
 "attributes values on sale price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
+"Prezo extra: Prezo extra da variante sobre o prezo de venda cos valores dos "
+"atributos actualmente seleccionados. Ex. prezo extra 200, 1000 + 200 = 1200."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_configurator_attribute__price_extra
@@ -357,38 +393,40 @@ msgid ""
 "Price Extra: Extra price for the variant with this attribute value on sale "
 "price. eg. 200 price extra, 1000 + 200 = 1200."
 msgstr ""
+"Prezo extra: Prezo extra da variante sobre o prezo de venda con este valor "
+"de atributo. Ex. prezo extra 200, 1000 + 200 = 1200."
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_pricelist
 msgid "Pricelist"
-msgstr ""
+msgstr "Tarifa"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_template
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_variant_id
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__attribute_line_ids
 msgid "Product Attributes"
-msgstr ""
+msgstr "Atributos do produto"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_category
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__categ_id
 msgid "Product Category"
-msgstr ""
+msgstr "Categoría de produto"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_configurator
 msgid "Product Configurator"
-msgstr ""
+msgstr "Configurador Produto"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_configurator_attribute
 msgid "Product Configurator Attribute"
-msgstr ""
+msgstr "Atributo Configurador de Produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_id_configurator_domain
@@ -399,7 +437,7 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_tag_ids
 msgid "Product Tags"
-msgstr ""
+msgstr "Etiquetas de produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_tmpl_id
@@ -407,52 +445,52 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_tmpl_id
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "Product Template"
-msgstr ""
+msgstr "Modelo de produto"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_template_attribute_line
 msgid "Product Template Attribute Line"
-msgstr ""
+msgstr "Liña de atributo Modelo de Produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_tooltip
 msgid "Product Tooltip"
-msgstr ""
+msgstr "Información sobre o produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__detailed_type
 msgid "Product Type"
-msgstr ""
+msgstr "Tipo de Produto"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_id
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_id
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante de Produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__product_attribute_ids
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_attribute_ids
 msgid "Product attributes"
-msgstr ""
+msgstr "Atributos de produto"
 
 #. module: product_variant_configurator
 #. odoo-python
 #: code:addons/product_variant_configurator/models/product_configurator.py:0
 #, python-format
 msgid "Product not created!"
-msgstr ""
+msgstr "Produto non creado!"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_variant_ids
 msgid "Products"
-msgstr ""
+msgstr "Produtos"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description_purchase
 msgid "Purchase Description"
-msgstr ""
+msgstr "Descrición de Compra"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__purchase_line_warn
@@ -462,42 +500,44 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__uom_po_id
 msgid "Purchase UoM"
-msgstr ""
+msgstr "Comprar UM"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__visible_qty_configurator
 msgid "Quantity visible in configurator"
-msgstr ""
+msgstr "Cantidade visible no configurador"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__expense_policy
 msgid "Re-Invoice Expenses"
-msgstr ""
+msgstr "Gastos de re-facturación"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__visible_expense_policy
 msgid "Re-Invoice Policy visible"
-msgstr ""
+msgstr "Política de refacturación visible"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_template_attribute_line__required
 msgid "Required"
-msgstr ""
+msgstr "Requirido"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description_sale
 msgid "Sales Description"
-msgstr ""
+msgstr "Descrición das vendas"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_line_warn
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Liña de Orde de Venda"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_variants_view
 msgid "Select a template for a variant. Keep empty for a new full product."
 msgstr ""
+"Seleccione un modelo para crear unha variante. Déixea en branco para crear "
+"un produto totalmente novo."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__purchase_line_warn
@@ -507,11 +547,14 @@ msgid ""
 "Selecting \"Blocking Message\" will throw an exception with the message and "
 "block the flow. The Message has to be written in the next field."
 msgstr ""
+"Se selecciona a opción \"Aviso\" notificarase aos usuarios coa mensaxe, se "
+"selecciona \"Mensaxe de bloqueo\" lanzarase unha excepción coa mensaxe e "
+"bloquearase o fluxo. A mensaxe debe escribirse no seguinte campo."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Secuencia"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__service_to_purchase
@@ -523,18 +566,20 @@ msgstr ""
 msgid ""
 "Tags to be set on the base and tax journal items created for this product."
 msgstr ""
+"Etiquetas que deben establecerse nos artigos da diario base e de impostos "
+"creados para este produto."
 
 #. module: product_variant_configurator
 #: model:ir.model.constraint,message:product_variant_configurator.constraint_product_template_attribute_line_product_attribute_uniq
 msgid "The attribute already exists for this product"
-msgstr ""
+msgstr "O atributo xa existe para este produto"
 
 #. module: product_variant_configurator
 #. odoo-python
 #: code:addons/product_variant_configurator/models/product_product.py:0
 #, python-format
 msgid "There's another product with the same attributes."
-msgstr ""
+msgstr "Hai outro produto cos mesmos atributos."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_category__no_create_variants
@@ -542,16 +587,18 @@ msgid ""
 "This check disables the automatic creation of product variants for all the "
 "products of this category."
 msgstr ""
+"Esta casa deshabilita a creación automática de variantes de produto para "
+"todos os produtos desta categoría."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__price_extra
 msgid "This is the sum of the extra price of all attributes"
-msgstr ""
+msgstr "Esta é a suma dos prezos extra de todos os atributos"
 
 #. module: product_variant_configurator
 #: model_terms:ir.ui.view,arch_db:product_variant_configurator.product_variants_view_2
 msgid "This product already exists."
-msgstr ""
+msgstr "Este produto xa existe."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__no_create_variants
@@ -560,92 +607,94 @@ msgid ""
 "This selection defines if variants for all attribute combinations are going "
 "to be created automatically at saving time."
 msgstr ""
+"Esta selección define se as variantes para todas as combinacións de "
+"atributos van ser creadas automaticamente no momento de gardar."
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__service_type
 msgid "Track Service"
-msgstr ""
+msgstr "Seguimento do Servizo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__type
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__uom_id
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Unidade de Medida"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__uom_name
 msgid "Unit of Measure Name"
-msgstr ""
+msgstr "Nome de unidade de medida"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields.selection,name:product_variant_configurator.selection__product_template__no_create_variants__no
 msgid "Use Odoo's default variant management"
-msgstr ""
+msgstr "Usar a xestión de variantes por defecto de Odoo"
 
 #. module: product_variant_configurator
 #: model:res.groups,name:product_variant_configurator.group_product_variant_extended_description
 msgid "Use extended description when having product attributes"
-msgstr ""
+msgstr "Utilizar descrición extensa ao ter atributos de produto"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields.selection,name:product_variant_configurator.selection__product_template__no_create_variants__empty
 msgid "Use the category value"
-msgstr ""
+msgstr "Utilizar o valor da categoría"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__valid_product_template_attribute_line_ids
 msgid "Valid Product Attribute Lines"
-msgstr ""
+msgstr "Liñas de atributo de produto válidas"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__value_id
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__price_extra
 msgid "Variant Price Extra"
-msgstr ""
+msgstr "Prezo Extra Variante"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__variant_seller_ids
 msgid "Variant Seller"
-msgstr ""
+msgstr "Vendedor de Variantes"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__no_create_variants
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_template__no_create_variants
 msgid "Variant creation"
-msgstr ""
+msgstr "Creación de variante"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__supplier_taxes_id
 msgid "Vendor Taxes"
-msgstr ""
+msgstr "Impostos dos vendedores"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__seller_ids
 msgid "Vendors"
-msgstr ""
+msgstr "Vendedores"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_ir_ui_view
 msgid "View"
-msgstr ""
+msgstr "Vista"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__volume_uom_name
 msgid "Volume unit of measure label"
-msgstr ""
+msgstr "Etiqueta de unidade de medida de volume"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__weight_uom_name
 msgid "Weight unit of measure label"
-msgstr ""
+msgstr "Etiqueta de unidade de medida de peso"
 
 #. module: product_variant_configurator
 #. odoo-python
@@ -655,3 +704,5 @@ msgid ""
 "You have to fill the following attributes:\n"
 "%s"
 msgstr ""
+"Ten que encher os seguintes atributos:\n"
+"%s"
