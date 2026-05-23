@@ -9,24 +9,25 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-18 05:12+0000\n"
-"PO-Revision-Date: 2017-02-18 05:12+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2026-05-23 08:47+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: Galician (https://www.transifex.com/oca/teams/23907/gl/)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__fix_price
 msgid "Fix Price"
-msgstr ""
+msgstr "Prezo fixo"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__list_price
 msgid "List Price"
-msgstr ""
+msgstr "Lista de Prezos"
 
 #. module: product_variant_sale_price
 #: model:ir.model,name:product_variant_sale_price.model_product_product
@@ -36,12 +37,12 @@ msgstr "Produto"
 #. module: product_variant_sale_price
 #: model:ir.model,name:product_variant_sale_price.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modelo de produto"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__lst_price
 msgid "Sales Price"
-msgstr ""
+msgstr "Prezo de venda"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
@@ -49,3 +50,5 @@ msgid ""
 "The sale price is managed from the product template. Click on the 'Configure "
 "Variants' button to set the extra attribute prices."
 msgstr ""
+"O prezo de venda xestiónase desde o modelo do produto. Faga clic no botón "
+"'Configurar variantes' para establecer os prezos dos atributos adicionais."
