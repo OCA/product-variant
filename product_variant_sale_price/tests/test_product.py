@@ -139,3 +139,55 @@ class TestProductVariantPrice(BaseCommon):
         self.product_blue.product_tmpl_id.list_price = 200
         for variant in self.product_blue.product_tmpl_id.product_variant_ids:
             self.assertEqual(self.product_blue.list_price, variant.lst_price)
+
+    def test_price_extra_test_disabled(self):
+        from odoo.tools import config
+
+        config["test_enable"] = False
+
+        product = self.product_blue.with_context(test_product_variant_sale_price=False)
+
+        # optional realistischer input
+        self.product_blue.product_template_attribute_value_ids.write(
+            {"price_extra": 10.0}
+        )
+
+        product.invalidate_recordset()
+        product._compute_product_price_extra()
+
+        # IMMER reset auf 0.0
+        self.assertEqual(product.price_extra, 0.0)
+
+    def test_price_extra_test_enabled_context_true(self):
+        from odoo.tools import config
+
+        config["test_enable"] = True
+
+        product = self.product_blue.with_context(test_product_variant_sale_price=True)
+
+        self.product_blue.product_template_attribute_value_ids.write(
+            {"price_extra": 10.0}
+        )
+
+        product.invalidate_recordset()
+        product._compute_product_price_extra()
+
+        # reset passiert
+        self.assertEqual(product.price_extra, 0.0)
+
+    def test_price_extra_test_enabled_context_false(self):
+        from odoo.tools import config
+
+        config["test_enable"] = True
+
+        product = self.product_blue.with_context(test_product_variant_sale_price=False)
+
+        self.product_blue.product_template_attribute_value_ids.write(
+            {"price_extra": 10.0}
+        )
+
+        product.invalidate_recordset()
+        product._compute_product_price_extra()
+
+        # KEIN reset → Wert bleibt erhalten
+        self.assertEqual(product.price_extra, 10.0)
