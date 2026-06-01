@@ -9,30 +9,31 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-04 12:43+0000\n"
-"PO-Revision-Date: 2017-12-04 12:43+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2026-06-01 06:15+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: sale_variant_configurator
 #: model:ir.model.constraint,message:sale_variant_configurator.constraint_sale_order_line_non_accountable_null_fields
 msgid "Forbidden values on non-accountable sale order line"
-msgstr ""
+msgstr "Prepovedane vrednosti na ne-obračunski prodajni postavki"
 
 #. module: sale_variant_configurator
 #: model:ir.model.constraint,message:sale_variant_configurator.constraint_sale_order_line_accountable_required_fields
 msgid "Missing required fields on accountable sale order line."
-msgstr ""
+msgstr "Manjkajoča obvezna polja na obračunski prodajni postavki."
 
 #. module: sale_variant_configurator
 #: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line__product_id
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: sale_variant_configurator
 #: model_terms:ir.ui.view,arch_db:sale_variant_configurator.view_order_form
@@ -44,12 +45,12 @@ msgstr "Predloga proizvoda"
 #. module: sale_variant_configurator
 #: model:ir.model.fields,field_description:sale_variant_configurator.field_sale_order_line__product_tmpl_id
 msgid "Product Template (no related)"
-msgstr ""
+msgstr "Predloga proizvoda (brez relacij)"
 
 #. module: sale_variant_configurator
 #: model:ir.model,name:sale_variant_configurator.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Prodajni nalog"
 
 #. module: sale_variant_configurator
 #: model:ir.model,name:sale_variant_configurator.model_sale_order_line
