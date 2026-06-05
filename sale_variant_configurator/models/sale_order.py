@@ -116,3 +116,16 @@ class SaleOrderLine(models.Model):
     def _compute_price_unit(self):
         """Add the proper dependency to compute the price correctly."""
         return super()._compute_price_unit()
+
+    @api.depends("product_tmpl_id")
+    def _compute_tax_id(self):
+        lines_with_template = self.filtered(
+            lambda x: x.product_tmpl_id and not x.product_id
+        )
+        for line in lines_with_template:
+            fiscal_position = line.order_id.fiscal_position_id
+            taxes = line.product_tmpl_id.taxes_id.filtered(
+                lambda r: not line.company_id or r.company_id == line.company_id
+            )
+            line.tax_id = fiscal_position.map_tax(taxes) if fiscal_position else taxes
+        return super(SaleOrderLine, self - lines_with_template)._compute_tax_id()
