@@ -54,7 +54,7 @@
                     <list create="0" delete="0" editable="bottom">
                         <field name="owner_model" column_invisible="1" />
                         <field name="owner_id" column_invisible="1" />
-                        <field name="attribute_id" column_invisible="1" />
+                        <field name="attribute_id" force_save="1" />
                         <field
                             name="possible_value_ids"
                             widget="many2many_tags"
