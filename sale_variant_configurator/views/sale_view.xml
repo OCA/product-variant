@@ -16,9 +16,25 @@
             </xpath>
             <xpath
                 expr="//field[@name='order_line']/list//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="required"
+                >not display_type and not is_downpayment and not product_tmpl_id</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/list//field[@name='product_id']"
                 position="after"
             >
                 <field name="product_id_configurator_domain" column_invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/list//field[@name='product_template_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="required"
+                >not display_type and not is_downpayment and not product_tmpl_id</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']" position="attributes">
                 <attribute name="options">{'reload_on_button': true}</attribute>
@@ -34,6 +50,9 @@
                 position="attributes"
             >
                 <attribute name="readonly">not product_updatable</attribute>
+                <attribute
+                    name="required"
+                >not display_type and not is_downpayment and not product_tmpl_id</attribute>
                 <attribute name="domain">product_id_configurator_domain</attribute>
             </xpath>
             <xpath
