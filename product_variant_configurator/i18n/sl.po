@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-16 02:12+0000\n"
-"PO-Revision-Date: 2026-06-07 19:46+0000\n"
+"PO-Revision-Date: 2026-06-21 07:46+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
@@ -153,7 +153,7 @@ msgstr "Valuta"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__taxes_id
 msgid "Customer Taxes"
-msgstr "Davki za stranke"
+msgstr "Prodajni davki"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__supplier_taxes_id
@@ -657,7 +657,7 @@ msgstr "Ustvarjanje različic"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__supplier_taxes_id
 msgid "Vendor Taxes"
-msgstr "Davki dobavitelja"
+msgstr "Nabavni davki"
 
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__seller_ids
