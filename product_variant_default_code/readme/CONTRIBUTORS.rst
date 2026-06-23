@@ -8,3 +8,5 @@
   * David Vidal
   * Pedro M. Baeza
   * João Marques
+
+* Florent THOMAS <florent.thomas@mind-and-go.com>
