@@ -93,7 +93,8 @@ class SaleOrderLine(models.Model):
             if (
                 vals.get("order_id")
                 and not vals.get("product_id")
-                and not vals.get("is_downpayment")
+                and not vals.get("display_type")
+                and vals.get("product_tmpl_id")
             ):
                 order = self.env["sale.order"].browse(vals["order_id"])
                 if order.state == "sale":
