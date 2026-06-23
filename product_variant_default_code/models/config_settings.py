@@ -23,3 +23,15 @@ class BaseConfiguration(models.TransientModel):
         default=False,
         config_parameter="product_variant_default_code.prefix_as_default_code",
     )
+
+    sequence_as_default_code = fields.Many2one(
+        string="Default sequence as default Reference",
+        comodel_name="ir.sequence",
+        config_parameter="product_variant_default_code.sequence_as_default_code",
+    )
+
+    use_sequence_per_product_tmp_as_default_code = fields.Boolean(
+        string="Use specific sequence par Product in Reference",
+        config_parameter="product_variant_default_code."
+        "use_sequence_per_product_tmp_as_default_code",
+    )

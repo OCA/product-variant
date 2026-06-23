@@ -6,6 +6,8 @@
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
+from ..models.product import SEQUENCE_PATTERN
+
 
 class TestVariantDefaultCode(TransactionCase):
     @classmethod
@@ -384,3 +386,134 @@ class TestVariantDefaultCode(TransactionCase):
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
+
+    def test_19_mask_with_global_sequence(self):
+        self.env.user.groups_id |= self.group_default_code
+        template2 = self.env["product.template"].create(
+            {
+                "name": "Jacket for test 19",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.attr1.id,
+                            "value_ids": [(6, 0, [self.attr1_1.id, self.attr1_2.id])],
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.attr2.id,
+                            "value_ids": [(6, 0, [self.attr2_1.id, self.attr2_2.id])],
+                        },
+                    ),
+                ],
+                "code_prefix": "pre/",
+                "reference_mask": "fix-[TColor]_%s" % SEQUENCE_PATTERN,
+            }
+        )
+        self.assertFalse(
+            self.env["ir.config_parameter"].get_param(
+                "product_variant_default_code.use_sequence_per_product_tmp_as_default_code",
+                False,
+            )
+        )
+        self.assertTrue(
+            self.env["ir.config_parameter"].get_param(
+                "product_variant_default_code.sequence_as_default_code", False
+            )
+        )
+        self.assertFalse(template2.code_sequence_id)
+        i = 0
+        list_expected_code = []
+        for product in template2.mapped("product_variant_ids"):
+            i = i + 1
+            expected_code = (
+                template2.code_prefix
+                + "fix-"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+                ).name[0:2]
+                + "_"
+                + "%03d" % i
+            )
+            list_expected_code.append(expected_code)
+        self.assertEqual(
+            template2.mapped("product_variant_ids.default_code").sort(),
+            list_expected_code.sort(),
+        )
+
+    def test_20_mask_with_product_sequence(self):
+        self.env.user.groups_id |= self.group_default_code
+        self.env["ir.config_parameter"].set_param(
+            "product_variant_default_code.use_sequence_per_product_tmp_as_default_code",
+            True,
+        )
+        template2 = self.template1.copy()
+        template2.write(
+            {
+                "code_prefix": "pre/",
+                "reference_mask": "fix-[TColor]_%s" % SEQUENCE_PATTERN,
+            }
+        )
+        self.assertTrue(
+            self.env["ir.config_parameter"].get_param(
+                "product_variant_default_code.use_sequence_per_product_tmp_as_default_code",
+                False,
+            )
+        )
+        self.assertFalse(
+            self.env["ir.config_parameter"].get_param(
+                "product_variant_default_code.sequence_as_default_code", False
+            )
+        )
+        self.assertFalse(
+            self.env["ir.config_parameter"].get_param(
+                "product_variant_default_code.sequence_as_default_code", False
+            )
+        )
+        i = 0
+        list_expected_code = []
+        for product in template2.mapped("product_variant_ids"):
+            i = i + 1
+            expected_code = (
+                template2.code_prefix
+                + "fix-"
+                + product.product_template_attribute_value_ids.filtered(
+                    lambda x: x.product_attribute_value_id.attribute_id == self.attr2
+                ).name[0:2]
+                + "_"
+                + "%03d" % i
+            )
+            list_expected_code.append(expected_code)
+            product._compute_default_code()
+        self.assertEqual(
+            template2.mapped("product_variant_ids.default_code").sort(),
+            list_expected_code.sort(),
+        )
+        self.assertTrue(template2.code_sequence_id)
+
+    def test_21_mask_with_product_id(self):
+        self.env.user.groups_id |= self.group_default_code
+        template2 = self.template1.copy()
+        template2.write(
+            {
+                "reference_mask": "fix_[ID]",
+            }
+        )
+        list_expected_code = [
+            "fix_" + str(i) for i in template2.product_variant_ids.ids
+        ]
+        template2.product_variant_ids._compute_default_code()
+        self.assertEqual(
+            template2.mapped("product_variant_ids.default_code").sort(),
+            list_expected_code.sort(),
+        )
+        self.assertFalse(template2.code_sequence_id)
+        self.assertFalse(
+            self.env["ir.config_parameter"].get_param(
+                "product_variant_default_code.sequence_as_default_code", False
+            )
+        )
