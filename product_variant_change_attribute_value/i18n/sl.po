@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-27 06:36+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,16 +15,17 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Apply"
-msgstr ""
+msgstr "Uveljavi"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__attribute_id
 msgid "Attribute"
-msgstr ""
+msgstr "Atribut"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__attribute_action
@@ -33,7 +35,7 @@ msgstr ""
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__attribute_value_ids
 msgid "Attribute Value"
-msgstr ""
+msgstr "Vrednost atributa"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
@@ -61,7 +63,7 @@ msgstr ""
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.actions.act_window,name:product_variant_change_attribute_value.action_variant_change_value_wiz
@@ -72,13 +74,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__create_uid
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__create_date
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: product_variant_change_attribute_value
 #: model:product.template,name:product_variant_change_attribute_value.product_product_1_product_template
@@ -89,7 +91,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__display_name
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__filter_attribute_id
@@ -100,24 +102,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__id
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__write_uid
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__write_date
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__product_ids
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: product_variant_change_attribute_value
 #. odoo-python
@@ -135,7 +137,7 @@ msgstr ""
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__product_template_count
 msgid "Product Template Count"
-msgstr ""
+msgstr "Št. predlog proizvodov"
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
@@ -145,7 +147,7 @@ msgstr ""
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_wizard__product_variant_count
 msgid "Product Variant Count"
-msgstr ""
+msgstr "Števec variant proizvoda"
 
 #. module: product_variant_change_attribute_value
 #: model:ir.model.fields,field_description:product_variant_change_attribute_value.field_variant_attribute_value_action__replaced_by_id
@@ -168,6 +170,8 @@ msgid ""
 "The attribute cannot be changed once the value is used on at least one "
 "product."
 msgstr ""
+"Atributa ni mogoče spremeniti, ko je vrednost uporabljena pri vsaj enem "
+"proizvodu."
 
 #. module: product_variant_change_attribute_value
 #: model_terms:ir.ui.view,arch_db:product_variant_change_attribute_value.view_product_variant_update_attribute_wizard
