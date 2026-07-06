@@ -34,8 +34,8 @@
                     attrs="{'invisible': ['|', ('target_product_template_id', '=', False), '&amp;', ('target_product_template_id', '!=', False), ('allowed_attribute_value_ids', '!=', [])]}"
                 >
                         <i
-                        class="fa fa-exclamation-triangle"
-                    /> No attributes available for create a new variant in the target template
+                    class="fa fa-exclamation-triangle"
+                /> No attributes available for create a new variant in the target template
                 </div>
                 <div
                     role="alert"
@@ -43,8 +43,8 @@
                     attrs="{'invisible': [('attribute_value_ids', '=', [])]}"
                 >
                         <i
-                        class="fa fa-exclamation-triangle"
-                    /> Reassigning this template variant to the selected target
+                    class="fa fa-exclamation-triangle"
+                /> Reassigning this template variant to the selected target
                         <strong>can't be undone</strong>
                 </div>
                 <footer>
