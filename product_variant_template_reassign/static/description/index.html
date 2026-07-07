@@ -387,21 +387,29 @@ ul.auto-toc {
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<p>The merging options are quite limited when it comes to keep the original
-record values. To ensure, that the orignal variant info is preserved,
-you can go to the <tt class="docutils literal">product_variant_template_reassign.keep_fields</tt>
-config parameter and add the field to the list.</p>
+<p>The merging options are quite limited when it comes to keeping the
+original record values. To ensure that the original variant info is
+preserved, go to <em>Settings &gt; Technical &gt; Parameters &gt; System Parameters</em>
+and add the fields you want to keep to the
+<tt class="docutils literal">product_variant_template_reassign.keep_fields</tt> parameter
+(comma-separated field names, <tt class="docutils literal">list_price,standard_price</tt> by default).</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
-<p>To assign variants, go to a single variant product template.</p>
+<p>Say you have a template “Scarf” with color variants (Blue, Red) and a
+standalone single-variant product “Green scarf” that should really be
+one more color of “Scarf”:</p>
 <ol class="arabic simple">
-<li>In actions, choose: <em>Reassign variant</em>.</li>
-<li>Choose the target product template.</li>
-<li>Choose the variant attributes if available (otherwise you won’t be
-able to reassign the variant)</li>
+<li>Open the single variant product “Green scarf” (<em>Inventory &gt; Products
+&gt; Products</em>).</li>
+<li>Choose <em>Reassign variant</em> in the <em>Actions</em> menu.</li>
+<li>Select the target template (“Scarf”) and the attribute values for the
+new variant (Green).</li>
 <li>Click on <em>Reassign</em>.</li>
 </ol>
+<p>“Green scarf” is merged into “Scarf” as its Green variant, keeping its
+data (code, barcode, operations…). The origin template is deleted and
+a tracking note is posted in the target template chatter.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
@@ -425,6 +433,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li><a class="reference external" href="https://tecnativa.com">Tecnativa</a><ul>
 <li>David Vidal</li>
 <li>Pedro M. Baeza</li>
+<li>Juan Carlos Oñate</li>
 </ul>
 </li>
 </ul>

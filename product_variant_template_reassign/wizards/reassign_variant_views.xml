@@ -13,39 +13,35 @@
                     />
                 </group>
                 <group string="Select the target template">
-                    <field name="allowed_target_product_template_ids" invisible="1" />
                     <field
                         name="target_product_template_id"
                         options="{'no_create': True}"
                         required="1"
                     />
-                    <field name="allowed_attribute_value_ids" invisible="1" />
                     <field
                         name="attribute_value_ids"
                         widget="many2many_tags"
                         options="{'no_create': True, 'no_open': True}"
                         required="1"
-                        attrs="{'invisible': ['|', ('target_product_template_id', '=', False), ('allowed_attribute_value_ids', '=', [])]}"
+                        invisible="not target_product_template_id or not allowed_attribute_value_ids"
                     />
                 </group>
                 <div
                     role="alert"
                     class="alert alert-info"
-                    attrs="{'invisible': ['|', ('target_product_template_id', '=', False), '&amp;', ('target_product_template_id', '!=', False), ('allowed_attribute_value_ids', '!=', [])]}"
+                    invisible="not target_product_template_id or allowed_attribute_value_ids"
                 >
-                        <i
-                    class="fa fa-exclamation-triangle"
-                /> No attributes available for create a new variant in the target template
+                    <i class="fa fa-exclamation-triangle" />
+ No attributes available for create a new variant in the target template
                 </div>
                 <div
                     role="alert"
                     class="alert alert-warning"
-                    attrs="{'invisible': [('attribute_value_ids', '=', [])]}"
+                    invisible="not attribute_value_ids"
                 >
-                        <i
-                    class="fa fa-exclamation-triangle"
-                /> Reassigning this template variant to the selected target
-                        <strong>can't be undone</strong>
+                    <i class="fa fa-exclamation-triangle" />
+ Reassigning this template variant to the selected target
+                    <strong>can't be undone</strong>
                 </div>
                 <footer>
                     <button
@@ -53,9 +49,9 @@
                         type="object"
                         class="btn-primary"
                         confirm="This will merge the current template into the selected one and it can't be undone"
-                        attrs="{'invisible': [('attribute_value_ids', '=', [])]}"
+                        invisible="not attribute_value_ids"
                     >Reassign</button>
-                    <button special="cancel" data-hotkey="z" string="Cancel" />
+                    <button special="cancel" data-hotkey="x" string="Cancel" />
                 </footer>
             </form>
         </field>

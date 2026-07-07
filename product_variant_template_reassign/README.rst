@@ -38,21 +38,30 @@ Be able to assign a unique variant to a multi-variant template.
 Configuration
 =============
 
-The merging options are quite limited when it comes to keep the original
-record values. To ensure, that the orignal variant info is preserved,
-you can go to the ``product_variant_template_reassign.keep_fields``
-config parameter and add the field to the list.
+The merging options are quite limited when it comes to keeping the
+original record values. To ensure that the original variant info is
+preserved, go to *Settings > Technical > Parameters > System Parameters*
+and add the fields you want to keep to the
+``product_variant_template_reassign.keep_fields`` parameter
+(comma-separated field names, ``list_price,standard_price`` by default).
 
 Usage
 =====
 
-To assign variants, go to a single variant product template.
+Say you have a template "Scarf" with color variants (Blue, Red) and a
+standalone single-variant product "Green scarf" that should really be
+one more color of "Scarf":
 
-1. In actions, choose: *Reassign variant*.
-2. Choose the target product template.
-3. Choose the variant attributes if available (otherwise you won't be
-   able to reassign the variant)
+1. Open the single variant product "Green scarf" (*Inventory > Products
+   > Products*).
+2. Choose *Reassign variant* in the *Actions* menu.
+3. Select the target template ("Scarf") and the attribute values for the
+   new variant (Green).
 4. Click on *Reassign*.
+
+"Green scarf" is merged into "Scarf" as its Green variant, keeping its
+data (code, barcode, operations...). The origin template is deleted and
+a tracking note is posted in the target template chatter.
 
 Bug Tracker
 ===========
@@ -79,6 +88,7 @@ Contributors
 
   - David Vidal
   - Pedro M. Baeza
+  - Juan Carlos Oñate
 
 Maintainers
 -----------

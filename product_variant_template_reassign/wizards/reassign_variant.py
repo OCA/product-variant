@@ -1,8 +1,9 @@
 # Copyright 2024 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from markupsafe import Markup
 from openupgradelib.openupgrade_merge_records import merge_records
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -36,14 +37,15 @@ class ReassignVariant(models.TransientModel):
         product_template = self.env["product.template"].browse(
             self.env.context.get("active_id", 0)
         )
-        if not product_template.check_access_rights("create", raise_exception=False):
+        if not self.env["product.template"].has_access("create"):
             raise UserError(
-                _(
-                    "Only users with permissions to create products can reassign variants"
+                self.env._(
+                    "Only users with permissions to create products can reassign "
+                    "variants"
                 )
             )
         if product_template and product_template.product_variant_count != 1:
-            raise UserError(_("You can only reassign unique variant products"))
+            raise UserError(self.env._("You can only reassign unique variant products"))
         res = super().default_get(fields_list)
         if product_template:
             res["origin_product_template_id"] = product_template.id
@@ -58,6 +60,11 @@ class ReassignVariant(models.TransientModel):
             ].search(
                 [
                     ("type", "=", wiz.origin_product_template_id.type),
+                    (
+                        "is_storable",
+                        "=",
+                        wiz.origin_product_template_id.is_storable,
+                    ),
                     ("uom_id", "=", wiz.origin_product_template_id.uom_id.id),
                     ("id", "!=", wiz.origin_product_template_id.id),
                     ("attribute_line_ids", "!=", False),
@@ -89,8 +96,8 @@ class ReassignVariant(models.TransientModel):
 
     def _get_field_spec(self) -> dict:
         """Keep the values from the original variant using merge_records.
-        See openupgradelib _adjust_merged_values_orm
-        https://github.com/OCA/openupgradelib/blob/8d04b103b70d6927f805b94ef26ecf53b26e51ed/openupgradelib/openupgrade_merge_records.py#L532-L587 # noqa
+        See ``_adjust_merged_values_orm`` in
+        ``openupgradelib/openupgrade_merge_records.py``.
         """
         field_spec_map = {
             "char": "first_from_origin",
@@ -142,7 +149,9 @@ class ReassignVariant(models.TransientModel):
         )
         dupes_to_delete = self.env["product.template.attribute.line"]
         for attribute in attribute_lines.attribute_id:
-            att_lines = attribute_lines.filtered(lambda x: x.attribute_id == attribute)
+            att_lines = attribute_lines.filtered(
+                lambda x, attribute=attribute: x.attribute_id == attribute
+            )
             # There's only one...
             if len(att_lines) == 1:
                 continue
@@ -155,7 +164,7 @@ class ReassignVariant(models.TransientModel):
         """Called after the merge. Some info might not be merged correctly. Override
         here to reset the original data"""
         # We need to reload the ORM cache to get rid of old stuff
-        self.env["product.template"].invalidate_cache()
+        self.env.invalidate_all()
         # There can be special cases like list_price where the values are handled
         # by the ORM as the column is delegated from the product template.
         fields_to_update = (
@@ -185,22 +194,24 @@ class ReassignVariant(models.TransientModel):
         existing_variants = self.target_product_template_id.product_variant_ids
         for attribute_value in self.attribute_value_ids:
             self.target_product_template_id.attribute_line_ids.filtered(
-                lambda x: x.attribute_id == attribute_value.attribute_id
+                lambda x, attribute_value=attribute_value: x.attribute_id
+                == attribute_value.attribute_id
             ).value_ids += attribute_value
         new_variant = (
             self.target_product_template_id.product_variant_ids - existing_variants
         )
         if not new_variant:
             raise UserError(
-                _(
-                    "The selected attributes didn't generate a variant in the target template"
+                self.env._(
+                    "The selected attributes didn't generate a variant in the "
+                    "target template"
                 )
             )
         try:
             new_variant.ensure_one()
         except ValueError:
             raise UserError(
-                _(
+                self.env._(
                     "The selected attributes generate more than one variant. "
                     "Refine your configuration"
                 )
@@ -226,10 +237,14 @@ class ReassignVariant(models.TransientModel):
             method="sql",
         )
         self._postprocess_data(new_variant, original_values)
-        body = (
-            f'<a href="#" data-oe-model="product.product" data-oe-id="{new_variant.id}">'
-            f'{new_variant.display_name}</a> {_("reassigned to this template")}'
-        )
+        body = Markup(
+            '<a href="#" data-oe-model="product.product" data-oe-id="%(id)s">'
+            "%(name)s</a> %(message)s"
+        ) % {
+            "id": new_variant.id,
+            "name": new_variant.display_name,
+            "message": self.env._("reassigned to this template"),
+        }
         self.target_product_template_id.message_post(body=body)
         return {
             "type": "ir.actions.act_window",

@@ -1,7 +1,10 @@
 # Copyright 2024 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import Command
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
 
 TEST_IMAGE = (
     b"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8"
@@ -9,7 +12,7 @@ TEST_IMAGE = (
 )
 
 
-class ProductVariantReassignCase(TransactionCase):
+class ProductVariantReassignCase(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -88,6 +91,7 @@ class ProductVariantReassignCase(TransactionCase):
             }
         )
 
+    @mute_logger("odoo.sql_db", "OpenUpgrade")
     def test_reassign_product(self):
         existing_color_scarves = self.color_scarf.product_variant_ids
         wiz_form = Form(
