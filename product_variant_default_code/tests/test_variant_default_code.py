@@ -384,3 +384,15 @@ class TestVariantDefaultCode(TransactionCase):
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
+
+    def test_19_mask_template_is_false(self):
+        self.env.user.groups_id |= self.group_default_code
+        self.template1.write({"reference_mask": False})
+        self.assertFalse(self.template1.reference_mask)
+        for product in self.template1.product_variant_ids:
+            generated_code = product._generate_default_code()
+            self.assertEqual(
+                generated_code,
+                "",
+                "The default_code should be an empty string if the reference_mask is False.",
+            )
