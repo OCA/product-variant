@@ -34,6 +34,11 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__is_storable
+msgid "A storable product is a product for which you manage stock."
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__account_tag_ids
 msgid "Account Tags"
 msgstr ""
@@ -57,6 +62,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator__can_create_product
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__can_create_product
 msgid "Can Create Product"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__route_from_categ_ids
+msgid "Category Routes"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -127,6 +137,11 @@ msgid "Currency"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__sale_delay
+msgid "Customer Lead Time"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,help:product_variant_configurator.field_product_product__supplier_taxes_id
 msgid "Default taxes used when buying the product"
 msgstr ""
@@ -149,8 +164,38 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__sale_delay
+msgid ""
+"Delivery lead time, in days. It's the number of days, promised to the "
+"customer, between the confirmation of the sales order and the delivery."
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__route_ids
+msgid ""
+"Depending on the modules installed, this will allow you to define the route "
+"of the product: whether it will be bought, manufactured, replenished on "
+"order, etc."
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description
 msgid "Description"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description_pickingout
+msgid "Description on Delivery Orders"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description_picking
+msgid "Description on Picking"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__description_pickingin
+msgid "Description on Receptions"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -166,6 +211,11 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_category__no_create_variants
 msgid "Don't create variants automatically"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__tracking
+msgid "Ensure the traceability of a storable product in your warehouse."
 msgstr ""
 
 #. module: product_variant_configurator
@@ -201,8 +251,18 @@ msgid "ID"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__lot_valuated
+msgid "If checked, the valuation will be specific by Lot/Serial number."
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_account_income_id
 msgid "Income Account"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_stock_inventory
+msgid "Inventory Location"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -242,6 +302,11 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__list_price
 msgid "List Price"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__location_id
+msgid "Location"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -396,6 +461,11 @@ msgid "Product not created!"
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__property_stock_production
+msgid "Production Location"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__product_variant_ids
 msgid "Products"
 msgstr ""
@@ -438,6 +508,21 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_template_attribute_line__required
 msgid "Required"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__responsible_id
+msgid "Responsible"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__route_ids
+msgid "Routes"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__has_available_route_ids
+msgid "Routes can be selected on this product"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -526,8 +611,39 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__property_stock_production
+msgid ""
+"This stock location will be used, instead of the default one, as the source "
+"location for stock moves generated by manufacturing orders."
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__property_stock_inventory
+msgid ""
+"This stock location will be used, instead of the default one, as the source "
+"location for stock moves generated when you do an inventory."
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,help:product_variant_configurator.field_product_product__responsible_id
+msgid ""
+"This user will be responsible of the next activities related to logistic "
+"operations for this product."
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__is_storable
+msgid "Track Inventory"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__service_type
 msgid "Track Service"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__tracking
+msgid "Tracking"
 msgstr ""
 
 #. module: product_variant_configurator
@@ -573,6 +689,11 @@ msgid ""
 msgstr ""
 
 #. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__lot_valuated
+msgid "Valuation by Lot/Serial number"
+msgstr ""
+
+#. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_configurator_attribute__value_id
 msgid "Value"
 msgstr ""
@@ -606,6 +727,11 @@ msgstr ""
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__volume_uom_name
 msgid "Volume unit of measure label"
+msgstr ""
+
+#. module: product_variant_configurator
+#: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__warehouse_id
+msgid "Warehouse"
 msgstr ""
 
 #. module: product_variant_configurator
