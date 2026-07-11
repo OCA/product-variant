@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-05 17:35+0000\n"
-"PO-Revision-Date: 2024-11-05 17:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,15 +16,16 @@ msgstr ""
 #. module: product_variant_template_reassign
 #: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
 msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/> No attributes available for create"
-" a new variant in the target template"
+"<i class=\"fa fa-exclamation-triangle\"/>\n"
+" No attributes available for create a new variant in the target template"
 msgstr ""
 
 #. module: product_variant_template_reassign
 #: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
 msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/> Reassigning this template variant to the selected target\n"
-"                        <strong>can't be undone</strong>"
+"<i class=\"fa fa-exclamation-triangle\"/>\n"
+" Reassigning this template variant to the selected target\n"
+"                    <strong>can't be undone</strong>"
 msgstr ""
 
 #. module: product_variant_template_reassign
@@ -70,11 +69,6 @@ msgid "ID"
 msgstr ""
 
 #. module: product_variant_template_reassign
-#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: product_variant_template_reassign
 #: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -85,13 +79,9 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: product_variant_template_reassign
-#: model:ir.model.fields,field_description:product_variant_template_reassign.field_reassign_variant__method
-msgid "Method"
-msgstr ""
-
-#. module: product_variant_template_reassign
-#: model:ir.model.fields.selection,name:product_variant_template_reassign.selection__reassign_variant__method__orm
-msgid "ORM - Try to respect Odoo's data flows"
+#. odoo-python
+#: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
+msgid "Only users with permissions to create products can reassign variants"
 msgstr ""
 
 #. module: product_variant_template_reassign
@@ -115,11 +105,6 @@ msgid "Reassign variant template"
 msgstr ""
 
 #. module: product_variant_template_reassign
-#: model:ir.model.fields.selection,name:product_variant_template_reassign.selection__reassign_variant__method__sql
-msgid "SQL - When the first on fails"
-msgstr ""
-
-#. module: product_variant_template_reassign
 #: model_terms:ir.ui.view,arch_db:product_variant_template_reassign.reassign_variant_form
 msgid "Select the target template"
 msgstr ""
@@ -130,15 +115,15 @@ msgid "Target Product Template"
 msgstr ""
 
 #. module: product_variant_template_reassign
+#. odoo-python
 #: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
-#, python-format
 msgid ""
 "The selected attributes didn't generate a variant in the target template"
 msgstr ""
 
 #. module: product_variant_template_reassign
+#. odoo-python
 #: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
-#, python-format
 msgid ""
 "The selected attributes generate more than one variant. Refine your "
 "configuration"
@@ -157,7 +142,13 @@ msgid "Variant to move"
 msgstr ""
 
 #. module: product_variant_template_reassign
+#. odoo-python
 #: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
-#, python-format
 msgid "You can only reassign unique variant products"
+msgstr ""
+
+#. module: product_variant_template_reassign
+#. odoo-python
+#: code:addons/product_variant_template_reassign/wizards/reassign_variant.py:0
+msgid "reassigned to this template"
 msgstr ""
