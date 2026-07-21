@@ -12,13 +12,43 @@ class TestProductVariantChangeAttributeValue(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.legs = cls.env.ref("product.product_attribute_1")
-        cls.steel = cls.env.ref("product.product_attribute_value_1")
-        cls.aluminium = cls.env.ref("product.product_attribute_value_2")
+        cls.legs = cls.env.ref("product.pa_legs", raise_if_not_found=False)
+        if not cls.legs:
+            cls.legs = cls.env["product.attribute"].create({"name": "Legs"})
 
-        cls.color = cls.env.ref("product.product_attribute_2")
-        cls.white = cls.env.ref("product.product_attribute_value_3")
-        cls.black = cls.env.ref("product.product_attribute_value_4")
+        cls.steel = cls.env.ref("product.pav_legs_steel", raise_if_not_found=False)
+        if not cls.steel:
+            cls.steel = cls.env["product.attribute.value"].create(
+                {"name": "Steel", "attribute_id": cls.legs.id}
+            )
+
+        cls.aluminium = cls.env.ref(
+            "product.pav_legs_aluminium", raise_if_not_found=False
+        )
+        if not cls.aluminium:
+            cls.aluminium = cls.env["product.attribute.value"].create(
+                {"name": "Aluminium", "attribute_id": cls.legs.id}
+            )
+
+        cls.color = cls.env.ref("product.pa_color", raise_if_not_found=False)
+        if not cls.color:
+            cls.color = cls.env["product.attribute"].create({"name": "Color"})
+
+        cls.white = cls.env.ref("product.pav_color_white", raise_if_not_found=False)
+        if not cls.white:
+            cls.white = cls.env["product.attribute.value"].create(
+                {"name": "White", "attribute_id": cls.color.id}
+            )
+
+        cls.black = cls.env.ref("product.pav_color_black", raise_if_not_found=False)
+        if not cls.black:
+            cls.black = cls.env["product.attribute.value"].create(
+                {"name": "Black", "attribute_id": cls.color.id}
+            )
+
+        cls.color.sequence = 1
+        cls.legs.sequence = 2
+
         cls.pink = cls.env["product.attribute.value"].create(
             {"name": "Pink", "attribute_id": cls.color.id}
         )
@@ -26,13 +56,47 @@ class TestProductVariantChangeAttributeValue(BaseCommon):
             {"name": "Blue", "attribute_id": cls.color.id}
         )
         cls.template = cls.env.ref(
-            "product_variant_change_attribute_value.product_product_1_product_template"
+            "product_variant_change_attribute_value.product_product_1_product_template",
+            raise_if_not_found=False,
         )
+        if not cls.template:
+            cls.template = cls.env["product.template"].create(
+                {
+                    "name": "Custom Desk",
+                    "attribute_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "attribute_id": cls.legs.id,
+                                "value_ids": [(6, 0, [cls.steel.id, cls.aluminium.id])],
+                            },
+                        ),
+                        (
+                            0,
+                            0,
+                            {
+                                "attribute_id": cls.color.id,
+                                "value_ids": [(6, 0, [cls.white.id, cls.black.id])],
+                            },
+                        ),
+                    ],
+                }
+            )
         cls.variants = cls.template.product_variant_ids
-        cls.variant_1 = cls.variants[0]
-        cls.variant_2 = cls.variants[1]
-        cls.variant_3 = cls.variants[2]
-        cls.variant_4 = cls.variants[3]
+
+        def _get_variant(legs_val, color_val):
+            return cls.variants.filtered(
+                lambda v: legs_val
+                in v.product_template_attribute_value_ids.product_attribute_value_id
+                and color_val
+                in v.product_template_attribute_value_ids.product_attribute_value_id
+            )
+
+        cls.variant_1 = _get_variant(cls.steel, cls.white)
+        cls.variant_2 = _get_variant(cls.steel, cls.black)
+        cls.variant_3 = _get_variant(cls.aluminium, cls.white)
+        cls.variant_4 = _get_variant(cls.aluminium, cls.black)
         cls.used_values = (
             cls.variants.product_template_attribute_value_ids.product_attribute_value_id
         )
@@ -281,10 +345,10 @@ class TestProductVariantChangeAttributeValue(BaseCommon):
             sorted(self.variants.mapped("display_name")),
             sorted(
                 [
-                    "Custom Desk (Steel, White)",
-                    "Custom Desk (Steel, Black)",
-                    "Custom Desk (Aluminium, White)",
-                    "Custom Desk (Aluminium, Black)",
+                    "Custom Desk (Black, Aluminium)",
+                    "Custom Desk (Black, Steel)",
+                    "Custom Desk (White, Aluminium)",
+                    "Custom Desk (White, Steel)",
                 ]
             ),
         )
@@ -302,10 +366,162 @@ class TestProductVariantChangeAttributeValue(BaseCommon):
             sorted(self.variants.mapped("display_name")),
             sorted(
                 [
-                    "Custom Desk (Steel, Pink)",
-                    "Custom Desk (Steel, White)",
-                    "Custom Desk (Aluminium, Pink)",
-                    "Custom Desk (Aluminium, White)",
+                    "Custom Desk (Pink, Aluminium)",
+                    "Custom Desk (Pink, Steel)",
+                    "Custom Desk (White, Aluminium)",
+                    "Custom Desk (White, Steel)",
                 ]
             ),
         )
+
+    def test_default_get_non_product_model(self):
+        """Test default_get when active_model is not product.product."""
+        res = self.wiz_model.with_context(active_model="res.partner").default_get(
+            ["product_variant_count"]
+        )
+        self.assertNotIn("product_ids", res)
+
+    def test_selectable_attribute_value_ids(self):
+        """Test compute of selectable_attribute_value_ids on action model."""
+        wiz = self._get_wiz()
+        action = wiz.attributes_action_ids[0]
+        self.assertTrue(action.selectable_attribute_value_ids)
+
+        empty_action = self.env["variant.attribute.value.action"].create(
+            {"attribute_action": "do_nothing"}
+        )
+        self.assertFalse(empty_action.selectable_attribute_value_ids)
+
+    def test_replace_without_replacement_value(self):
+        """Test setting replace action without specifying replaced_by_id."""
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.white, "replace", replaced_by_id=False)
+        wiz.action_apply()
+        self.assertTrue(self._is_value_on_variant(self.variant_1, self.white))
+
+    def test_replace_with_new_attribute(self):
+        """Test replacing an attribute value with a value from an
+        attribute not on the template."""
+        material_attr = self.env["product.attribute"].create({"name": "Material"})
+        wood_val = self.env["product.attribute.value"].create(
+            {"name": "Wood", "attribute_id": material_attr.id}
+        )
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.white, "replace", replaced_by_id=wood_val)
+        wiz.action_apply()
+        self.assertTrue(self._is_value_on_variant(self.variant_1, wood_val))
+
+    def test_remove_duplicate_product_both_associated(self):
+        """Test error raised when trying to remove duplicate variants
+        and both are associated."""
+        if "sale.order" not in self.env:
+            return
+        partner = self.env["res.partner"].create({"name": "Test Partner"})
+        so1 = self.env["sale.order"].create({"partner_id": partner.id})
+        self.env["sale.order.line"].create(
+            {"order_id": so1.id, "product_id": self.variant_1.id}
+        )
+        so2 = self.env["sale.order"].create({"partner_id": partner.id})
+        self.env["sale.order.line"].create(
+            {"order_id": so2.id, "product_id": self.variant_3.id}
+        )
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.steel, "delete")
+        self._change_action(wiz, self.aluminium, "delete")
+        with self.assertRaises(UserError):
+            wiz.action_apply()
+
+    def test_remove_duplicate_product_product_associated_check_product_not(self):
+        """Test duplicate product removal when target product is
+        associated but check product is not."""
+        if "sale.order" not in self.env:
+            return
+        partner = self.env["res.partner"].create({"name": "Test Partner"})
+        so = self.env["sale.order"].create({"partner_id": partner.id})
+        self.env["sale.order.line"].create(
+            {"order_id": so.id, "product_id": self.variant_3.id}
+        )
+        wiz = self._get_wiz()
+        self._change_action(wiz, self.steel, "delete")
+        self._change_action(wiz, self.aluminium, "delete")
+        wiz.action_apply()
+        self.assertTrue(self.variant_3.exists())
+        self.assertFalse(self.variant_1.exists())
+
+    def test_remove_duplicate_product_default_ptav(self):
+        """Test _remove_duplicate_product with default ptav_ids."""
+        wiz = self._get_wiz()
+        res = wiz._remove_duplicate_product(self.variant_1)
+        self.assertFalse(res)
+
+    def test_handle_unique_violation(self):
+        """Test _handle_unique_violation error handling."""
+        import psycopg2
+
+        wiz = self._get_wiz()
+
+        class MockUniqueViolation(psycopg2.IntegrityError):
+            pgcode = psycopg2.errorcodes.UNIQUE_VIOLATION
+
+        class MockOtherIntegrityError(psycopg2.IntegrityError):
+            pgcode = "12345"
+
+        def raise_unique():
+            raise MockUniqueViolation()
+
+        with self.assertRaises(UserError):
+            wiz._handle_unique_violation(raise_unique, "Custom Error")
+
+        def raise_other():
+            raise MockOtherIntegrityError()
+
+        with self.assertRaises(psycopg2.IntegrityError):
+            wiz._handle_unique_violation(raise_other, "Custom Error")
+
+    def test_cleanup_attribute_values_deactivate_line(self):
+        """Test _cleanup_attribute_values deactivates line when no values left."""
+        wiz = self._get_wiz()
+        legs_line = self.template.attribute_line_ids.filtered(
+            lambda x: x.attribute_id == self.legs
+        )
+        self.assertTrue(legs_line.active)
+        wiz._cleanup_attribute_values(
+            self.variant_1, {self.legs: self.steel | self.aluminium}
+        )
+        self.assertFalse(legs_line.active)
+
+    def test_remove_duplicate_product_unlinked_check_product(self):
+        """Test _remove_duplicate_product skips unlinked check_product (line 217)."""
+        wiz = self._get_wiz()
+        self.variant_2.unlink()
+        res = wiz._remove_duplicate_product(self.variant_1)
+        self.assertFalse(res)
+
+    def test_remove_duplicate_both_associated_mock(self):
+        """Test UserError raised when both products are associated (lines 224-232)."""
+        from unittest.mock import patch
+
+        wiz = self._get_wiz()
+        with patch.object(wiz.__class__, "_is_product_associated", return_value=True):
+            target_ptavs = self.variant_2.product_template_attribute_value_ids
+            with self.assertRaises(UserError):
+                wiz._remove_duplicate_product(self.variant_1, target_ptavs)
+
+    def test_is_product_associated_true(self):
+        """Test _is_product_associated returns True when model search
+        finds line (lines 247-248)."""
+        from unittest.mock import patch
+
+        wiz = self._get_wiz()
+        mock_model = self.env["ir.model"].search(
+            [("model", "=", "res.partner")], limit=1
+        )
+        with patch.object(
+            self.env["ir.model"].__class__, "search", return_value=mock_model
+        ):
+            with patch.object(
+                self.env["res.partner"].__class__,
+                "search",
+                return_value=self.env["res.partner"].browse(1),
+            ):
+                self.assertTrue(wiz._is_product_associated(self.variant_1))

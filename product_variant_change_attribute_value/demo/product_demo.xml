@@ -3,13 +3,12 @@
     <!-- Data similar to `product` module but re-defined here to be isolated -->
     <record id="product_product_1_product_template" model="product.template">
         <field name="name">Custom Desk</field>
-        <field name="categ_id" ref="product.product_category_5" />
+        <field name="categ_id" ref="product.product_category_goods" />
         <field name="standard_price">100.0</field>
         <field name="list_price">100.0</field>
         <field name="type">consu</field>
         <field name="weight">1.0</field>
         <field name="uom_id" ref="uom.product_uom_unit" />
-        <field name="uom_po_id" ref="uom.product_uom_unit" />
     </record>
 
     <!-- the product template attribute lines have to be defined before creating the variants -->
@@ -18,10 +17,10 @@
         model="product.template.attribute.line"
     >
         <field name="product_tmpl_id" ref="product_product_1_product_template" />
-        <field name="attribute_id" ref="product.product_attribute_1" />
+        <field name="attribute_id" ref="product.pa_legs" />
         <field
             name="value_ids"
-            eval="[(6, 0, [ref('product.product_attribute_value_1'), ref('product.product_attribute_value_2')])]"
+            eval="[(6, 0, [ref('product.pav_legs_steel'), ref('product.pav_legs_aluminium')])]"
         />
     </record>
     <record
@@ -29,10 +28,10 @@
         model="product.template.attribute.line"
     >
         <field name="product_tmpl_id" ref="product_product_1_product_template" />
-        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field name="attribute_id" ref="product.pa_color" />
         <field
             name="value_ids"
-            eval="[(6, 0, [ref('product.product_attribute_value_3'), ref('product.product_attribute_value_4')])]"
+            eval="[(6, 0, [ref('product.pav_color_white'), ref('product.pav_color_black')])]"
         />
     </record>
 </odoo>

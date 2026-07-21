@@ -109,8 +109,8 @@ class VariantAttributeValueWizard(models.TransientModel):
                 lambda r, pav=pav: r.product_attribute_value_id != pav
             )
             if action == "delete":
-                if pav.id in product_tmpl_av_ids.attribute_id.ids:
-                    if self._remove_duplicate_product(product):
+                if pav.attribute_id in product_tmpl_av_ids.attribute_id:
+                    if self._remove_duplicate_product(product, ptav_ids):
                         continue
                 # nothing to do because `_cleanup_attribute_value` will take care
             elif action == "replace":
@@ -194,10 +194,10 @@ class VariantAttributeValueWizard(models.TransientModel):
             error_msg = self._unique_err_msg(product, tpl_attr_line, pavs)
             if not set(tpl_attr_line.value_ids.ids) - set(pavs.ids):
                 # no value left
-                def _make_inactive(tpl_attr_line):
-                    tpl_attr_line.active = False
+                def _make_inactive(line=tpl_attr_line):
+                    line.active = False
 
-                self._handle_unique_violation(_make_inactive(tpl_attr_line), error_msg)
+                self._handle_unique_violation(_make_inactive, error_msg)
             tpl_attr_line.write({"value_ids": [(3, pav.id) for pav in pavs]})
             tpl_attr_values = TplAttrValue.search(
                 [
@@ -208,11 +208,15 @@ class VariantAttributeValueWizard(models.TransientModel):
             if tpl_attr_values:
                 self._handle_unique_violation(tpl_attr_values.unlink, error_msg)
 
-    def _remove_duplicate_product(self, product):
-        product_pavs = set(product.product_template_attribute_value_ids.ids)
+    def _remove_duplicate_product(self, product, ptav_ids=None):
+        if ptav_ids is None:
+            ptav_ids = product.product_template_attribute_value_ids
+        target_pavs = set(ptav_ids.ids)
         for check_product in self.product_ids - product:
+            if not check_product.exists():
+                continue
             variant_pavs = set(check_product.product_template_attribute_value_ids.ids)
-            if not variant_pavs.issubset(product_pavs):
+            if not variant_pavs.issubset(target_pavs):
                 continue
             if not self._is_product_associated(product):
                 product.unlink()
