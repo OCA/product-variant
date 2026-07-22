@@ -143,3 +143,13 @@ class TestProductProduct(SavepointCase):
         # check that variant is active and combination_deleted is False
         self.assertTrue(self.product_product_4c.active)
         self.assertFalse(self.product_product_4c.combination_deleted)
+
+    def test_compute_active_ignores_active_test(self):
+        template = self._create_template_with_variant()
+        template.with_context(active_test=False).product_variant_ids.write(
+            {"active": False}
+        )
+        template_no_test = template.with_context(active_test=False)
+        template_no_test.invalidate_cache(["active"])
+        template_no_test._compute_active()
+        self.assertFalse(template_no_test.active)
