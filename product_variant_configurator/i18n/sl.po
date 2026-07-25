@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-16 02:12+0000\n"
-"PO-Revision-Date: 2026-06-27 06:32+0000\n"
+"PO-Revision-Date: 2026-07-25 06:49+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
@@ -386,7 +386,7 @@ msgstr "Proizvod"
 #. module: product_variant_configurator
 #: model:ir.model.fields,field_description:product_variant_configurator.field_product_product__attribute_line_ids
 msgid "Product Attributes"
-msgstr "Lastnosti izdelka"
+msgstr "Atributi proizvoda"
 
 #. module: product_variant_configurator
 #: model:ir.model,name:product_variant_configurator.model_product_category
