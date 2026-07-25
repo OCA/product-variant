@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 02:42+0000\n"
-"PO-Revision-Date: 2016-09-07 02:42+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"PO-Revision-Date: 2026-07-25 07:00+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_variant_sale_price
 #: model_terms:ir.ui.view,arch_db:product_variant_sale_price.product_template_form_view
@@ -26,6 +27,8 @@ msgid ""
 "<span class=\"text-muted fst-italic\">Setting the price here will update all "
 "variants.</span>"
 msgstr ""
+"<span class=\"text-muted fst-italic\">Če tukaj nastavite ceno, se bodo "
+"posodobile vse različice.</span>"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__fix_price
@@ -34,9 +37,8 @@ msgstr "Fiksna cena"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__list_price
-#, fuzzy
 msgid "List Price"
-msgstr "Fiksna cena"
+msgstr "Cena po ceniku"
 
 #. module: product_variant_sale_price
 #: model:ir.model,name:product_variant_sale_price.model_product_template
@@ -46,12 +48,12 @@ msgstr "Proizvod"
 #. module: product_variant_sale_price
 #: model:ir.model,name:product_variant_sale_price.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Različica proizvoda"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,field_description:product_variant_sale_price.field_product_product__lst_price
 msgid "Sales Price"
-msgstr ""
+msgstr "Prodajna cena"
 
 #. module: product_variant_sale_price
 #: model:ir.model.fields,help:product_variant_sale_price.field_product_product__lst_price
@@ -59,6 +61,8 @@ msgid ""
 "The sale price is managed from the product template. Click on the 'Configure "
 "Variants' button to set the extra attribute prices."
 msgstr ""
+"Prodajna cena se nastavi v predlogi proizvoda. Kliknite gumb 'Nastavi "
+"različice', da nastavite cene za dodatne atribute."
 
 #~ msgid "Product Template"
 #~ msgstr "Predloga proizvoda"
