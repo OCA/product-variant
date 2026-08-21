@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 class ProductConfigurator(models.AbstractModel):
     _name = "product.configurator"
     _description = "Product Configurator"
+    _partner_id_field = "partner_id"
 
     product_tmpl_id = fields.Many2one(
         string="Product Template", comodel_name="product.template", auto_join=True
@@ -150,15 +151,14 @@ class ProductConfigurator(models.AbstractModel):
         if not self.product_id:
             product_tmpl = self.product_tmpl_id
             values = self.product_attribute_ids.mapped("value_id")
-            if "partner_id" in self._fields:
+            if self._partner_id_field in self._fields:
+                partner = self[self._partner_id_field]
                 # If our model has a partner_id field, language is got from it
                 obj = self.env["product.attribute.value"].with_context(
-                    lang=self.partner_id.lang
+                    lang=partner.lang
                 )
                 values = obj.browse(self.product_attribute_ids.mapped("value_id").ids)
-                obj = self.env["product.template"].with_context(
-                    lang=self.partner_id.lang
-                )
+                obj = self.env["product.template"].with_context(lang=partner.lang)
                 product_tmpl = obj.browse(self.product_tmpl_id.id)
             if "name" in self._fields:
                 self.name = self._get_product_description(product_tmpl, False, values)
@@ -168,11 +168,12 @@ class ProductConfigurator(models.AbstractModel):
         self.ensure_one()
         if self.product_id:
             product = self.product_id
-            if "partner_id" in self._fields:
+            if self._partner_id_field in self._fields:
+                partner = self[self._partner_id_field]
                 # If our model has a partner_id field, language is got from it
                 product = (
                     self.env["product.product"]
-                    .with_context(lang=self.partner_id.lang)
+                    .with_context(lang=partner.lang)
                     .browse(self.product_id.id)
                 )
             if "name" in self._fields:

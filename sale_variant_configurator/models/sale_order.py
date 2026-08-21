@@ -74,8 +74,7 @@ class SaleOrderLine(models.Model):
         res = super()._get_product_description(
             template=template, product=product, product_attributes=product_attributes
         )
-        product = self.product_id.with_context(lang=self.order_partner_id.lang)
-        if product.description_sale:
+        if product and product.description_sale:
             res = (res or "") + "\n" + product.description_sale
         return res
 
