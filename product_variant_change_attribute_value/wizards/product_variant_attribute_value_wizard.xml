@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_variant_update_attribute_wizard" model="ir.ui.view">
+        <field name="name">Product Variant Update Attribute</field>
+        <field name="model">variant.attribute.value.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Variant Change Attribute">
+                <sheet>
+                    <div>Updating <field
+                        name="product_variant_count"
+                    /> variant(s) selected out of <field
+                        name="product_template_count"
+                    /> product template(s).</div>
+                    <notebook>
+                        <page string="Attribute value changes">
+                            <label for="filter_attribute_id" class="oe_inline" />
+                            <field
+                                name="filter_attribute_id"
+                                class="oe_inline"
+                                nolabel="1"
+                                options="{'no_create': True}"
+                            />
+                            <group>
+                                <field name="available_attribute_ids" invisible="1" />
+                                <field name="attributes_action_ids" nolabel="1">
+                                    <list
+                                        editable="bottom"
+                                        create="false"
+                                        delete="0"
+                                        no_open="1"
+                                    >
+                                        <field
+                                            name="attribute_action"
+                                            string="action"
+                                        />
+                                        <field name="product_attribute_value_id" />
+                                        <field
+                                            name="replaced_by_id"
+                                            readonly="attribute_action != 'replace'"
+                                        />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Selected variants">
+                            <group>
+                                <field name="product_ids" nolabel="1">
+                                    <list
+                                        edit="false"
+                                        create="false"
+                                        delete="false"
+                                        open="false"
+                                    >
+                                        <field name="default_code" />
+                                        <field name="name" />
+                                        <field
+                                            name="product_template_attribute_value_ids"
+                                            widget="many2many_tags"
+                                        />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button
+                            name="action_apply"
+                            string="Apply"
+                            type="object"
+                            class="btn-primary"
+                        />
+                        <button
+                            string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_variant_change_value_wiz" model="ir.actions.act_window">
+        <field name="name">Change attribute values assigned</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">variant.attribute.value.wizard</field>
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_view_types">list</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_product_ids': active_ids}</field>
+    </record>
+</odoo>
