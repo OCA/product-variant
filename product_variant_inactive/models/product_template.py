@@ -37,7 +37,5 @@ class ProductTemplate(models.Model):
     @api.depends("product_variant_ids.active")
     def _compute_active(self):
         for template in self:
-            if not template.product_variant_ids.mapped("active"):
-                template.active = False
-            else:
-                template.active = True
+            variants = template.with_context(active_test=False).product_variant_ids
+            template.active = any(variants.mapped("active"))
