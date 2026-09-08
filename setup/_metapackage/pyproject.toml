@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-product-variant"
-version = "17.0.20260417.0"
+version = "17.0.20260908.0"
 dependencies = [
     "odoo-addon-product_variant_attribute_tax>=17.0dev,<17.1dev",
     "odoo-addon-product_variant_configurator>=17.0dev,<17.1dev",
@@ -8,6 +8,7 @@ dependencies = [
     "odoo-addon-product_variant_name>=17.0dev,<17.1dev",
     "odoo-addon-product_variant_sale_price>=17.0dev,<17.1dev",
     "odoo-addon-purchase_variant_configurator>=17.0dev,<17.1dev",
+    "odoo-addon-sale_variant_configurator>=17.0dev,<17.1dev",
 ]
 classifiers=[
     "Programming Language :: Python",

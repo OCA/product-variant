@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [product_variant_name](product_variant_name/) | 17.0.1.0.0 |  | Product Variant Name
 [product_variant_sale_price](product_variant_sale_price/) | 17.0.1.2.1 |  | Allows to write fixed prices in product variants
 [purchase_variant_configurator](purchase_variant_configurator/) | 17.0.1.0.1 |  | Product variants in purchase management
+[sale_variant_configurator](sale_variant_configurator/) | 17.0.1.0.0 |  | Product variants in sale management
 
 [//]: # (end addons)
 
