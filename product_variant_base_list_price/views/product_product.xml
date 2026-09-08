@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="product_product_form_view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lst_price']/parent::div" position="after">
+                <label
+                    for="pricelist_base_price"
+                    string="Sales Price (based on Pricelist)"
+                />
+                <div class="o_row">
+                    <field
+                        name="pricelist_base_price"
+                        class="oe_inline"
+                        widget='monetary'
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                        readonly="1"
+                    />
+                    <field name="base_pricelist_id" class="oe_inline" readonly="1" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_normal_form_view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lst_price']/parent::div" position="after">
+                <label
+                    for="pricelist_base_price"
+                    string="Sales Price (based on Pricelist)"
+                />
+                <div class="o_row">
+                    <field
+                        name="pricelist_base_price"
+                        class="oe_inline"
+                        widget='monetary'
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                        readonly="1"
+                    />
+                    <field name="base_pricelist_id" class="oe_inline" readonly="1" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_tree_view" model="ir.ui.view">
+        <field name="name">product.product.list</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="arch" type="xml">
+            <field name="lst_price" position="after">
+                <field name="pricelist_base_price" optional="show" />
+            </field>
+        </field>
+    </record>
+</odoo>
