@@ -1,2 +1,4 @@
 - Christopher Ormaza \<chris.ormaza@forgeflow.com\>
 - Manuel Regidor \<manuel.regidor@sygel.es\>
+- [Tecnativa](https://www.tecnativa.com):
+  - Carlos Dauden

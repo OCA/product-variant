@@ -59,19 +59,22 @@ class ProductTemplate(models.Model):
     )
     def _compute_pending_variants(self):
         for rec in self:
-            has_pending_variants = False
-            all_combinations = self._get_all_variant_combinations()
-            existing_variants = self._get_existing_variants()
-            for combination_tuple in all_combinations:
-                combination = self._get_variant_combination(combination_tuple)
-                if combination and combination not in existing_variants:
-                    for value in combination:
-                        if self._can_add_variant(value):
-                            has_pending_variants = True
-                            break
-                if has_pending_variants:
-                    break
-            rec.has_pending_variants = has_pending_variants
+            # The attribute values of an unsaved record do not exist yet and
+            # its exclusions cannot be searched by id: use the saved template.
+            template = rec._origin
+            rec.has_pending_variants = (
+                bool(template) and template._has_pending_variants()
+            )
+
+    def _has_pending_variants(self):
+        self.ensure_one()
+        existing_variants = self._get_existing_variants()
+        for combination_tuple in self._get_all_variant_combinations():
+            combination = self._get_variant_combination(combination_tuple)
+            if combination and combination not in existing_variants:
+                if any(self._can_add_variant(value) for value in combination):
+                    return True
+        return False
 
     def _get_values_without_variant(self):
         all_combinations = self._get_all_variant_combinations()

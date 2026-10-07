@@ -1,6 +1,8 @@
 # Copyright 2022 ForgeFlow S.L. <https://forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.fields import Command
+from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
 
@@ -295,3 +297,62 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         ]
         variant_creation_wizard1.action_create_variants()
         self.assertEqual(self.product_template1.product_variant_count, 3)
+
+    def _create_template_with_pending_variants(self, name):
+        template = self.product_template.create(
+            {"name": name, "no_create_variants": "yes"}
+        )
+        self.attribute_line_model.with_context(check_variant_creation=True).create(
+            {
+                "product_tmpl_id": template.id,
+                "attribute_id": self.attribute1.id,
+                "value_ids": [Command.set([self.value1.id, self.value2.id])],
+            }
+        )
+        return template
+
+    def test_pending_variants_several_templates(self):
+        pending = self._create_template_with_pending_variants("Pending")
+        complete = self.product_template.create({"name": "Without attributes"})
+        templates = pending | complete
+        templates.invalidate_recordset(["has_pending_variants"])
+        self.assertEqual(templates.mapped("has_pending_variants"), [True, False])
+
+    def test_pending_variants_form_with_exclusions(self):
+        self.env.user.groups_id |= self.env.ref("product.group_product_variant")
+        value3 = self.product_attribute_value.create(
+            {"name": "Value 3", "attribute_id": self.attribute1.id}
+        )
+        template = self._create_template_with_pending_variants("With exclusions")
+        self.attribute_line_model.with_context(check_variant_creation=True).create(
+            {
+                "product_tmpl_id": template.id,
+                "attribute_id": self.attribute2.id,
+                "value_ids": [Command.set([self.value2_1.id, self.value2_2.id])],
+            }
+        )
+        values = template.attribute_line_ids.product_template_value_ids
+        self.env["product.template.attribute.exclusion"].with_context(
+            check_variant_creation=True
+        ).create(
+            {
+                "product_tmpl_id": template.id,
+                "product_template_attribute_value_id": values.filtered(
+                    lambda v: v.product_attribute_value_id == self.value1
+                ).id,
+                "value_ids": [
+                    Command.set(
+                        values.filtered(
+                            lambda v: v.product_attribute_value_id == self.value2_1
+                        ).ids
+                    )
+                ],
+            }
+        )
+        template_form = Form(template)
+        self.assertTrue(template_form.has_pending_variants)
+        # Editing the attributes recomputes the field on the unsaved record
+        with self.assertNoLogs("odoo.models", level="WARNING"):
+            with template_form.attribute_line_ids.edit(0) as line:
+                line.value_ids.add(value3)
+        self.assertTrue(template_form.has_pending_variants)
