@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="reassign_variant_form" model="ir.ui.view">
+        <field name="model">reassign.variant</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field
+                        name="origin_product_template_id"
+                        string="Variant to move"
+                        readonly="1"
+                        widget="selection"
+                    />
+                </group>
+                <group string="Select the target template">
+                    <field
+                        name="target_product_template_id"
+                        options="{'no_create': True}"
+                        required="1"
+                    />
+                    <field
+                        name="attribute_value_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True, 'no_open': True}"
+                        required="1"
+                        invisible="not target_product_template_id or not allowed_attribute_value_ids"
+                    />
+                </group>
+                <div
+                    role="alert"
+                    class="alert alert-info"
+                    invisible="not target_product_template_id or allowed_attribute_value_ids"
+                >
+                    <i class="fa fa-exclamation-triangle" />
+ No attributes available for create a new variant in the target template
+                </div>
+                <div
+                    role="alert"
+                    class="alert alert-warning"
+                    invisible="not attribute_value_ids"
+                >
+                    <i class="fa fa-exclamation-triangle" />
+ Reassigning this template variant to the selected target
+                    <strong>can't be undone</strong>
+                </div>
+                <footer>
+                    <button
+                        name="reassign"
+                        type="object"
+                        class="btn-primary"
+                        confirm="This will merge the current template into the selected one and it can't be undone"
+                        invisible="not attribute_value_ids"
+                    >Reassign</button>
+                    <button special="cancel" data-hotkey="x" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="reassign_variant_action" model="ir.actions.act_window">
+        <field name="name">Reassign variant</field>
+        <field name="binding_model_id" ref="product.model_product_template" />
+        <field name="res_model">reassign.variant</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
