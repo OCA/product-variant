@@ -1,0 +1,557 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_change_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-24 14:01+0000\n"
+"PO-Revision-Date: 2026-09-24 13:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"%(count)s %(model)s records of %(target)s apply to all its variants, the "
+"moved ones included."
+msgstr ""
+"%(count)s registros de %(model)s de %(target)s se aplican a todas sus "
+"variantes, incluidas las movidas."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "%(origin)s and %(target)s have a different %(field)s."
+msgstr "%(origin)s y %(target)s tienen distinto %(field)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"%(origin)s keeps %(count)s combinations that cannot be excluded; Odoo will "
+"generate them again in it."
+msgstr ""
+"%(origin)s conserva %(count)s combinaciones que no se pueden excluir; Odoo "
+"volverá a generarlas en ella."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"%(template)s: Odoo would create %(created)s, delete %(removed)s, archive "
+"%(archived)s and reactivate %(activated)s variants."
+msgstr ""
+"%(template)s: Odoo crearía %(created)s, eliminaría %(removed)s, archivaría "
+"%(archived)s y reactivaría %(activated)s variantes."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "%(text)s (not merged: %(reason)s)"
+msgstr "%(text)s (no fusionada: %(reason)s)"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "%(value)s is used by %(model)s and has no equivalent in the target."
+msgstr "%(value)s se usa en %(model)s y no tiene equivalente en el destino."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "%(variant)s has several values for the same attribute."
+msgstr "%(variant)s tiene varios valores para el mismo atributo."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "%(variant)s needs a value for %(attributes)s."
+msgstr "%(variant)s necesita un valor para %(attributes)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "%(variant)s would get the same attributes as %(other)s."
+msgstr "%(variant)s tendría los mismos atributos que %(other)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "A variant is listed more than once."
+msgstr "Una variante aparece más de una vez."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Add %(values)s to %(attribute)s (does not create variants)."
+msgstr "Añadir %(values)s a %(attribute)s (no crea variantes)."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Add %(values)s to %(attribute)s."
+msgstr "Añadir %(values)s a %(attribute)s."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,help:product_variant_change_template.field_product_variant_change_template__copy_no_variant_attributes
+msgid ""
+"Add the attributes that do not create variants of the source templates to "
+"the target template."
+msgstr ""
+"Añadir a la plantilla destino los atributos de las plantillas origen que no "
+"crean variantes."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,help:product_variant_change_template.field_product_variant_change_template__missing_combination_policy
+msgid ""
+"Adding values to the target template makes combinations possible that no "
+"variant uses. 'Exclude them' adds attribute exclusions so Odoo never "
+"generates them; combinations that cannot be excluded without excluding an "
+"existing variant are created anyway. 'Create them' generates every missing "
+"combination, as Odoo does by default."
+msgstr ""
+"Añadir valores a la plantilla destino hace posibles combinaciones que "
+"ninguna variante usa. 'Excluirlas' añade exclusiones de atributos para que "
+"Odoo no las genere nunca; las combinaciones que no se pueden excluir sin "
+"excluir una variante existente se crean igualmente. 'Crearlas' genera todas "
+"las combinaciones que faltan, como hace Odoo por defecto."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,help:product_variant_change_template.field_product_variant_change_template__include_archived
+msgid "Also move the archived variants of the source templates."
+msgstr "Mover también las variantes archivadas de las plantillas origen."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"An attribute exclusion of %(target)s forbids the combination of %(variant)s."
+msgstr ""
+"Una exclusión de atributos de %(target)s impide la combinación de "
+"%(variant)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Another user is modifying these products. Try again in a moment."
+msgstr ""
+"Otro usuario está modificando estos productos. Inténtelo de nuevo en un "
+"momento."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields.selection,name:product_variant_change_template.selection__product_variant_change_template__source_template_policy__archive
+msgid "Archive"
+msgstr "Archivar"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Archive %(origin)s."
+msgstr "Archivar %(origin)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Archived template: %(name)s"
+msgstr "Plantilla archivada: %(name)s"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"Archived variants with a valid combination are reactivated by Odoo the next "
+"time the attributes of the target change."
+msgstr ""
+"Odoo reactiva las variantes archivadas con una combinación válida la próxima"
+" vez que cambien los atributos del destino."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__attribute_id
+msgid "Attribute"
+msgstr "Atributo"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__value_ids
+msgid "Attributes in the Target"
+msgstr "Atributos en el destino"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Blocking problems"
+msgstr "Problemas que impiden continuar"
+
+#. module: product_variant_change_template
+#: model_terms:ir.ui.view,arch_db:product_variant_change_template.product_variant_change_template_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Changes"
+msgstr "Cambios"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"Choose the value the existing variants of %(target)s take for "
+"%(attributes)s."
+msgstr ""
+"Elija el valor que toman las variantes existentes de %(target)s para "
+"%(attributes)s."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__copy_no_variant_attributes
+msgid "Copy Non-Variant Attributes"
+msgstr "Copiar atributos que no crean variantes"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Create %(count)s attribute exclusions in %(template)s."
+msgstr "Crear %(count)s exclusiones de atributos en %(template)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Create %(count)s variants in %(template)s."
+msgstr "Crear %(count)s variantes en %(template)s."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields.selection,name:product_variant_change_template.selection__product_variant_change_template__missing_combination_policy__create
+msgid "Create them"
+msgstr "Crearlas"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__create_uid
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__create_uid
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__create_date
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__create_date
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__source_combination
+msgid "Current Attributes"
+msgstr "Atributos actuales"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__source_tmpl_id
+msgid "Current Template"
+msgstr "Plantilla actual"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__display_name
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__display_name
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__source_template_policy
+msgid "Emptied Source Templates"
+msgstr "Plantillas origen vaciadas"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields.selection,name:product_variant_change_template.selection__product_variant_change_template__missing_combination_policy__exclude
+msgid "Exclude them"
+msgstr "Excluirlas"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Existing variants of the target get %(attribute)s: %(value)s."
+msgstr ""
+"Las variantes existentes del destino reciben %(attribute)s: %(value)s."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__has_errors
+msgid "Has Errors"
+msgstr "Tiene errores"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__id
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__id
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__include_archived
+msgid "Include Archived Variants"
+msgstr "Incluir variantes archivadas"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "It is defined by the module data %(xmlids)s."
+msgstr "La definen los datos de módulo %(xmlids)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "It keeps archived variants."
+msgstr "Conserva variantes archivadas."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__keep_sale_price
+msgid "Keep Sales Prices"
+msgstr "Conservar precios de venta"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__write_uid
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__write_uid
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__write_date
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__write_date
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"Merge %(origin)s into the target, or archive it if something prevents it."
+msgstr "Fusionar %(origin)s con el destino, o archivarla si algo lo impide."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields.selection,name:product_variant_change_template.selection__product_variant_change_template__source_template_policy__merge
+msgid "Merge into the target"
+msgstr "Fusionar con el destino"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Merged templates: %(names)s"
+msgstr "Plantillas fusionadas: %(names)s"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__missing_combination_policy
+msgid "Missing Combinations"
+msgstr "Combinaciones que faltan"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Move %(count)s variants keeping their identifier."
+msgstr "Mover %(count)s variantes conservando su identificador."
+
+#. module: product_variant_change_template
+#: model_terms:ir.ui.view,arch_db:product_variant_change_template.product_variant_change_template_view_form
+msgid "Move Variants"
+msgstr "Mover variantes"
+
+#. module: product_variant_change_template
+#: model:ir.actions.act_window,name:product_variant_change_template.product_variant_change_template_action_product
+#: model:ir.actions.act_window,name:product_variant_change_template.product_variant_change_template_action_template
+msgid "Move Variants to Template"
+msgstr "Mover variantes a plantilla"
+
+#. module: product_variant_change_template
+#: model:ir.model,name:product_variant_change_template.model_product_variant_change_template
+msgid "Move product variants to another template"
+msgstr "Mover variantes de producto a otra plantilla"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__preview
+msgid "Preview"
+msgstr "Vista previa"
+
+#. module: product_variant_change_template
+#: model:ir.model,name:product_variant_change_template.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Remove %(values)s from %(template)s."
+msgstr "Quitar %(values)s de %(template)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Select a target template and at least one variant."
+msgstr "Seleccione una plantilla destino y al menos una variante."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,help:product_variant_change_template.field_product_variant_change_template__keep_sale_price
+msgid ""
+"Set the extra price of the attribute values added to the target so the moved"
+" variants keep their sales price when possible, and keep the price of the "
+"existing target variants when they get a new attribute."
+msgstr ""
+"Fijar el precio extra de los valores de atributo añadidos al destino para "
+"que las variantes movidas conserven su precio de venta cuando sea posible, y"
+" mantener el precio de las variantes existentes del destino cuando reciben "
+"un atributo nuevo."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Some variants already belong to the target template."
+msgstr "Algunas variantes ya pertenecen a la plantilla destino."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__source_tmpl_ids
+msgid "Source Templates"
+msgstr "Plantillas origen"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__target_tmpl_id
+msgid "Target Template"
+msgstr "Plantilla destino"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"The categories of %(origin)s and %(target)s have a different %(field)s."
+msgstr "Las categorías de %(origin)s y %(target)s tienen distinto %(field)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"The move would leave the attributes inconsistent with the variants:\n"
+"%(problems)s"
+msgstr ""
+"El movimiento dejaría los atributos incoherentes con las variantes:\n"
+"%(problems)s"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"The moved variants of %(origin)s will use the %(fields)s of %(target)s."
+msgstr ""
+"Las variantes movidas de %(origin)s usarán los campos %(fields)s de "
+"%(target)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"The resulting attribute configuration allows more than %(limit)s "
+"combinations."
+msgstr ""
+"La configuración de atributos resultante permite más de %(limit)s "
+"combinaciones."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid ""
+"The sales price of the existing variants of %(target)s changes by the extra "
+"price of %(values)s."
+msgstr ""
+"El precio de venta de las variantes existentes de %(target)s cambia en el "
+"precio extra de %(values)s."
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "The sales price of these variants changes: %(variants)s"
+msgstr "El precio de venta de estas variantes cambia: %(variants)s"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__value_id
+msgid "Value"
+msgstr "Valor"
+
+#. module: product_variant_change_template
+#: model:ir.model,name:product_variant_change_template.model_product_variant_change_template_attribute
+msgid "Value of a new attribute for the existing target variants"
+msgstr "Valor de un atributo nuevo para las variantes existentes del destino"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__attribute_default_ids
+msgid "Values for Existing Variants"
+msgstr "Valores para las variantes existentes"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__product_id
+msgid "Variant"
+msgstr "Variante"
+
+#. module: product_variant_change_template
+#: model:ir.model,name:product_variant_change_template.model_product_variant_change_template_line
+msgid "Variant to move to another template"
+msgstr "Variante a mover a otra plantilla"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__line_ids
+msgid "Variants"
+msgstr "Variantes"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Variants moved to"
+msgstr "Variantes movidas a"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Variants moved to this template:"
+msgstr "Variantes movidas a esta plantilla:"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template__product_ids
+msgid "Variants to Move"
+msgstr "Variantes a mover"
+
+#. module: product_variant_change_template
+#: model_terms:ir.ui.view,arch_db:product_variant_change_template.product_variant_change_template_view_form
+msgid ""
+"Variants will be moved and the templates adjusted. This cannot be undone "
+"automatically. Continue?"
+msgstr ""
+"Se moverán las variantes y se ajustarán las plantillas. No se puede deshacer"
+" automáticamente. ¿Continuar?"
+
+#. module: product_variant_change_template
+#. odoo-python
+#: code:addons/product_variant_change_template/wizards/product_variant_change_template.py:0
+msgid "Warnings"
+msgstr "Advertencias"
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,help:product_variant_change_template.field_product_variant_change_template__source_template_policy
+msgid ""
+"What to do with a source template left without variants. 'Merge' repoints "
+"its remaining references (chatter, attachments, external identifiers, links "
+"from other products) to the target and deletes it; when that is not possible"
+" it is archived instead."
+msgstr ""
+"Qué hacer con una plantilla origen que se queda sin variantes. 'Fusionar' "
+"redirige al destino sus referencias restantes (chatter, adjuntos, "
+"identificadores externos, enlaces desde otros productos) y la elimina; "
+"cuando no es posible, se archiva."
+
+#. module: product_variant_change_template
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_attribute__wizard_id
+#: model:ir.model.fields,field_description:product_variant_change_template.field_product_variant_change_template_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
