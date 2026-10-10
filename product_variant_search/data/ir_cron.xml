@@ -1,0 +1,11 @@
+<odoo>
+    <record id="ir_cron_populate_search_name" model="ir.cron">
+        <field name="name">Assign product search name</field>
+        <field name="model_id" ref="model_product_product" />
+        <field name="state">code</field>
+        <field name="code">model._cron_populate_search_name()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="active">False</field>
+    </record>
+</odoo>
