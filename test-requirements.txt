@@ -1,0 +1,1 @@
+odoo-addon-product_variant_change_template @ git+https://github.com/OCA/product-variant@refs/pull/471/head#subdirectory=product_variant_change_template
