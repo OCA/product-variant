@@ -148,6 +148,7 @@ Contributors
   * João Marques
 
 * Florent THOMAS <florent.thomas@mind-and-go.com>
+* Daniel Amores <daniel.amores@factorlibre.com>
 
 Maintainers
 ~~~~~~~~~~~
