@@ -377,6 +377,9 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/product-variant/tree/19.0/product_variant_name"><img alt="OCA/product-variant" src="https://img.shields.io/badge/github-OCA%2Fproduct--variant-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/product-variant-19-0/product-variant-19-0-product_variant_name"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/product-variant&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module allows having different product variant names than the name
 of their template.</p>
+<p>Renaming a template renames its variants still named like it, language
+by language, archived ones included. A variant with a name of its own
+keeps it, and renaming a variant never renames its template.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -413,6 +416,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Bhavesh Heliconia</li>
 </ul>
 </li>
+<li>alb-oca</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
