@@ -72,6 +72,7 @@ Contributors
 [Trobz]
 
 - Nhan Tran <nhant@trobz.com>
+- Mario Castillo López <@mcastillol14>
 
 Other credits
 -------------

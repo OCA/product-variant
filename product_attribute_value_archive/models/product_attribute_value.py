@@ -1,4 +1,5 @@
 # Copyright 2021 Camptocamp SA
+# Copyright 2026 Mario Castillo López <@mcastillol14>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models
@@ -9,14 +10,8 @@ class ProductAttributeValue(models.Model):
 
     active = fields.Boolean(default=True)
 
+    # products get archived instead of unlinked, so a value can have archived ones
     def _get_related_variants(self):
-        """Returns all related archived products.
-
-        When product is referenced from a SO, the variant is archived instead
-        of unlinked when it becomes not necessary. Thus, it can happen
-        that a product.attribute.value is still referenced by an archived
-        product.
-        """
         self.ensure_one()
         self.flush_model()
         query = """
@@ -45,13 +40,11 @@ class ProductAttributeValue(models.Model):
         pav_to_archive_ids = set()
         for pav in self:
             related_variants = pav._get_related_variants()
-            # Archive only if all related variants are archived
-            # (none is active)
+            # prefetch disabled, we only need the active field here
             active_variants = related_variants.with_context(
                 prefetch_fields=False
             ).mapped("active")
-            # Performance optimization:
-            # fetch only 'active' field instead of prefetching all fields
+            # archive only if every related variant is already archived
             all_variants_are_archived = related_variants and not any(active_variants)
             if all_variants_are_archived:
                 pav_to_archive_ids.add(pav.id)
