@@ -49,12 +49,16 @@ class TestProductVariantPrice(BaseCommon):
         )
 
         cls.product_blue = cls.product_template.product_variant_ids.filtered(
-            lambda x: x.product_template_attribute_value_ids.product_attribute_value_id
-            == cls.att_color_blue
+            lambda x: (
+                x.product_template_attribute_value_ids.product_attribute_value_id
+                == cls.att_color_blue
+            )
         )
         cls.product_red = cls.product_template.product_variant_ids.filtered(
-            lambda x: x.product_template_attribute_value_ids.product_attribute_value_id
-            == cls.att_color_red
+            lambda x: (
+                x.product_template_attribute_value_ids.product_attribute_value_id
+                == cls.att_color_red
+            )
         )
 
     def test_post_init_hook(self):
