@@ -17,15 +17,12 @@ class ProductProduct(models.Model):
     )
     fix_price = fields.Float()
 
-    @api.depends("fix_price")
+    @api.depends("fix_price", "product_tmpl_id.list_price")
     def _compute_lst_price(self):
-        uom_model = self.env["uom.uom"]
+        # lst_price is a stored field since 20.0: it must not depend on the
+        # context, so the uom conversion is left to the price computation
         for product in self:
-            price = product.fix_price or product.list_price
-            if self.env.context.get("uom"):
-                context_uom = uom_model.browse(self.env.context["uom"])
-                price = product.uom_id._compute_price(price, context_uom)
-            product.lst_price = price
+            product.lst_price = product.fix_price or product.product_tmpl_id.list_price
 
     def _compute_list_price(self):
         uom_model = self.env["uom.uom"]

@@ -29,21 +29,9 @@ class ProductTemplate(models.Model):
             self.mapped("product_variant_ids").write({"fix_price": vals["list_price"]})
         return res
 
-    def _get_combination_info(
-        self,
-        combination=False,
-        product_id=False,
-        add_qty=1.0,
-        uom_id=False,
-        only_template=False,
-    ):
-        res = super()._get_combination_info(
-            combination,
-            product_id,
-            add_qty,
-            uom_id,
-            only_template,
-        )
+    def _get_combination_info(self, *args, **kwargs):
+        # Defined by website_sale since 20.0, only called when it is installed
+        res = super()._get_combination_info(*args, **kwargs)
         test_condition = not config["test_enable"] or (
             config["test_enable"]
             and self.env.context.get("test_product_variant_sale_price")
