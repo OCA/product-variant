@@ -258,3 +258,26 @@ class TestSaleOrder(BaseCommon):
             line.name,
             f"{self.product_template_yes.name} ({self.value1.name})",
         )
+
+    def test_taxes_on_line_without_product(self):
+        """A line with only a template gets the template taxes."""
+        tax_group = self.env["account.tax.group"].create({"name": "Test group"})
+        tax = self.env["account.tax"].create(
+            {
+                "name": "Test tax 21%",
+                "amount": 21,
+                "type_tax_use": "sale",
+                "tax_group_id": tax_group.id,
+                "country_id": self.env.ref("base.us").id,
+            }
+        )
+        self.product_template_yes.taxes_id = tax
+        order_form = Form(self.env["sale.order"])
+        order_form.partner_id = self.customer
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+            line_form.price_unit = 100
+        sale = order_form.save()
+        self.assertFalse(sale.order_line.product_id)
+        self.assertEqual(sale.order_line.tax_ids, tax)
+        self.assertEqual(sale.amount_tax, 21)
