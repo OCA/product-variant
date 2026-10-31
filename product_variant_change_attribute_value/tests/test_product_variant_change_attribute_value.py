@@ -1,5 +1,6 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
+from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
@@ -128,6 +129,44 @@ class TestProductVariantChangeAttributeValue(BaseCommon):
         self.assertFalse(
             self._is_attribute_value_on_template(self.variant_1, self.steel)
         )
+
+    @mute_logger("odoo.models.unlink")
+    def test_remove_last_value_of_attribute_line(self):
+        """Removing the only value of an attribute line archives the line"""
+        material = self.env["product.attribute"].create(
+            {"name": "Material", "value_ids": [Command.create({"name": "Wood"})]}
+        )
+        wood = material.value_ids
+        template = self.env["product.template"].create(
+            {
+                "name": "Chair",
+                "attribute_line_ids": [
+                    Command.create(
+                        {
+                            "attribute_id": material.id,
+                            "value_ids": [Command.set(wood.ids)],
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "attribute_id": self.color.id,
+                            "value_ids": [Command.set((self.pink | self.blue).ids)],
+                        }
+                    ),
+                ],
+            }
+        )
+        variants = template.product_variant_ids
+        self.assertEqual(len(variants), 2)
+        wiz = self._get_wiz(variants.ids)
+        self._change_action(wiz, wood, "delete")
+        wiz.action_apply()
+        for variant in variants:
+            self.assertFalse(self._is_value_on_variant(variant, wood))
+        material_line = template.with_context(
+            active_test=False
+        ).attribute_line_ids.filtered(lambda line: line.attribute_id == material)
+        self.assertFalse(material_line.active)
 
     def test_remove_attribute_values_when_both_products_are_associated(self):
         if "sale.order" not in self.env:
