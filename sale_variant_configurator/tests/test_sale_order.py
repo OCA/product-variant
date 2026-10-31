@@ -194,6 +194,25 @@ class TestSaleOrder(BaseCommon):
             self.assertEqual(len(line.product_attribute_ids), 2)
             self.assertEqual(line.product_tmpl_id, self.product_template_yes)
 
+    def test_confirm_line_without_variant(self):
+        """Confirming the order creates the variant of the lines that only have
+        a product template"""
+        order_form = Form(self.env["sale.order"])
+        order_form.partner_id = self.customer
+        with order_form.order_line.new() as line_form:
+            line_form.product_tmpl_id = self.product_template_yes
+            with line_form.product_attribute_ids.edit(0) as attribute_line_form:
+                attribute_line_form.value_id = self.value2
+            line_form.price_unit = 100
+        order = order_form.save()
+        self.assertFalse(order.order_line.product_id)
+        order.action_confirm()
+        self.assertEqual(order.state, "sale")
+        self.assertEqual(
+            order.order_line.product_id.product_template_attribute_value_ids.product_attribute_value_id,
+            self.value2,
+        )
+
     def _test_action_confirm(self):
         order = self.sale_order.create({"partner_id": self.customer.id})
         line_1 = self.sale_order_line.new(
