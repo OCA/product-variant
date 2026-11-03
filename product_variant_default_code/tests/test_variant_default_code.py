@@ -229,7 +229,7 @@ class TestVariantDefaultCode(TransactionCase):
 
     def test_11_prefix_code_as_default_code_by_default(self):
         self.assertFalse(self.template1.default_code)
-        self.env["ir.config_parameter"].set_param(
+        self.env["ir.config_parameter"].set_bool(
             "product_variant_default_code.prefix_as_default_code", True
         )
         self.template1.code_prefix = "prefix_code"
