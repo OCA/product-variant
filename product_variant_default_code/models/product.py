@@ -233,9 +233,7 @@ class ProductProduct(models.Model):
             (not self.code_prefix and self.product_tmpl_id.is_automask())
             or not all(value_codes)
             or not self.product_tmpl_id.reference_mask
-        ):
-            return None
-        elif not self.product_tmpl_id.reference_mask:
+        ) or not self.product_tmpl_id.reference_mask:
             return None
         else:
             product_attrs = defaultdict(str)
