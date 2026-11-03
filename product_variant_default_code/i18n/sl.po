@@ -1,0 +1,198 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * product_variant_default_code
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-23 03:56+0000\n"
+"PO-Revision-Date: 2026-07-25 07:00+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,help:product_variant_default_code.field_product_product__code_prefix
+#: model:ir.model.fields,help:product_variant_default_code.field_product_template__code_prefix
+msgid "Add prefix to product variant reference (default code)"
+msgstr "Dodaj predpono k sklicu različice izdelka (privzeta koda)"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute__code
+msgid "Attribute Code"
+msgstr "Koda atributa"
+
+#. module: product_variant_default_code
+#. odoo-python
+#: code:addons/product_variant_default_code/models/product.py:0
+#: model:ir.model.constraint,message:product_variant_default_code.constraint_product_attribute_number_uniq
+#, python-format
+msgid "Attribute Name must be unique!"
+msgstr "Naziv atributa mora biti unikaten!"
+
+#. module: product_variant_default_code
+#: model:ir.model,name:product_variant_default_code.model_product_attribute_value
+msgid "Attribute Value"
+msgstr "Vrednost atributa"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_attribute_value__code
+msgid "Attribute Value Code"
+msgstr "Koda vrednosti atributa"
+
+#. module: product_variant_default_code
+#: model:ir.model,name:product_variant_default_code.model_res_config_settings
+msgid "Config Settings"
+msgstr "Nastavitve"
+
+#. module: product_variant_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+msgid ""
+"Defines how you want to manage the Variant default.\n"
+"                                Check this if you want to use Manual Mask.\n"
+"                                Default: Automask"
+msgstr ""
+"Določa, kako želite upravljati privzeto kodo različice.\n"
+"                                Označite, če želite uporabiti ročno masko.\n"
+"                                Privzeto: samodejna maska"
+
+#. module: product_variant_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+msgid ""
+"Defines the variant \"Reference Prefix\" as the default reference "
+"(default_code) of the variant."
+msgstr "Določa \"predpono sklica\" kot privzeti sklic (default_code) različice."
+
+#. module: product_variant_default_code
+#. odoo-python
+#: code:addons/product_variant_default_code/models/product.py:0
+#, python-format
+msgid "Found unrecognized attribute name in \"Variant Reference Mask\""
+msgstr "V 'maski sklica variante' najden nerazpoznaven naziv atributa"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__default_code
+msgid "Internal Reference"
+msgstr "Interni sklic"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__manual_code
+msgid "Manual Reference"
+msgstr "Ročno sklic"
+
+#. module: product_variant_default_code
+#: model:ir.model,name:product_variant_default_code.model_product_template
+msgid "Product"
+msgstr "Proizvod"
+
+#. module: product_variant_default_code
+#: model:ir.model,name:product_variant_default_code.model_product_attribute
+msgid "Product Attribute"
+msgstr "Atribut proizvoda"
+
+#. module: product_variant_default_code
+#: model:res.groups,name:product_variant_default_code.group_product_default_code_manual_mask
+msgid "Product Default Code Behavior"
+msgstr "Vedenje privzete kode izdelka"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__group_product_default_code_manual_mask
+msgid "Product Default Code Manual Mask"
+msgstr "Ročna maska privzete kode izdelka"
+
+#. module: product_variant_default_code
+#: model:ir.model,name:product_variant_default_code.model_product_product
+msgid "Product Variant"
+msgstr "Različica proizvoda"
+
+#. module: product_variant_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.view_general_configuration
+msgid "Product Variants"
+msgstr "Različice proizvodov"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__code_prefix
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__code_prefix
+msgid "Reference Prefix"
+msgstr "Predpona sklica"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_res_config_settings__prefix_as_default_code
+msgid "Reference Prefix as default Reference"
+msgstr "Predpona sklica kot privzeti sklic"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,help:product_variant_default_code.field_product_product__reference_mask
+#: model:ir.model.fields,help:product_variant_default_code.field_product_template__reference_mask
+msgid ""
+"Reference mask for building internal references of a variant generated from "
+"this template.\n"
+"Example:\n"
+"A product named ABC with 2 attributes: Size and Color:\n"
+"Product: ABC\n"
+"Color: Red(r), Yellow(y), Black(b)  #Red, Yellow, Black are the attribute "
+"value, `r`, `y`, `b` are the corresponding code\n"
+"Size: L (l), XL(x)\n"
+"When setting Variant reference mask to `[Color]-[Size]`, the default code on "
+"the variants will be something like `r-l` `b-l` `r-x` ...\n"
+"If you like, You can even have the attribute name appear more than once in "
+"the mask. Such as,`fancyA/[Size]~[Color]~[Size]`\n"
+" When saved, the default code on variants will be something like \n"
+" `fancyA/l~r~l` (for variant with Color \"Red\" and Size \"L\")  `fancyA/"
+"x~y~x` (for variant with Color \"Yellow\" and Size \"XL\")\n"
+"Note: make sure characters \"[,]\" do not appear in your attribute name"
+msgstr ""
+"Maska sklica za izgradnjo internih sklicev različice, ustvarjene iz te "
+"predloge.\n"
+"Primer:\n"
+"Izdelek z imenom ABC z 2 atributoma: Velikost in Barva:\n"
+"Izdelek: ABC\n"
+"Barva: Rdeča(r), Rumena(y), Črna(b)  #Rdeča, Rumena, Črna so vrednosti "
+"atributa, `r`, `y`, `b` so pripadajoče kode\n"
+"Velikost: L (l), XL(x)\n"
+"Ko nastavite masko sklica različice na `[Barva]-[Velikost]`, bo privzeta "
+"koda na različicah nekaj takega kot `r-l` `b-l` `r-x` ...\n"
+"Če želite, se lahko ime atributa v maski pojavi večkrat, npr. `fancyA/"
+"[Velikost]~[Barva]~[Velikost]`\n"
+" Ko shranite, bodo privzete kode na različicah nekaj takega:\n"
+" `fancyA/l~r~l` (za različico z barvo \"Rdeča\" in velikostjo \"L\")  "
+"`fancyA/x~y~x` (za različico z barvo \"Rumena\" in velikostjo \"XL\")\n"
+"Opomba: poskrbite, da znaka \"[,]\" ne bosta v imenu atributa\""
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,help:product_variant_default_code.field_res_config_settings__group_product_default_code_manual_mask
+msgid ""
+"Set behaviour of codes. Default: Automask (depends on variant use: see Sales/"
+"Purchases configuration)"
+msgstr ""
+"Nastavi vedenje kod. Privzeto: samodejna maska (odvisno od uporabe različic; "
+"glejte nastavitve Prodaja/Nabava)"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__variant_default_code_error
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__variant_default_code_error
+msgid "Variant Default Code Error"
+msgstr "Napaka privzete kode različice"
+
+#. module: product_variant_default_code
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_product__reference_mask
+#: model:ir.model.fields,field_description:product_variant_default_code.field_product_template__reference_mask
+msgid "Variant reference mask"
+msgstr "Maska sklica variante"
+
+#. module: product_variant_default_code
+#: model_terms:ir.ui.view,arch_db:product_variant_default_code.product_template_only_form_view
+msgid "[attribute3]-[attribute1]"
+msgstr "[atribut3]-[atribut1]"
+
+#~ msgid "Product Template"
+#~ msgstr "Predloga proizvoda"
