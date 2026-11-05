@@ -78,7 +78,7 @@ class SaleOrderLine(models.Model):
         return super()._compute_price_unit()
 
     @api.depends("product_tmpl_id")
-    def _compute_tax_id(self):
+    def _compute_tax_ids(self):
         # Fill taxes when no product is yet defined
         lines_with_template = self.filtered(
             lambda x: x.product_tmpl_id and not x.product_id
@@ -89,9 +89,9 @@ class SaleOrderLine(models.Model):
                 lambda r, line=line: not line.company_id
                 or r.company_id == line.company_id
             )
-            line.tax_id = fiscal_position.map_tax(taxes) if fiscal_position else taxes
+            line.tax_ids = fiscal_position.map_tax(taxes) if fiscal_position else taxes
         self -= lines_with_template
-        return super()._compute_tax_id()
+        return super()._compute_tax_ids()
 
     @api.depends("product_tmpl_id")
     def _compute_product_uom_id(self):
