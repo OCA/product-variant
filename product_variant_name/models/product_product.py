@@ -39,4 +39,10 @@ class ProductProduct(models.Model):
             )
             for vals, template in zip(to_create, templates, strict=True):
                 vals["product_tmpl_id"] = template.id
+        for vals in vals_list:
+            # Variants created for a template without name (e.g. dynamic
+            # variants created by _create_product_variant) take its name
+            if not vals.get("name") and vals.get("product_tmpl_id"):
+                template = self.env["product.template"].browse(vals["product_tmpl_id"])
+                vals["name"] = template.name
         return super().create(vals_list)

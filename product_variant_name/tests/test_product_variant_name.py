@@ -35,3 +35,32 @@ class TestProductVariantName(TransactionCase):
         self.assertEqual(products[1].product_tmpl_id.list_price, 12.0)
         for product in products:
             self.assertEqual(product.product_tmpl_id.product_variant_ids, product)
+
+    def test_create_dynamic_variant(self):
+        # Variants created on demand for dynamic attributes get the template name
+        attribute = self.env["product.attribute"].create(
+            {
+                "name": "Test Dynamic Attribute",
+                "create_variant": "dynamic",
+                "value_ids": [(0, 0, {"name": "Value 1"}), (0, 0, {"name": "Value 2"})],
+            }
+        )
+        product_tmpl = self.product_tmpl_model.create(
+            {
+                "name": "Test Dynamic Template",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": attribute.id,
+                            "value_ids": [(6, 0, attribute.value_ids.ids)],
+                        },
+                    )
+                ],
+            }
+        )
+        self.assertFalse(product_tmpl.product_variant_ids)
+        combination = product_tmpl.attribute_line_ids.product_template_value_ids[0]
+        variant = product_tmpl._create_product_variant(combination)
+        self.assertEqual(variant.name, "Test Dynamic Template")
