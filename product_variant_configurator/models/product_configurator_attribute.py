@@ -11,19 +11,16 @@ class ProductConfiguratorAttribute(models.Model):
     _description = "Product Configurator Attribute"
 
     owner_id = fields.Many2oneReference(
-        string="Owner", required=True, index=True, model_field="owner_model"
+        required=True, index=True, model_field="owner_model"
     )
     owner_model = fields.Char(required=True)
     product_tmpl_id = fields.Many2one(
         comodel_name="product.template", string="Product Template", required=True
     )
-    attribute_id = fields.Many2one(
-        comodel_name="product.attribute", string="Attribute", readonly=True
-    )
+    attribute_id = fields.Many2one(comodel_name="product.attribute", readonly=True)
     value_id = fields.Many2one(
         comodel_name="product.attribute.value",
         domain="[('id', 'in', possible_value_ids)]",
-        string="Value",
     )
     possible_value_ids = fields.Many2many(
         comodel_name="product.attribute.value",
