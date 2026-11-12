@@ -99,7 +99,7 @@ class ProductTemplate(models.Model):
             error_txt = ""
             if not rec.code_prefix and automask:
                 error_txt += "Reference Prefix is missing.\n"
-            invalid_values = self.attribute_line_ids.value_ids.filtered(
+            invalid_values = rec.attribute_line_ids.value_ids.filtered(
                 lambda s: not s.code
             )
             if invalid_values:
@@ -214,7 +214,6 @@ class ProductProduct(models.Model):
         "product_template_attribute_value_ids.product_attribute_value_id.code",
     )
     def _compute_default_code(self):
-        self.env.cr.flush()  # https://github.com/odoo/odoo/blob/16.0/odoo/models.py#L5592
         for rec in self:
             if not rec.manual_code:
                 new_code = rec._generate_default_code()
