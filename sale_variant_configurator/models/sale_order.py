@@ -9,14 +9,14 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def _action_confirm(self):
+    def action_confirm(self):
         """Create possible product variants not yet created."""
         lines_without_product = self.mapped("order_line").filtered(
             lambda x: not x.product_id and x.product_tmpl_id
         )
         for line in lines_without_product:
             line.create_variant_if_needed()
-        return super()._action_confirm()
+        return super().action_confirm()
 
 
 class SaleOrderLine(models.Model):
