@@ -30,6 +30,32 @@
                                 Defines the variant "Reference Prefix" as the default reference (default_code) of the variant.
                             </div>
                         </div>
+                        <div class="o_setting_left_pane">
+                            <field
+                                name="use_sequence_per_product_tmp_as_default_code"
+                            />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="use_sequence_per_product_tmp_as_default_code" />
+                            <div class="text-muted">
+                                Create the "Reference Sequence" per Product as the default for compute reference (default_code) of the variant.
+                            </div>
+                        </div>
+                        <div
+                            class="o_setting_right_pane"
+                            attrs="{'invisible': [('sequence_as_default_code', '=', True)]}"
+                        >
+                            <label for="sequence_as_default_code" />
+                            <div class="text-muted">
+                                Defines the "Reference Sequence" as the default for compute reference (default_code) of the variant.
+                            </div>
+                            <div
+                                class="content-group"
+                                attrs="{'invisible': [('sequence_as_default_code', '=', True)]}"
+                            >
+                                <field name="sequence_as_default_code" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </xpath>
