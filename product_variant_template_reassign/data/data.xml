@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record
+        id="template_reassign_keep_fields"
+        forcecreate="True"
+        model="ir.config_parameter"
+    >
+        <field name="key">product_variant_template_reassign.keep_fields</field>
+        <field name="value">list_price,standard_price</field>
+    </record>
+</odoo>
