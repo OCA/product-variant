@@ -99,7 +99,7 @@ class ProductTemplate(models.Model):
             error_txt = ""
             if not rec.code_prefix and automask:
                 error_txt += "Reference Prefix is missing.\n"
-            invalid_values = self.attribute_line_ids.value_ids.filtered(
+            invalid_values = rec.attribute_line_ids.value_ids.filtered(
                 lambda s: not s.code
             )
             if invalid_values:
@@ -118,11 +118,18 @@ class ProductTemplate(models.Model):
     )
     def _compute_reference_mask(self):
         automask = self.is_automask()
+        separator = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("default_reference_separator")
+            or ""
+        )
+        main_lang = self._guess_main_lang()
         for rec in self:
             if rec.default_code and not rec.code_prefix:
                 rec.code_prefix = rec.default_code
             if automask or not rec.reference_mask:
-                rec.reference_mask = rec._get_default_mask()
+                rec.reference_mask = rec._get_default_mask(separator, main_lang)
             elif (
                 not automask
                 and rec.code_prefix
@@ -133,24 +140,22 @@ class ProductTemplate(models.Model):
     def _inverse_reference_mask(self):
         self._compute_reference_mask()
 
-    def _get_default_mask(self):
+    def _get_default_mask(self, separator=None, main_lang=None):
+        if separator is None:
+            separator = (
+                self.env["ir.config_parameter"]
+                .sudo()
+                .get_param("default_reference_separator")
+                or ""
+            )
+        if main_lang is None:
+            main_lang = self._guess_main_lang()
         attribute_names = []
-        default_reference_separator = (
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("default_reference_separator")
-            or ""
-        )
-        # Get the attribute name in the main lang format, otherwise we could not
-        # match mask with the proper values
-        main_lang = self._guess_main_lang()
         for line in self.attribute_line_ids:
             attribute_names.append(
                 f"[{line.attribute_id.with_context(lang=main_lang).name}]"
             )
-        default_mask = (self.code_prefix or "") + default_reference_separator.join(
-            attribute_names
-        )
+        default_mask = (self.code_prefix or "") + separator.join(attribute_names)
         return default_mask
 
     @api.model_create_multi
@@ -214,7 +219,6 @@ class ProductProduct(models.Model):
         "product_template_attribute_value_ids.product_attribute_value_id.code",
     )
     def _compute_default_code(self):
-        self.env.cr.flush()  # https://github.com/odoo/odoo/blob/16.0/odoo/models.py#L5592
         for rec in self:
             if not rec.manual_code:
                 rec.default_code = rec._generate_default_code()
