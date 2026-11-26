@@ -384,3 +384,58 @@ class TestVariantDefaultCode(TransactionCase):
                 ).name[0:2]
             )
             self.assertEqual(product.default_code, expected_code)
+
+    def test_19_compute_does_not_flush_other_models(self):
+        """Computing the default code must not flush unrelated pending recomputes."""
+        child = self.env["res.partner"].create({"name": "Child"})
+        self.env.flush_all()
+        commercial_field = child._fields["commercial_partner_id"]
+        self.attr1_1.code = "OO"
+        self.env.add_to_compute(commercial_field, child)
+        self.assertTrue(
+            self.env.is_to_compute(commercial_field, child),
+            "The unrelated recompute should be pending before the compute runs",
+        )
+        product = self.template1.product_variant_ids.filtered(
+            lambda variant: self.attr1_1
+            in variant.product_template_attribute_value_ids.product_attribute_value_id
+        )[:1]
+        self.assertTrue(product)
+        color_code = product.product_template_attribute_value_ids.filtered(
+            lambda value: value.product_attribute_value_id.attribute_id == self.attr2
+        ).product_attribute_value_id.code
+        default_code = product.default_code
+        self.assertTrue(
+            self.env.is_to_compute(commercial_field, child),
+            "The unrelated recompute must still be pending",
+        )
+        self.assertEqual(default_code, "prefix/OO-" + color_code)
+
+    def test_20_translated_attribute_name_without_flush(self):
+        """A renamed attribute is used in the code of variants created right after."""
+        self.attr1.name = "TNewSize"
+        new_value = self.env["product.attribute.value"].create(
+            {"name": "XXL", "attribute_id": self.attr1.id}
+        )
+        self.template1.attribute_line_ids.filtered(
+            lambda line: line.attribute_id == self.attr1
+        ).write({"value_ids": [(4, new_value.id)]})
+        variants = self.template1.product_variant_ids
+        self.assertEqual(len(variants), 6)
+
+        def attribute_value(product, attribute):
+            return product.product_template_attribute_value_ids.filtered(
+                lambda value: value.product_attribute_value_id.attribute_id == attribute
+            ).product_attribute_value_id
+
+        expected = {
+            product.id: "prefix/%s-%s"
+            % (
+                attribute_value(product, self.attr1).code,
+                attribute_value(product, self.attr2).code,
+            )
+            for product in variants
+        }
+        self.assertEqual(
+            {product.id: product.default_code for product in variants}, expected
+        )
