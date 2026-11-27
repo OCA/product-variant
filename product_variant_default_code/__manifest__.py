@@ -26,5 +26,7 @@
         "views/config_settings_view.xml",
     ],
     "demo": ["demo/attribute_demo.xml"],
+    "pre_init_hook": "pre_init_hook",
+    "post_init_hook": "post_init_hook",
     "installable": True,
 }
