@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_base_list_price
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-07 13:51+0000\n"
+"PO-Revision-Date: 2026-04-07 13:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_variant_base_list_price
+#: model:ir.model.fields,field_description:product_variant_base_list_price.field_product_product__base_pricelist_id
+msgid "Base Pricelist"
+msgstr "Liste de Prix de base"
+
+#. module: product_variant_base_list_price
+#: model:ir.model,name:product_variant_base_list_price.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: product_variant_base_list_price
+#: model:ir.model,name:product_variant_base_list_price.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: product_variant_base_list_price
+#: model_terms:ir.ui.view,arch_db:product_variant_base_list_price.res_config_settings_view_form
+msgid "Define the base pricelist to display a base price on product variants"
+msgstr "Définissez la liste de prix de base pour afficher le prix sur les variantes de produit"
+
+#. module: product_variant_base_list_price
+#: model:ir.model.fields,field_description:product_variant_base_list_price.field_product_product__pricelist_base_price
+msgid "Price (Base Pricelist)"
+msgstr "Prix (Liste de Prix de Base)"
+
+#. module: product_variant_base_list_price
+#: model:ir.model.fields,field_description:product_variant_base_list_price.field_res_company__price_display_variant_pricelist_id
+#: model:ir.model.fields,field_description:product_variant_base_list_price.field_res_config_settings__price_display_variant_pricelist_id
+msgid "Price Display Variant Pricelist"
+msgstr ""
+
+#. module: product_variant_base_list_price
+#: model:ir.model,name:product_variant_base_list_price.model_product_product
+msgid "Product Variant"
+msgstr "Variante de produit"
+
+#. module: product_variant_base_list_price
+#: model_terms:ir.ui.view,arch_db:product_variant_base_list_price.product_product_form_view
+msgid "Sales Price (based on Pricelist)"
+msgstr "Prix de vente (basé sur Liste de Prix)"
