@@ -1,0 +1,28 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_variant_change_template_website_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-24 14:01+0000\n"
+"PO-Revision-Date: 2026-09-24 14:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: product_variant_change_template_website_sale
+#: model:ir.model,name:product_variant_change_template_website_sale.model_product_variant_change_template
+msgid "Move product variants to another template"
+msgstr "Mover variantes de producto a otra plantilla"
+
+#. module: product_variant_change_template_website_sale
+#. odoo-python
+#: code:addons/product_variant_change_template_website_sale/wizards/product_variant_change_template.py:0
+msgid "Moved product: %(name)s"
+msgstr "Producto movido: %(name)s"
