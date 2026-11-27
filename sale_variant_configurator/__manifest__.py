@@ -7,7 +7,7 @@
 {
     "name": "Sale - Product variants",
     "summary": "Product variants in sale management",
-    "version": "19.0.1.0.6",
+    "version": "19.0.1.0.7",
     "development_status": "Production/Stable",
     "license": "AGPL-3",
     "depends": ["sale", "product_variant_configurator"],
